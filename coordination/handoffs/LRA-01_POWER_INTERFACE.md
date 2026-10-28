@@ -33,6 +33,46 @@ The historical exact circuit tables are at private `logger-power/` candidate
 review. If private access is unavailable, request the selected export from the
 manager; do not require predecessor conversations or invent component values.
 
+## Owner direction — continue the existing circuit, October 28
+
+Recorded by the current pcb-manager identified above: the owner explicitly wants
+to avoid repeating power-circuit research where a potential circuit already exists.
+**Use `9527a14153c7b06f3d59b641a2e681b28dcd1735` as the continuation baseline.**
+LRA-01/02 close and integrate that candidate; they are not a fresh topology search.
+Retain completed circuit choices/calculations unless a specific unresolved
+requirement or verified defect warrants changing them. Any alternative must name
+that defect, explain the bounded change and preserve useful existing work.
+
+Manager recovery check on October 28 located the original `logger-power/` in the
+historical checkout. The following ten files are byte-identical to `9527a14`:
+
+- `NEXT_SESSION.md`: use its final **Current handoff after the margin review**
+  section; earlier remaining-work lists describe superseded checkpoints.
+- `DESIGN.md`, `BOM.csv`: base onboard supply, switching connections and BOM.
+- `MAX_ON_CUTOFF.md`, `MAX_ON_BOM.csv`: independent cutoff circuit and additions.
+- `CUTOFF_MARGIN_REVIEW.md`: later clock/reset/supply/current revisions; read
+  alongside the base design to avoid restoring superseded choices.
+- `INTERFACE_HANDOFF.md`, `PROTOTYPE_TEST_PLAN.md`: proposed interfaces and tests.
+- `check_max_on_logic.py`, `check_cutoff_margins.py`: existing verification.
+
+The historical checkout's later committed power-folder change only adds a
+manager seed; it does not revise these engineering files. Original commit author
+is `Jayson Gazeley (Remote Codex)`; the engineer session identified by the owner
+and historical manager review is `01a17407-4357-7031-b3ac-a51c97864fbe`.
+Preserve that attribution when exporting; this manager is the verifier/transporter.
+
+Fresh verification: ran both scripts from exact Git blobs in a temporary directory
+with Python 3 `-B`: **11 logic + 8 margin checks passed**. No historical working
+files were changed. These remain conditional checks, not physical acceptance.
+
+Continue with the known open work: current/leakage allocations, compatible input
+protection, exact capacitor/hot-device/clock limits, off-state signal isolation,
+current-firmware agreement, then coherent schematic/BOM and measured validation.
+Manager should export only the selected public-reviewed engineering files with
+provenance into `logger/hardware/power/` before remote detailed review. Their
+absence from this public repository is a transfer dependency, not missing design
+work. Do not dispatch a public-only engineer to recreate the missing circuit.
+
 ## Manager source triage — review input, not firmware acceptance
 
 Inspected public firmware at `303092a` (unchanged code baseline `8261314`):

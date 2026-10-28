@@ -25,6 +25,11 @@ remain in use until separately migrated. Do not maintain another active tracker.
 - **Public source complete so far:** keyless firmware/KiCad, logger firmware,
   raw receiver/canonical conversion, tests and deployment templates (`8261314`).
   Public extraction did not change installed firmware or live services.
+- **Power continuation baseline:** owner reaffirmed October 28: reuse the existing
+  `9527a14` circuit; no fresh topology research without a specific demonstrated
+  gap. Manager located ten unchanged engineering/continuation files and reran
+  all 19 conditional checks successfully; see the LRA-01 packet. Selected export
+  is still required before remote detailed review.
 - **First blocker to resolve:** one qualified-IGN/HOLD/shutdown contract and
   the cutoff candidate's power-budget/protection gaps.
 - **Next action:** electrical lead claims [LRA-01](handoffs/LRA-01_POWER_INTERFACE.md);
@@ -61,7 +66,7 @@ before dispatch; record the claim and evidence here, not in a second tracker.
 | ID | Responsible role | State / dependencies | Outcome and acceptance |
 |---|---|---|---|
 | [LRA-01](handoffs/LRA-01_POWER_INTERFACE.md) | Electrical lead; firmware reviewer; manager integrates | Ready; both specialist roles unclaimed; manager source triage recorded | One agreed qualified-IGN/HOLD/startup/shutdown/reset/USB contract; numerical assumptions and faults explicit; current/protection decisions and reviewer disposition |
-| LRA-02 | Power engineer | Ready for analysis; final depends on 01 | Coherent power schematic/BOM, compatible protection, effective capacitance and current/leakage allocations; off-state paths and bench checklist |
+| LRA-02 | Power engineer | Ready for gap closure on existing `9527a14` candidate; final depends on 01 | Coherent power schematic/BOM, compatible protection, effective capacitance and current/leakage allocations; off-state paths and bench checklist |
 | [LRA-03](handoffs/LRA-03_AS_BUILT.md) | Hardware integrator; analog reviewer | Ready, unclaimed; packet prepared; finalize power domains with 01/02 | Current as-built consolidated with unknowns, frozen Rev A pins/connectors/input loading/protection/grounds/mechanics/test points; no full fuel model |
 | [LRA-04](handoffs/LRA-04_COMMUNICATIONS.md) | Bounded communications reviewer; hardware/firmware accept | Ready, unclaimed; packet prepared; coordinate 03 | RS-485/CAN/daughterboard comparison with usable GPIO/peripheral/current/voltage/power-off contract; recommendation and fallback |
 | LRA-05 | Logger firmware | Blocked on 01 contract | Isolated shutdown candidate: early HOLD, bounded SD finalization, IGN-return/reset/watchdog behavior; build/fault/replay tests and rollback; no implicit flash |
@@ -86,7 +91,7 @@ for every row. Remote electrical work and local physical validation are distinct
 | TIME-01 | Logger/bridge | Deferred design: reset/offline time and retrospective drift policy; hardware reservations feed 03/04 if concrete |
 | KEY-01 | Proximity/keyless | Owner participation required: threshold/repeatability and parked operation independent of Pi/logger; installed settings unknown |
 | DIST-01 | Bridge/DB | Deferred: production-host cutover, packet checkpoints and independent server/VM comparison; not yet implemented |
-| DOC-01 | Codex pcb-manager, `01a18447-07c2-7bb3-8318-9b276cfdb3b8` | Active, claimed October 28: authority recorded; 01 refreshed and 03/04 prepared. Next: provide selected power artifacts when needed by the electrical claimant; no specialist dispatched yet |
+| DOC-01 | Codex pcb-manager, `01a18447-07c2-7bb3-8318-9b276cfdb3b8` | Active, claimed October 28: authority recorded; 01 refreshed and 03/04 prepared. Existing power candidate located and 19 checks rerun. Next: export selected engineering artifacts before remote detailed review; no specialist dispatched yet |
 
 ## Decisions and gates
 
@@ -99,6 +104,9 @@ for every row. Remote electrical work and local physical validation are distinct
   to fabricate an electrically unresolved design.
 - **D-RA-03 — pending 01:** one shared qualified-IGN/deadline contract. Never mix
   the old raw-GP5/100 ms rules with the newer analog-qualified proposal.
+- **D-POWER-02 — owner direction, October 28:** continue the existing `9527a14`
+  power circuit. Reuse its design, BOMs and checks; limit new investigation to
+  identified gaps. Replacement requires a documented defect or unmet requirement.
 - **D-RA-04 — pending 04:** minimal communications provisioning; daughterboard
   is a valid alternative to evaluate, not a selected implementation.
 - **D-REPO-01 — owner direction:** `accord` is authoritative for new active work;
