@@ -1,0 +1,135 @@
+{
+  "scratch": "/tmp/accord-keyless-kicad-3im017yx",
+  "jobs": [
+    [
+      "copy-erc",
+      [
+        "kicad-cli",
+        "sch",
+        "erc",
+        "--format",
+        "json",
+        "--output",
+        "/srv/agent_share/SMB Tests/honda/accord/keyless/validation/kicad-20261027/copy-erc.json",
+        "/srv/agent_share/SMB Tests/honda/accord/keyless/hardware/hondaPico.kicad_sch"
+      ]
+    ],
+    [
+      "copy-drc",
+      [
+        "kicad-cli",
+        "pcb",
+        "drc",
+        "--schematic-parity",
+        "--format",
+        "json",
+        "--output",
+        "/srv/agent_share/SMB Tests/honda/accord/keyless/validation/kicad-20261027/copy-drc.json",
+        "/srv/agent_share/SMB Tests/honda/accord/keyless/hardware/hondaPico.kicad_pcb"
+      ]
+    ],
+    [
+      "original-erc",
+      [
+        "kicad-cli",
+        "sch",
+        "erc",
+        "--format",
+        "json",
+        "--output",
+        "/srv/agent_share/SMB Tests/honda/accord/keyless/validation/kicad-20261027/original-erc.json",
+        "/tmp/accord-keyless-kicad-3im017yx/original/hondaPico.kicad_sch"
+      ]
+    ],
+    [
+      "original-drc",
+      [
+        "kicad-cli",
+        "pcb",
+        "drc",
+        "--schematic-parity",
+        "--format",
+        "json",
+        "--output",
+        "/srv/agent_share/SMB Tests/honda/accord/keyless/validation/kicad-20261027/original-drc.json",
+        "/tmp/accord-keyless-kicad-3im017yx/original/hondaPico.kicad_pcb"
+      ]
+    ],
+    [
+      "schematic-export",
+      [
+        "kicad-cli",
+        "sch",
+        "export",
+        "svg",
+        "--output",
+        "/srv/agent_share/SMB Tests/honda/accord/keyless/validation/kicad-20261027/schematic/",
+        "/srv/agent_share/SMB Tests/honda/accord/keyless/hardware/hondaPico.kicad_sch"
+      ]
+    ],
+    [
+      "pcb-export",
+      [
+        "kicad-cli",
+        "pcb",
+        "export",
+        "svg",
+        "--layers",
+        "F.Cu,F.Silkscreen,Edge.Cuts",
+        "--mode-single",
+        "--page-size-mode",
+        "2",
+        "--output",
+        "/srv/agent_share/SMB Tests/honda/accord/keyless/validation/kicad-20261027/pcb-top.svg",
+        "/srv/agent_share/SMB Tests/honda/accord/keyless/hardware/hondaPico.kicad_pcb"
+      ]
+    ]
+  ],
+  "results": [
+    {
+      "job": "copy-erc",
+      "exit_code": 0,
+      "output": "Checking sheet names...\nChecking bus conflicts...\nChecking conflicts...\nChecking units...\nChecking footprints...\nChecking pins...\nChecking similar labels...\nChecking local and global labels...\nChecking for unresolved variables...\nChecking no connect pins for connections...\nChecking for library symbol issues...\nChecking for footprint link issues...\nChecking for off grid pins and wires...\nChecking for labels on more than one wire...\nChecking for undefined netclasses...\nFound 2 violations\nSaved ERC Report to /srv/agent_share/SMB Tests/honda/accord/keyless/validation/kicad-20261027/copy-erc.json\n"
+    },
+    {
+      "job": "copy-drc",
+      "exit_code": 0,
+      "output": "Found 3 violations\nFound 0 unconnected items\nFound 8 schematic parity issues\nSaved DRC Report to /srv/agent_share/SMB Tests/honda/accord/keyless/validation/kicad-20261027/copy-drc.json\n"
+    },
+    {
+      "job": "original-erc",
+      "exit_code": 0,
+      "output": "Checking sheet names...\nChecking bus conflicts...\nChecking conflicts...\nChecking units...\nChecking footprints...\nChecking pins...\nChecking similar labels...\nChecking local and global labels...\nChecking for unresolved variables...\nChecking no connect pins for connections...\nChecking for library symbol issues...\nChecking for footprint link issues...\nChecking for off grid pins and wires...\nChecking for labels on more than one wire...\nChecking for undefined netclasses...\nFound 4 violations\nSaved ERC Report to /srv/agent_share/SMB Tests/honda/accord/keyless/validation/kicad-20261027/original-erc.json\n"
+    },
+    {
+      "job": "original-drc",
+      "exit_code": 0,
+      "output": "Found 3 violations\nFound 0 unconnected items\nFound 8 schematic parity issues\nSaved DRC Report to /srv/agent_share/SMB Tests/honda/accord/keyless/validation/kicad-20261027/original-drc.json\n"
+    },
+    {
+      "job": "schematic-export",
+      "exit_code": 0,
+      "output": "Plotted to '/srv/agent_share/SMB Tests/honda/accord/keyless/validation/kicad-20261027/schematic/hondaPico.svg'.\nDone.\n"
+    },
+    {
+      "job": "pcb-export",
+      "exit_code": 0,
+      "output": "Plotted to '/srv/agent_share/SMB Tests/honda/accord/keyless/validation/kicad-20261027/pcb-top.svg'.\nDone.\n"
+    }
+  ],
+  "original_hardware_hashes": {
+    "hardware/fp-lib-table": "636f22fb6474525d859be39b426c053b2277d746002c780b3d38ac132b9dea31",
+    "hardware/hondaPico.kicad_pro": "dd2678368a3e71e46eec89df0031288c7e942b80b77628f87c9a37a60ed4771a",
+    "hardware/sym-lib-table": "ec3042e0d3ee3ea58e54b2cda25c939465dcc8e6094e1a9d76cb4a1ae25d3b4d",
+    "hardware/hondaPico.kicad_sch": "1dcbbcc3bd7bd6b9ffb0cfbb6bbc236a6089c77c5131f363b59b51b51fcdb744",
+    "hardware/hondaPico.kicad_pcb": "9066af21c54e9e2bdd012b68197cb9accc847b56654b66675f34c37a2ed14692",
+    "hardware/Custom.kicad_sym": "a950b7ff52185fccb4b86fab7c546e623718c6c7a5b2315c2fbe822c162d35b6",
+    "hardware/3d/039301160.stp": "fbee6e45aab0723e6f9e5709887bc53f565a5762a73f5b2bbf4184a8e47c03cb",
+    "hardware/hondaPico.pretty/EnclosurePost_H1.kicad_mod": "da6f0d0c840149db921518ac21b2dcc3d79c967bdd27c6aead306ebcc9c8f735",
+    "hardware/hondaPico.pretty/EnclosurePost_H3.kicad_mod": "1e1694b9e947dcc5075d647f5a84ae2460c24a8ba641b953c88849a164d1e57b",
+    "hardware/hondaPico.pretty/EnclosurePost_H5.kicad_mod": "3775b327aaa7fff21599acb090796303049224d1f725ab4a089ff4d459e5e5f3",
+    "hardware/hondaPico.pretty/JAE_IL-AG5-22P-D3L2.kicad_mod": "3e997878563c885b83779ff3eee15f8e3f3b03bf3684f2ed1cfd17062d4dc961",
+    "hardware/hondaPico.pretty/EnclosurePost_H4.kicad_mod": "029774135e6b04e941a9dfb7c13a469c6a1f8c11f8d24d6ded4d20e0d48447ae",
+    "hardware/hondaPico.pretty/EnclosurePost_H2.kicad_mod": "a202959ccc8a48865f539ac310b6ab4b8f89676e385b7c6d20624fa7ca690433"
+  }
+}

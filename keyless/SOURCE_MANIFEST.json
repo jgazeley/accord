@@ -1,0 +1,233 @@
+{
+  "source_commit": "1e994494f933da99636942d6ec135e857f2b3f6b",
+  "source_repository": "jgazeley/accord-logger",
+  "copied_by": {
+    "tool": "Codex",
+    "role": "logger-wifi-piless",
+    "session": "01a17526-034c-78f1-9d09-24c3b88c3dc7"
+  },
+  "files": [
+    {
+      "source": "benchlink/uart_main/uart_main.ino",
+      "destination": "firmware/accord-keyless/accord-keyless.ino",
+      "source_sha256": "e51a6b01a134ba4f187c26b18f14a46dee2665da4c7c77eed989493e2234e898",
+      "copied_sha256": "e51a6b01a134ba4f187c26b18f14a46dee2665da4c7c77eed989493e2234e898",
+      "destination_sha256": "e51a6b01a134ba4f187c26b18f14a46dee2665da4c7c77eed989493e2234e898"
+    },
+    {
+      "source": "benchlink/uart_main/bleprox.cpp",
+      "destination": "firmware/accord-keyless/bleprox.cpp",
+      "source_sha256": "71aba4c68254ce6b7d81c35d46f4146899333396530e821de568391ba9f3435d",
+      "copied_sha256": "71aba4c68254ce6b7d81c35d46f4146899333396530e821de568391ba9f3435d",
+      "destination_sha256": "71aba4c68254ce6b7d81c35d46f4146899333396530e821de568391ba9f3435d"
+    },
+    {
+      "source": "benchlink/uart_main/bleprox.h",
+      "destination": "firmware/accord-keyless/bleprox.h",
+      "source_sha256": "ad24c79dc2ec1762b1ffcc0279f618620373c785673c7dea7c95eafc66790c27",
+      "copied_sha256": "ad24c79dc2ec1762b1ffcc0279f618620373c785673c7dea7c95eafc66790c27",
+      "destination_sha256": "ad24c79dc2ec1762b1ffcc0279f618620373c785673c7dea7c95eafc66790c27"
+    },
+    {
+      "source": "benchlink/uart_main/proximity.c",
+      "destination": "firmware/accord-keyless/proximity.c",
+      "source_sha256": "4ddcdee0472471f2064c4b225a1b52a653acc9eb4388fc1483e7c2f318059021",
+      "copied_sha256": "4ddcdee0472471f2064c4b225a1b52a653acc9eb4388fc1483e7c2f318059021",
+      "destination_sha256": "4ddcdee0472471f2064c4b225a1b52a653acc9eb4388fc1483e7c2f318059021"
+    },
+    {
+      "source": "benchlink/uart_main/proximity.h",
+      "destination": "firmware/accord-keyless/proximity.h",
+      "source_sha256": "197c27599e85f883d673b9178f6f3a05bdde190f056af5ceae7a3ce8c168d4a6",
+      "copied_sha256": "197c27599e85f883d673b9178f6f3a05bdde190f056af5ceae7a3ce8c168d4a6",
+      "destination_sha256": "197c27599e85f883d673b9178f6f3a05bdde190f056af5ceae7a3ce8c168d4a6"
+    },
+    {
+      "source": "benchlink/uart_main/proximity_act.h",
+      "destination": "firmware/accord-keyless/proximity_act.h",
+      "source_sha256": "41cdc07f3fa6c4815a1e0e4ec2aae4ec0d364386e25f3a6355eb0e14296e9934",
+      "copied_sha256": "41cdc07f3fa6c4815a1e0e4ec2aae4ec0d364386e25f3a6355eb0e14296e9934",
+      "destination_sha256": "41cdc07f3fa6c4815a1e0e4ec2aae4ec0d364386e25f3a6355eb0e14296e9934"
+    },
+    {
+      "source": "benchlink/uart_main/link.h",
+      "destination": "firmware/accord-keyless/link.h",
+      "source_sha256": "56104aabc1d4024c77affe6feff28f6f6ca2e356f7e8148e4b6b93c78451584e",
+      "copied_sha256": "56104aabc1d4024c77affe6feff28f6f6ca2e356f7e8148e4b6b93c78451584e",
+      "destination_sha256": "56104aabc1d4024c77affe6feff28f6f6ca2e356f7e8148e4b6b93c78451584e"
+    },
+    {
+      "source": "benchlink/uart_main/tests/interlock_test.c",
+      "destination": "tests/interlock_test.c",
+      "source_sha256": "be278cd41288fcacbb6817a0db402216c944a916a99b4a9847b3f12c0e63734f",
+      "copied_sha256": "be278cd41288fcacbb6817a0db402216c944a916a99b4a9847b3f12c0e63734f",
+      "destination_sha256": "be278cd41288fcacbb6817a0db402216c944a916a99b4a9847b3f12c0e63734f"
+    },
+    {
+      "source": "benchlink/uart_main/tests/relock_test.c",
+      "destination": "tests/relock_test.c",
+      "source_sha256": "fda3fd0fd7abd4a720e5442a4b1593e56e8964ee4fcc0490c130a40f2a659b34",
+      "copied_sha256": "fda3fd0fd7abd4a720e5442a4b1593e56e8964ee4fcc0490c130a40f2a659b34",
+      "destination_sha256": "fda3fd0fd7abd4a720e5442a4b1593e56e8964ee4fcc0490c130a40f2a659b34"
+    },
+    {
+      "source": "benchlink/uart_main/tests/proximity_act_test.c",
+      "destination": "tests/proximity_act_test.c",
+      "source_sha256": "d7e2ea13b7062d958881c9e21c143ea83b195fa6ad068279f0664c3c98e21e22",
+      "copied_sha256": "d7e2ea13b7062d958881c9e21c143ea83b195fa6ad068279f0664c3c98e21e22",
+      "destination_sha256": "d7c930fc384a03e639f651cd49f4334428f0de25d392c74f2ef3a0d425392c3e"
+    },
+    {
+      "source": "hondaPico-kicad/hondaPico.kicad_pro",
+      "destination": "hardware/hondaPico.kicad_pro",
+      "source_sha256": "dd2678368a3e71e46eec89df0031288c7e942b80b77628f87c9a37a60ed4771a",
+      "copied_sha256": "dd2678368a3e71e46eec89df0031288c7e942b80b77628f87c9a37a60ed4771a",
+      "destination_sha256": "dd2678368a3e71e46eec89df0031288c7e942b80b77628f87c9a37a60ed4771a"
+    },
+    {
+      "source": "hondaPico-kicad/hondaPico.kicad_sch",
+      "destination": "hardware/hondaPico.kicad_sch",
+      "source_sha256": "1dcbbcc3bd7bd6b9ffb0cfbb6bbc236a6089c77c5131f363b59b51b51fcdb744",
+      "copied_sha256": "1dcbbcc3bd7bd6b9ffb0cfbb6bbc236a6089c77c5131f363b59b51b51fcdb744",
+      "destination_sha256": "1dcbbcc3bd7bd6b9ffb0cfbb6bbc236a6089c77c5131f363b59b51b51fcdb744"
+    },
+    {
+      "source": "hondaPico-kicad/hondaPico.kicad_pcb",
+      "destination": "hardware/hondaPico.kicad_pcb",
+      "source_sha256": "9066af21c54e9e2bdd012b68197cb9accc847b56654b66675f34c37a2ed14692",
+      "copied_sha256": "9066af21c54e9e2bdd012b68197cb9accc847b56654b66675f34c37a2ed14692",
+      "destination_sha256": "9066af21c54e9e2bdd012b68197cb9accc847b56654b66675f34c37a2ed14692"
+    },
+    {
+      "source": "hondaPico-kicad/fp-lib-table",
+      "destination": "hardware/fp-lib-table",
+      "source_sha256": "636f22fb6474525d859be39b426c053b2277d746002c780b3d38ac132b9dea31",
+      "copied_sha256": "636f22fb6474525d859be39b426c053b2277d746002c780b3d38ac132b9dea31",
+      "destination_sha256": "636f22fb6474525d859be39b426c053b2277d746002c780b3d38ac132b9dea31"
+    },
+    {
+      "source": "hondaPico-kicad/hondaPico.pretty/EnclosurePost_H1.kicad_mod",
+      "destination": "hardware/hondaPico.pretty/EnclosurePost_H1.kicad_mod",
+      "source_sha256": "da6f0d0c840149db921518ac21b2dcc3d79c967bdd27c6aead306ebcc9c8f735",
+      "copied_sha256": "da6f0d0c840149db921518ac21b2dcc3d79c967bdd27c6aead306ebcc9c8f735",
+      "destination_sha256": "da6f0d0c840149db921518ac21b2dcc3d79c967bdd27c6aead306ebcc9c8f735"
+    },
+    {
+      "source": "hondaPico-kicad/hondaPico.pretty/EnclosurePost_H2.kicad_mod",
+      "destination": "hardware/hondaPico.pretty/EnclosurePost_H2.kicad_mod",
+      "source_sha256": "a202959ccc8a48865f539ac310b6ab4b8f89676e385b7c6d20624fa7ca690433",
+      "copied_sha256": "a202959ccc8a48865f539ac310b6ab4b8f89676e385b7c6d20624fa7ca690433",
+      "destination_sha256": "a202959ccc8a48865f539ac310b6ab4b8f89676e385b7c6d20624fa7ca690433"
+    },
+    {
+      "source": "hondaPico-kicad/hondaPico.pretty/EnclosurePost_H3.kicad_mod",
+      "destination": "hardware/hondaPico.pretty/EnclosurePost_H3.kicad_mod",
+      "source_sha256": "1e1694b9e947dcc5075d647f5a84ae2460c24a8ba641b953c88849a164d1e57b",
+      "copied_sha256": "1e1694b9e947dcc5075d647f5a84ae2460c24a8ba641b953c88849a164d1e57b",
+      "destination_sha256": "1e1694b9e947dcc5075d647f5a84ae2460c24a8ba641b953c88849a164d1e57b"
+    },
+    {
+      "source": "hondaPico-kicad/hondaPico.pretty/EnclosurePost_H4.kicad_mod",
+      "destination": "hardware/hondaPico.pretty/EnclosurePost_H4.kicad_mod",
+      "source_sha256": "029774135e6b04e941a9dfb7c13a469c6a1f8c11f8d24d6ded4d20e0d48447ae",
+      "copied_sha256": "029774135e6b04e941a9dfb7c13a469c6a1f8c11f8d24d6ded4d20e0d48447ae",
+      "destination_sha256": "029774135e6b04e941a9dfb7c13a469c6a1f8c11f8d24d6ded4d20e0d48447ae"
+    },
+    {
+      "source": "hondaPico-kicad/hondaPico.pretty/EnclosurePost_H5.kicad_mod",
+      "destination": "hardware/hondaPico.pretty/EnclosurePost_H5.kicad_mod",
+      "source_sha256": "3775b327aaa7fff21599acb090796303049224d1f725ab4a089ff4d459e5e5f3",
+      "copied_sha256": "3775b327aaa7fff21599acb090796303049224d1f725ab4a089ff4d459e5e5f3",
+      "destination_sha256": "3775b327aaa7fff21599acb090796303049224d1f725ab4a089ff4d459e5e5f3"
+    },
+    {
+      "source": "hondaPico-kicad/hondaPico.pretty/JAE_IL-AG5-22P-D3L2.kicad_mod",
+      "destination": "hardware/hondaPico.pretty/JAE_IL-AG5-22P-D3L2.kicad_mod",
+      "source_sha256": "3e997878563c885b83779ff3eee15f8e3f3b03bf3684f2ed1cfd17062d4dc961",
+      "copied_sha256": "3e997878563c885b83779ff3eee15f8e3f3b03bf3684f2ed1cfd17062d4dc961",
+      "destination_sha256": "3e997878563c885b83779ff3eee15f8e3f3b03bf3684f2ed1cfd17062d4dc961"
+    },
+    {
+      "source": "hondaPico-kicad/3d/039301160.stp",
+      "destination": "hardware/3d/039301160.stp",
+      "source_sha256": "fbee6e45aab0723e6f9e5709887bc53f565a5762a73f5b2bbf4184a8e47c03cb",
+      "copied_sha256": "fbee6e45aab0723e6f9e5709887bc53f565a5762a73f5b2bbf4184a8e47c03cb",
+      "destination_sha256": "fbee6e45aab0723e6f9e5709887bc53f565a5762a73f5b2bbf4184a8e47c03cb"
+    }
+  ],
+  "adjustments": [
+    "Renamed uart_main.ino to accord-keyless.ino; firmware contents unchanged.",
+    "Adjusted two relative includes in tests/proximity_act_test.c.",
+    "Exported two embedded Custom symbols to hardware/Custom.kicad_sym and added sym-lib-table; original KiCad files unchanged."
+  ],
+  "validation": {
+    "source_files_unchanged": true,
+    "copied_file_hashes_verified": true,
+    "firmware_build": {
+      "cli": "1.4.1",
+      "core": "6.1.0",
+      "fqbn": "rp2040:rp2040:rpipicow:ipbtstack=ipv4btcble",
+      "flash_bytes": 482008,
+      "static_ram_bytes": 89688,
+      "warnings": 0,
+      "hardware_flashing": false
+    },
+    "native_tests": {
+      "interlock_test.c": "passed",
+      "relock_test.c": "passed",
+      "proximity_act_test.c": "90 checks, 0 failures"
+    },
+    "kicad": {
+      "version": "9.0.2",
+      "schematic_and_board_cli_load_export": "passed",
+      "erc": {
+        "errors": 0,
+        "warnings": 2
+      },
+      "drc": {
+        "errors": 0,
+        "warnings": 3,
+        "unconnected_items": 0
+      },
+      "schematic_parity": {
+        "warnings": 8
+      },
+      "compared_with_original": "identical board findings; copy resolves two missing Custom library ERC warnings; no new findings",
+      "design_file_hashes_unchanged": true,
+      "standard_symbol_and_footprint_libraries": "installed and used via isolated configuration",
+      "standard_3d_models": "directory missing; not verified",
+      "gui": "not tested",
+      "report": "validation/kicad-20261027/README.md"
+    }
+  },
+  "generated_files": {
+    "hardware/Custom.kicad_sym": "a950b7ff52185fccb4b86fab7c546e623718c6c7a5b2315c2fbe822c162d35b6",
+    "hardware/sym-lib-table": "ec3042e0d3ee3ea58e54b2cda25c939465dcc8e6094e1a9d76cb4a1ae25d3b4d",
+    "README.md": "c501be3c3ae8113a2a56e01e3cf35970c7e7092e4501a5edf80fdde9a600b9f7",
+    ".gitignore": "a7986844257eeda69ebd4f2faf428d0abfd7603ad01d2898706e223e062a0a3a",
+    "hardware/LICENSE": "6e471d647db50527d0c75ee5f1a55a74012ab177c73282bef0bdc7f6562b7ded",
+    "hardware/NOTICE": "aacc465f83a715a0ecbdfb4eac50842239c8e17939c5905ac8ffa6e96c6abc75"
+  },
+  "validation_files": {
+    "validation/kicad-20261027/copy-erc.log": "5077adb2e8929b152079f1b111ce3da674da84772d58650cc98b7755e3ea1157",
+    "validation/kicad-20261027/commands.json": "d44e13091d7f52a908ee245dacb654fbc056d1c158e790a474fa5c8877d0a60a",
+    "validation/kicad-20261027/original-drc.json": "20acb6ffb7dc51a865130fc88a9edebaffedd2ccd79a6207c776e418bc1d99af",
+    "validation/kicad-20261027/copy-drc.json": "20acb6ffb7dc51a865130fc88a9edebaffedd2ccd79a6207c776e418bc1d99af",
+    "validation/kicad-20261027/copy-erc.json": "8e01a06d3bc8efb777299294aee801a4fc28a2e849a2ef299d267ccb88e55f13",
+    "validation/kicad-20261027/schematic-export.log": "243c71a4a1235dfc3566cf6115c3188a3b079fc82663474ed895ef5e3369f5e6",
+    "validation/kicad-20261027/README.md": "306e7640322b2bd6981620a25be1b83f08946b01788fc2f9bf772c06eab84450",
+    "validation/kicad-20261027/copy-drc.log": "1d206303224305e589d4721002787cfd341379d49356196d84396df46906df8d",
+    "validation/kicad-20261027/pcb-export.log": "1e54053c9fbb9ee6207ebf53af2da13ed15ef6e5021559399848253f20761585",
+    "validation/kicad-20261027/original-erc.log": "defae89ea7b8583e8dbc6cd3f96ccb952c0751fb56b0164fe43959628f62720d",
+    "validation/kicad-20261027/pcb-top.svg": "807d7fcc71bb2026cccfb9ad0c14d5ce12b2d288f1070cb10218edcd60e16904",
+    "validation/kicad-20261027/original-erc.json": "efb2b81a3e578b1584b35fd2955f1617af6bca5de33350782d7712b57cc5e8bb",
+    "validation/kicad-20261027/original-drc.log": "40030555da8523f8e1544474c1cd3828463dc2322e756e08c9ab2bf0c2792534",
+    "validation/kicad-20261027/schematic/hondaPico.svg": "07d8db5c950e68022674f5885f9ddf2de88085ab9886614021fa17ba498bf0f3"
+  },
+  "publication_exclusions": [
+    {
+      "path": "hardware/3d/039301160.stp",
+      "reason": "Unused local copy; redistribution license not established. Excluded by root .gitignore; original local file retained."
+    }
+  ]
+}

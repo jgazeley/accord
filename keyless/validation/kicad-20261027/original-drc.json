@@ -1,0 +1,184 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-27T18:31:33-0700",
+    "kicad_version": "9.0.2",
+    "schematic_parity": [
+        {
+            "description": "Missing footprint J2 (STOCK 22P (JAE IL-AG5))",
+            "items": [],
+            "severity": "warning",
+            "type": "missing_footprint"
+        },
+        {
+            "description": "Value (R14) doesn't match symbol value (390 (bias)).",
+            "items": [
+                {
+                    "description": "Footprint R14",
+                    "pos": {
+                        "x": 138.02,
+                        "y": 71.12
+                    },
+                    "uuid": "954195a1-24ef-429e-a144-feeb3d558ef3"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_mismatch"
+        },
+        {
+            "description": "Value (R15) doesn't match symbol value (390 (bias)).",
+            "items": [
+                {
+                    "description": "Footprint R15",
+                    "pos": {
+                        "x": 138.02,
+                        "y": 67.31
+                    },
+                    "uuid": "8045b3e5-e260-4523-973a-8da19c299640"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_mismatch"
+        },
+        {
+            "description": "Extra footprint",
+            "items": [
+                {
+                    "description": "Footprint H1",
+                    "pos": {
+                        "x": 214.9,
+                        "y": 56.1
+                    },
+                    "uuid": "055b7f6e-4ae8-4ff2-a61b-9ed64030d081"
+                }
+            ],
+            "severity": "warning",
+            "type": "extra_footprint"
+        },
+        {
+            "description": "Extra footprint",
+            "items": [
+                {
+                    "description": "Footprint H2",
+                    "pos": {
+                        "x": 107.2,
+                        "y": 56.8
+                    },
+                    "uuid": "3dcce8b4-ec96-417e-ac86-f00d14bb0951"
+                }
+            ],
+            "severity": "warning",
+            "type": "extra_footprint"
+        },
+        {
+            "description": "Extra footprint",
+            "items": [
+                {
+                    "description": "Footprint H3",
+                    "pos": {
+                        "x": 161.0,
+                        "y": 96.4
+                    },
+                    "uuid": "c804366c-d51a-413d-a66a-2acd63c8cc6e"
+                }
+            ],
+            "severity": "warning",
+            "type": "extra_footprint"
+        },
+        {
+            "description": "Extra footprint",
+            "items": [
+                {
+                    "description": "Footprint H4",
+                    "pos": {
+                        "x": 211.5,
+                        "y": 134.99
+                    },
+                    "uuid": "cc0244f5-71c5-4088-a406-388c4f45ede9"
+                }
+            ],
+            "severity": "warning",
+            "type": "extra_footprint"
+        },
+        {
+            "description": "Extra footprint",
+            "items": [
+                {
+                    "description": "Footprint H5",
+                    "pos": {
+                        "x": 105.99,
+                        "y": 135.76
+                    },
+                    "uuid": "dfb491ac-e9fd-49bd-8d7d-f87aea15b00f"
+                }
+            ],
+            "severity": "warning",
+            "type": "extra_footprint"
+        }
+    ],
+    "source": "hondaPico.kicad_pcb",
+    "unconnected_items": [],
+    "violations": [
+        {
+            "description": "Silkscreen clipped by board edge",
+            "items": [
+                {
+                    "description": "Segment on Edge.Cuts",
+                    "pos": {
+                        "x": 222.0,
+                        "y": 140.0
+                    },
+                    "uuid": "fe07d37f-19fa-4fe7-807e-934d62849dc1"
+                },
+                {
+                    "description": "Segment of J1 on F.Silkscreen",
+                    "pos": {
+                        "x": 211.99,
+                        "y": 74.38
+                    },
+                    "uuid": "5c5370ab-715c-41a2-9741-3faaa10f1965"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "Silkscreen clipped by board edge",
+            "items": [
+                {
+                    "description": "Segment on Edge.Cuts",
+                    "pos": {
+                        "x": 222.0,
+                        "y": 140.0
+                    },
+                    "uuid": "fe07d37f-19fa-4fe7-807e-934d62849dc1"
+                },
+                {
+                    "description": "Segment of J1 on F.Silkscreen",
+                    "pos": {
+                        "x": 211.99,
+                        "y": 109.4
+                    },
+                    "uuid": "050aae48-39c3-43d0-ae49-c38d5b157de9"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "Footprint 'RaspberryPi_Pico_Common_SMD' does not match copy in library 'Module'.",
+            "items": [
+                {
+                    "description": "Footprint U1",
+                    "pos": {
+                        "x": 122.555,
+                        "y": 95.885
+                    },
+                    "uuid": "43d26ccb-b9f8-49da-b7e5-cc20465cc0da"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        }
+    ]
+}

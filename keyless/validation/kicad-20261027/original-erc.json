@@ -1,0 +1,75 @@
+{
+    "$schema": "https://schemas.kicad.org/erc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-27T18:31:32-0700",
+    "kicad_version": "9.0.2",
+    "sheets": [
+        {
+            "path": "/",
+            "uuid_path": "/403f2642-1038-4bf1-85b0-12c603595f46",
+            "violations": [
+                {
+                    "description": "Symbol 'RaspberryPi_Pico_W' doesn't match copy in library 'MCU_Module'",
+                    "items": [
+                        {
+                            "description": "Symbol U1 [RaspberryPi_Pico_W]",
+                            "pos": {
+                                "x": 0.6985,
+                                "y": 1.1938
+                            },
+                            "uuid": "c32d1830-9788-403b-bd4d-71f85a528c75"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_mismatch"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Custom'",
+                    "items": [
+                        {
+                            "description": "Symbol U3 [LM2678T-5.0]",
+                            "pos": {
+                                "x": 0.6985,
+                                "y": 3.7973
+                            },
+                            "uuid": "ac899ab8-43b2-408c-a181-24b4f500991b"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Symbol 'MAX3485' doesn't match copy in library 'Interface_UART'",
+                    "items": [
+                        {
+                            "description": "Symbol U5 [MAX3485]",
+                            "pos": {
+                                "x": 4.699,
+                                "y": 1.1049
+                            },
+                            "uuid": "3d83e5e2-972d-4e30-82a2-2f5e7fa187fe"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_mismatch"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Custom'",
+                    "items": [
+                        {
+                            "description": "Symbol J2 [IL-AG5-22P]",
+                            "pos": {
+                                "x": 5.0038,
+                                "y": 2.9972
+                            },
+                            "uuid": "4ce25b5a-4965-44ba-a7b9-de9632ee9ec6"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                }
+            ]
+        }
+    ],
+    "source": "hondaPico.kicad_sch"
+}

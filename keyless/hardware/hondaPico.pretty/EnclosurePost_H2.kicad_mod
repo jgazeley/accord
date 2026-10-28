@@ -1,0 +1,59 @@
+(footprint "EnclosurePost_H2"
+	(version 20241229)
+	(generator "gen_fp_mounting.py")
+	(layer "F.Cu")
+	(descr "Enclosure post hole, copied verbatim from old_hondaPCB/honda_pcb.kicad_pcb (measured off the stock Alpine keyless enclosure). Hole centre 106,56; drill oval 7 6. Hole centre on the rev-3 board: 106,56; drill oval 7 6. Pad offset kept as on the board so the footprint origin -- and the hole -- do not move.")
+	(tags "mounting hole enclosure NPTH honda alpine")
+	(property "Reference" "H**"
+		(at 0 -4 0)
+		(layer "F.SilkS")
+		(hide yes)
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "EnclosurePost_H2"
+		(at 0 4 0)
+		(layer "F.Fab")
+		(hide yes)
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" "Enclosure post hole"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr exclude_from_pos_files exclude_from_bom allow_missing_courtyard)
+	(pad "" np_thru_hole circle
+		(at -1.2 -0.8)
+		(size 4.064 4.064)
+		(drill oval 7 6)
+		(layers "*.Mask")
+	)
+	(embedded_fonts no)
+)

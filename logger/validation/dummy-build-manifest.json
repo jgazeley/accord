@@ -1,0 +1,32 @@
+{
+  "profile": "DUMMY-CREDENTIALS-DO-NOT-FLASH",
+  "fqbn": "rp2040:rp2040:rpipicow",
+  "core": "6.1.0",
+  "sdfat": "2.3.1",
+  "cli": "arduino-cli  Version: 1.4.1 Commit: e39419312 Date: 2026-01-19T16:13:12Z",
+  "sources": {
+    "accord-logger.ino": "1e24bd36fc391580a881648b9eb07d5a45ed345d61cd8b2da07f9a44a3ebafe1",
+    "adc_median.h": "ee4d9251f87e7c3914e58d0291d42c58178b072e7c3c6cbc314708a10284a627",
+    "card_header.h": "e95c8c18585898f6520e43523e27ba9243666f5772abe6e8ba28a5d5621197b2",
+    "card_tail.h": "78be99e307f86245bfd8336e0d4e00855e4501bf41e6d23ecc55c05172e7817b",
+    "host_time_frame.h": "bc6a8471f22f3972bc991fde5560790d40fca5168954846d8aef69450068f200",
+    "logger_network.cpp": "39971095a64f91ec7ff1c5558a4f05315232985b3c7b8dd8fb2a4d9cc3e5119a",
+    "logger_network.h": "3346c5d891eedd17ffdb6e89e601a227a75097f6214ca9684dd8ba6776ab021c",
+    "logger_sd.cpp": "5d36a4ca6d0fb13a0572ad72997550fbe28e1c8c698bbf66ffa555dcd279d95f",
+    "logger_sd.h": "5b5957c5455dbef9cf79fbe579001e144b7f7428553f5f7d193564814233db46",
+    "logger_upload.cpp": "2c9135c06e61c208f20d6f5552a38feadad09c8310d5410680df8bcb3ae5b723",
+    "logger_upload.h": "e5591b48bf754ac6723ff6ea50f1c5daf0430b47c94f567a558ff168a1d6c6b0",
+    "sntp_packet.h": "819ac923d7131d7e41ab490cbccc0d6150524e5ea8f60b371f2664fc8babbd72",
+    "upload_identity.h": "70bcf13d643a2aad938c9ab1d7d4f78134da77cc3db5619d78a82fcbbf8bbae4",
+    "upload_protocol.h": "758e66053281cd2468a9af7f3fc8e1cbc281a78c74bffd7ecc0242a7997f03e2",
+    "wifi_schedule.h": "131a97fdaf2eddd8704fd1bd756afe2dbc34fa220845507350e5d9c762a0c2f7"
+  },
+  "artifacts": {
+    "accord-logger.ino.uf2": "ee398d348dca0cf3814cb28e06b120242de7f4f2b0583e4556291812310889ad"
+  },
+  "build_summary": [
+    "Sketch uses 393688 bytes (18%) of program storage space. Maximum is 2093056 bytes.",
+    "Global variables use 103376 bytes (39%) of dynamic memory, leaving 158768 bytes for local variables. Maximum is 262144 bytes."
+  ],
+  "warnings": 0
+}

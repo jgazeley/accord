@@ -1,0 +1,15 @@
+Accord keyless hardware
+Copyright 2026 Jayson Gazeley and contributors.
+
+Created by Jayson Gazeley (jgazeley).
+Source: https://github.com/jgazeley/accord/tree/main/keyless/hardware
+
+Original hardware design source in this directory is licensed under
+CERN-OHL-P-2.0. See LICENSE. Keep applicable notices with redistributed
+designs and make them accessible to recipients of products based on them.
+
+Covered Source and Products are provided as-is, without warranty, under
+section 5 of the license. Retain third-party notices and applicable terms.
+KiCad library material is subject to its upstream license and design exception.
+The local, untracked 3d/039301160.stp asset is excluded from this license grant;
+its redistribution terms have not been established.

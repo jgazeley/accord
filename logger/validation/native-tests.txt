@@ -1,0 +1,103 @@
+  ok  even count takes the LOWER median (1,2,3,4 -> 2)
+  ok      extremes preserved
+  ok      sample count exact
+  ok      no overflow
+  ok  odd count takes the middle (1,2,3 -> 2)
+  ok      extremes preserved
+  ok      sample count exact
+  ok      no overflow
+  ok  two samples take the lower (7,9 -> 7)
+  ok      extremes preserved
+  ok      sample count exact
+  ok      no overflow
+  ok  one sample is itself
+  ok      extremes preserved
+  ok      sample count exact
+  ok      no overflow
+  ok  all values equal
+  ok      extremes preserved
+  ok      sample count exact
+  ok      no overflow
+  ok  the whole burst at 0
+  ok      extremes preserved
+  ok      sample count exact
+  ok      no overflow
+  ok  the whole burst at full scale
+  ok      extremes preserved
+  ok      sample count exact
+  ok      no overflow
+  ok  both rails, even split
+  ok      extremes preserved
+  ok      sample count exact
+  ok      no overflow
+  ok  both rails, odd split
+  ok      extremes preserved
+  ok      sample count exact
+  ok      no overflow
+  ok  20 rail-high impulses do not move the median
+      median 1850, mean 1872.5 (22.5 counts of bias rejected)
+  ok      and the impulses are still visible in hi
+  ok  20 rail-low impulses do not move the median
+  ok      and are still visible in lo
+  ok  impulses on both sides at once
+  ok      extremes preserved
+  ok      sample count exact
+  ok      no overflow
+  ok      median still the quiet level
+  ok  one outlier at each rail
+  ok      extremes preserved
+  ok      sample count exact
+  ok      no overflow
+  ok  median far from mid-scale (low)
+  ok      extremes preserved
+  ok      sample count exact
+  ok      no overflow
+  ok      median is the dense low level
+  ok  median far from mid-scale (high)
+  ok      extremes preserved
+  ok      sample count exact
+  ok      no overflow
+  ok  200 realistic bursts match a sort exactly
+      lower vs averaged median over 200 bursts: mean +0.0175 counts, worst +0.5000
+  ok      and the convention costs well under one count
+  ok  two bursts do not share state
+  ok  reset clears the histogram, count and extremes
+  ok      and a reused burst reads only the new samples
+  ok  an out-of-range sample is counted in overflow
+  ok      and is still visible in hi
+  ok      and still counts toward n
+
+PASS: lower median matches a sort on every case, rejects impulses on both rails, preserves extrema, channels independent
+      8192 bytes of histogram per channel
+PASS adc_median_test.cpp
+  ok  immutable upload identity fits full header and survives rename
+  ok  rename record: 67 bytes, truncation refused
+PASS: card header renders the frozen bytes of CARD_FORMAT.md
+      765 bytes per file, 766 of 1152 buffer
+PASS card_header_test.cpp
+card_tail_test: 11 scenarios x 3 chunk sizes
+  ok   baseline                 no fault                                       180 rows, 1 file(s), 30 notes
+  ok   note-zero                note write lands nothing, returns 0            180 rows, 1 file(s), 29 notes
+  ok   note-short               note write lands 34 bytes, returns 34          180 rows, 1 file(s), 30 notes
+  ok   note-lying               note write lands 20 bytes, returns 0           180 rows, 1 file(s), 30 notes
+  ok   note-unsynced            note written whole, its sync fails once        180 rows, 1 file(s), 30 notes
+  ok   note-unsynced-dead       note sync fails, and settle's sync too         180 rows, 2 file(s), 33 notes
+  ok   short-newline-fails      short note, settle's newline write fails       180 rows, 2 file(s), 33 notes
+  ok   short-newline-vanishes   settle's newline claims success, lands nothing 180 rows, 2 file(s), 33 notes
+  ok   short-read-fails         short note, settle cannot read back            180 rows, 2 file(s), 33 notes
+  ok   short-then-resume        short note, abandon, reopen SAME name          180 rows, 1 file(s), 30 notes
+  ok   header-short             header lands 40 bytes, returns 40              180 rows, 1 file(s), 29 notes
+  ok   edges                    resumed torn boot, v0.7.0 control, Tail unit edges
+
+PASS (175 assertions): no metadata fault costs a sample row; every abandonment carries the queued rows to the next file
+PASS card_tail_test.cpp
+PASS: frame decodes, bounds enforced, and 898 suffixes of real firmware output rejected with no '@' among them
+PASS host_time_frame_test.cpp
+PASS: SNTP timestamps, fractions, era rollover, malformed/untrusted/replayed/slow replies
+PASS sntp_packet_test.cpp
+PASS: fragmented/malformed HTTP, immutable identity, unknown legacy boot, scheduling, deadlines/backoff, invalidation
+PASS upload_protocol_test.cpp
+PASS: partial sweep, progress/old seals, cancellation/resume, storage priority, failed/empty sweeps, policy+client
+PASS upload_schedule_test.cpp
+PASS: IGN gating/bounce, boot states, deadlines, progress, fresh sync, days parked, rollover
+PASS wifi_schedule_test.cpp

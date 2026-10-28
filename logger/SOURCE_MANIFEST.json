@@ -1,0 +1,202 @@
+{
+  "source_repository": "jgazeley/accord-logger",
+  "source_branch": "session/logger-wifi-scheduling-01a17526",
+  "source_commit": "426a43df1ea3bb60540b12e99b3ae9862dec3bb0",
+  "firmware_version": "0.8.1-dev",
+  "original_build_manifest": "benchlink/picow-logger/evidence/wifi-scheduling-20261026/build-manifest.json",
+  "original_manifest_sources_verified": true,
+  "copied_by": {
+    "tool": "Codex",
+    "role": "logger-wifi-piless",
+    "session": "01a17526-034c-78f1-9d09-24c3b88c3dc7"
+  },
+  "files": [
+    {
+      "source": "benchlink/picow-logger/adc_median.h",
+      "destination": "firmware/accord-logger/adc_median.h",
+      "source_sha256": "ee4d9251f87e7c3914e58d0291d42c58178b072e7c3c6cbc314708a10284a627",
+      "destination_sha256": "ee4d9251f87e7c3914e58d0291d42c58178b072e7c3c6cbc314708a10284a627"
+    },
+    {
+      "source": "benchlink/picow-logger/card_header.h",
+      "destination": "firmware/accord-logger/card_header.h",
+      "source_sha256": "e95c8c18585898f6520e43523e27ba9243666f5772abe6e8ba28a5d5621197b2",
+      "destination_sha256": "e95c8c18585898f6520e43523e27ba9243666f5772abe6e8ba28a5d5621197b2"
+    },
+    {
+      "source": "benchlink/picow-logger/card_tail.h",
+      "destination": "firmware/accord-logger/card_tail.h",
+      "source_sha256": "78be99e307f86245bfd8336e0d4e00855e4501bf41e6d23ecc55c05172e7817b",
+      "destination_sha256": "78be99e307f86245bfd8336e0d4e00855e4501bf41e6d23ecc55c05172e7817b"
+    },
+    {
+      "source": "benchlink/picow-logger/host_time_frame.h",
+      "destination": "firmware/accord-logger/host_time_frame.h",
+      "source_sha256": "bc6a8471f22f3972bc991fde5560790d40fca5168954846d8aef69450068f200",
+      "destination_sha256": "bc6a8471f22f3972bc991fde5560790d40fca5168954846d8aef69450068f200"
+    },
+    {
+      "source": "benchlink/picow-logger/logger_network.cpp",
+      "destination": "firmware/accord-logger/logger_network.cpp",
+      "source_sha256": "39971095a64f91ec7ff1c5558a4f05315232985b3c7b8dd8fb2a4d9cc3e5119a",
+      "destination_sha256": "39971095a64f91ec7ff1c5558a4f05315232985b3c7b8dd8fb2a4d9cc3e5119a"
+    },
+    {
+      "source": "benchlink/picow-logger/logger_network.h",
+      "destination": "firmware/accord-logger/logger_network.h",
+      "source_sha256": "3346c5d891eedd17ffdb6e89e601a227a75097f6214ca9684dd8ba6776ab021c",
+      "destination_sha256": "3346c5d891eedd17ffdb6e89e601a227a75097f6214ca9684dd8ba6776ab021c"
+    },
+    {
+      "source": "benchlink/picow-logger/logger_sd.cpp",
+      "destination": "firmware/accord-logger/logger_sd.cpp",
+      "source_sha256": "5d36a4ca6d0fb13a0572ad72997550fbe28e1c8c698bbf66ffa555dcd279d95f",
+      "destination_sha256": "5d36a4ca6d0fb13a0572ad72997550fbe28e1c8c698bbf66ffa555dcd279d95f"
+    },
+    {
+      "source": "benchlink/picow-logger/logger_sd.h",
+      "destination": "firmware/accord-logger/logger_sd.h",
+      "source_sha256": "5b5957c5455dbef9cf79fbe579001e144b7f7428553f5f7d193564814233db46",
+      "destination_sha256": "5b5957c5455dbef9cf79fbe579001e144b7f7428553f5f7d193564814233db46"
+    },
+    {
+      "source": "benchlink/picow-logger/logger_upload.cpp",
+      "destination": "firmware/accord-logger/logger_upload.cpp",
+      "source_sha256": "2c9135c06e61c208f20d6f5552a38feadad09c8310d5410680df8bcb3ae5b723",
+      "destination_sha256": "2c9135c06e61c208f20d6f5552a38feadad09c8310d5410680df8bcb3ae5b723"
+    },
+    {
+      "source": "benchlink/picow-logger/logger_upload.h",
+      "destination": "firmware/accord-logger/logger_upload.h",
+      "source_sha256": "e5591b48bf754ac6723ff6ea50f1c5daf0430b47c94f567a558ff168a1d6c6b0",
+      "destination_sha256": "e5591b48bf754ac6723ff6ea50f1c5daf0430b47c94f567a558ff168a1d6c6b0"
+    },
+    {
+      "source": "benchlink/picow-logger/picow-logger.ino",
+      "destination": "firmware/accord-logger/accord-logger.ino",
+      "source_sha256": "1e24bd36fc391580a881648b9eb07d5a45ed345d61cd8b2da07f9a44a3ebafe1",
+      "destination_sha256": "1e24bd36fc391580a881648b9eb07d5a45ed345d61cd8b2da07f9a44a3ebafe1"
+    },
+    {
+      "source": "benchlink/picow-logger/sntp_packet.h",
+      "destination": "firmware/accord-logger/sntp_packet.h",
+      "source_sha256": "819ac923d7131d7e41ab490cbccc0d6150524e5ea8f60b371f2664fc8babbd72",
+      "destination_sha256": "819ac923d7131d7e41ab490cbccc0d6150524e5ea8f60b371f2664fc8babbd72"
+    },
+    {
+      "source": "benchlink/picow-logger/upload_identity.h",
+      "destination": "firmware/accord-logger/upload_identity.h",
+      "source_sha256": "70bcf13d643a2aad938c9ab1d7d4f78134da77cc3db5619d78a82fcbbf8bbae4",
+      "destination_sha256": "70bcf13d643a2aad938c9ab1d7d4f78134da77cc3db5619d78a82fcbbf8bbae4"
+    },
+    {
+      "source": "benchlink/picow-logger/upload_protocol.h",
+      "destination": "firmware/accord-logger/upload_protocol.h",
+      "source_sha256": "758e66053281cd2468a9af7f3fc8e1cbc281a78c74bffd7ecc0242a7997f03e2",
+      "destination_sha256": "758e66053281cd2468a9af7f3fc8e1cbc281a78c74bffd7ecc0242a7997f03e2"
+    },
+    {
+      "source": "benchlink/picow-logger/wifi_schedule.h",
+      "destination": "firmware/accord-logger/wifi_schedule.h",
+      "source_sha256": "131a97fdaf2eddd8704fd1bd756afe2dbc34fa220845507350e5d9c762a0c2f7",
+      "destination_sha256": "131a97fdaf2eddd8704fd1bd756afe2dbc34fa220845507350e5d9c762a0c2f7"
+    },
+    {
+      "source": "benchlink/picow-logger/secrets.h.example",
+      "destination": "firmware/accord-logger/secrets.h.example",
+      "source_sha256": "f4ba7e0852b108f8c20b40d4ded21c5834e7f14650abce9a006687706a5093a0",
+      "destination_sha256": "3ed63a34b9fa05036db3bdc58fb78ddb7eadf9e059b2f0ac4ee40605425a2aa8"
+    },
+    {
+      "source": "benchlink/picow-logger/tests/adc_median_test.cpp",
+      "destination": "tests/adc_median_test.cpp",
+      "source_sha256": "6616596003662ef46172932609bd12ded231aa7d1ea0f5b6a2c8a5b4c1d7b51f",
+      "destination_sha256": "839d15fe93273811f3cbcc0d210ff4b361c3c733ee996f039f385f7446a118f6"
+    },
+    {
+      "source": "benchlink/picow-logger/tests/card_header_test.cpp",
+      "destination": "tests/card_header_test.cpp",
+      "source_sha256": "b03560fec691f4e41ebad94ea5b7fa11d00c4015e3e12b6ded631ce6d8e4d1c2",
+      "destination_sha256": "265c1f46f5f96ed73d3bfb68fa05134a68fa329f425fa81d8ea9aaa0a7291e32"
+    },
+    {
+      "source": "benchlink/picow-logger/tests/card_tail_test.cpp",
+      "destination": "tests/card_tail_test.cpp",
+      "source_sha256": "f2d7b00e77173e1b65c26f898e4a90699c1769b159e973347774de35db01f8be",
+      "destination_sha256": "589a59c1b869893cc960069fbb93578fac75c803a23d216a122d5efbcb85490f"
+    },
+    {
+      "source": "benchlink/picow-logger/tests/host_time_frame_test.cpp",
+      "destination": "tests/host_time_frame_test.cpp",
+      "source_sha256": "9108f8acc978e5cbffc7e190a8ec8ce3c76a06b9d2b940e59dbf08c31a660d33",
+      "destination_sha256": "bdf34892a2f3ec74d6d4f93b8f54097c534e47a6f5d8343197130478f6abd603"
+    },
+    {
+      "source": "benchlink/picow-logger/tests/sntp_packet_test.cpp",
+      "destination": "tests/sntp_packet_test.cpp",
+      "source_sha256": "857a1795ee17a085916dd7441c30b25976ef9518a0d4e3c961f0f413ebb3ea50",
+      "destination_sha256": "d2973b770685596987107d4e85a027b425a64f5123aa36e67eab58d4d416031c"
+    },
+    {
+      "source": "benchlink/picow-logger/tests/upload_protocol_test.cpp",
+      "destination": "tests/upload_protocol_test.cpp",
+      "source_sha256": "dfed9e06856e5776c425e822b7658e4867c663083ddbbf2240fbd84c0719b38a",
+      "destination_sha256": "70858862b8211f5549082cf9e95adb497344ad87582d6a6c17b96e76835c9cc2"
+    },
+    {
+      "source": "benchlink/picow-logger/tests/upload_schedule_test.cpp",
+      "destination": "tests/upload_schedule_test.cpp",
+      "source_sha256": "8a566c62950a40b8d830d253f9215efc20edd7d844c5c982f179a85cc192a848",
+      "destination_sha256": "54569c4bfa9d7379bb2dcb8935bc620da55c36a1062bf3b7704116b1a5d91c38"
+    },
+    {
+      "source": "benchlink/picow-logger/tests/wifi_schedule_test.cpp",
+      "destination": "tests/wifi_schedule_test.cpp",
+      "source_sha256": "e8995fab1fa24241c666db8beefca0361beff50bd35c6caf260dcd47e50952a4",
+      "destination_sha256": "7b2b9db8d3e28c7fea41582d12e860cf60b554305c90475203122f85429b4834"
+    },
+    {
+      "source": "benchlink/picow-logger/tools/build_candidate.py",
+      "destination": "tools/build_candidate.py",
+      "source_sha256": "2367256793ef87022e6c804f738707213e61bb1e0d3d4e6dac4136f9b63e980a",
+      "destination_sha256": "c84856a2c9b8bd5b1d04ad7fc164c1313763c19784a44f2043c1eb7272462d03"
+    },
+    {
+      "source": "coordination/AGENT_ATTRIBUTION.md",
+      "destination": "coordination/AGENT_ATTRIBUTION.md",
+      "source_sha256": "1d7ceff4933672179857cfed86291936f24173c7e48a1ceeee84aade98419f5f",
+      "destination_sha256": "1d7ceff4933672179857cfed86291936f24173c7e48a1ceeee84aade98419f5f"
+    }
+  ],
+  "adjustments": [
+    "Renamed picow-logger.ino to accord-logger.ino; all 15 firmware file contents unchanged.",
+    "Updated secrets.h.example instructions for independent logger configuration.",
+    "Adjusted native test include paths.",
+    "Adjusted build helper source and staging directories for renamed sketch."
+  ],
+  "validation": {
+    "firmware_contents_unchanged": true,
+    "local_includes_resolved_except_private_secrets": true,
+    "private_header_copied": false,
+    "native_tests_passed": 8,
+    "build": {
+      "profile": "DUMMY-CREDENTIALS-DO-NOT-FLASH",
+      "warnings": 0,
+      "summary": [
+        "Sketch uses 393688 bytes (18%) of program storage space. Maximum is 2093056 bytes.",
+        "Global variables use 103376 bytes (39%) of dynamic memory, leaving 158768 bytes for local variables. Maximum is 262144 bytes."
+      ],
+      "manifest": "validation/dummy-build-manifest.json"
+    },
+    "hardware_flashed": false,
+    "receiver_contacted": false
+  },
+  "generated_files": {
+    "README.md": "88a9dd038ef6777eeb54f9bf2128d7444e0667ddca1bdeee816c61c2aaec753b",
+    "NEXT_AGENT.md": "86f2000ae1bec77c0b85e2a27cc886bb6bcd37ac201f8be8e3f452d9a99eefcd",
+    ".gitignore": "e5d5b54a26e27fdca4b245021aed6204a65b51b8d8c7d63df29cb931efe59b91",
+    "tools/test_native.py": "5694bb716d64676425cc040ca235a564b16343383212700ffb59b9bbf6bd92ff",
+    "validation/dummy-build-manifest.json": "cba60a22400b3789e27d063b67885c4200461ab1dd0c7183bfdc757c45ef2a80",
+    "validation/native-tests.txt": "e7f1539a0cc99497efbe3375bc3ed66c5a525ff3eadaa7a767eac1d8d0d3aec1"
+  }
+}
