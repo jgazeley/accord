@@ -104,6 +104,11 @@ for every row. Remote electrical work and local physical validation are distinct
   to fabricate an electrically unresolved design.
 - **D-RA-03 — pending 01:** one shared qualified-IGN/deadline contract. Never mix
   the old raw-GP5/100 ms rules with the newer analog-qualified proposal.
+- **D-ASBUILT-01 — owner reminder, October 28:** the logger already has a physical
+  as-built circuit documented outside KiCad. LRA-03 consolidates those corrected
+  records first; LRA-06 captures the reviewed baseline and explicit Rev A changes.
+  Keep fitted logger wiring, keyless examples and the automatic-power candidate
+  distinct. Exact source sections and current connections are in the LRA-03 packet.
 - **D-REUSE-01 — owner direction, October 28:** consult the existing `hondaPico`
   keyless circuit and working examples before designing equivalent logger blocks.
   References: `keyless/hardware/hondaPico.kicad_sch`, matching PCB and firmware,

@@ -32,6 +32,37 @@ to copy specified values into an as-built BOM. Collect precise owner/bench quest
 Start signal consolidation now; power domains finalize after LRA-01/02. Exchange
 proposed GPIO/connector reservations with LRA-04 before either freezes them.
 
+## Existing logger as-built — owner reminder, October 28
+
+Current pcb-manager verified the historical as-built records following the owner's
+reminder that the logger circuit already exists but is not yet captured in KiCad.
+**Start by consolidating that physical build; schematic absence is not design
+absence.** Keep the recorded as-built and proposed Rev A changes separately labeled.
+Keyless circuits are references; `9527a14` is the proposed automatic-power addition.
+Neither is a substitute for the fitted logger signal chain.
+
+Baseline source: historical `accord-logger` at
+`1e994494f933da99636942d6ec135e857f2b3f6b`, `circuits.md` dated corrections and
+`fuel/READINGS.md` installation/ground entries; `fuel/ADC_INTERFACE_SPEC.md`
+provides specifications, not blanket proof of fitted parts. The current public
+summary is `logger/hardware/REV_A_CONTEXT.md`. Read newest owner corrections first:
+
+| Block | Existing recorded build / qualification |
+|---|---|
+| VSS / tach / brake | B2 -> GP2, 22k/33k; B1 -> GP3 and C14 -> GP4, 22k/6.8k. October 24 owner correction confirms one upper 1N5819 clamp per cell, replacing erroneous BAT54 labels. |
+| Fuel / supply | C11 -> GP26 and B11 -> GP27. Fuel divider installed October 24; B11/B16 subsequently confirmed connected. Specified dividers are 7.5k/4.7k and 22k/4.7k; exact fitted protection/filter parts still need reconciliation. |
+| Ground | October 24 owner clarification: B16 lands on a breadboard ground rail jumpered to Pico AGND; both ADC dividers use that rail. Buck power return and opto output return must be represented explicitly. |
+| IGN | October 26 supersedes the older clock/Pi feed: B11 -> series diode/resistor -> opto LED, return B16; collector -> GP5, emitter -> Pico GND, capacitor across collector/emitter. Latest report leaves resistor/capacitor values and diode type unspecified. |
+| SD | Existing SPI0 GP16/17/18/19 for MISO/CS/SCK/MOSI, module 3V3 fed from Pico 3V3(OUT); current `logger_sd.cpp` preserves the as-built assignment. |
+| Supply | Auxiliary-battery buck provides 5 V with manual power; automatic HOLD/cutoff remains a candidate addition. |
+
+Older notes saying brake/fuel are merely tapped, B11/B16 are disconnected or all
+three digital dividers are identical must not overwrite later installation
+records. Preserve unknowns rather than importing keyless values or proposed power
+values into the as-built. Capture each planned change as a delta with its reason.
+Selected historical excerpts need provenance/public review; personal readings and
+road data do not need importing to preserve this circuit record.
+
 ## Existing keyless examples — owner reminder, October 28
 
 Current pcb-manager reviewed `keyless/hardware/hondaPico.kicad_sch`, matching
