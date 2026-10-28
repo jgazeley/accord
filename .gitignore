@@ -56,3 +56,13 @@ Thumbs.db
 # Unused third-party model: redistribution terms have not been established.
 # Retain locally; do not publish until provenance is resolved.
 /keyless/hardware/3d/039301160.stp
+
+# Private receiver configuration and data
+receiver.env
+*.env
+!*.env.example
+state/
+raw/
+spool/
+id_ed25519*
+id_rsa*

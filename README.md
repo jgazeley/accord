@@ -15,8 +15,8 @@ Both run on the Pico W without an always-on in-car Linux computer. A Raspberry
 Pi 4 serves as a portable development bench.
 
 This is an ongoing vehicle-specific project. Build instructions, tests and
-current limitations are documented with each module. The logger's receiver,
-trip-processing and database software are not included here yet.
+current limitations are documented with each module. The [logger server](logger/server/README.md) receives raw uploads and produces
+trip JSON. Personal databases and dashboards are outside this repository.
 
 ## License
 

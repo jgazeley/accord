@@ -7,8 +7,8 @@ synchronization for timestamped records.
 
 The current firmware is **v0.8.1-dev**. The sketch is
 [accord-logger.ino](firmware/accord-logger/accord-logger.ino); firmware messages
-retain the `picow-logger` name. Receiver, trip-processing and database software
-are not included in this directory.
+retain the `picow-logger` name. The [server](server/README.md) receives uploads and converts them to trip JSON.
+Database and dashboard applications are separate consumers.
 
 ## Build and test
 
@@ -56,3 +56,7 @@ controls connection attempts separately.
 
 Source provenance and validation are recorded in
 [SOURCE_MANIFEST.json](SOURCE_MANIFEST.json).
+
+Hardware interfaces and remaining documentation: [logger hardware](hardware/README.md).
+Record and transfer contracts: [card format](protocols/CARD_FORMAT.md) and
+[upload protocol](protocols/UPLOAD_PROTOCOL.md).

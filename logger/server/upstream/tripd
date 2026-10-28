@@ -1,0 +1,1215 @@
+#!/usr/bin/env python3
+"""tripd -- turn the vsslog CSV stream into trip packets, queued for the server.
+
+    ./tripd --once ~/vsslogs/drive_20261015_221433.csv     replay one log
+    ./tripd --follow                                        live, watches ~/vsslogs
+    ./tripd --once <file> --dry-run                         print, queue nothing
+
+WHAT THIS IS. The car produces raw 1 Hz rows; the Accord data service wants
+trips. This is the piece in between, and it is deliberately the ONLY piece that
+holds state across reboots: see "the monotonic total", below. It never opens the
+Pico's serial port -- `vssrec` owns that and stays the single reader. tripd only
+tails the CSV that vssrec writes, so raw data is preserved whatever tripd does
+and a tripd bug can never cost a drive.
+
+Output: one JSON file per trip in ~/trips/queue/, drained by `tripsend`.
+Format and protocol: benchlink/TRIP_PROTOCOL.md.
+
+THE MONOTONIC TOTAL. The Pico's counters are 32-bit ISR counters in RAM. They
+zero on power cycle and on the `r` command, so a lifetime pulse total CANNOT be
+read off the hardware -- it has to be integrated here and persisted. Every
+restart of the counters begins a new `counter_epoch` (a fresh uuid) and force-
+closes any open trip, because the pulses that occurred across the gap are gone
+and pretending otherwise would silently shorten a drive.
+
+THE TRAP, inherited from honda/service/vsslog.py. Distance must be summed
+WITHIN an epoch and never as first-minus-last across a reset. Done wrong on the
+2026-10-15 blind drive it gave 2.553 miles instead of 13.653 -- an 81%
+undercount that looked entirely plausible. Equally: the first row of a log is
+NOT a zero base, it inherits whatever the counter already held, so it primes the
+delta and contributes nothing. The blind log opens with four rows still reading
+45,698; counting those as fresh pulses added a phantom 11.1 miles.
+
+WHAT GETS THROWN AWAY. Two filters, in `close` and `_trivial`, and they are
+deliberately different in kind: the first is about DURATION and the second
+about DISTANCE, because neither quantity can do the other's job. Both are
+cautious on purpose -- a packet wrongly dropped here is a drive that silently
+never happened, which is the worst outcome this program has. `_trivial` carries
+the full argument, including the version of it that was wrong and the replay
+that caught it. Every drop prints the numbers it dropped.
+"""
+from __future__ import annotations
+
+import argparse, csv, datetime as dt, glob, json, os, pathlib, re, signal
+import subprocess, sys, threading, time, uuid
+
+SCHEMA     = "accord.trip/1"
+RAW_FORMAT = "vssrec-csv/1"
+# Appended to, never reordered: tripd indexes positionally, so a new field at
+# the end is invisible to the parse and only widens what a packet records.
+# brake (1 = the BRAKE WARNING line is grounded -- parking brake OR low
+# brake fluid; see picow-logger.ino) added 2026-10-16 with the C14 tap.
+COLUMNS    = "wall,ms,vss_total,vss_hz,tach_total,tach_hz,rpm,brake,fuel_counts,fuel_lo,fuel_hi,supply_counts,die_counts,ms_since_ign,ign"
+# The first EIGHT fields are the stable contract and are indexed by
+# position; everything after is optional and absent in pre-0.5.0 logs.
+# Never reorder the first eight.
+N_CORE_COLS = 8
+SW         = "tripd/0.1"
+
+# The PCM synthesises this pulse train and the same wire drives the dashboard
+# odometer, so tyre and speedometer error cancel. Do NOT "correct" to the
+# widely cited 4000.
+#
+# REFIT 2026-10-18 from a 384-mile round trip: 4116.9 -> 4104.3.
+# The first value came from one 11.1-mile trip-meter pair, which at 0.1 mile
+# resolution could only pin the constant to about +-20. Nine readings from the
+# Roseville trip -- five odometer integers and four trip-meter decimals, every
+# one of them a TRUNCATING display and therefore an interval, not a point --
+# intersect at a feasible band of 4103.19 to 4105.42, width 2.23. 4116.9 lies
+# outside it and misses 2 of the 5 odometer reads and 3 of the 4 trip-meter
+# reads outright; 4104.3 satisfies all nine simultaneously.
+#
+# The same fit solves for what the truncated 230722 anchor really was:
+# [230722.215, 230722.699). The +0.5 midpoint correction derived on 2026-10-16
+# sits inside that interval -- confirmed, not assumed.
+#
+# A refit is retroactive by construction: tripload stores pulses_per_mile_used
+# per trip and sums vss_pulses / pulses_per_mile_used, so old trips are
+# corrected by an UPDATE, never by re-ingesting. Keep it that way.
+PULSES_PER_MILE = 4104.3
+TACH_HZ_TO_RPM  = 30
+
+# Engine idles at 28 Hz tach; the dividers showed zero spurious edges parked, so
+# anything above a couple of Hz is unambiguously the engine turning.
+RUNNING_HZ   = 5.0
+# 1 Hz = 0.874 mph. Below ~2 km/h the PCM emits nothing at all, so there is no
+# point trying to resolve creep.
+MOVING_HZ    = 1.0
+# The distance floor, below which a closed trip is not a drive and is dropped.
+# 0.05 mi = 205 pulses. It is NOT applied on magnitude alone -- see Tracker's
+# `_trivial` for why that would be exactly backwards -- so read the two
+# together; neither number means anything without the other.
+TRIVIAL_MI    = 0.05
+# Peak rate that separates a deliberate move from stray edges. A stray edge is
+# one pulse in one second, which reads as precisely 1.00 Hz, so the dividing
+# line has to sit just above MOVING_HZ. 2 Hz = 1.75 mph; nothing the car does
+# under its own power is slower, and nothing a bad tap does is faster.
+STRAY_PEAK_HZ = 2.0
+# Seconds of tach above which the floor refuses to act at all, because an
+# engine that ran could have been driving. See `_trivial`: this is the guard
+# that keeps the floor away from a dead VSS tap, and it is the whole reason
+# the floor is safe.
+FLOOR_RUN_S   = 10
+CLOSE_AFTER  = 120.0   # s of neither running nor moving before a trip closes
+STALL_AFTER  = 300.0   # s with no rows at all before an open trip is closed
+GAP_MS       = 1500    # ms between rows above which a sample gap is recorded
+# The Pico reports millis(), a uint32, so `ms` returns to zero every 2**32 ms =
+# 49.71 days of continuous uptime. It has never happened: the Pico is powered
+# from the Pi's USB and the Pi power-cycles with the car, so uptime has never
+# exceeded a day. It becomes reachable the moment the Pico gets its own supply.
+#
+# WHAT IT WOULD HAVE COST. `ms` going backwards is tripd's power-cycle signal,
+# and a power cycle zeroes the counter base -- so the row after the wrap would
+# have been handed the whole lifetime total as a single delta. At the 2,123,696
+# pulses standing on 2026-10-20 that is +517 miles injected in one row, the
+# same shape of error as the 2026-10-15 epoch trap and the opposite sign.
+#
+# A wrap is told from a power cycle by ARITHMETIC, not by heuristics. Across a
+# wrap the modular difference is the real elapsed time, about a second; across
+# a power cycle it is almost the whole modulus. Four orders of magnitude apart,
+# so WRAP_NEAR_MS can be generous -- STALL_AFTER, past which a trip closes
+# anyway -- and still never confuse the two. The counters must also not have
+# gone backwards, which a power cycle makes them do and a wrap does not.
+MS_WRAP      = 1 << 32
+WRAP_NEAR_MS = 300_000
+# How far the wall clock may disagree with the Pico's `ms` across one row before
+# it counts as the clock being STEPPED rather than ticking. `wall` is truncated
+# to whole seconds and rows arrive at 1 Hz, so a second of slack is ordinary;
+# the real events on 2026-10-19 were 969, 1925 and 13004 s.
+CLOCK_TOL_S  = 3.0
+# Ignition, polled from hondaPico over RS-485. The tach alone cannot see
+# key-on-engine-off, so a trip had to be bounded by 120 s of tach silence --
+# which on 2026-10-16 split a 2 min 7 s shop stop by seven seconds. With ign in
+# hand a trip closes shortly after the key turns off instead of waiting out a
+# timer. Grace is short but non-zero so a stall-and-restart is not two trips.
+IGN_GRACE    = 20.0
+
+FILENAME_DATE = re.compile(r"(\d{8})_(\d{6})")
+
+
+class IgnPoller:
+    """Poll hondaPico's input byte over RS-485 in a thread.
+
+    IT MUST NOT BE LOAD-BEARING. The bus can be unplugged, the board can be
+    asleep, and jaypi has one hub whose FT232 the owner does pull out. So a
+    stale or failing poll means "fall back to the tach rule", never "the
+    ignition is off" -- inferring ign-off from a failed read would end a trip
+    in the middle of a drive. Only a SUCCESSFUL read showing ign clear counts.
+
+    `hp io --wait 0.8` instead of the default: the 6 s window in cm5sim is there
+    to collect the board's human-readable log, which is worth having
+    interactively and pure waste here. The reply itself arrives in a few ms.
+    """
+    RE = re.compile(r"in=\[([^\]]*)\]")
+
+    def __init__(self, hp, interval):
+        self.hp, self.interval = hp, interval
+        self.state = {"ok": False, "at": 0.0, "ign": False, "key_in": False}
+        self.polls = self.good = 0
+        self._stop = threading.Event()
+        self._t = None
+
+    def start(self):
+        if self.interval <= 0 or not os.path.exists(self.hp):
+            return False
+        self._t = threading.Thread(target=self._run, daemon=True)
+        self._t.start()
+        return True
+
+    def stop(self):
+        self._stop.set()
+
+    def _run(self):
+        backoff = 0
+        while not self._stop.is_set():
+            self.polls += 1
+            try:
+                r = subprocess.run([self.hp, "io", "--wait", "0.8"],
+                                   capture_output=True, text=True, timeout=12)
+                m = self.RE.search(r.stdout)
+                if m:
+                    names = {n.strip() for n in m.group(1).split(",") if n.strip() != "-"}
+                    self.state = {"ok": True, "at": time.time(),
+                                  "ign": "ign" in names, "key_in": "key_in" in names}
+                    self.good += 1
+                    backoff = 0
+                else:
+                    backoff = min(backoff + 1, 6)
+            except (subprocess.TimeoutExpired, OSError):
+                backoff = min(backoff + 1, 6)
+            self._stop.wait(self.interval * (1 + backoff))
+
+    def fresh(self):
+        """The reading, only while it is recent enough to act on."""
+        st = self.state
+        if not st["ok"] or time.time() - st["at"] > max(45.0, self.interval * 3):
+            return None
+        return st
+
+
+def clock_state():
+    """Is the wall clock worth believing?
+
+    The Pi in the car boots with no RTC and no network, so `wall` can be
+    plausible and wrong for the first minutes of a drive while the Pico's `ms`
+    stays perfectly sound. jaypi booted on 2026-10-16 reporting
+    "System clock synchronized: no". The service needs to know that per trip,
+    so it can trust durations and pulse counts while distrusting the dates.
+
+    `uptime_s` is carried because a trip that STARTED moments after boot is
+    suspect even when NTP had caught up by the time it closed.
+    """
+    ntp = "unknown"
+    try:
+        r = subprocess.run(["timedatectl", "show", "-p", "NTPSynchronized",
+                            "--value"], capture_output=True, text=True, timeout=5)
+        if r.returncode == 0 and r.stdout.strip():
+            ntp = r.stdout.strip()
+    except (FileNotFoundError, subprocess.TimeoutExpired, OSError):
+        # No systemd, or it answered too slowly. Fall back to the stamp file
+        # systemd-timesyncd drops once it has stepped the clock.
+        if os.path.exists("/run/systemd/timesync/synchronized"):
+            ntp = "yes"
+    try:
+        up = float(open("/proc/uptime").read().split()[0])
+    except OSError:
+        up = None
+    return {"trusted": {"yes": True, "no": False}.get(ntp),
+            "ntp": ntp,
+            "uptime_s": int(up) if up is not None else None,
+            "source": "timedatectl"}
+MARK_RE = re.compile(r"#\s*MARK\s+(\d+)\s+at\s+ms=(\d+)\s+vss=(\d+)\s+tach=(\d+)")
+# picow-logger v0.4.0 emits one of these after every CSV row, keyed to that
+# row's `ms`. Same shape `tools/cardconv.py` parses, so the card path and the
+# live path agree on what an ignition note is.
+IGN_NOTE = re.compile(r"^#\s*IGN\s+ms=(\d+)\s+state=(on|off)\s+raw=[01]\s+source=(\S+)$")
+# How stale a note may be, in `ms`, and still be acted on. The firmware reports
+# once per second, so three missed reports means the stream is broken rather
+# than quiet -- and a broken stream must NOT be read as "ignition off".
+IGN_NOTE_STALE_MS = 3500
+# Consecutive seconds of "notes say off while the tach says running" after
+# which GP5 is distrusted for the rest of the trip. It cannot be 1: turning the
+# key off while the engine spins down produces a genuine contradiction for a
+# second or two, every single time, and treating that as a fault would throw
+# away the ignition sense on every normal drive. A loose wire contradicts for
+# the whole drive instead, so the two separate cleanly on duration.
+IGN_CONTRA_S = 10
+# Mirrors SUPPLY_DARK in picow-logger.ino: below this the supply channel says
+# B11 is not live, so the analog columns exist but are not a measurement.
+# If one of these two numbers changes the other must change with it.
+SUPPLY_DARK = 155
+
+
+def file_date(path):
+    """vssrec names logs `<tag>_YYYYmmdd_HHMMSS.csv`; rows carry only a time."""
+    m = FILENAME_DATE.search(pathlib.Path(path).name)
+    return dt.datetime.strptime(m.group(1), "%Y%m%d").date() if m else None
+
+
+class Trip:
+    def __init__(self, at, epoch, node, src):
+        self.started_at = at
+        self.last_active = at
+        self.last_at = at
+        self.epoch = epoch
+        self.node = node
+        self.src = src
+        self.vss = 0
+        self.tach = 0
+        self.samples = 0
+        self.gaps = 0
+        self.vss_hz_integral = 0.0
+        self.max_vss_hz = 0.0
+        self.max_tach_hz = 0.0
+        self.tach_hz_sum = 0.0
+        self.running_s = 0
+        self.moving_s = 0
+        self.marks = []
+        self.rows = []
+        self.ign_on_at = None
+        self.ign_off_at = None
+        # The ms companion to each, which the packet prefers. See feed().
+        self.ign_on_ms = None
+        self.ign_off_ms = None
+        self.ign_src = None
+        self.key_in_seen = False
+        # Analog, firmware v0.5.0+. `a_rows` stays 0 for an older log and the
+        # packet then omits the block entirely rather than reporting zeros,
+        # because "no channel" and "a channel reading zero" are different
+        # findings and the fuel work turns on telling them apart.
+        self.a_rows = 0
+        self.a_live = 0                 # rows with B11 actually live
+        self.a_fuel_sum = 0
+        self.a_fuel_lo = self.a_sup_lo = self.a_die_lo = 1 << 30
+        self.a_fuel_hi = self.a_sup_hi = self.a_die_hi = -(1 << 30)
+        self.a_sup_sum = self.a_die_sum = 0
+        self.a_fuel_first = self.a_fuel_last = None
+        self.a_since_ign_max = 0
+        self.ign_polls = 0
+        self.vss_total_at_start = None   # lifetime total when the trip opened
+        self.last_ms = None
+        # The Pico's monotonic `ms` is the only sound time base in the car: the
+        # Pi has no RTC, so `wall` can step by hours mid-trip when NTP finally
+        # reaches it. Durations and back-dated stamps come from these two.
+        self.started_ms = None
+        self.last_active_ms = None
+        self.jump_base = 0               # index into Tracker.clock_jumps
+
+    def miles(self):
+        return self.vss / PULSES_PER_MILE
+
+
+class Tracker:
+    """Fold CSV lines into trips. One instance per tripd process."""
+
+    def __init__(self, node_id, node_kind, state, emit, keep_raw=True, ign=None):
+        self.node_id, self.node_kind = node_id, node_kind
+        self.state, self.emit, self.keep_raw = state, emit, keep_raw
+        self.ign = ign
+        self._ign_off_since = None
+        # The last `# IGN` note seen, or None. It carries `ms`, so its
+        # freshness is judged on the Pico's monotonic clock, never on `wall`.
+        self._ign_note = None
+        self.ign_notes = self.ign_notes_bad = 0
+        self.ign_note_acts = self.ign_poll_acts = 0
+        self.ign_disagreements = 0
+        # A tap that has contradicted the tach for IGN_CONTRA_S straight does
+        # not get to decide anything else this trip. Cleared on close.
+        self._ign_contra_run = 0
+        self._ign_note_distrusted = False
+        self.analog_bad = 0
+        self.epoch = state.get("counter_epoch") or str(uuid.uuid4())
+        self.lifetime_vss = int(state.get("vss_pulse_total", 0))
+        self.lifetime_tach = int(state.get("tach_pulse_total", 0))
+        self.trip = None
+        self.src = None
+        self._reset_counters()
+        # Kept for DETECTION only, never for arithmetic. resume_counters()
+        # rightly refuses to reuse these unless we are resuming the same file at
+        # the same offset -- but they are still the last counter values this node
+        # ever saw, and that is exactly what is needed to notice that the Pico
+        # restarted while tripd was not running. See feed().
+        _lk = (state.get("prev_vss"), state.get("prev_tach"), state.get("prev_ms"))
+        self.last_known = (None if any(v is None for v in _lk) else
+                           {"vss": int(_lk[0]), "tach": int(_lk[1]), "ms": int(_lk[2])})
+        self.date = None
+        self.rolls = 0
+        self.prev_clock = None
+        # How many times millis() has wrapped in the stream being read. Carried
+        # in the state file, because a tripd restarted mid-file resumes at a
+        # byte offset and cannot see the wrap that happened before it.
+        self.ms_wraps = int(state.get("ms_wraps", 0))
+        # Every wall-clock STEP this process has seen, in order. A trip records
+        # where the list stood when it opened, so packet() can report exactly
+        # the steps that happened inside it.
+        self.clock_jumps = []
+        # Trips the distance floor dropped. In memory only, deliberately: the
+        # state file's contract is the counter chain and the file offset, and
+        # this is neither. It is reported at shutdown and in the --once summary.
+        self.trivial_dropped = 0
+
+    def _reset_counters(self):
+        self.prev_vss = self.prev_tach = self.prev_ms = None
+        # The monotonic companion to prev_ms. prev_ms stays RAW, because that is
+        # what the state file means by it and what a resumed run compares the
+        # next row against; this one carries the wrap offset for the arithmetic.
+        self.prev_ms_mono = None
+        # millis() restarts at zero on a real power cycle, so the accumulated
+        # offset must go with it. Reading a file from the top starts at zero for
+        # the same reason -- only resume_counters() restores a carried value.
+        self.ms_wraps = 0
+        self.base_zero = False     # True only after an OBSERVED reset
+
+    # ---- file plumbing -------------------------------------------------
+    def set_source(self, path):
+        if self.src == path:
+            return
+        rotation = self.src is not None and self.prev_vss is not None
+        if self.trip:
+            self.close("log_rotated")
+        self.src = path
+        self.date = file_date(path)
+        self.rolls = 0
+        self.prev_clock = None
+        if rotation:
+            # A ROTATION, not a cold start: vssrec was restarted (a reboot, or
+            # a fresh `vssgo`) but the Pico's counters are independent of which
+            # file we are writing, so they kept running. Carrying prev_* means
+            # the delta across the seam is counted instead of vanishing -- it
+            # was 72 pulses, 0.017 mi, on the 2026-10-16 rotation test, and
+            # integral_check caught it at 1.0045.
+            #
+            # If the Pico power-cycled too, the first row of the new log will
+            # show `ms` or the counters going backwards, and feed()'s checks
+            # turn that into a new epoch with a zero base. So carrying is safe
+            # in both cases and correct in one more of them.
+            #
+            # That reasoning holds for a rotation INSIDE one tripd. It did NOT
+            # hold for a cold start, because prev_* is None there and every one
+            # of those checks is guarded on it -- so a reboot carried the epoch
+            # across a real counter restart. feed()'s last_known check closes
+            # that; see the 2026-10-16 ign-wake work.
+            return
+        # Cold start: the first row of a log inherits an unknown counter value,
+        # so it primes and contributes nothing.
+        self._reset_counters()
+
+    # ---- the reset rules -----------------------------------------------
+    def _mark_reset(self, why):
+        if self.trip:
+            self.close("counter_" + why)
+        self.epoch = str(uuid.uuid4())
+        self._reset_counters()
+        self.base_zero = True
+
+    def feed(self, line):
+        parts = next(csv.reader([line]), [])
+        if not parts or parts[0] == "wall":
+            return
+        if len(parts) >= 2 and parts[1].lstrip().startswith("#"):
+            note = parts[1].strip()
+            if note.startswith("# RESET"):
+                self._mark_reset("reset")
+            elif note.lstrip("# ").startswith("IGN"):
+                # The ignition tap the owner wired to GP5, reported once per
+                # row and keyed to that row's `ms`. It is NOT acted on here:
+                # it is recorded, and the one decision site in feed() consumes
+                # it alongside the RS-485 poll. Two places deciding when a trip
+                # ends is the same mistake as two trip builders over one drive.
+                #
+                # Deliberately undebounced at the firmware ("one instantaneous
+                # observation per report"), so all the smoothing is ours --
+                # which is right, because the grace window belongs with the
+                # thing that knows what a trip is.
+                m = IGN_NOTE.match(note)
+                if m:
+                    self.ign_notes += 1
+                    self._ign_note = {"ms": int(m.group(1)),
+                                      "ign": m.group(2) == "on",
+                                      "src": m.group(3)}
+                else:
+                    # A note we cannot parse is not a note saying "off".
+                    self.ign_notes_bad += 1
+            else:
+                m = MARK_RE.match(note)
+                if m and self.trip:
+                    # A mark is the owner saying "the dash reads exactly X now".
+                    # That is an odometer anchor, so carry the lifetime total.
+                    self.trip.marks.append({
+                        "n": int(m.group(1)),
+                        "at": self._stamp(parts[0]).isoformat(),
+                        "vss_pulse_total": self.lifetime_vss,
+                        "note": note.lstrip("# ").strip(),
+                    })
+            return
+        if len(parts) < 7:
+            return                       # truncated row, e.g. power cut mid-write
+        try:
+            ms_raw = int(parts[1])
+            vss_total, tach_total = int(parts[2]), int(parts[4])
+            vss_hz, tach_hz = float(parts[3]), float(parts[5])
+        except (ValueError, IndexError):
+            return
+
+        # The analog tail, firmware v0.5.0 and later. OPTIONAL: every log
+        # before 2026-10-23 has eight fields and must keep working unchanged,
+        # so a short row is not an error and a malformed tail is not a reason
+        # to drop a row whose VSS and tach are perfectly good. Distance must
+        # never depend on the fuel channel parsing.
+        analog = None
+        if len(parts) >= 14:
+            try:
+                analog = {
+                    "fuel": int(parts[8]), "fuel_lo": int(parts[9]),
+                    "fuel_hi": int(parts[10]), "supply": int(parts[11]),
+                    "die": int(parts[12]), "since_ign": int(parts[13]),
+                }
+            except (ValueError, IndexError):
+                self.analog_bad += 1
+
+        # Resolve a millis() wrap BEFORE anything reads `ms` -- _stamp() needs
+        # it, the gap test needs it, and every duration is a difference of it.
+        # prev_* are set to None together, so prev_ms being present means
+        # prev_vss and prev_tach are too.
+        wrapped = (self.prev_ms is not None and ms_raw < self.prev_ms
+                   and (ms_raw - self.prev_ms) % MS_WRAP <= WRAP_NEAR_MS
+                   and vss_total >= self.prev_vss
+                   and tach_total >= self.prev_tach)
+        if wrapped:
+            self.ms_wraps += 1
+        # Monotonic from here down. Everything downstream subtracts two of
+        # these, so carrying the offset is what keeps a wrap invisible rather
+        # than merely survivable.
+        ms = ms_raw + self.ms_wraps * MS_WRAP
+        at = self._stamp(parts[0], ms)
+
+        if self.prev_ms is None and self.last_known is not None:
+            # First row after a COLD START (new process, not resuming the same
+            # file at the same offset). tripd cannot difference across that
+            # seam, but it can still tell what happened: `ms` or a counter
+            # below the last value the previous run saw means the Pico
+            # power-cycled. Now that the Pico is USB-powered by the Pi, that is
+            # every boot -- so this is the common case, not the exotic one.
+            lk = self.last_known
+            self.last_known = None               # one-shot: first row only
+            if (ms_raw < lk["ms"] or vss_total < lk["vss"]
+                    or tach_total < lk["tach"]):
+                self._mark_reset("powercycle_cold")
+        if self.prev_ms is not None and not wrapped:
+            if ms_raw < self.prev_ms:
+                self._mark_reset("powercycle")   # ms restarted: so did the totals
+            elif (self.prev_vss is not None and
+                  (vss_total < self.prev_vss or tach_total < self.prev_tach)):
+                self._mark_reset("rollback")     # counters dropped with no marker
+
+        # Pulses since the previous row. prev_* is None either because an epoch
+        # just began (base is known zero, so the reading IS the delta) or
+        # because this is the first row of a log (base unknown: prime only).
+        if self.prev_vss is None:
+            dv = vss_total if self.base_zero else 0
+            dt_ = tach_total if self.base_zero else 0
+        else:
+            dv, dt_ = vss_total - self.prev_vss, tach_total - self.prev_tach
+        self.prev_vss, self.prev_tach, self.prev_ms = vss_total, tach_total, ms_raw
+        self.prev_ms_mono = ms
+        self.lifetime_vss += dv
+        self.lifetime_tach += dt_
+
+        # Ignition as a COLUMN, firmware v0.6.0 and later. Same optional,
+        # width-gated, append-only treatment as the analog tail above, and
+        # placed here rather than with the row parse because `ms` has to be
+        # monotonic first -- see below.
+        #
+        # It fills the SAME _ign_note slot the `# IGN` note fills, so the
+        # staleness test, the tach-contradiction counter, the distrust latch
+        # and the RS-485 fallback in _ign_state() all keep working untouched.
+        # There is still exactly one site that decides what the ignition is.
+        #
+        # `ms` here is the MONOTONIC ms, not ms_raw, deliberately: _ign_state()
+        # computes `ms - note["ms"]` against the monotonic clock, so storing
+        # this row's own monotonic ms makes the column trivially fresh and
+        # keeps it correct across a millis() wrap. The note path stores the RAW
+        # ms out of the note text, which is why a note stops being trusted
+        # after a wrap; that is pre-existing, is not this change's business,
+        # and is written up in picow-logger/NOTES-FOR-REVIEW.md.
+        if len(parts) >= 15:
+            try:
+                self._ign_note = {"ms": ms, "ign": int(parts[14]) == 1,
+                                  "src": "gp5"}
+                self.ign_notes += 1
+            except (ValueError, IndexError):
+                self.ign_notes_bad += 1
+
+        running, moving = tach_hz >= RUNNING_HZ, vss_hz >= MOVING_HZ
+        # Ignition. It opens a trip earlier than the tach can (key-on happens
+        # before the engine turns) and closes one sooner (key-off is
+        # unambiguous; tach silence is not).
+        ign_now = self._ign_state(ms, running)
+        if self.trip is None:
+            if not (running or moving or (ign_now and ign_now["ign"])):
+                return
+            self.trip = Trip(at, self.epoch, self.node_id, self.src)
+            self.trip.vss_total_at_start = self.lifetime_vss - dv
+            self.trip.started_ms = self.trip.last_active_ms = ms
+            self.trip.jump_base = len(self.clock_jumps)
+
+        t = self.trip
+        if ign_now:
+            t.ign_polls += 1
+            t.ign_src = ign_now.get("src") or t.ign_src
+            if ign_now["key_in"]:
+                t.key_in_seen = True
+            if ign_now["ign"]:
+                if t.ign_on_at is None:
+                    # `ms` ALONGSIDE the wall stamp, and the packet prefers the
+                    # ms. On 2026-10-23 this field shipped 08:48:26 against a
+                    # started_at of 10:31:09 -- the same instant, 6163 s apart,
+                    # because NTP stepped the clock 28 s into the drive and
+                    # started_at was anchored while this was not. Two
+                    # timestamps for one event, one of them wrong, is worse
+                    # than one coarse timestamp.
+                    t.ign_on_at, t.ign_on_ms = at, ms
+                t.ign_off_at = t.ign_off_ms = None
+                self._ign_off_since = None
+            else:
+                if self._ign_off_since is None:
+                    self._ign_off_since = at
+                    t.ign_off_at, t.ign_off_ms = at, ms
+        if analog is not None:
+            t.a_rows += 1
+            t.a_fuel_sum += analog["fuel"]
+            t.a_sup_sum  += analog["supply"]
+            t.a_die_sum  += analog["die"]
+            t.a_fuel_lo = min(t.a_fuel_lo, analog["fuel_lo"])
+            t.a_fuel_hi = max(t.a_fuel_hi, analog["fuel_hi"])
+            t.a_sup_lo  = min(t.a_sup_lo,  analog["supply"])
+            t.a_sup_hi  = max(t.a_sup_hi,  analog["supply"])
+            t.a_die_lo  = min(t.a_die_lo,  analog["die"])
+            t.a_die_hi  = max(t.a_die_hi,  analog["die"])
+            t.a_since_ign_max = max(t.a_since_ign_max, analog["since_ign"])
+            if analog["supply"] >= SUPPLY_DARK:
+                t.a_live += 1
+                # First and last LIVE reading, not first and last row: a dark
+                # sample is not a fuel measurement, and bracketing the trip
+                # with two of them would describe the key, not the tank.
+                if t.a_fuel_first is None:
+                    t.a_fuel_first = analog["fuel"]
+                t.a_fuel_last = analog["fuel"]
+
+        t.vss += dv
+        t.tach += dt_
+        t.samples += 1
+        t.vss_hz_integral += vss_hz
+        t.tach_hz_sum += tach_hz
+        t.max_vss_hz = max(t.max_vss_hz, vss_hz)
+        t.max_tach_hz = max(t.max_tach_hz, tach_hz)
+        if running:
+            t.running_s += 1
+        if moving:
+            t.moving_s += 1
+        if self.keep_raw:
+            t.rows.append(",".join(parts))
+        if t.last_ms is not None and ms - t.last_ms > GAP_MS:
+            t.gaps += 1
+        t.last_ms = ms
+        t.last_at = at
+        if running or moving:
+            t.last_active = at
+            t.last_active_ms = ms
+        # Key off for IGN_GRACE closes the trip now. Falling back to the tach
+        # timer only when the bus has nothing fresh to say.
+        if (self._ign_off_since is not None
+                and (at - self._ign_off_since).total_seconds() >= IGN_GRACE
+                and not running and not moving):
+            self._ign_off_since = None
+            self.close("ign_off")
+        elif not (running or moving) and \
+                (at - t.last_active).total_seconds() >= CLOSE_AFTER:
+            self.close("engine_off")
+
+    def _ign_state(self, ms, running):
+        """The ignition, from the best source that is actually answering.
+
+        Three senses of the key exist on this car and until 2026-10-23 tripd
+        used the worst of them. In preference order:
+
+          1. `# IGN` notes from picow-logger's GP5, once per row, already
+             inside the CSV this process is tailing. No bus, no second board,
+             no USB adapter, and a 1 s resolution.
+          2. The RS-485 poll of hondaPico (`IgnPoller`), every 15 s, which
+             needs the FT232 plugged in, the bus intact and that board awake.
+          3. Neither -- fall through to the tach rule, as before.
+
+        `IgnPoller` was written when 3 was the only alternative to 2; the owner
+        wired GP5 days later and nothing here was changed. Its docstring's rule
+        still governs both sources, and is the reason this is not a one-liner:
+        **a source that is not answering must mean "fall back", never "the
+        ignition is off".** Inferring ign-off from a silent sense would end a
+        trip mid-drive.
+
+        That rule is sharper for the notes than for the poll, because a failed
+        poll is *visibly* failed while **a disconnected GP5 reads OFF** --
+        INPUT_PULLUP with nothing on it is indistinguishable from a key that is
+        out (the v0.4.0 deploy note says so explicitly). So a notes-off is
+        cross-examined two ways:
+
+          * staleness, in `ms`: three missed reports means the stream broke,
+            not that the key turned.
+          * physics: an engine cannot run with the ignition off. A notes-off
+            while the tach says `running` is a contradiction, and the tap is
+            the thing to doubt, not the engine. Counted and warned about, not
+            acted on.
+
+        `key_in` is carried only by the RS-485 board, so it is merged in from
+        the poll whatever decides `ign`.
+        """
+        poll = self.ign.fresh() if self.ign else None
+        note = self._ign_note
+        fresh_note = (note is not None
+                      and 0 <= (ms - note["ms"]) <= IGN_NOTE_STALE_MS)
+
+        # Count the contradiction before deciding anything, so a run of them
+        # accumulates even on the samples where it is not acted on.
+        if fresh_note and not note["ign"] and running:
+            self.ign_disagreements += 1
+            self._ign_contra_run += 1
+            if self._ign_contra_run >= IGN_CONTRA_S and not self._ign_note_distrusted:
+                self._ign_note_distrusted = True
+                print(f"tripd: GP5 distrusted -- {self._ign_contra_run}s of "
+                      f"'ign off' while the tach says running. Falling back to "
+                      f"the {'RS-485 poll' if poll else 'tach rule'} for this "
+                      f"trip; check the GP5 tap.", flush=True)
+        elif fresh_note or not running:
+            self._ign_contra_run = 0
+
+        if fresh_note and not self._ign_note_distrusted:
+            if not note["ign"] and running:
+                # Inside the tolerated run: a spin-down, probably. Do not act
+                # on it and do not let it become the authority either.
+                if poll:
+                    self.ign_poll_acts += 1
+                    return dict(poll, src=poll.get("src", "rs485"))
+                return None
+            self.ign_note_acts += 1
+            return {"ok": True, "ign": note["ign"], "src": note["src"],
+                    "key_in": bool(poll and poll["key_in"])}
+        if poll:
+            self.ign_poll_acts += 1
+            return dict(poll, src=poll.get("src", "rs485"))
+        return None
+
+    def _stamp(self, hhmmss, ms=None):
+        """Wall time for a row, with midnight distinguished from a clock step.
+
+        Rows carry only HH:MM:SS, so a day boundary has to be inferred from the
+        time going backwards. The old rule treated ANY backward step as
+        midnight -- but the Pi steps its clock backwards whenever NTP corrects
+        a fast fake-hwclock boot, and that would have added a full 24 hours.
+
+        The Pico's `ms` settles it. Across one row the wall clock should
+        advance by as much as `ms` did. Midnight is the one case where it
+        instead goes back by almost exactly a day; anything else is the clock
+        being stepped, which gets recorded rather than absorbed.
+
+        `ms` is absent for note rows, and goes BACKWARDS across a Pico power
+        cycle -- in neither case is there anything to corroborate against, so
+        both fall through to the old rule.
+        """
+        clock = dt.datetime.strptime(hhmmss.strip(), "%H:%M:%S").time()
+        if self.prev_clock is not None:
+            def secs(t):
+                return t.hour * 3600 + t.minute * 60 + t.second
+            step = secs(clock) - secs(self.prev_clock)
+            dms = (None if ms is None or self.prev_ms_mono is None
+                   else (ms - self.prev_ms_mono) / 1000.0)
+            if dms is None or dms < 0:
+                if step < 0:
+                    self.rolls += 1
+            elif abs(step + 86400 - dms) <= CLOCK_TOL_S:
+                self.rolls += 1                       # a genuine midnight
+            elif abs(step - dms) > CLOCK_TOL_S:
+                self.clock_jumps.append({
+                    "at_ms": ms,
+                    "step_s": round(step - dms, 3),
+                    "wall": clock.isoformat(),
+                })
+        self.prev_clock = clock
+        base = self.date or dt.date(1970, 1, 1)
+        return dt.datetime.combine(base + dt.timedelta(days=self.rolls), clock)
+
+    # ---- closing out ----------------------------------------------------
+    def close(self, reason):
+        t, self.trip = self.trip, None
+        if t is None:
+            self._ign_contra_run = 0
+            self._ign_note_distrusted = False
+            return None
+        # An idle blip is not a trip, and THIS filter has to be about DURATION
+        # rather than distance: the 2026-10-15 calibration log contains three
+        # single-row blips of 2-4 stray pulses, while a legitimate test of the
+        # VSS tap is rolling the car one car length -- 15 ft, 12 pulses. Length
+        # of activity separates those; magnitude does not.
+        if t.moving_s < 5 and t.running_s < 30:
+            return None
+        # The distance floor runs AFTER the packet is built, not here, because
+        # it has to see `warnings` to know whether the distance can be trusted
+        # at all. `packet()` does not mutate the Tracker, so building one and
+        # dropping it costs nothing but a wasted uuid4.
+        pkt = self.packet(t, reason)
+        # The distrust is a judgement about THIS trip and is reported in its
+        # packet, so it is cleared only once that packet exists.
+        self._ign_contra_run = 0
+        self._ign_note_distrusted = False
+        why = self._trivial(pkt, t)
+        if why:
+            self.trivial_dropped += 1
+            # Never silently. A dropped trip that should have been kept is the
+            # expensive failure here, so leave the numbers in the journal.
+            print(f"dropped {pkt['started_at'][11:19]}->{pkt['ended_at'][11:19]} "
+                  f"{pkt['vss']['miles']:.4f} mi  {pkt['vss']['pulse_count_trip']}p  "
+                  f"max {pkt['vss']['max_mph']:.1f} mph  {pkt['close_reason']}  "
+                  f"-- {why}", flush=True)
+            return None
+        self.emit(pkt)
+        return pkt
+
+    def _trivial(self, pkt, t):
+        """Is this closed trip below the distance floor? Reason string, or "".
+
+        A PURE DISTANCE FLOOR CANNOT DO THIS JOB, and gets it exactly
+        backwards. The two cases it has to separate are:
+
+            rolling the car one car length to test the VSS tap
+                15 ft, 12 pulses, 0.0029 mi   -- must be KEPT
+            the stray edges a tap throws while it is being worked on
+                28 of them on 2026-10-20,  0.0068 mi   -- must be DROPPED
+
+        The one that must be kept is the SMALLER of the two. Magnitude is not
+        just a weak discriminator here, it points the wrong way. What separates
+        them is rate: a car rolling 15 ft in two seconds peaks near 6 Hz, while
+        a stray edge is one pulse in one second and reads as exactly 1.00 Hz.
+        Hence the floor is distance AND peak rate, never distance alone.
+
+        THE ENGINE GUARD IS THE WHOLE REASON THIS IS SAFE, and it is not the
+        guard this started out as. Trip 26 -- the 5.4-mile errand on 2026-10-19
+        -- drove its whole length with the VSS tap open-circuit and closed with
+        0 pulses, 0.0 mi and max_vss_hz 0.0. It clears the duration filter on
+        running_s, so it arrives here, and on distance and rate it is
+        indistinguishable from noise. Dropping it would have destroyed a real
+        5.4-mile measurement and taken the odometer chain with it, silently.
+
+        The first version of this exempted `vss_silent_while_running`, the
+        detector that actually caught trip 26. That was wrong, and a replay of
+        a 23-minute dead-tap drive at 1800 rpm proved it: that detector is
+        gated on `max_rpm > 2000`, so gentle suburban driving slips past it,
+        and the floor then ate the trip. The file already says that detector
+        "missed it on the very data it was written for" -- so nothing
+        destructive may be built on top of it.
+
+        The rule instead is structural: THE FLOOR MAY ONLY DROP A SESSION WHOSE
+        ENGINE NEVER RAN. A car cannot have driven anywhere without the engine
+        turning, so when the tach is silent there is no hidden drive to lose,
+        and dropping is provably safe rather than probably safe. The cost
+        asymmetry demands that standard -- a destroyed drive is unrecoverable
+        and silent, a kept 0.0-mile row is cosmetic.
+
+        What this deliberately does NOT drop: an idle-only session, engine
+        running, car stationary, which still emits a 0.0-mile trip. tripd
+        cannot tell that from trip 26 and must not guess. Filtering it belongs
+        in whatever displays trips, where being wrong is reversible.
+
+        Combined with the duration filter above, the floor can therefore only
+        ever fire on one shape: five or more seconds of stray or creeping
+        edges with the engine essentially off -- bench and tap-repair noise,
+        and a key turned to II without starting. Which is all it is for.
+        """
+        if "vss_silent_while_running" in pkt["warnings"]:
+            return ""                      # belt; the next test is the braces
+        if t.running_s > FLOOR_RUN_S:
+            return ""
+        if t.miles() >= TRIVIAL_MI:
+            return ""
+        if t.max_vss_hz > STRAY_PEAK_HZ:
+            return ""
+        return (f"engine never ran (running_s {t.running_s}), under "
+                f"{TRIVIAL_MI} mi, never exceeded {STRAY_PEAK_HZ} Hz "
+                f"-- stray edges, not a drive")
+
+    def packet(self, t, reason):
+        # DURATION COMES FROM `ms`, NEVER FROM `wall`. On 2026-10-19 the Pi's
+        # clock stepped +13004 s mid-trip when NTP finally reached it, and the
+        # wall subtraction reported a 49-minute drive as 4 h 26 m -- while the
+        # trip's own running_s of 2954 sat right there contradicting it.
+        if t.started_ms is not None and t.last_active_ms is not None:
+            dur = max(1, int(round((t.last_active_ms - t.started_ms) / 1000.0)))
+        else:
+            dur = max(1, int((t.last_active - t.started_at).total_seconds()))
+
+        jumps = self.clock_jumps[t.jump_base:]
+        # Back-date the trip the way the Pico back-dates a log file it opened
+        # before SNTP arrived: anchor on the LAST wall reading, which is the
+        # most corrected one this trip ever saw, and subtract elapsed `ms`.
+        # Without this a trip that began on fake-hwclock time keeps a
+        # started_at hours wrong while clock.trusted cheerfully says true.
+        started_at, ended_at, anchored = t.started_at, t.last_active, False
+        if jumps and t.last_ms is not None and t.started_ms is not None:
+            def back(ms_then):
+                return (t.last_at - dt.timedelta(
+                    seconds=(t.last_ms - ms_then) / 1000.0)).replace(microsecond=0)
+            started_at = back(t.started_ms)
+            if t.last_active_ms is not None:
+                ended_at = back(t.last_active_ms)
+            anchored = True
+
+        def ign_stamp(ms_then, fallback):
+            """An ign timestamp on the same footing as started_at/ended_at.
+
+            The whole point of back-dating is that `ms` survives a clock step
+            and `wall` does not. Anchoring `started_at` but leaving the `ign`
+            block on raw wall shipped two timestamps for one instant on
+            2026-10-23, 6163 s apart. Any field that names a moment in the
+            trip gets the same treatment or it is a trap for whoever reads it.
+            """
+            if anchored and ms_then is not None:
+                return back(ms_then).isoformat()
+            return fallback.isoformat() if fallback else None
+
+        max_rpm = int(t.max_tach_hz * TACH_HZ_TO_RPM)
+        mean_rpm = (int(t.tach_hz_sum / t.running_s * TACH_HZ_TO_RPM)
+                    if t.running_s else 0)
+        # A tap that goes open-circuit is SILENT, not noisy, so the only way to
+        # catch it from the data is a record that contradicts itself. Both of
+        # these fired for real on 2026-10-19 and neither packet said a word.
+        warnings = []
+        if jumps:
+            warnings.append("clock_jumped")
+        # NEITHER OF THESE MAY BE GATED ON AN EXACT ZERO. A tap that has gone
+        # open-circuit is silent, but one stray edge is indistinguishable from
+        # a reading, and a single stray edge is exactly what these taps produce
+        # -- 28 of them during the 2026-10-20 VSS repair alone. One VSS pulse
+        # in a second reads as precisely 1.00 Hz, clears MOVING_HZ, and adds 1
+        # to moving_s; caridle needs ACTIVE_RUN=5 for the very same reason
+        # (`caridle`), so the allowance here is the same 5 and for the same
+        # reason.
+        #
+        # Found by replay on 2026-10-20: the drive home on 2026-10-19 with the
+        # tach tap already dead scored moving_s=146 over 0.7134 mi with 9 tach
+        # pulses all day -- and did NOT warn, because ONE row of its 336 read
+        # 8.0 Hz and set running_s=1. The detector written for that failure
+        # missed it on the very data it was written for.
+        #
+        # An ABSOLUTE allowance, not a fraction. A fraction was the first idea
+        # and it is wrong: a trip that idles twenty minutes and then drives two
+        # can legitimately show moving_s below a tenth of running_s, and
+        # dressing that up as a dead tap would be a false alarm on a healthy
+        # car. A dead tap gives a handful of seconds, never a proportion.
+        STRAY_S = 5
+        # An engine that ran under load for a minute and recorded no distance.
+        # Idling in the driveway stays near 840 rpm and must NOT trip this --
+        # the 5.4-mile errand emitted running_s=1459, max_rpm=2940, mean 1186
+        # and miles=0.0 with a perfectly healthy tach.
+        if (t.running_s >= 60 and t.moving_s <= STRAY_S
+                and max_rpm > 2000 and mean_rpm > 1000):
+            warnings.append("vss_silent_while_running")
+        # The mirror case, which is how the tach tap failed earlier the same
+        # day: distance accumulating with the engine apparently not turning.
+        if t.moving_s >= 60 and t.running_s <= STRAY_S:
+            warnings.append("tach_silent_while_moving")
+
+        integral = (t.vss_hz_integral / t.vss) if t.vss else None
+        return {
+            "schema": SCHEMA,
+            "trip_id": str(uuid.uuid4()),
+            "vehicle": "accord01",
+            "node": {"id": self.node_id, "kind": self.node_kind, "sw": SW},
+            "counter_epoch": t.epoch,
+            "started_at": started_at.isoformat(),
+            # ended_at is the last ACTIVE sample -- what the driving did.
+            # closed_at is the last row in `raw`, which runs on through the
+            # 120 s engine-off window, so the two differ by design.
+            "ended_at": ended_at.isoformat(),
+            "closed_at": t.last_at.isoformat(),
+            "duration_s": dur,
+            "close_reason": reason,
+            "vss": {
+                "pulse_count_trip": t.vss,
+                "pulse_total": self.lifetime_vss,
+                "pulse_total_at_start": t.vss_total_at_start,
+                "pulses_per_mile_used": PULSES_PER_MILE,
+                "miles": round(t.miles(), 4),
+                "max_mph": round(t.max_vss_hz * 0.8744, 1),
+                "moving_s": t.moving_s,
+            },
+            "tach": {
+                "pulse_count_trip": t.tach,
+                "pulse_total": self.lifetime_tach,
+                "hz_to_rpm": TACH_HZ_TO_RPM,
+                "max_rpm": max_rpm,
+                "mean_rpm_running": mean_rpm,
+                "running_s": t.running_s,
+            },
+            # Analog, only when the log actually carried it. RAW COUNTS, and
+            # deliberately NOT converted to volts here: the divider ratio and
+            # the in-situ calibration both live downstream, and a packet that
+            # shipped volts would bake today's guess at the ratio into data
+            # that outlives it. fuel/ADC_INTERFACE_SPEC.md §7.
+            **({"analog": {
+                "rows": t.a_rows,
+                "rows_live": t.a_live,          # B11 live, i.e. a real reading
+                "bad_rows": self.analog_bad,
+                "fuel_counts_mean": round(t.a_fuel_sum / t.a_rows, 1),
+                "fuel_counts_lo": t.a_fuel_lo,
+                "fuel_counts_hi": t.a_fuel_hi,
+                # The burst spread across the trip is the float-noise estimate
+                # the spec asks to preserve; it is data, not error.
+                "fuel_spread": t.a_fuel_hi - t.a_fuel_lo,
+                "fuel_first_live": t.a_fuel_first,
+                "fuel_last_live": t.a_fuel_last,
+                "supply_counts_mean": round(t.a_sup_sum / t.a_rows, 1),
+                "supply_counts_lo": t.a_sup_lo,
+                "supply_counts_hi": t.a_sup_hi,
+                "die_counts_mean": round(t.a_die_sum / t.a_rows, 1),
+                "die_counts_lo": t.a_die_lo,
+                "die_counts_hi": t.a_die_hi,
+                "ms_since_ign_max": t.a_since_ign_max,
+            }} if t.a_rows else {}),
+            "samples": {
+                "count": t.samples,
+                "gaps": t.gaps,
+                # 1 Hz rate integral over the hardware edge count. 1.000 means
+                # the two independent measurements of the same pulse train
+                # agree; a drift here means dropped rows.
+                "integral_check": round(integral, 4) if integral else None,
+            },
+            # clock_state() describes the clock AT CLOSE. That is not enough
+            # on its own: both 2026-10-19 packets reported trusted=true over a
+            # started_at that was hours wrong, because NTP had landed by the
+            # time the trip closed. The step itself has to be in the record.
+            "clock": {**clock_state(),
+                      "jumps": len(jumps),
+                      "jump_total_s": round(sum(j["step_s"] for j in jumps)),
+                      "timestamps_from": "ms-anchored" if anchored else "wall",
+                      **({"wall_started_at": t.started_at.isoformat(),
+                          "steps": jumps} if anchored else {})},
+            "warnings": warnings,
+            # Omitted entirely when the bus said nothing during the trip, so a
+            # reader can tell "ignition was on" from "nobody asked".
+            # Gated on notes OR polls, not polls alone. A GP5 that has gone
+            # loose makes _ign_state return None on every sample, so ign_polls
+            # stays 0 and the whole block used to vanish -- taking the
+            # contradiction counters, the only evidence of the fault, with it.
+            # A failure that erases its own symptom is the worst shape there is.
+            **({"ign": {
+                # What ACTUALLY decided, not what used to. Before
+                # 2026-10-23 this was hardcoded "rs485" while three ignition
+                # senses existed and the notes were being thrown away.
+                "source": t.ign_src or "rs485",
+                "polls_seen": t.ign_polls,
+                # Which sense actually decided, and how often. A GP5 that has
+                # come loose reads OFF forever and is otherwise silent, so the
+                # only way to see it from the packet is a record that
+                # contradicts itself: notes arriving while none of them are
+                # trusted, or disagreements with the tach.
+                "note_count": self.ign_notes,
+                "note_bad": self.ign_notes_bad,
+                "decided_by_note": self.ign_note_acts,
+                "decided_by_poll": self.ign_poll_acts,
+                "tach_contradictions": self.ign_disagreements,
+                "note_distrusted": self._ign_note_distrusted,
+                "ign_on_at": ign_stamp(t.ign_on_ms, t.ign_on_at),
+                "ign_off_at": ign_stamp(t.ign_off_ms, t.ign_off_at),
+                "key_in_seen": t.key_in_seen,
+            }} if (t.ign_polls or self.ign_notes) else {}),
+            "marks": t.marks,
+            "raw": ({"format": RAW_FORMAT, "columns": COLUMNS,
+                     "source_file": os.path.basename(t.src or ""),
+                     "rows": t.rows} if self.keep_raw else None),
+        }
+
+    def snapshot(self, offset=None):
+        return {"counter_epoch": self.epoch,
+                "offset": offset,
+                "vss_pulse_total": self.lifetime_vss,
+                "tach_pulse_total": self.lifetime_tach,
+                # Carried so a restart does not lose the seam. Without these,
+                # resuming primes from the next row and the delta across the
+                # restart contributes zero -- about 80 pulses (0.02 mi) at
+                # highway speed, every time tripd is restarted mid-drive.
+                "prev_vss": self.prev_vss,
+                "prev_tach": self.prev_tach,
+                "prev_ms": self.prev_ms,
+                "ms_wraps": self.ms_wraps,
+                "source": self.src,
+                "updated": dt.datetime.now().isoformat(timespec="seconds")}
+
+    def resume_counters(self, state):
+        """Pick up the counters exactly where a previous run left off.
+
+        Only safe when resuming the SAME file at the SAME offset -- otherwise
+        the saved prev_* belong to a different point in the stream and the
+        first delta would be nonsense. Caller checks that.
+        """
+        if state.get("prev_vss") is None:
+            return False
+        self.prev_vss = int(state["prev_vss"])
+        self.prev_tach = int(state["prev_tach"])
+        self.prev_ms = int(state["prev_ms"])
+        self.ms_wraps = int(state.get("ms_wraps", 0))
+        self.prev_ms_mono = self.prev_ms + self.ms_wraps * MS_WRAP
+        self.base_zero = False
+        self.last_known = None     # consumed: prev_* is authoritative now
+        return True
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--once", metavar="CSV", help="replay one finished log and exit")
+    ap.add_argument("--follow", action="store_true", help="watch --dir for live rows")
+    ap.add_argument("--dir", default="~/vsslogs", help="where vssrec writes logs")
+    ap.add_argument("--queue", default="~/trips", help="trip queue root")
+    ap.add_argument("--state", help="state file (default <queue>/state.json)")
+    ap.add_argument("--node", default=os.uname().nodename)
+    ap.add_argument("--kind", default="pi4-bench")
+    ap.add_argument("--no-raw", action="store_true", help="omit raw rows")
+    ap.add_argument("--hp", default=os.path.expanduser("~/hondaPico/hp"),
+                    help="RS-485 shortcut used to read ign/key_in")
+    ap.add_argument("--ign-poll", type=float, default=15.0, metavar="SECS",
+                    help="poll ign over RS-485 this often; 0 disables")
+    ap.add_argument("--dry-run", action="store_true", help="print, queue nothing")
+    a = ap.parse_args()
+    if not (a.once or a.follow):
+        ap.error("need --once <csv> or --follow")
+
+    qroot = pathlib.Path(os.path.expanduser(a.queue))
+    statep = pathlib.Path(os.path.expanduser(a.state)) if a.state else qroot / "state.json"
+    queue = qroot / "queue"
+    if not a.dry_run:
+        for d in (queue, qroot / "sent", qroot / "rejected"):
+            d.mkdir(parents=True, exist_ok=True)
+
+    # --once must not disturb the live lifetime total: replaying a log would
+    # double-count it. Offline replay therefore starts from a blank state.
+    state = {}
+    if a.follow and statep.exists():
+        state = json.loads(statep.read_text())
+
+    emitted = []
+
+    def emit(pkt):
+        emitted.append(pkt)
+        line = (f"trip {pkt['started_at'][11:19]}->{pkt['ended_at'][11:19]} "
+                f"{pkt['vss']['miles']:7.3f} mi  {pkt['duration_s']:5d}s  "
+                f"max {pkt['vss']['max_mph']:5.1f} mph / {pkt['tach']['max_rpm']:5d} rpm  "
+                f"chk {pkt['samples']['integral_check']}  {pkt['close_reason']}")
+        print(line, flush=True)
+        if a.dry_run:
+            return
+        name = f"trip-{pkt['started_at'][:19].replace(':','').replace('-','')}-{pkt['trip_id'][:8]}.json"
+        tmp = queue / (name + ".part")
+        tmp.write_text(json.dumps(pkt, separators=(",", ":")))
+        tmp.rename(queue / name)        # atomic: tripsend never sees a partial
+        print(f"  queued {queue/name}", flush=True)
+
+    poller = IgnPoller(a.hp, 0 if a.once else a.ign_poll)
+    if poller.start():
+        print(f"ign poll: {a.hp} every {a.ign_poll:.0f}s", flush=True)
+    elif a.follow and a.ign_poll > 0:
+        print(f"ign poll: DISABLED ({a.hp} not found) -- tach-only trip bounds",
+              flush=True)
+    tr = Tracker(a.node, a.kind, state, emit, keep_raw=not a.no_raw,
+                 ign=poller if poller._t else None)
+
+    # The file offset lives here, not in save()'s argument. It used to be an
+    # argument defaulting to None, and the final save() on SIGTERM therefore
+    # wrote `offset: null` over a perfectly good offset. The next tripd then
+    # read "no offset", restarted from the top of the file and counted the
+    # whole drive a SECOND time -- 23.401 mi for a 13.653 mi drive. Found by
+    # restarting tripd mid-replay on 2026-10-16. A lost offset must mean
+    # "start over", so it must never be written by accident.
+    pos = {"at": None}
+
+    def save():
+        if not a.dry_run and a.follow:
+            statep.write_text(json.dumps(tr.snapshot(pos["at"]), indent=1))
+
+    if a.once:
+        p = os.path.expanduser(a.once)
+        tr.set_source(p)
+        with open(p) as fh:
+            for line in fh:
+                tr.feed(line.rstrip("\n"))
+        tr.close("log_end")
+        print(f"\n{len(emitted)} trip(s)  "
+              f"{sum(p['vss']['miles'] for p in emitted):.3f} mi total"
+              + (f"  ({tr.trivial_dropped} below the distance floor)"
+                 if tr.trivial_dropped else ""), flush=True)
+        return
+
+    stop = {"v": False}
+    signal.signal(signal.SIGTERM, lambda *_: stop.__setitem__("v", True))
+    signal.signal(signal.SIGINT, lambda *_: stop.__setitem__("v", True))
+
+    logdir = os.path.expanduser(a.dir)
+    cur, fh, last_row = None, None, time.time()
+    print(f"tripd following {logdir}  -> {queue}", flush=True)
+    while not stop["v"]:
+        newest = max(sorted(glob.glob(os.path.join(logdir, "*.csv"))),
+                     key=os.path.getmtime, default=None) if glob.glob(
+                     os.path.join(logdir, "*.csv")) else None
+        if newest and newest != cur:
+            if fh:
+                fh.close()
+            cur, fh = newest, open(newest)
+            # Resume where this process left off only if it is the same file as
+            # the saved state; a different file starts from its beginning.
+            resumed = False
+            if state.get("source") == newest and state.get("offset") is not None:
+                fh.seek(int(state["offset"]))
+                pos["at"] = int(state["offset"])
+                tr.set_source(newest)
+                # set_source clears the counters, so restore AFTER it.
+                resumed = tr.resume_counters(state)
+            else:
+                pos["at"] = 0
+                tr.set_source(newest)
+            print(f"  reading {newest}"
+                  + (f" resumed at {state['offset']} "
+                     f"(vss {state['prev_vss']}, tach {state['prev_tach']})"
+                     if resumed else " from the start"), flush=True)
+            state = {}      # consumed; a later rotation must not reuse it
+        if fh:
+            where = fh.tell()
+            line = fh.readline()
+            while line.endswith("\n"):
+                tr.feed(line.rstrip("\n"))
+                last_row = time.time()
+                where = fh.tell()
+                line = fh.readline()
+            fh.seek(where)              # hold position before a partial line
+            pos["at"] = where
+            save()
+        if tr.trip and time.time() - last_row > STALL_AFTER:
+            tr.close("log_stalled")
+            save()
+        time.sleep(2)
+    poller.stop()
+    if tr.trip:
+        tr.close("shutdown")
+    save()
+    print(f"tripd stopped (ign polls {poller.good}/{poller.polls} ok"
+          + (f", {tr.trivial_dropped} trip(s) below the distance floor)"
+             if tr.trivial_dropped else ")"), flush=True)
+
+
+if __name__ == "__main__":
+    main()

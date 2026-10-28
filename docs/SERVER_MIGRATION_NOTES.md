@@ -1,3 +1,11 @@
+> October 28 public-scope update — Codex `pcb-manager`, session
+> `01a17045-1855-7af2-b76a-32c2b778cd64` (resume with `codex resume` and that ID).
+> The receiver and canonical conversion core are now in `logger/server/`.
+> See its README for the standalone deployment. The assessment below is
+> historical and covers the broader private DB/dashboard installation;
+> those components are intentionally excluded from this public package.
+> No live service migration has occurred.
+
 # Server migration: source map and outstanding work
 
 Recorded October 27, 2026 by Codex `logger-wifi-piless`.

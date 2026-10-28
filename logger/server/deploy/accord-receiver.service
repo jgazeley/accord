@@ -1,0 +1,25 @@
+[Unit]
+Description=Accord raw upload receiver and trip converter
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=accord-receiver
+Group=accord-receiver
+WorkingDirectory=/opt/accord/logger/server
+EnvironmentFile=/etc/accord-receiver.env
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/usr/bin/python3 /opt/accord/logger/server/run.py
+StateDirectory=accord-receiver
+UMask=0077
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=40
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectHome=yes
+ProtectSystem=strict
+
+[Install]
+WantedBy=multi-user.target

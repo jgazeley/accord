@@ -11,7 +11,8 @@ firmware or hardware. Successors must use their own verified session identities.
 - `keyless/` contains local Pico W keyless firmware, native tests and KiCad
   hardware. It does not communicate with or depend on the logger's VM bridge.
 - `logger/` contains Pico W recording/upload firmware, native tests and build
-  tooling. Server migration is deferred; no server code is included yet.
+  tooling. `logger/server/` now contains the raw receiver and trip conversion core;
+  database/dashboard migration remains outside this public repository.
 - The Pi 4 is a portable bench, not a normal ingestion dependency.
 - Preserve the existing source repositories and other agents' worktrees.
   Copying files here does not authorize flashing or service cutover.
@@ -68,9 +69,7 @@ a local Custom symbol library and table were added from embedded definitions.
   notices and third-party terms; see [LICENSING.md](LICENSING.md). The unused
   local `keyless/hardware/3d/039301160.stp` is excluded from Git pending license
   provenance. Do not force-add it or include it in a public archive.
-- The new GitHub repository is `jgazeley/accord`. Deploy-key authentication was
-  verified while the remote was empty. No initial commit or push had been made
-  when this note was prepared. Inspect current Git state before proceeding.
+- The new GitHub repository is `jgazeley/accord`. The initial import is published. Inspect current Git state before proceeding.
 
 ## Required attribution
 
@@ -88,3 +87,12 @@ global Git identity. Use this block in new or refreshed seeds and handoffs:
 > and dated updates. Preserve predecessor bookmarks and original attribution when
 > transporting existing commits. If your ID is unavailable, say so rather than
 > inventing one. Include this requirement in any seeds or handoffs you create.
+
+## Public server preparation — October 28, 2026
+
+Codex `pcb-manager`, session `01a17045-1855-7af2-b76a-32c2b778cd64`
+(`codex resume 01a17045-1855-7af2-b76a-32c2b778cd64`).
+The public server stops at raw storage and trip JSON. The historical server
+migration note describes a broader private installation; collecting its DB,
+renderer, personal recordings or private settings is not required here.
+Keep the private development repository and live services unchanged.

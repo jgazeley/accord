@@ -1,0 +1,76 @@
+{
+  "source_repository": "jgazeley/accord-logger",
+  "source_commit": "1e994494f933da99636942d6ec135e857f2b3f6b",
+  "copied_by": {
+    "tool": "Codex",
+    "role": "pcb-manager",
+    "session": "01a17045-1855-7af2-b76a-32c2b778cd64"
+  },
+  "files": [
+    {
+      "source": "bridge/host/accord_bridge.py",
+      "destination": "logger/server/host/accord_bridge.py",
+      "sha256": "397d0ded97fe2c5ad2b2a62df027aa157b5a3a13eea7f4ce0958f4d7a728b2cb"
+    },
+    {
+      "source": "bridge/host/server.py",
+      "destination": "logger/server/host/server.py",
+      "sha256": "aac0bba79919b9c399e2ef2bd5c9f82342c2f4ede4ef56029040041ea6d6a866"
+    },
+    {
+      "source": "bridge/host/storage.py",
+      "destination": "logger/server/host/storage.py",
+      "sha256": "c2034a93410be1ee1e24f038f0c45c1fce739e2b29f5ecd78c246f01c3d3ed3a"
+    },
+    {
+      "source": "bridge/host/pipeline.py",
+      "destination": "logger/server/host/pipeline.py",
+      "sha256": "cf72861a485aa1d756f40e64838a53fa6fb596d0ffc2f9b368e61e0da713db33"
+    },
+    {
+      "source": "bridge/host/replay.py",
+      "destination": "logger/server/host/replay.py",
+      "sha256": "42d21cc8f1b6b4f17de25efd11c4f6e2761dff17864cc01c3f41f83cc53873bd"
+    },
+    {
+      "source": "bridge/host/events.py",
+      "destination": "logger/server/host/events.py",
+      "sha256": "17f6f2a4e9b137d682588ac908febe08635bd94704ef67e77664bb2d4d11b53b"
+    },
+    {
+      "source": "bridge/host/bridgectl.py",
+      "destination": "logger/server/host/bridgectl.py",
+      "sha256": "a5b0662461b22e2e9a582ef94999f8f4b043374b21384444e07577672778a803"
+    },
+    {
+      "source": "benchlink/tripd",
+      "destination": "logger/server/upstream/tripd",
+      "sha256": "d9c9add62c736bf177e7bd700ac68556eac7215bb072a09e95aa6c0aa2e7d372"
+    },
+    {
+      "source": "benchlink/picow-logger/tools/cardconv.py",
+      "destination": "logger/server/upstream/cardconv.py",
+      "sha256": "7d4751f459484409329d05b5c9626cdfbd877c244691f2769e6f97264c53ca8f"
+    },
+    {
+      "source": "bridge/tests/check_wifi_contract.py",
+      "destination": "logger/server/tests/check_wifi_contract.py",
+      "sha256": "393cff520506f8fb8797b56c11e771b428df2a443c85c8dd7b1ff457ce96eec3",
+      "adaptation": "Synthetic device identity replaced with example ID."
+    },
+    {
+      "source": "benchlink/picow-logger/CARD_FORMAT.md",
+      "destination": "logger/protocols/CARD_FORMAT.md",
+      "sha256": "41b869f009c42621788c6a14d2900a6be67cf5ded13b600ed90bc5a5c4def7ff"
+    },
+    {
+      "source": "benchlink/picow-logger/UPLOAD_PROTOCOL.md",
+      "destination": "logger/protocols/UPLOAD_PROTOCOL.md",
+      "sha256": "d3e14aa1e68993dfc335581414f5bf6f7244fa3a8d2d07356ceef9bfd29ff933"
+    }
+  ],
+  "notes": [
+    "Core host and conversion source bytes preserved. No private runtime files, database, credentials or real recordings copied.",
+    "Firmware remains the independently recorded v0.8.1-dev baseline."
+  ]
+}
