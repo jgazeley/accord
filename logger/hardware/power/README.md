@@ -6,6 +6,15 @@ Selective export of the existing `9527a14` engineering candidate from
 The circuit has not been assembled or accepted; component, protection,
 current-budget, isolation and firmware-interface work remains.
 
+## LRA-01 continuation — October 28, 2026
+
+The electrical lead's [interface contract candidate](INTERFACE_CONTRACT.md)
+defines qualified IGN, GP6 HOLD, startup/shutdown timing, reset/USB behavior,
+current allocations and bounded component changes. It is **pending firmware
+review and engineering/bench closure**, not an accepted implementation.
+Read its [integration handoff](LRA01_HANDOFF.md) for claim attribution,
+validation, unresolved issues and required reviewer dispositions.
+
 ## Read the existing design in revision order
 
 1. [Current LRA-01 packet](../../../coordination/handoffs/LRA-01_POWER_INTERFACE.md)
@@ -38,6 +47,7 @@ From the `accord` repository root:
 ```sh
 python3 -B logger/hardware/power/check_max_on_logic.py
 python3 -B logger/hardware/power/check_cutoff_margins.py
+python3 -B logger/hardware/power/check_interface_contract.py
 ```
 
 These check settled logic and arithmetic under stated assumptions. They do not
@@ -45,6 +55,8 @@ establish component limits, circuit behavior or physical acceptance. Read the
 margin review before applying the original prototype plan: shared-qualified IGN
 supersedes raw-GP5/100 ms rules, and the original 41.4 V clamp is incompatible
 with the selected always-on regulator's input boundary.
+The new contract check adds state/generation and timing-budget examples;
+it does not test the current logger firmware or qualify hardware.
 
 Circuit connection definitions and BOMs are original hardware design source
 under [CERN-OHL-P-2.0](LICENSE). Narrative documentation and verification scripts
