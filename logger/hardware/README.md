@@ -24,3 +24,6 @@ input records ADC measurements, not an independently calibrated fuel quantity.
 A reviewed, consolidated logger schematic/BOM remains to be published.
 Automatic power cutoff is not implemented in this firmware baseline.
 No fabrication-ready logger board is claimed by this repository.
+
+Current electrical/PCB context: [Rev A context](REV_A_CONTEXT.md).
+Active task authority: [project milestones](../../coordination/PROJECT_MILESTONES.md).

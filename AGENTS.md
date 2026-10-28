@@ -6,6 +6,24 @@ Bookmark: `codex resume 01a17526-034c-78f1-9d09-24c3b88c3dc7`.
 This identifies the migration/documentation work, not authorship of all copied
 firmware or hardware. Successors must use their own verified session identities.
 
+## Active authority — October 28, 2026
+
+Owner direction: this repository is the authoritative home for new active
+Accord development, hardware and coordination. `jgazeley/accord-logger` is
+historical reference and retained deployment storage, not a competing tracker.
+Read [current tasks](coordination/PROJECT_MILESTONES.md) and the
+[manager handoff](coordination/handoffs/PCB_MANAGER_TRANSITION_2026-10-28.md).
+New agents start here; recover only missing material with provenance/public review.
+The successor manager claims its own identity; predecessor sessions are history.
+
+Artifact owners: manager owns root/coordination; logger role owns logger firmware;
+bridge role owns logger/server; electrical/KiCad roles own logger/hardware with
+one claimed edit scope; keyless role owns keyless. Preserve others' work and stage
+only explicit task paths. The single tracker records actual claimants/dependencies.
+Publishing source does not authorize deployment, hardware changes or DB writes.
+
+Prepared October 28, 2026 by Codex `pcb-manager`, session `01a17045-1855-7af2-b76a-32c2b778cd64`. Historical bookmark: `codex resume 01a17045-1855-7af2-b76a-32c2b778cd64`. Successors use their own identities.
+
 ## Project boundaries
 
 - `keyless/` contains local Pico W keyless firmware, native tests and KiCad
@@ -63,7 +81,7 @@ a local Custom symbol library and table were added from embedded definitions.
   or adapting server files. They identify stale guidance, files absent from Git,
   runtime data to retain and the guarded database-intake boundary.
 - Keep credentials, configured firmware binaries and private runtime data out
-  of source control. Inspect the exact initial-commit contents before publishing.
+  of source control. Inspect exact staged contents before every public commit/push.
 - Owner-approved licensing intent is free reuse with credit. Original software
   and docs use Apache 2.0; original hardware uses CERN-OHL-P-2.0. Preserve
   notices and third-party terms; see [LICENSING.md](LICENSING.md). The unused
@@ -92,7 +110,7 @@ global Git identity. Use this block in new or refreshed seeds and handoffs:
 
 Codex `pcb-manager`, session `01a17045-1855-7af2-b76a-32c2b778cd64`
 (`codex resume 01a17045-1855-7af2-b76a-32c2b778cd64`).
-The public server stops at raw storage and trip JSON. The historical server
+Historical preparation checkpoint: the public server stops at raw storage and trip JSON. The historical server
 migration note describes a broader private installation; collecting its DB,
 renderer, personal recordings or private settings is not required here.
 Keep the private development repository and live services unchanged.

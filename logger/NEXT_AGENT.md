@@ -1,3 +1,9 @@
+> Current coordination, October 28, 2026: new work starts in this repository.
+> Read [current tasks](../coordination/PROJECT_MILESTONES.md); power/shutdown
+> interface agreement precedes that implementation. The configuration instructions
+> below remain applicable; this older packet does not itself assign a new task.
+> Updated by Codex pcb-manager, session `01a17045-1855-7af2-b76a-32c2b778cd64`.
+
 # Next agent: logger configuration after restructuring
 
 Prepared October 27, 2026 by Codex `logger-wifi-piless`.
