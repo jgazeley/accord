@@ -24,6 +24,16 @@ Publishing source does not authorize deployment, hardware changes or DB writes.
 
 Prepared October 28, 2026 by Codex `pcb-manager`, session `01a17045-1855-7af2-b76a-32c2b778cd64`. Historical bookmark: `codex resume 01a17045-1855-7af2-b76a-32c2b778cd64`. Successors use their own identities.
 
+### Current manager claim — October 28, 2026
+
+October 28, 2026 update by Codex `pcb-manager`, session `01a18447-07c2-7bb3-8318-9b276cfdb3b8`.
+Current manager bookmark: `codex resume 01a18447-07c2-7bb3-8318-9b276cfdb3b8`.
+Identity verified from matching `CODEX_SESSION_ID` and `CODEX_THREAD_ID`.
+
+Scope: root/coordination, task assignment and integration. Specialist claims and
+dependencies remain in `coordination/PROJECT_MILESTONES.md`. The preceding manager
+identities and bookmarks are historical attribution.
+
 ## Project boundaries
 
 - `keyless/` contains local Pico W keyless firmware, native tests and KiCad

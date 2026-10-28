@@ -2,8 +2,14 @@
 
 Prepared October 28, 2026 by Codex `pcb-manager`, session `01a17045-1855-7af2-b76a-32c2b778cd64`. Historical bookmark: `codex resume 01a17045-1855-7af2-b76a-32c2b778cd64`. Successors use their own identities.
 
-**State:** ready, unclaimed. **Parent:** M2; feeds M5. **Responsibility:** electrical
-lead, with logger-firmware review; successor manager integrates the decision.
+October 28, 2026 update by Codex `pcb-manager`, session `01a18447-07c2-7bb3-8318-9b276cfdb3b8`.
+Current manager bookmark: `codex resume 01a18447-07c2-7bb3-8318-9b276cfdb3b8`.
+Identity verified from matching `CODEX_SESSION_ID` and `CODEX_THREAD_ID`.
+
+**State:** ready; electrical lead and logger-firmware reviewer unclaimed.
+**Parent:** M2; feeds M5. **Responsibility:** electrical lead, with logger-firmware
+review; current `pcb-manager` integrates the decision. The manager has prepared
+this assignment, not claimed electrical approval.
 Use your own session identity. No old agent is presumed currently available.
 
 ## Objective and context
@@ -12,9 +18,10 @@ Produce one compatible IGN/HOLD/deadline/reset/USB contract plus concrete
 current/protection decisions so electrical capture and firmware can proceed.
 No hardware implementation or fabrication is part of this assignment.
 
-Start in `jgazeley/accord`, based on the coordination-transition commit (find
-with `git log -1 -- coordination/PROJECT_MILESTONES.md`); code baseline is
-`8261314`. Suggested branch `task/LRA-01-<own-session-short>`; own
+Start in `jgazeley/accord`; transition base is
+`303092a74526c1107ab705457064b6062dfc0906`, code baseline `8261314`.
+Use the latest pushed manager packet revision (see
+`git log -1 -- coordination/handoffs/LRA-01_POWER_INTERFACE.md`). Suggested branch `task/LRA-01-<own-session-short>`; own
 `logger/hardware/power/` design documents only. Propose cross-owner changes
 rather than edit firmware or global task state concurrently with its owner.
 
@@ -25,6 +32,50 @@ The historical exact circuit tables are at private `logger-power/` candidate
 `9527a14`. Retrieve only needed documents/scripts with provenance and public
 review. If private access is unavailable, request the selected export from the
 manager; do not require predecessor conversations or invent component values.
+
+## Manager source triage — review input, not firmware acceptance
+
+Inspected public firmware at `303092a` (unchanged code baseline `8261314`):
+
+- `accord-logger.ino`: `setup()` calls SD then network setup; no HOLD output is
+  initialized. `setup1()` configures active-low GP5 with a pull-up and can wait
+  up to 3000 ms for USB serial before `loop1()` begins. Startup HOLD cannot rely
+  on that loop meeting the old 100 ms proposal.
+- `loop1()` samples GP5 for `networkSetIgn()` every 20 ms, with a nonblocking
+  mailbox that can reject a contended update. This does not establish the later
+  proposed <=10 ms observation bound. The reviewer must specify the observation
+  owner, edge timestamp and worst-case delay, including startup and contention.
+- `logger_sd.h` exposes setup/loop/status/upload APIs, no shutdown handshake.
+  Core 1 produces lines; core 0 owns SdFat/SPI. `sdLoop()` drains and periodically
+  syncs at 10000 ms or 4096 bytes; this is not a bounded finalization operation.
+  Decide producer quiescence, drain/close acknowledgment, timeout and IGN return
+  during each phase before implementing LRA-05.
+- `wifi_schedule.h` has 5000 ms settling and a 900000 ms maximum radio window.
+  Those govern radio policy only. Its initial known-OFF state can open a window;
+  it must not be reused to grant a fresh power HOLD after IGN-absent reset/USB boot.
+  Proposed 1800 s HOLD / nominal 2048 s hardware cutoff still need tolerances,
+  finalization reserve and a single qualified-IGN rearm definition.
+
+This is static source inspection; no timing, circuit or firmware acceptance test
+was performed. Electrical and firmware reviewer acknowledgments remain required.
+The exact historical power tables are still a bounded manager export dependency;
+no engineering artifacts have been imported or declared accepted by this update.
+
+## Assignment and return protocol
+
+Before editing, acknowledge electrical lead or firmware reviewer with your own
+verified identity to the manager. Electrical scope is
+`logger/hardware/power/`; firmware review belongs in
+`logger/hardware/power/FIRMWARE_REVIEW.md`, reserved to the acknowledged reviewer.
+The electrical lead owns the other design documents in that directory. If one
+person performs both analyses, record that and retain a separate review gate.
+Firmware source is read-only for this task. Manager alone updates the tracker.
+
+Return the contract candidate, review findings and explicit unresolved decisions,
+source provenance, checks and pushed branch/commit. Manager integration is blocked
+until the electrical and firmware dispositions are recorded; missing measurements
+must remain named bench requirements, not inferred passes. Use remote/no-bench
+analysis initially. The first deliverable may be a candidate with blockers.
 
 ## Required decisions/deliverables
 

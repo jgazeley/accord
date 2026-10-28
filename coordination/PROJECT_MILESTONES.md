@@ -2,6 +2,10 @@
 
 Prepared October 28, 2026 by Codex `pcb-manager`, session `01a17045-1855-7af2-b76a-32c2b778cd64`. Historical bookmark: `codex resume 01a17045-1855-7af2-b76a-32c2b778cd64`. Successors use their own identities.
 
+October 28, 2026 update by Codex `pcb-manager`, session `01a18447-07c2-7bb3-8318-9b276cfdb3b8`.
+Current manager bookmark: `codex resume 01a18447-07c2-7bb3-8318-9b276cfdb3b8`.
+Identity verified from matching `CODEX_SESSION_ID` and `CODEX_THREAD_ID`.
+
 This is the **single active project task tracker**. Owner direction, October 28:
 new work and coordination start in `jgazeley/accord`; `accord-logger` becomes a
 historical reference and a source of missing material. Old runtime locations
@@ -23,10 +27,13 @@ remain in use until separately migrated. Do not maintain another active tracker.
   Public extraction did not change installed firmware or live services.
 - **First blocker to resolve:** one qualified-IGN/HOLD/shutdown contract and
   the cutoff candidate's power-budget/protection gaps.
-- **Next action:** claim [LRA-01](handoffs/LRA-01_POWER_INTERFACE.md), electrical
-  lead with firmware review. No other session is presumed currently running.
-- **Authority:** the successor `pcb-manager` started here owns coordination.
-  The predecessor session is historical; new manager identity is pending claim.
+- **Next action:** electrical lead claims [LRA-01](handoffs/LRA-01_POWER_INTERFACE.md);
+  logger-firmware reviewer separately acknowledges review. Manager source triage
+  is available in the packet. LRA-03/04 packets are prepared for parallel claims.
+- **Authority:** Codex `pcb-manager`, session `01a18447-07c2-7bb3-8318-9b276cfdb3b8`,
+  claims root/coordination on October 28, 2026. Predecessor remains historical.
+  No electrical, firmware, hardware-integrator or communications specialist has
+  acknowledged a current claim; preparation is not dispatch or acceptance.
 
 ## Milestones (existing IDs retained)
 
@@ -48,15 +55,15 @@ requirement. Do not import every historical proposed signal into Rev A.
 
 State: ready / active / blocked / candidate / accepted / deferred. `Active`
 requires an acknowledged claimant and date. Candidate is not deployed/accepted.
-No LRA task has a live claimant at transition. Every row requires a task packet
+No LRA task has an acknowledged specialist claimant at this manager takeover. Every row requires a task packet
 before dispatch; record the claim and evidence here, not in a second tracker.
 
 | ID | Responsible role | State / dependencies | Outcome and acceptance |
 |---|---|---|---|
-| LRA-01 | Electrical lead; firmware reviewer; manager integrates | Ready, unclaimed | One agreed qualified-IGN/HOLD/startup/shutdown/reset/USB contract; numerical assumptions and faults explicit; current/protection decisions and reviewer disposition |
+| [LRA-01](handoffs/LRA-01_POWER_INTERFACE.md) | Electrical lead; firmware reviewer; manager integrates | Ready; both specialist roles unclaimed; manager source triage recorded | One agreed qualified-IGN/HOLD/startup/shutdown/reset/USB contract; numerical assumptions and faults explicit; current/protection decisions and reviewer disposition |
 | LRA-02 | Power engineer | Ready for analysis; final depends on 01 | Coherent power schematic/BOM, compatible protection, effective capacitance and current/leakage allocations; off-state paths and bench checklist |
-| LRA-03 | Hardware integrator; analog reviewer | Ready; finalize power domains with 01/02 | Current as-built consolidated with unknowns, frozen Rev A pins/connectors/input loading/protection/grounds/mechanics/test points; no full fuel model |
-| LRA-04 | Bounded communications reviewer; hardware/firmware accept | Ready; coordinate 03 | RS-485/CAN/daughterboard comparison with usable GPIO/peripheral/current/voltage/power-off contract; recommendation and fallback |
+| [LRA-03](handoffs/LRA-03_AS_BUILT.md) | Hardware integrator; analog reviewer | Ready, unclaimed; packet prepared; finalize power domains with 01/02 | Current as-built consolidated with unknowns, frozen Rev A pins/connectors/input loading/protection/grounds/mechanics/test points; no full fuel model |
+| [LRA-04](handoffs/LRA-04_COMMUNICATIONS.md) | Bounded communications reviewer; hardware/firmware accept | Ready, unclaimed; packet prepared; coordinate 03 | RS-485/CAN/daughterboard comparison with usable GPIO/peripheral/current/voltage/power-off contract; recommendation and fallback |
 | LRA-05 | Logger firmware | Blocked on 01 contract | Isolated shutdown candidate: early HOLD, bounded SD finalization, IGN-return/reset/watchdog behavior; build/fault/replay tests and rollback; no implicit flash |
 | LRA-06 | KiCad schematic owner | Blocked for freeze on 01–04; known-block capture may start | Consolidated schematic/export/BOM, pin/part/footprint checks and ERC dispositions; explicitly unpopulated options |
 | LRA-07 | Local bench role; owner operates hardware | Blocked on testable 02/03 circuit and authorized bench setup; combined tests use 05 | Measured rails/startup/cutoff/reset/USB/energized-input-with-board-off results; conditions, limits, exceptions and artifacts |
@@ -79,7 +86,7 @@ for every row. Remote electrical work and local physical validation are distinct
 | TIME-01 | Logger/bridge | Deferred design: reset/offline time and retrospective drift policy; hardware reservations feed 03/04 if concrete |
 | KEY-01 | Proximity/keyless | Owner participation required: threshold/repeatability and parked operation independent of Pi/logger; installed settings unknown |
 | DIST-01 | Bridge/DB | Deferred: production-host cutover, packet checkpoints and independent server/VM comparison; not yet implemented |
-| DOC-01 | Successor manager | Ready: claim authority, issue 01, selectively migrate missing engineering documents; no wholesale cleanup |
+| DOC-01 | Codex pcb-manager, `01a18447-07c2-7bb3-8318-9b276cfdb3b8` | Active, claimed October 28: authority recorded; 01 refreshed and 03/04 prepared. Next: provide selected power artifacts when needed by the electrical claimant; no specialist dispatched yet |
 
 ## Decisions and gates
 
