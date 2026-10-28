@@ -13,6 +13,7 @@ This file is only a packet locator. Ready does not mean assigned or running.
 |---|---|
 | Successor pcb-manager / DOC-01 | [Manager handoff](handoffs/PCB_MANAGER_TRANSITION_2026-10-28.md) |
 | LRA-01 power interface | [Power-interface packet](handoffs/LRA-01_POWER_INTERFACE.md) |
+| LRA-02 component margins/current budget | [Returning power-engineer packet](handoffs/LRA-02_COMPONENT_MARGINS.md) |
 | LRA-03 as-built | [As-built/interface packet](handoffs/LRA-03_AS_BUILT.md) |
 | LRA-04 communications | [Communications packet](handoffs/LRA-04_COMMUNICATIONS.md) |
 | Other LRA tasks | Prepare from [template](TASK_PACKET_TEMPLATE.md) when assigned; scope/acceptance in tracker |
