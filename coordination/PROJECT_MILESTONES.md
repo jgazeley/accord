@@ -34,13 +34,14 @@ remain in use until separately migrated. Do not maintain another active tracker.
   required for LRA-01 review.
 - **First blocker to resolve:** one qualified-IGN/HOLD/shutdown contract and
   the cutoff candidate's power-budget/protection gaps.
-- **Next action:** electrical lead claims [LRA-01](handoffs/LRA-01_POWER_INTERFACE.md);
-  logger-firmware reviewer separately acknowledges review. Manager source triage
-  is available in the packet. LRA-03/04 packets are prepared for parallel claims.
+- **Next action:** owner reports LRA-01 electrical work has begun remotely
+  (October 28); session/branch identity is pending receipt. A firmware reviewer
+  is still needed. LRA-03/04 packets are ready for independent remote work.
 - **Authority:** Codex `pcb-manager`, session `01a18447-07c2-7bb3-8318-9b276cfdb3b8`,
   claims root/coordination on October 28, 2026. Predecessor remains historical.
-  No electrical, firmware, hardware-integrator or communications specialist has
-  acknowledged a current claim; preparation is not dispatch or acceptance.
+  LRA-01 electrical work is owner-reported underway; its session identity has
+  not yet been supplied. Firmware, hardware-integrator and communications
+  reviewers remain unclaimed.
 
 ## Milestones (existing IDs retained)
 
@@ -62,12 +63,13 @@ requirement. Do not import every historical proposed signal into Rev A.
 
 State: ready / active / blocked / candidate / accepted / deferred. `Active`
 requires an acknowledged claimant and date. Candidate is not deployed/accepted.
-No LRA task has an acknowledged specialist claimant at this manager takeover. Every row requires a task packet
-before dispatch; record the claim and evidence here, not in a second tracker.
+Owner reports LRA-01 electrical work underway remotely; named session claim
+pending. Other specialist claims remain unacknowledged. Every row requires a
+task packet before dispatch; record the claim and evidence here, not in a second tracker.
 
 | ID | Responsible role | State / dependencies | Outcome and acceptance |
 |---|---|---|---|
-| [LRA-01](handoffs/LRA-01_POWER_INTERFACE.md) | Electrical lead; firmware reviewer; manager integrates | Ready; both specialist roles unclaimed; manager source triage recorded | One agreed qualified-IGN/HOLD/startup/shutdown/reset/USB contract; numerical assumptions and faults explicit; current/protection decisions and reviewer disposition |
+| [LRA-01](handoffs/LRA-01_POWER_INTERFACE.md) | Electrical lead; firmware reviewer; manager integrates | Owner-reported electrical work underway remotely October 28; session/branch pending; firmware reviewer unclaimed | One agreed qualified-IGN/HOLD/startup/shutdown/reset/USB contract; numerical assumptions and faults explicit; current/protection decisions and reviewer disposition |
 | LRA-02 | Power engineer | Ready for gap closure on existing `9527a14` candidate; final depends on 01 | Coherent power schematic/BOM, compatible protection, effective capacitance and current/leakage allocations; off-state paths and bench checklist |
 | [LRA-03](handoffs/LRA-03_AS_BUILT.md) | Hardware integrator; analog reviewer | Ready, unclaimed; packet prepared; finalize power domains with 01/02 | Current as-built consolidated with unknowns, frozen Rev A pins/connectors/input loading/protection/grounds/mechanics/test points; no full fuel model |
 | [LRA-04](handoffs/LRA-04_COMMUNICATIONS.md) | Bounded communications reviewer; hardware/firmware accept | Ready, unclaimed; packet prepared; coordinate 03 | RS-485/CAN/daughterboard comparison with usable GPIO/peripheral/current/voltage/power-off contract; recommendation and fallback |
@@ -93,7 +95,7 @@ for every row. Remote electrical work and local physical validation are distinct
 | TIME-01 | Logger/bridge | Deferred design: reset/offline time and retrospective drift policy; hardware reservations feed 03/04 if concrete |
 | KEY-01 | Proximity/keyless | Owner participation required: threshold/repeatability and parked operation independent of Pi/logger; installed settings unknown |
 | DIST-01 | Bridge/DB | Deferred: production-host cutover, packet checkpoints and independent server/VM comparison; not yet implemented |
-| DOC-01 | Codex pcb-manager, `01a18447-07c2-7bb3-8318-9b276cfdb3b8` | Active, claimed October 28: authority recorded; 01 refreshed and 03/04 prepared. Power export delivered with source hashes and 19 checks passing. Next: owner dispatches LRA-01 electrical lead; record acknowledged claim and firmware reviewer. No specialist dispatched yet |
+| DOC-01 | Codex pcb-manager, `01a18447-07c2-7bb3-8318-9b276cfdb3b8` | Active, claimed October 28: authority recorded; 01 refreshed and 03/04 prepared. Power export delivered with source hashes and 19 checks passing. Owner reports LRA-01 begun remotely; obtain session/branch attribution and firmware review. LRA-03/04 remain available |
 
 ## Decisions and gates
 
