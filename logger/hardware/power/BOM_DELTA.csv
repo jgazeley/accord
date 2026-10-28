@@ -1,0 +1,15 @@
+refs,qty,old_candidate,new_candidate,package,disposition,conditions,evidence
+CCLK,1,Unspecified nominal 47uF; effective22-60uF,KEMET T491D336K016AT,D/7343-31,CONDITIONAL,33uF 10% 16V; 24.057-43.923uF engineering stack; DC/combined-stress qualification pending,COMPONENT_MARGIN_CLOSURE.md section1
+A5_CIN,1,Unspecified4.7uF50V,Murata GRM32ER71H475KA88L,1210,CONDITIONAL,Effective>=1uF at28V; approval-sheet bias/aging and IR required,COMPONENT_MARGIN_CLOSURE.md section1
+A5_COUT,2,Unspecified10uF16V,Murata GRM32ER71H475KA88L,1210; parallel,CONDITIONAL,9.4uF nominal sum; effective>=2.2uF at5.11V; stability/IR pending,COMPONENT_MARGIN_CLOSURE.md section1
+CIN,1,Unspecified100uF50V,Panasonic EEUFR1H101,Radial8x11.5mm; pitch3.5mm,CONDITIONAL,100uF20%50V; 0.870Arms100kHz105C; temperature/inrush pending,COMPONENT_MARGIN_CLOSURE.md section1
+COUT,1,Unspecified820uF16V,Panasonic EEUFR1C102,Radial10x16mm; pitch5mm,CONDITIONAL,1000uF20%16V; 1.790Arms100kHz105C; not TI-listed equivalent; loop/decay pending,COMPONENT_MARGIN_CLOSURE.md section1
+UOE,1,TI SN74LVC1G17DBVR,Nexperia 74AHC1G17GV,SOT753,CONDITIONAL,Same NC1 A2 GND3 Y4 VCC5; supply minimum now2V; loaded ARM/ramp qualification,COMPONENT_MARGIN_CLOSURE.md section2
+QP,1,Infineon IRF4905PbF,Infineon IPD50P04P4L11ATMA2,PG-TO252-3; DPAK,PAIRED_PROPOSAL,IPD50P04P4L-11; G1 D2/tab S3; only with DZ proposal; VGS absolute+5/-16V; test-14..+1V,COMPONENT_MARGIN_CLOSURE.md section2
+DZ,1,Vishay BZX55C12-TAP,Vishay BZX55C10-TAP,DO-35,PAIRED_PROPOSAL,10V nominal clamp for proposed QP; actual hot/low-current clamp and enhancement unproved,COMPONENT_MARGIN_CLOSURE.md section2
+UA5,1,TI TPS70950QDBVRQ1,TI TPS70950QDBVRQ1,SOT-23-5,RETAIN_UNRESOLVED,No permanent preload; low-load output accuracy and all-load ground-current bounds pending,COMPONENT_MARGIN_CLOSURE.md section2
+UGCLK,1,TI SN74LVC1G97DBVR,TI SN74LVC1G97DBVR,SOT-23-6,RETAIN,Retain Schmitt clock gate; no AHC1G08 substitution,COMPONENT_MARGIN_CLOSURE.md section2
+QI QH QMON QRESET,4,onsemi 2N3904,onsemi 2N3904,TO-92,RETAIN_UNRESOLVED,Identify manufacturer; actual base-network hot leakage/saturation; BC846 ICBO is not closure,COMPONENT_MARGIN_CLOSURE.md sections3-4
+QS QREPORT,2,Nexperia BSS138P,Nexperia BSS138P,SOT-23,RETAIN_UNRESOLVED,Actual gate drive and hot injection/leakage required,COMPONENT_MARGIN_CLOSURE.md sections3-4
+DOR,1,LRA-01 Vishay1N4004-E3/54 candidate,Vishay 1N4004-E3/54,DO-41,RETAIN_UNRESOLVED,No new change; cold Vf thermal USB recovery and VIN_SW backfeed tests remain,COMPONENT_MARGIN_CLOSURE.md section5
+TVS,0,Inherited1.5KE30A sole-clamp candidate,No vehicle-approved selection,Unresolved,REJECT_AS_SOLE_CLAMP,41.4V incompatible;1.5KE20A not selected as complete protection; exposure/energy inputs required,COMPONENT_MARGIN_CLOSURE.md section5
