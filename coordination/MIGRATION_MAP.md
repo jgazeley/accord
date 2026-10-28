@@ -23,12 +23,17 @@ Public `8261314` is the pre-coordination baseline. Historical private master
 are provenance; later changes here must record new validation rather than
 pretend to retain the original source hashes.
 
+October 28 update by Codex `pcb-manager`, session `01a18447-07c2-7bb3-8318-9b276cfdb3b8`
+(`codex resume 01a18447-07c2-7bb3-8318-9b276cfdb3b8`): selected power engineering export
+completed; see [review and provenance](reviews/POWER_EXPORT_9527A14_2026-10-28.md).
+
 ## Selective material still to recover
 
-- Power detailed design/BOM/check scripts: historical `logger-power/`, reviewed
-  `9527a14`. Active destination when selected: `logger/hardware/power/`.
-  [Rev A context](../logger/hardware/REV_A_CONTEXT.md) carries immediate blockers
-  and interface requirements. No blanket copy of inventory or session exports.
+- Power detailed design/BOM/check scripts: **selected export complete**, from
+  historical `logger-power/` at `9527a14` to `logger/hardware/power/`. Eleven
+  original files retain exact bytes; manifest preserves hashes and attribution.
+  Current entry point is the [power README](../logger/hardware/power/README.md).
+  Engineering gaps remain; no inventory or private session export was copied.
 - Consolidated current as-built: reconstruct from corrected historical notes,
   ADC specification and owner confirmation. Active destination: logger hardware.
   Unknown component values must stay unknown, not be inferred from a proposal.

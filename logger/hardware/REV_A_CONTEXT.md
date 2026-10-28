@@ -2,6 +2,9 @@
 
 Prepared October 28, 2026 by Codex `pcb-manager`, session `01a17045-1855-7af2-b76a-32c2b778cd64`. Historical bookmark: `codex resume 01a17045-1855-7af2-b76a-32c2b778cd64`. Successors use their own identities.
 
+October 28 export update by Codex `pcb-manager`, session `01a18447-07c2-7bb3-8318-9b276cfdb3b8`
+(`codex resume 01a18447-07c2-7bb3-8318-9b276cfdb3b8`).
+
 This is active task context, **not a complete verified schematic**. It replaces
 transcript reconstruction for onboarding. Task state belongs only in
 [the project tracker](../../coordination/PROJECT_MILESTONES.md).
@@ -69,14 +72,15 @@ Candidate-specific gaps preserved for electrical review:
   fuse/input protection and buck BOM boundaries.
 
 Eleven Boolean and eight margin checks were recorded passing. They establish
-conditional consistency, not assembled analog behavior. The original detailed
-connection tables/BOM/test scripts are **not yet copied** into public source.
-Retrieve only needed artifacts from historical `logger-power/` at `9527a14`
-(or its unchanged descendants), preserve provenance, review for public suitability,
-and make the selected version the single active design in `logger/hardware/power/`.
-A public-only remote agent can start interface review here; it must request a
-reviewed export for missing exact tables rather than inventing them or requiring
-private transcripts. Manager handles that bounded dependency.
+conditional consistency, not assembled analog behavior. The selected detailed
+connection tables/BOM/test scripts are now exported in
+[power/](power/README.md), byte-for-byte from `9527a14`, with source manifest and
+public-content review. All 19 conditional checks passed in the destination.
+Follow its README for revision precedence: the margin review replaces specified
+parts of the base design; these files are not a merged schematic/BOM. Current
+LRA-01 instructions supersede historical paths/staffing/firmware assumptions.
+The electrical agent can begin from this package without private-repository or
+transcript access. Engineering and physical acceptance remain pending.
 
 ## LRA-04 communications review boundary
 

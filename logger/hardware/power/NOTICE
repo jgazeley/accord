@@ -1,0 +1,16 @@
+Accord logger power circuit candidate
+Copyright 2026 Jayson Gazeley and contributors.
+
+Created for Accord by Jayson Gazeley (jgazeley) and the power engineering
+contributors identified in SOURCE_MANIFEST.json. Export packaging and validation
+by Codex pcb-manager; original engineering authorship is retained separately.
+Source: https://github.com/jgazeley/accord/tree/main/logger/hardware/power
+Historical source: jgazeley/accord-logger at
+9527a14153c7b06f3d59b641a2e681b28dcd1735, logger-power/.
+
+Original circuit connection definitions and BOMs are licensed under
+CERN-OHL-P-2.0; see LICENSE. Narrative documentation and verification scripts
+are licensed under the repository's Apache License 2.0. Preserve these notices,
+source provenance and applicable third-party terms when redistributing.
+Covered Source and Products are provided as-is, without warranty, under
+section 5 of the hardware license. This candidate is not a fabrication release.

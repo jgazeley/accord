@@ -1,0 +1,212 @@
+{
+  "source_repository": "jgazeley/accord-logger",
+  "source_commit": "9527a14153c7b06f3d59b641a2e681b28dcd1735",
+  "exported_by": {
+    "tool": "Codex",
+    "role": "pcb-manager",
+    "session": "01a18447-07c2-7bb3-8318-9b276cfdb3b8",
+    "date": "2026-10-28",
+    "scope": "Selective transport, public-content review and verification; not original circuit authorship"
+  },
+  "engineering_sessions": [
+    {
+      "session": "01a173c4-d2fd-7f71-a396-8996d502387b",
+      "role": "original power engineer",
+      "evidence": "INTERFACE_HANDOFF.md and NEXT_SESSION.md"
+    },
+    {
+      "session": "01a17407-4357-7031-b3ac-a51c97864fbe",
+      "role": "remote power continuation",
+      "evidence": "Owner-supplied bookmark and historical manager review; not a trailer on the original commit"
+    }
+  ],
+  "source_history": [
+    {
+      "commit": "9527a14153c7b06f3d59b641a2e681b28dcd1735",
+      "author_name": "Jayson Gazeley (Remote Codex)",
+      "author_email": "jayson.gazeley@gmail.com",
+      "author_date": "2026-10-25T12:15:16-07:00",
+      "committer_name": "Jayson Gazeley (Remote Codex)",
+      "committer_email": "jayson.gazeley@gmail.com",
+      "committer_date": "2026-10-25T13:46:29-07:00",
+      "message": "logger-power: refine cutoff clock reset and supply proposal\n\nSelect an external oscillator and reverse-current-protected regulator, replace false-ON filter polarity, and propose shared qualified ignition on GP5. Record conditional ramp, timing and gate-drive calculations with eight additional checks. Keep the parked-current allocation shortfall, hot-device limits, capacitor qualification and vehicle protection explicit; no physical validation is claimed.\n\n"
+    },
+    {
+      "commit": "8937ccb7703d79d2f38c34614b498bf4e403ff55",
+      "author_name": "Jayson Gazeley (Remote Codex)",
+      "author_email": "jayson.gazeley@gmail.com",
+      "author_date": "2026-10-25T11:57:56-07:00",
+      "committer_name": "Jayson Gazeley (Remote Codex)",
+      "committer_email": "jayson.gazeley@gmail.com",
+      "committer_date": "2026-10-25T11:57:56-07:00",
+      "message": "logger-power: record remote review and cutoff candidate\n\nPreserve the rollout review, owner requirements and inventory snapshot. Add the 2048-second cutoff candidate, incremental BOM and 11 passing Boolean checks. Correct firmware handoff constraints and document unresolved electrical margins and remote follow-up work in NEXT_SESSION.md. No physical validation or firmware changes.\n\n"
+    },
+    {
+      "commit": "e7415c9318e9b6353e39609b029c96b36b0ae313",
+      "author_name": "Jayson Gazeley",
+      "author_email": "jayson@sjsu",
+      "author_date": "2026-10-25T10:55:36-07:00",
+      "committer_name": "Jayson Gazeley",
+      "committer_email": "jayson@sjsu",
+      "committer_date": "2026-10-25T10:55:36-07:00",
+      "message": "Add logger-power design/handoff, project milestones, and coordination updates\n\n"
+    }
+  ],
+  "files": [
+    {
+      "source": "logger-power/DESIGN.md",
+      "destination": "logger/hardware/power/DESIGN.md",
+      "source_blob": "4b8d9a3c2ca9e9ea942faf3bbec28411e25b5ce8",
+      "source_sha256": "2d7a175a1cc1acb6b10b2addba9300dea4811556cf8609e00da546a36bdf552d",
+      "destination_sha256": "2d7a175a1cc1acb6b10b2addba9300dea4811556cf8609e00da546a36bdf552d",
+      "changes": "none; byte-for-byte export",
+      "source_history": [
+        "9527a14153c7b06f3d59b641a2e681b28dcd1735",
+        "8937ccb7703d79d2f38c34614b498bf4e403ff55",
+        "e7415c9318e9b6353e39609b029c96b36b0ae313"
+      ]
+    },
+    {
+      "source": "logger-power/BOM.csv",
+      "destination": "logger/hardware/power/BOM.csv",
+      "source_blob": "251755ab47839d455c5d6602bbf19884a2ddca07",
+      "source_sha256": "b63f91e61e8221c200237d8723c52eb7748fd8bf7e9348ce108426547e175770",
+      "destination_sha256": "b63f91e61e8221c200237d8723c52eb7748fd8bf7e9348ce108426547e175770",
+      "changes": "none; byte-for-byte export",
+      "source_history": [
+        "e7415c9318e9b6353e39609b029c96b36b0ae313"
+      ]
+    },
+    {
+      "source": "logger-power/MAX_ON_CUTOFF.md",
+      "destination": "logger/hardware/power/MAX_ON_CUTOFF.md",
+      "source_blob": "a5a77f2432eb665d0050232b068a0a16973e6b05",
+      "source_sha256": "54a75c444ee322cbda4a326c3c1ae6a4560a112fb292cc4e06c7c2ce3b8bfdc4",
+      "destination_sha256": "54a75c444ee322cbda4a326c3c1ae6a4560a112fb292cc4e06c7c2ce3b8bfdc4",
+      "changes": "none; byte-for-byte export",
+      "source_history": [
+        "9527a14153c7b06f3d59b641a2e681b28dcd1735",
+        "8937ccb7703d79d2f38c34614b498bf4e403ff55"
+      ]
+    },
+    {
+      "source": "logger-power/MAX_ON_BOM.csv",
+      "destination": "logger/hardware/power/MAX_ON_BOM.csv",
+      "source_blob": "345d9691014d5c084ff07aa54240e38a0a349b45",
+      "source_sha256": "28a0d48d47be67c715a57d29c9aaac568107eb42aec1395ab6ed1747d6115546",
+      "destination_sha256": "28a0d48d47be67c715a57d29c9aaac568107eb42aec1395ab6ed1747d6115546",
+      "changes": "none; byte-for-byte export",
+      "source_history": [
+        "9527a14153c7b06f3d59b641a2e681b28dcd1735",
+        "8937ccb7703d79d2f38c34614b498bf4e403ff55"
+      ]
+    },
+    {
+      "source": "logger-power/CUTOFF_MARGIN_REVIEW.md",
+      "destination": "logger/hardware/power/CUTOFF_MARGIN_REVIEW.md",
+      "source_blob": "dafa0e46f195d7c3799e0729c5e76333e83c996a",
+      "source_sha256": "5becdaa616a3acc5db841012d65f8598155baadbb7f43a5beb614812341983dd",
+      "destination_sha256": "5becdaa616a3acc5db841012d65f8598155baadbb7f43a5beb614812341983dd",
+      "changes": "none; byte-for-byte export",
+      "source_history": [
+        "9527a14153c7b06f3d59b641a2e681b28dcd1735"
+      ]
+    },
+    {
+      "source": "logger-power/INTERFACE_HANDOFF.md",
+      "destination": "logger/hardware/power/INTERFACE_HANDOFF.md",
+      "source_blob": "6544448ec2edc78cb040e3b58ddd5a8784f37ddb",
+      "source_sha256": "b9b34320662f16545ac7b7a12a8e0a225be71cba6b086f2de0b49838ccc38e59",
+      "destination_sha256": "b9b34320662f16545ac7b7a12a8e0a225be71cba6b086f2de0b49838ccc38e59",
+      "changes": "none; byte-for-byte export",
+      "source_history": [
+        "9527a14153c7b06f3d59b641a2e681b28dcd1735",
+        "8937ccb7703d79d2f38c34614b498bf4e403ff55",
+        "e7415c9318e9b6353e39609b029c96b36b0ae313"
+      ]
+    },
+    {
+      "source": "logger-power/PROTOTYPE_TEST_PLAN.md",
+      "destination": "logger/hardware/power/PROTOTYPE_TEST_PLAN.md",
+      "source_blob": "219b96773b876087e0ffe941e50cde425855c57c",
+      "source_sha256": "12b8fe56889f5ba5cf442774fe27bb3a9ad03b63e82460ee71b44b3f75724955",
+      "destination_sha256": "12b8fe56889f5ba5cf442774fe27bb3a9ad03b63e82460ee71b44b3f75724955",
+      "changes": "none; byte-for-byte export",
+      "source_history": [
+        "9527a14153c7b06f3d59b641a2e681b28dcd1735",
+        "8937ccb7703d79d2f38c34614b498bf4e403ff55",
+        "e7415c9318e9b6353e39609b029c96b36b0ae313"
+      ]
+    },
+    {
+      "source": "logger-power/NEXT_SESSION.md",
+      "destination": "logger/hardware/power/NEXT_SESSION.md",
+      "source_blob": "972244b67eddf98005e922d0bcaeb0ebf5049d83",
+      "source_sha256": "22d36c7d65908a4805646cda476bd36194f39fd37828aa76991a1f7e8e90c7cb",
+      "destination_sha256": "22d36c7d65908a4805646cda476bd36194f39fd37828aa76991a1f7e8e90c7cb",
+      "changes": "none; byte-for-byte export",
+      "source_history": [
+        "9527a14153c7b06f3d59b641a2e681b28dcd1735",
+        "8937ccb7703d79d2f38c34614b498bf4e403ff55"
+      ]
+    },
+    {
+      "source": "logger-power/check_max_on_logic.py",
+      "destination": "logger/hardware/power/check_max_on_logic.py",
+      "source_blob": "ac6e1980f55980fc7f1d5b86dab420df630d040f",
+      "source_sha256": "ad51aa36e070c2195d947463a3546c78e7e4997901e6c33de1a6d142601ef49e",
+      "destination_sha256": "ad51aa36e070c2195d947463a3546c78e7e4997901e6c33de1a6d142601ef49e",
+      "changes": "none; byte-for-byte export",
+      "source_history": [
+        "8937ccb7703d79d2f38c34614b498bf4e403ff55"
+      ]
+    },
+    {
+      "source": "logger-power/check_cutoff_margins.py",
+      "destination": "logger/hardware/power/check_cutoff_margins.py",
+      "source_blob": "34bb172874d36a98e40cb3e8cb699bf692b268cc",
+      "source_sha256": "65eee37546a5c7035976b35a723e4cd24c2326d61360fe9c389c525bf9b7b3a2",
+      "destination_sha256": "65eee37546a5c7035976b35a723e4cd24c2326d61360fe9c389c525bf9b7b3a2",
+      "changes": "none; byte-for-byte export",
+      "source_history": [
+        "9527a14153c7b06f3d59b641a2e681b28dcd1735"
+      ]
+    },
+    {
+      "source": "logger-power/REVIEW_2026-10-25.md",
+      "destination": "logger/hardware/power/REVIEW_2026-10-25.md",
+      "source_blob": "fb0998121de979df1f5bb6922e2d4acf2948502f",
+      "source_sha256": "a10f20aa20e733707f5014f97039405280c766b0b3e9c5438e8a4422926c50c2",
+      "destination_sha256": "a10f20aa20e733707f5014f97039405280c766b0b3e9c5438e8a4422926c50c2",
+      "changes": "none; byte-for-byte export",
+      "source_history": [
+        "8937ccb7703d79d2f38c34614b498bf4e403ff55"
+      ]
+    }
+  ],
+  "excluded": [
+    "logger-power/inventory_list.md: full personal stock snapshot not needed; BOM stock annotations retained as historical evidence",
+    "logger-power/README.md: replaced by a current-path entry point; original metadata remains in source history",
+    "private transcripts, runtime data, credentials, recordings and configured binaries: not exported"
+  ],
+  "review_record": "coordination/reviews/POWER_EXPORT_9527A14_2026-10-28.md",
+  "validation": {
+    "source_hashes_verified": true,
+    "logic_checks": 11,
+    "margin_checks": 8,
+    "status": "passed in exported destination on 2026-10-28",
+    "physical_tests": "not performed; candidate remains unaccepted",
+    "python": "3.13.5",
+    "csv_structure": {
+      "BOM.csv": {
+        "rows_including_header": 31,
+        "columns": 8
+      },
+      "MAX_ON_BOM.csv": {
+        "rows_including_header": 25,
+        "columns": 6
+      }
+    },
+    "secret_pattern_screen": "no matches; complements manual whole-file public-content review"
+  }
+}

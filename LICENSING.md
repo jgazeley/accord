@@ -7,11 +7,14 @@ subject to the applicable license below.
 | Material | License |
 |---|---|
 | Original firmware, tools, tests and documentation | [Apache License 2.0](LICENSE) |
-| Original hardware design source under `keyless/hardware/` and generated representations of that design | [CERN Open Hardware Licence 2 — Permissive](keyless/hardware/LICENSE) |
+| Original hardware design source under `keyless/hardware/`, circuit definitions/BOMs under `logger/hardware/power/`, and generated representations of those designs | [CERN Open Hardware Licence 2 — Permissive](keyless/hardware/LICENSE) |
 | Third-party material | Its own applicable terms, as described below |
 
 The hardware license covers the original schematic, PCB, custom design
-libraries and project configuration. It does not relicense third-party
+libraries, project configuration, and logger power circuit connection definitions
+and BOMs. Narrative design documentation and verification scripts use Apache 2.0.
+The logger power directory contains its own hardware license and credit notice.
+It does not relicense third-party
 library content or the separately excluded model below. Hardware design
 exports under `keyless/validation/` follow the design's licensing; validation
 reports and scripts follow the software/documentation license.

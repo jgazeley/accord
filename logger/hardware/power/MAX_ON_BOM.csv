@@ -1,0 +1,25 @@
+refs,qty,candidate,package,stock_status,qualification_note
+UCLK,1,TI CD74HC4060E,PDIP-16,Not listed,External clock into pin11; pins9 and10 open
+UCOUNT,1,TI CD74HC4020E,PDIP-16,Not listed,Q13 production; Q8 accelerated bench only
+ULATCH,1,TI CD4011BE,PDIP-14,CD4011 listed; verify maker,Gate C now inverts QUAL_N; only gate D unused
+UOR,1,TI CD4071BE,PDIP-14,Not listed,Four OR gates
+USCH,1,TI CD4093BE,PDIP-14,Not listed,Schmitt NAND; single input used for IGN filter
+QS,1,Nexperia BSS138P,SOT-23 plus adapter,Not listed,Measure hot leakage and minimum-drive operation
+QMON,1,onsemi 2N3904,TO-92,Two listed already allocated to QI/QH,Additional transistor needed; equivalent requires pinout check
+USUP,1,TI TPS3839K50DBZR,SOT-23-3 plus adapter,Not listed,120ms minimum reset release; brownout qualification pending
+UA5,1,TI TPS70950QDBVRQ1,SOT-23-5 plus adapter,Not listed,Replaces TPS7A16; P_AON <=28V design envelope; <=30V IC limit
+RGS,1,10k 1 percent,Axial,10k 1 percent listed; verify available,Replaces revision A 100k; recheck gate currents and total off leakage
+RQUAL CQUAL,2,220k 1 percent and 1uF film 5 percent,Through-hole,Not confirmed,Qualification must agree with firmware
+Supporting passives,AR,See MAX_ON_CUTOFF.md,Mixed,Verify exact values and ratings,Includes bypass and supply capacitors; pullups; pulldowns; not a complete procurement BOM
+UXO,1,Micro Crystal OV-7604-C7-32.768KHZ-20PPM-TA-QC,3.2x1.5mm SMD plus adapter,Not listed,Replaces bare crystal; -40 to85C; supply slew requirement
+UOE,1,TI SN74LVC1G17DBVR,SOT-23-5 plus adapter,Not listed,VCC=VCLK; ARM to CLKOE; input overvoltage tolerance required
+UGCLK,1,TI SN74LVC1G97DBVR,SOT-23-6 plus adapter,Not listed,VCC=A5; AND configuration gates external clock
+QRESET,1,onsemi 2N3904,TO-92,Additional part beyond QI/QH/QMON,Discharges IGN_RC through4.7k; check hot saturation
+QREPORT,1,Nexperia BSS138P,SOT-23 plus adapter,Not listed,Translates shared IGN_Q to switched3V3 GP5
+UIGN,0 additional,Reuse revision A PC817; rewire output,DIP-4,Generic stock needs qualification,Single LED retained; emitter output now charges IGN_RC
+RCLK,1,1k 1 percent,Axial,Listed; verify spare,VCLK supply filter
+CCLK,1 or parallel,22 to60uF effective over voltage and temperature,Part/package selection open,Not verified,Initial nominal47uF; DC bias and leakage must meet envelope
+RRESET RBRESET RDIS,3,22k and100k and4.7k 1 percent,Axial,Assortment; verify,QRESET base drive and capacitor discharge
+A5 capacitors,2,4.7uF50V input;10uF16V output proposed,Exact series open,Not verified,Effective >=1uF input and >=2.2uF output; ceramic
+Clock bypasses,3,10nF oscillator;100nF each buffer,Ceramic,Assortment; verify,Local placement on correct rail
+QREPORT resistors,2,1k series gate and100k gate-ground,Axial,Listed; verify,No 5V pullup on GP5

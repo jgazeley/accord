@@ -28,8 +28,10 @@ remain in use until separately migrated. Do not maintain another active tracker.
 - **Power continuation baseline:** owner reaffirmed October 28: reuse the existing
   `9527a14` circuit; no fresh topology research without a specific demonstrated
   gap. Manager located ten unchanged engineering/continuation files and reran
-  all 19 conditional checks successfully; see the LRA-01 packet. Selected export
-  is still required before remote detailed review.
+  all 19 conditional checks successfully. The reviewed
+  [power export](../logger/hardware/power/README.md) now contains the existing
+  candidate, BOMs, handoffs and scripts with provenance; private access is not
+  required for LRA-01 review.
 - **First blocker to resolve:** one qualified-IGN/HOLD/shutdown contract and
   the cutoff candidate's power-budget/protection gaps.
 - **Next action:** electrical lead claims [LRA-01](handoffs/LRA-01_POWER_INTERFACE.md);
@@ -91,7 +93,7 @@ for every row. Remote electrical work and local physical validation are distinct
 | TIME-01 | Logger/bridge | Deferred design: reset/offline time and retrospective drift policy; hardware reservations feed 03/04 if concrete |
 | KEY-01 | Proximity/keyless | Owner participation required: threshold/repeatability and parked operation independent of Pi/logger; installed settings unknown |
 | DIST-01 | Bridge/DB | Deferred: production-host cutover, packet checkpoints and independent server/VM comparison; not yet implemented |
-| DOC-01 | Codex pcb-manager, `01a18447-07c2-7bb3-8318-9b276cfdb3b8` | Active, claimed October 28: authority recorded; 01 refreshed and 03/04 prepared. Existing power candidate located and 19 checks rerun. Next: export selected engineering artifacts before remote detailed review; no specialist dispatched yet |
+| DOC-01 | Codex pcb-manager, `01a18447-07c2-7bb3-8318-9b276cfdb3b8` | Active, claimed October 28: authority recorded; 01 refreshed and 03/04 prepared. Power export delivered with source hashes and 19 checks passing. Next: owner dispatches LRA-01 electrical lead; record acknowledged claim and firmware reviewer. No specialist dispatched yet |
 
 ## Decisions and gates
 

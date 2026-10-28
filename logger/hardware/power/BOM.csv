@@ -1,0 +1,31 @@
+refs,qty,manufacturer_part_or_value,rating_or_tolerance,package,availability_evidence,status,notes
+QP,1,Infineon IRF4905PbF,-55V VDS; +/-20V VGS,TO-220,No P-channel MOSFET in inventory_list.md,MISSING,First bench switch; automotive selection not frozen
+QI QH,2,onsemi 2N3904,40V VCEO; 200mA,TO-92,Two 2N3904 listed in CmpE kit; maker and unused quantity unverified,VERIFY_STOCK,Bench 12-16V only; higher voltage replacement needed before vehicle transient envelope
+DZ,1,Vishay BZX55C12-TAP,12V nominal; 500mW,DO-35,Only 3.3V and 5.1V zeners listed,MISSING,Do not substitute low-voltage kit zeners without recalculating gate enhancement
+DI DR,2,Vishay 1N4148-TAP,75V DC reverse; 100V repetitive,DO-35,Not found in inventory list,MISSING,IGN series blocking and LED reverse clamp
+UIGN,1,Sharp PC817XNNSZ1B,CTR 50-400 percent at stated test point,DIP-4,BOJACK PC817 stock listed; actual manufacturer/rank unknown,VERIFY_STOCK,Sharp exact part is purchase candidate; qualify stock part identity and low level
+UREG,1,TI LM2678T-5.0/NOPB,Fixed 5V; 8-40V operating input,TO-220-7,Received for hondaPico per circuits.md; no spare confirmed,MISSING_OR_VERIFY_SPARE,Do not remove installed regulator
+DREV DCATCH,2,Vishay SB360-E3/54,60V; 3A,DO-201AD,One received for hondaPico D30; no spare confirmed,MISSING_OR_VERIFY_SPARE,New input diode uses 60V part; no part borrowed from live board
+DOR,1,Vishay 1N5819-E3/54,40V; 1A,DO-41,100 Chanzon 1N5819 listed; current quantity unknown,VERIFY_STOCK,Stock brand requires characterization; selected manufacturer limits do not certify another brand
+TVS,1,Vishay 1.5KE30A-E3/54,25.6V standoff; 41.4V specified clamp,DO-201AD,Received for hondaPico; no spare confirmed,CANDIDATE_NOT_VEHICLE_APPROVED,Inherited protection candidate only; energy and voltage coordination open
+L1,1,Bourns RLB0912-220KL,22uH +/-10 percent; 2.1A rated; 2.5A saturation,Radial 8.7mm body 5mm pitch,Listed as missing in circuits.md; only low-current kit axials in inventory,MISSING,Normal load margin only; LM2678 fault limit exceeds saturation rating
+CIN,1,TBD manufacturer series: 100uF 50V,20 percent; >=0.375A RMS at relevant frequency; 105C,Radial dimensions TBD,Generic kit electrolytics listed; no exact voltage ESR or ripple evidence,PART_SELECTION_OPEN,Match LM2678 stability/input requirements; positive VIN_SW
+COUT,1,TBD manufacturer series: 820uF 16V,20 percent; low ESR characterized for LM2678; 105C,Radial dimensions TBD,820uF kit parts listed; ratings and ESR unverified,PART_SELECTION_OPEN,Positive B5; 820uF starting value is not complete capacitor specification
+C0 CIB,2,TBD manufacturer: 100nF 63V X7R,10 percent,Prototype leaded or adapter,Assortments listed; exact marked voltage/dielectric unverified,VERIFY_OR_SOURCE,Always-on C0 ceramic; local switched-input CIB
+COB,1,TBD manufacturer: 100nF 50V X7R,10 percent,Prototype leaded or adapter,Assortments listed; exact rating unverified,VERIFY_OR_SOURCE,B5 local bypass
+CBOOST,1,TBD manufacturer: 10nF 50V X7R or C0G,10 percent,Prototype leaded or adapter,10nF listed; voltage/dielectric unverified,VERIFY_OR_SOURCE,Between SW and BOOST; keep short
+RGS RBI RBH,3,100k metal film,1 percent; 0.25W,Axial,Resistor kits list value,VERIFY_STOCK,RGS gate-source; RBI/RBH base-emitter
+RG,1,1k metal film,1 percent; 0.5W,Axial,Half-watt kit listed; value/tolerance confirm,VERIFY_STOCK,Gate sink resistor; 0.259W worst bench clamp-short calculation
+RH RB5,2,1k metal film,1 percent; 0.25W,Axial,Resistor kits list value,VERIFY_STOCK,HOLD base drive and B5 bleeder
+RLED,1,1k metal film,1 percent; 0.5W,Axial,Half-watt kit listed; value/tolerance confirm,VERIFY_STOCK,IGN optocoupler LED resistor
+RI,1,2.2k metal film,1 percent; 0.25W,Axial,CmpE kit and assortment list value,VERIFY_STOCK,IGN transistor base drive
+RPD,1,47k metal film,1 percent; 0.25W,Axial,Resistor kits list value,VERIFY_STOCK,External GPIO HOLD pulldown
+RIGN RBIN,2,10k metal film,1 percent; 0.25W,Axial,Resistor kits list value,VERIFY_STOCK,GP5 pullup and switched-input bleeder
+F1,1,TBD 1A DC fuse and holder,DC interrupt rating suited to source; characterize inrush,Inline,No exact unused part verified,PART_SELECTION_OPEN,Bench branch protection; production wire/fuse coordination open
+FIGN,1,TBD 100mA DC fuse and holder,At IGN source; DC interrupt rating suited to source,Inline,Prior fuse recommendations are not availability evidence,PART_SELECTION_OPEN,Protect sense harness
+J1 J2,2,Bench labeled two-position terminals,>=2A; >=60V; keyed final connector TBD,Terminal block,No exact stock verified,VERIFY_OR_SOURCE,BATT/GND and IGN/GND; logical pinout only
+JH,1,Removable two-pin link,3.3V low current,2.54mm header and shunt,Header stock not inventoried here,VERIFY_OR_SOURCE,Open for USB maintenance; RH and RBH remain on driver side
+TP,10,Insulated test loops,P12 GATE VIN_SW SW B5 VSYS 3V3 HOLD IGN_N PGND,Loops,No exact stock verified,VERIFY_OR_SOURCE,PGND loops at power and logic locations
+MAX_ON,1,TBD independent timer plus latched HOLD-path inhibit,32-40min after IGN fall; nonretriggerable by HOLD; <=40uA room allocation,TBD,Not designed or in stock record,REQUIRED_BEFORE_UNATTENDED_USE,Not implemented in revision A
+SIGNAL_ISOLATION,1,TBD powered-off-safe digital and analog interfaces,All energized input paths; preserve ADC loading,TBD,Existing rail clamps do not isolate,REQUIRED_BEFORE_INTEGRATION,Component choice requires full input ranges and fuel error review
+VEHICLE_PROTECTION,1,TBD coordinated input/IGN protection and fault limiting,Feed-specific pulses reverse battery fuse and temperature,TBD,Reference hondaPico stage is not logger qualification,REQUIRED_BEFORE_VEHICLE_USE,Replace 40V drivers; coordinate TVS buck and passives

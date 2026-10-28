@@ -28,10 +28,11 @@ rather than edit firmware or global task state concurrently with its owner.
 Read [current task authority](../PROJECT_MILESTONES.md),
 [Rev A context](../../logger/hardware/REV_A_CONTEXT.md),
 [migration map](../MIGRATION_MAP.md), and current logger startup/IGN/SD APIs.
-The historical exact circuit tables are at private `logger-power/` candidate
-`9527a14`. Retrieve only needed documents/scripts with provenance and public
-review. If private access is unavailable, request the selected export from the
-manager; do not require predecessor conversations or invent component values.
+The selected circuit tables, BOMs, handoffs and checks from `9527a14` are now
+exported in [logger/hardware/power](../../logger/hardware/power/README.md).
+Start with that directory README for revision precedence and current commands.
+The source manifest records exact hashes and original attribution; private
+repository access and predecessor conversations are not prerequisites.
 
 ## Owner direction — continue the existing circuit, October 28
 
@@ -68,10 +69,11 @@ files were changed. These remain conditional checks, not physical acceptance.
 Continue with the known open work: current/leakage allocations, compatible input
 protection, exact capacitor/hot-device/clock limits, off-state signal isolation,
 current-firmware agreement, then coherent schematic/BOM and measured validation.
-Manager should export only the selected public-reviewed engineering files with
-provenance into `logger/hardware/power/` before remote detailed review. Their
-absence from this public repository is a transfer dependency, not missing design
-work. Do not dispatch a public-only engineer to recreate the missing circuit.
+Export completed October 28: the ten listed files plus the supporting
+`REVIEW_2026-10-25.md` are preserved byte-for-byte in `logger/hardware/power/`.
+[Public-content/provenance review](../reviews/POWER_EXPORT_9527A14_2026-10-28.md)
+records the source, exclusions and destination checks. Continue this circuit;
+no reconstruction of earlier work is required.
 
 ## Existing keyless power/input reference
 
@@ -111,8 +113,8 @@ Inspected public firmware at `303092a` (unchanged code baseline `8261314`):
 
 This is static source inspection; no timing, circuit or firmware acceptance test
 was performed. Electrical and firmware reviewer acknowledgments remain required.
-The exact historical power tables are still a bounded manager export dependency;
-no engineering artifacts have been imported or declared accepted by this update.
+The selected historical power tables are now exported. This supplies review
+inputs; electrical and firmware acceptance remain pending.
 
 ## Assignment and return protocol
 

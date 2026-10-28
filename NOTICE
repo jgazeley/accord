@@ -5,6 +5,7 @@ Created by Jayson Gazeley (jgazeley).
 Project: https://github.com/jgazeley/accord
 
 Original software and documentation are licensed under Apache License 2.0.
-Original keyless hardware designs are licensed under CERN-OHL-P-2.0;
-see keyless/hardware/LICENSE and keyless/hardware/NOTICE.
+Original keyless hardware designs and logger power circuit definitions/BOMs
+are licensed under CERN-OHL-P-2.0; see the LICENSE and NOTICE files in
+keyless/hardware/ and logger/hardware/power/.
 Third-party material retains its own applicable terms; see LICENSING.md.
