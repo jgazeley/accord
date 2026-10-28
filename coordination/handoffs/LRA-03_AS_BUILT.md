@@ -32,6 +32,29 @@ to copy specified values into an as-built BOM. Collect precise owner/bench quest
 Start signal consolidation now; power domains finalize after LRA-01/02. Exchange
 proposed GPIO/connector reservations with LRA-04 before either freezes them.
 
+## Existing keyless examples — owner reminder, October 28
+
+Current pcb-manager reviewed `keyless/hardware/hondaPico.kicad_sch`, matching
+firmware input definitions and the existing KiCad validation report. Consult this
+already-migrated design before inventing equivalent logger blocks:
+
+- U10–U13 PC817 input cells: ground-active switch inputs and +12 V-active IGN.
+  U13/R12/D4 is the schematic's PC817 / 2.2k / 1N5819 ignition example; firmware
+  reads GP14 active-low. It is not the logger's GP5 pin assignment or proof of
+  the logger's latest fitted resistor/capacitor values.
+- U3 LM2678T-5.0 supply, battery divider, ULN2803A output stages, ceiling-light
+  MOSFET, harness connectors, rail/ground test points and RUN reset header are
+  existing implementation references. Select only blocks relevant to logger.
+- Existing validation records J2 absent from the PCB and R14/R15 value differences.
+  Read `keyless/validation/kicad-20261027/README.md` before extracting values.
+
+The owner identifies working examples in this circuit. Preserve the associated
+operational evidence, but distinguish schematic intent, fitted hardware and any
+logger-specific validation still required. Historical `circuits.md` explicitly
+records the earlier IGN wake cell as a copy of keyless U13; do not rediscover that
+basic topology. Shared-qualified IGN and logger power-off behavior remain the
+LRA-01/02 continuation work. No keyless design changes are assigned here.
+
 ## Deliverables and acceptance
 
 - Circuit table: signal, vehicle tap, polarity, fitted component/value/source,

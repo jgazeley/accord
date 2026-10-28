@@ -31,6 +31,24 @@ Analysis may begin alongside LRA-03. Obtain LRA-01/02 rail/current/off-state
 constraints and agree pin reservations with LRA-03 before recommending a freeze.
 GP6/GP7 HOLD and GP8/GP9 bus suggestions are not accepted allocations.
 
+## Existing RS-485 implementation to consult first
+
+Owner reminder, October 28, recorded by the current pcb-manager: the existing
+`hondaPico` keyless circuit provides working examples and must inform this review.
+Read `keyless/hardware/hondaPico.kicad_sch` U5 and its RS-485 notes together with
+`keyless/firmware/accord-keyless/accord-keyless.ino` and `link.h`.
+The schematic specifies MAX3485 on 3V3, tied DE and /RE with a 10k default-listen
+pulldown, selectable 120-ohm termination and a dedicated bus ground return.
+Keyless firmware assigns GP8 TX, GP9 RX, GP10 direction and 115200 baud.
+Those are keyless allocations; propose logger allocations separately.
+
+Treat these as existing design/source evidence. Reconcile R14/R15 bias values
+against the PCB and fitted board before adopting them: the migration validation
+report flags a schematic/PCB mismatch. Confirm populated hardware and operational
+bus evidence separately from stale firmware comments. This reference and the
+owner-tested 5 V module/divider option should precede new component research;
+new analysis should address actual logger power-off/resource/interface gaps.
+
 ## Deliverables and acceptance
 
 - Compare controller versus transceiver requirements, exact GPIO/peripheral use,

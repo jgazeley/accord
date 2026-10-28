@@ -104,6 +104,12 @@ for every row. Remote electrical work and local physical validation are distinct
   to fabricate an electrically unresolved design.
 - **D-RA-03 — pending 01:** one shared qualified-IGN/deadline contract. Never mix
   the old raw-GP5/100 ms rules with the newer analog-qualified proposal.
+- **D-REUSE-01 — owner direction, October 28:** consult the existing `hondaPico`
+  keyless circuit and working examples before designing equivalent logger blocks.
+  References: `keyless/hardware/hondaPico.kicad_sch`, matching PCB and firmware,
+  and `keyless/validation/kicad-20261027/README.md`. Reuse applicable knowledge;
+  record actual fitted evidence and logger-specific differences. Keep the two
+  modules' pin maps, power lifecycle and artifact ownership separate.
 - **D-POWER-02 — owner direction, October 28:** continue the existing `9527a14`
   power circuit. Reuse its design, BOMs and checks; limit new investigation to
   identified gaps. Replacement requires a documented defect or unmet requirement.

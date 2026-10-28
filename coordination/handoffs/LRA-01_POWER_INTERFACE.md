@@ -73,6 +73,19 @@ provenance into `logger/hardware/power/` before remote detailed review. Their
 absence from this public repository is a transfer dependency, not missing design
 work. Do not dispatch a public-only engineer to recreate the missing circuit.
 
+## Existing keyless power/input reference
+
+Owner reminder, October 28, recorded by the current pcb-manager: consult the
+already-migrated `keyless/hardware/hondaPico.kicad_sch` and PCB for applicable
+working examples. Its U13 PC817 ignition cell and U3 LM2678 supply are concrete
+references; LRA-03 records additional blocks. Historical notes explicitly derive
+the earlier IGN wake cell from U13. Use this prior work alongside `9527a14`.
+The keyless input cell does not itself establish the proposed shared-qualified
+IGN timing, logger cutoff or off-state behavior. In particular, the keyless
+protection arrangement must not be copied over the unresolved regulator/clamp
+compatibility requirement. Preserve useful circuits and review the specific
+logger differences; no fresh general topology search is implied.
+
 ## Manager source triage — review input, not firmware acceptance
 
 Inspected public firmware at `303092a` (unchanged code baseline `8261314`):
