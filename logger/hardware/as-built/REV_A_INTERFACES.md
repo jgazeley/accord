@@ -7,7 +7,7 @@ Session ID read from this session's harness-assigned working paths; no
 tool-provided session/thread pair exists here to cross-check it against.
 
 **Disposition: proposal for review. Nothing here is frozen, accepted, ordered or
-built.** A freeze needs the dispositions in §11: analog reviewer on loading and
+built.** A freeze needs the dispositions in §10: analog reviewer on loading and
 protection, electrical lead on power boundaries, firmware reviewer on the pin
 map and card metadata, LRA-04 on the bus allocation, and manager acceptance.
 
@@ -73,11 +73,19 @@ upper source calculation and replaces the old 3.0 V HOLD-HIGH criterion with a
 
 ---
 
-## 2. Input interface selection gate
+## 2. Input interface requirements — provisional, with open rows
 
-This closes the LRA-03 half of `INTERFACE_CONTRACT.md` §8's gate: *"establish
-each normal/fault input range, source impedance and permissible cluster
-loading."* Present load is what the fitted divider draws.
+`INTERFACE_CONTRACT.md` §8 asks LRA-03 to *"establish each normal/fault input
+range, source impedance and permissible cluster loading."* **This matrix does
+not close that gate.** It states what is established and marks what is not: two
+of the five source impedances are unknown (U-08), and the fault envelopes rest
+on nominal waveforms rather than characterised transients. Treat the "proposed
+permissible load" column as a requirement to be reviewed, not an agreed limit.
+Present load is what the fitted divider draws.
+
+**Open rows, which the gate needs before a freeze:** B2 source impedance and
+permissible loading; B1 the same; the fault envelope on all five branches beyond
+a nominal 16 V charging case; and C11's open-circuit ceiling (U-09).
 
 | Channel | Normal range at the tap | Fault / worst-case exposure | Source impedance | Present load | Proposed permissible load | Basis |
 |---|---|---|---|---|---|---|
@@ -167,13 +175,16 @@ trade is visible and so the one already-screened option is not re-screened.
 | **Analog switch with power-off protection** | Solid state, no coil, no contacts | The screened **ADG5412F-class** part is *not* selected: its 8 V minimum supply excludes powering it from B5, and its power-off source-leakage entry is **typical, not a maximum**. Any replacement must supply a guaranteed off-leakage maximum over temperature at the full tap voltage, and a rail that exists in this design |
 | **Per-channel discrete (opto or series FET) for the three digital branches, relay for the two analog** | Lets the analog channels keep a metallic path with no R<sub>on</sub> error while the digital ones become genuinely isolated | Two mechanisms to qualify instead of one; the digital path's loading changes, which U-08 says is not yet permissible to decide |
 
-**None of these classes is in stock.** The owner's inventory
-(`/srv/agent_share/inventory/inventory_list.md`, named October 29) holds
-coil-driven power and solid-state relay *modules* whose contacts are not
-specified for the 90 µA / 3 V dry-circuit switching the VSS branch needs, and no
-power-off-protected analog switch. Exact stock reconciliation is deferred to the
-parts discussion and must not block the design choice; stock is not fitted
-hardware and not a suitability argument either way.
+**No confirmed suitable item was identified in the consulted list.** The
+inventory the owner named on October 29
+(`/srv/agent_share/inventory/inventory_list.md`) lists coil-driven power and
+solid-state relay *modules* whose contacts are not specified for the 90 µA / 3 V
+dry-circuit switching the VSS branch needs, and no power-off-protected analog
+switch. The owner states that list is **incomplete and may include consumed
+stock**, so absence from it cannot establish absence from stock. Exact
+reconciliation is deferred to the parts discussion and must not block the design
+choice; in either direction, stock is neither fitted hardware nor a suitability
+argument.
 
 ### 3.4 Requirements any candidate must meet
 
@@ -185,7 +196,8 @@ hardware and not a suitability argument either way.
 4. **Insert ≤25 Ω in the fuel top leg and ≤100 Ω in the supply top leg.** At
    25 Ω the fuel ratio shifts −0.205 %, which is −4.9 mV referred to a 2.4 V
    wire signal and ~0.07 Ω of R<sub>s</sub> — inside the existing 0.1-float-point
-   loading allowance and removable by the §9 step 2 in-situ ratio calibration.
+   loading allowance and removable by the in-situ ratio calibration in the
+   historical `fuel/ADC_INTERFACE_SPEC.md` §9 step 2.
    The **temperature drift** of that resistance is the part calibration cannot
    remove and must be bounded.
 5. **Introduce no edge artefact within 100 µs** on GP2/GP3, the firmware's
@@ -198,12 +210,20 @@ hardware and not a suitability argument either way.
 ### 3.5 Clamp and filter, per channel
 
 - Digital cells: keep one 1N5819 per cell to 3V3 and the fitted ratios (C-02).
-  Nothing in the record justifies adding lower clamps to three signals that do
-  not go below ground.
+  Whether a lower clamp is also needed is **open**, not settled: the record
+  establishes only that these signals are nominally positive in normal
+  operation, which does not bound negative harness transients. The analog
+  reviewer decides it against an agreed fault envelope; this document neither
+  requires nor rejects one.
 - Analog cells: the specified 1 kΩ + 1 µF + two 1N5819 per channel are **already
-  fitted** on both channels, confirmed by the owner's October 29 part counts
-  (U-01 closed). Rev A carries them forward unchanged; the values are justified
-  and the leakage objection was measured away. There is nothing to fit.
+  fitted** on both channels, per the owner's October 29 part counts (U-01
+  closed). Rev A carries them forward; there is nothing to fit. The clamp
+  leakage objection is **bounded, not eliminated**: the October 24 check showed
+  the midpoint and GP26 within DMM resolution, i.e. under about 2 µA at room
+  temperature at one operating point, and the historical specification itself
+  limits that finding to its own resolution and conditions. Schottky leakage
+  roughly doubles per 10 °C, so hot leakage remains an open item for the analog
+  reviewer (U-07).
 - Fuses: the C11 and B11 tap-end fuses are **already fitted**, owner-confirmed
   October 29. Rev A extends the same protection to B2, B1 and C14 (D10), which
   do not have it. C14 is the branch where it matters most — its source delivered
@@ -305,7 +325,7 @@ table is established today.
 | 5 | B11 → 22k/4.7k → 1k → GP27, clamps | Ignition-switched | ~0.516 mA at 16 V | As 1 | As 1 |
 | 6 | B16 ground sense | Cluster ground | Reference; shares the ADC bottoms' rail | Unchanged; never a power return; missing-PGND case analysed | B06, with missing PGND safely simulated |
 | 7 | Opto LED input, B11 → 1N5819 → 2.2k | Ignition-switched | Draws vehicle current only with the key on: 4.72 mA at 11.93 V, 5.84 mA at 14.4 V | Unchanged topology and values; endpoints still to be qualified | LRA-07 endpoint measurement; see D15 |
-| 8 | Opto output → GP5 | A5 domain in Rev A | Internal pull-up from an off 3V3, with 100 nF across the opto output. No Pi node: the Pi is out, owner-confirmed October 29 | QREPORT translation, switched 10k pull-up, no DC A5 path into GP5. Decide whether the 100 nF is retained, and account its RC in the observation budget | Measure powered-A5/unpowered-Pico, and USB with A5 absent; scope the GP5 edge |
+| 8 | Report node → GP5 | A5 domain in Rev A | Opto collector direct to GP5, internal pull-up from an off 3V3, 100 nF across the opto output. No Pi node: the Pi is out, owner-confirmed October 29 | Opto output moves to the A5 qualification network; **QREPORT** drives GP5 against a switched 10k pull-up; no DC A5 path into GP5. State whether a capacitor is placed on the report node, and budget its settling | Measure powered-A5/unpowered-Pico, and USB with A5 absent; scope the report-node edge |
 | 9 | GP6 → QH / QMON | A5 domain | Does not exist | Released ≤0.3 V including hot collector leakage and an unpowered Pico; QH short tested separately | `INTERFACE_CONTRACT.md` §8; bench B05 |
 | 10 | USB VBUS → Pico | Bench host | USB deliberately powers the Pico | B5 → DOR → VSYS, never B5 tied to VBUS; open JH for maintenance; no VSYS/3V3 decay required in this mode | B07, including DOR reverse recovery and both VIN_SW and B5 backfeed — QP's body diode permits reverse flow toward P12 |
 | 11 | SD interface | — | Entirely on Pico 3V3; module powered from 3V3(OUT) | Unchanged: no externally powered SD module or pull-ups; SD capacitance included in the decay test | B07 |
@@ -324,7 +344,7 @@ Each delta has a reason. IDs are referenced from AS_BUILT §2.
 
 | ID | Change | Reason | Owner | Status |
 |---|---|---|---|---|
-| **D1** | Replace GP5's internal pull-up and any shared node with QREPORT level translation and a 10k pull-up to **switched** 3V3 | Two independent reasons. (a) Removes the DC path into GP5 from an always-on domain and the historical Pi back-feed; LRA-01 E02. (b) **Timing:** the fitted 100 nF across the opto output needs 12–19 ms to reach the contract's 3.0 V HIGH through the internal pull-up, over the 10 ms observation budget across the whole RP2040 pull-up spread. At 10 kΩ it is 2.40 ms. See AS_BUILT §3.2a | Electrical lead | Candidate, reviewed; the timing reason is new |
+| **D1** | Replace GP5's internal pull-up and any shared node with QREPORT level translation and a 10k pull-up to **switched** 3V3 | Two independent reasons. (a) Removes the DC path into GP5 from an always-on domain and the historical Pi back-feed; LRA-01 E02. (b) **Report-node delay, which must now be budgeted.** In the as-built, the fitted 100 nF plus the internal pull-up needs 12–19 ms (nominal) to reach the contract's 3.0 V criterion, against a 10 ms observation budget. Rev A changes the node: QREPORT, not the optocoupler, sinks this pull-up. So the open question is whether any capacitance is placed on the QREPORT/GP5 report node — if a 100 nF is, the same arithmetic gives 2.40 ms at 10 kΩ; if none is, the delay is QREPORT's own. Either way it belongs inside the 10 ms budget, not assumed to be zero. AS_BUILT §3.2a | Electrical lead | Existing contract candidate; the delay-budget requirement is the new part |
 | **D2** | Add GP6 HOLD_RAW with 4 mA drive, LOW latch before output enable, 47k pulldown, and the JH maintenance link | Autonomous power requires a HOLD output; LRA-01 E03; the LRA-05 candidate already writes GP6 | Electrical lead + firmware | Candidate, reviewed; implementation is opt-in |
 | ~~D3~~ | Carry the fitted ADC protection forward unchanged | **Not a delta.** The 1 kΩ, 1 µF and two 1N5819 per channel are already fitted on both channels, with their tap-end fuses, per the owner's October 29 part counts. Rev A reproduces the as-built here rather than changing it | Analog reviewer confirms the carry-forward | Closed — nothing to fit |
 | **D4** | Add normally-open, power-off-safe isolation upstream of **every** divider top, on all five branches | ~2.78 mA of off-state injection against a 10/25 µA interface budget; §3 | Analog reviewer + LRA-02 | Open — the largest Rev A design item |
@@ -372,16 +392,18 @@ For the firmware reviewer; no firmware change is proposed or made here.
    "line grounded", `ign=1` stays "on", units and column order stay as they are.
    `brake` remains meaningful only with the ignition on.
 5. **No raw-IGN column exists after D1**, as the contract already states.
-6. **The ≤10 ms observation budget must be stated to include the GP5 node's own
-   RC**, not only firmware sampling. The fitted 100 nF across the opto output
-   takes 2.40 ms to reach the contract's 3.0 V criterion through the proposed
-   10 kΩ pull-up, leaving 7.6 ms for sampling and scheduling; through the
-   as-built internal pull-up it takes 12–19 ms and the budget cannot be met at
-   all. The reviewer should either confirm 10 kΩ and the retained capacitor as
-   the qualified-mode configuration, or specify a smaller capacitor — **≤52 nF**
-   if the internal pull-up were kept, at the worst-case 80 kΩ. AS_BUILT §3.2a
-   has the full table. This bears on LRA-05's masked-interrupt analysis, which
-   assumes the pin transition itself is prompt.
+6. **The ≤10 ms observation budget must be stated to include the report node's
+   own settling time**, not only firmware sampling. Rev A's GP5 node is driven
+   by QREPORT against a 10 kΩ pull-up, so the first thing to settle is whether
+   any capacitance is fitted there at all. If a 100 nF is retained, nominal
+   arithmetic gives 2.40 ms to the contract's 3.0 V criterion, leaving 7.6 ms
+   for sampling and scheduling; the as-built internal-pull-up case needs 12–19 ms
+   and would not fit. A **≤52 nF** limit applies only in the hypothetical where
+   the internal pull-up is kept, at the worst-case 80 kΩ. None of these is a
+   timing qualification: rail, capacitor, leakage and temperature corners have to
+   be carried through first. AS_BUILT §3.2a has the table and its assumptions.
+   This also bears on LRA-05's masked-interrupt analysis, which assumes the pin
+   transition itself is prompt.
 
 ---
 

@@ -158,22 +158,22 @@
   "deliverables": [
     {
       "path": "logger/hardware/as-built/AS_BUILT.md",
-      "sha256": "4aa313eefdc6f6aea8170644eb3cc75fc9a4c2d5cb89cfc7636dfb526c35a741",
-      "bytes": 44506,
+      "sha256": "bf28d37654766af2cce6152b436c0946b6d85ccf971ba64601ba6b98590e214f",
+      "bytes": 49701,
       "origin": "written in this session; no source file was copied",
       "note": "check_as_built_numbers.py is an addition beyond the three deliverables the task packet names. It is inside the claimed scope and follows the project's existing practice of shipping a check script beside an engineering document."
     },
     {
       "path": "logger/hardware/as-built/REV_A_INTERFACES.md",
-      "sha256": "d9bf7d68b1842a30f324b59d3df40793594bf52f234bd11b6fce6485ccf141fb",
-      "bytes": 33511,
+      "sha256": "f256db3163cc67f932dd83d3cb20767b87d1719f942a28e1ae86d0ff2d8a9032",
+      "bytes": 35442,
       "origin": "written in this session; no source file was copied",
       "note": "check_as_built_numbers.py is an addition beyond the three deliverables the task packet names. It is inside the claimed scope and follows the project's existing practice of shipping a check script beside an engineering document."
     },
     {
       "path": "logger/hardware/as-built/check_as_built_numbers.py",
-      "sha256": "045fdd788e40d3f46f1911d5b7f868e60ef5c16d7291e1c30e18d1a0bf77b262",
-      "bytes": 7801,
+      "sha256": "550a6b82b90f98d403260d09b6c227e4817089dbb9c35d34e9b0a4a7b4a2f886",
+      "bytes": 9086,
       "origin": "written in this session; no source file was copied",
       "note": "check_as_built_numbers.py is an addition beyond the three deliverables the task packet names. It is inside the claimed scope and follows the project's existing practice of shipping a check script beside an engineering document."
     }
@@ -199,7 +199,12 @@
     {
       "check": "Every derived number asserted in the two documents",
       "command": "python3 -B logger/hardware/as-built/check_as_built_numbers.py",
-      "result": "65 arithmetic checks pass. Three initial mismatches were found and the documents were corrected before commit: the supply/DMM difference (-43.7 mV / -0.37 percent, not -45 mV / -0.38 percent), the fuel difference (+21.2 mV / +1.15 percent) and the powered-rail clamp model for the tach cell"
+      "result": "70 arithmetic checks pass. Corrections made during authoring and review: three initial mismatches (supply/DMM difference -43.7 mV, fuel +21.2 mV, powered-rail clamp model); then, per manager review R03-REV-2 and R03-REV-3, the ADC filter poles were recomputed including the fitted 1k (40.92/32.66 Hz, not 55.1/41.1 Hz), the RP2040 VIH corrected to 2.0 V at IOVDD 3.3 V, and the edge-rejection headroom corrected to 46x"
+    },
+    {
+      "check": "Manager review R03-REV-1 through R03-REV-6 addressed",
+      "command": "coordination/reviews/LRA03_REVIEW_2026-10-29.md",
+      "result": "All six findings accepted and applied. Two were substantive technical errors in the first return (the ADC filter model and the RP2040 VIH value); the rest were overclaims, stale fitted-status prose and reference repairs. No finding was disputed"
     },
     {
       "check": "No file outside the claimed scope was modified",

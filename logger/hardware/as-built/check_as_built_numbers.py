@@ -135,15 +135,30 @@ chk("to 3.0 V at internal 50k", t_rise(50e3, C_OPTO, 3.0) * 1e3, 11.99, 0.02, " 
 chk("to 3.0 V at internal 60k", t_rise(60e3, C_OPTO, 3.0) * 1e3, 14.39, 0.02, " ms")
 chk("to 3.0 V at internal 80k", t_rise(80e3, C_OPTO, 3.0) * 1e3, 19.18, 0.02, " ms")
 chk("to 3.0 V at Rev A 10k", t_rise(10e3, C_OPTO, 3.0) * 1e3, 2.40, 0.01, " ms")
-chk("to RP2040 VIH at internal 60k", t_rise(60e3, C_OPTO, 0.65 * 3.3) * 1e3, 6.30, 0.01, " ms")
+# RP2040 VIH at IOVDD = 3.3 V is 2.0 V (datasheet 5.5.3.4, table 625). The
+# 0.65*IOVDD formula belongs to the 1.8 V row and was used in error here before.
+chk("to VIH 2.0 V at internal 50k", t_rise(50e3, C_OPTO, 2.0) * 1e3, 4.658, 0.01, " ms")
+chk("to VIH 2.0 V at internal 60k", t_rise(60e3, C_OPTO, 2.0) * 1e3, 5.589, 0.01, " ms")
+chk("to VIH 2.0 V at internal 80k", t_rise(80e3, C_OPTO, 2.0) * 1e3, 7.452, 0.01, " ms")
 chk("node corner at internal 60k", 1 / (2 * math.pi * 60e3 * C_OPTO), 26.5, 0.1, " Hz")
 chk("node corner at Rev A 10k", 1 / (2 * math.pi * 10e3 * C_OPTO), 159.2, 0.2, " Hz")
 chk("largest cap holding 10 ms to 3.0 V at 80k",
     10e-3 / (80e3 * math.log(1 / (1 - 3.0 / 3.3))) * 1e9, 52.1, 0.2, " nF")
 
-print("-- ADC filter corners with the fitted 1 uF (section 3.2a)")
-chk("fuel corner", 1 / (2 * math.pi * 2889.34 * 1e-6), 55.1, 0.1, " Hz")
-chk("supply corner", 1 / (2 * math.pi * 3872.66 * 1e-6), 41.1, 0.1, " Hz")
+print("-- ADC filter poles with the fitted 1 uF (section 3.2a)")
+# The specification's section 4 diagram puts the capacitor on the GPIO side of
+# the 1k, so the resistance charging it is the divider Thevenin PLUS that 1k.
+# An earlier revision used the Thevenin alone and reported 55.1/41.1 Hz.
+def pole(rtop, rbot, rseries, c=1e-6):
+    return 1 / (2 * math.pi * (rtop * rbot / (rtop + rbot) + rseries) * c)
+chk("fuel R seen by the cap", 7500 * 4700 / 12200 + 1000, 3889.34, 0.01, " ohm")
+chk("supply R seen by the cap", 22000 * 4700 / 26700 + 1000, 4872.66, 0.01, " ohm")
+chk("fuel pole", pole(7500, 4700, 1000), 40.92, 0.01, " Hz")
+chk("supply pole", pole(22000, 4700, 1000), 32.66, 0.01, " Hz")
+
+print("-- edge-rejection headroom, corrected (section 3.1)")
+chk("tach period at 6500 rpm", 1 / (6500 / 60 * 2) * 1e3, 4.62, 0.01, " ms")
+chk("GLITCH_US margin against that period", 1 / (6500 / 60 * 2) / 100e-6, 46.2, 0.1, "x")
 
 print("-- opto cell, assumed 2.2k versus 1k (section 3.4a)")
 VLED, VD = 1.2, 0.35
@@ -151,8 +166,11 @@ chk("LED current, 2.2k at 14.4 V", (14.4 - VD - VLED) / 2200 * 1e3, 5.84, 0.01, 
 chk("LED current, 1k at 11.93 V", (11.93 - VD - VLED) / 1000 * 1e3, 10.38, 0.01, " mA")
 chk("Ic needed, internal 60k", 3.3 / 60e3 * 1e6, 55.0, 0.1, " uA")
 chk("Ic needed, Rev A 10k", 3.3 / 10e3 * 1e6, 330.0, 0.1, " uA")
-chk("CTR 50% margin, internal 60k", 4.72e-3 * 0.5 / (3.3 / 60e3), 42.9, 0.1, "x")
-chk("CTR 50% margin, Rev A 10k", 4.72e-3 * 0.5 / (3.3 / 10e3), 7.2, 0.05, "x")
+# Conditional screen only: Sharp's 50% CTR minimum is specified at IF = 5 mA,
+# VCE = 5 V, Ta = 25 C, and the fitted part is PC817-class from a kit. The Rev A
+# ratio is deliberately NOT computed here: there the opto drives IGN_A/IGN_RC,
+# not a 10k GP5 pull-up, so a ratio against that pull-up would be meaningless.
+chk("CTR 50% screen ratio, as-built node", 4.72e-3 * 0.5 / (3.3 / 60e3), 42.9, 0.1, "x")
 chk("RLED dissipation at 28 V, as-built 2.2k", 28 ** 2 / 2200, 0.356, 0.001, " W")
 chk("RLED dissipation at 28 V, candidate 990", 28 ** 2 / 990, 0.792, 0.001, " W")
 

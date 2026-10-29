@@ -43,14 +43,22 @@ largest open item in this record; §3.2 works it through. It closes U-04 and mos
 of U-01, and it contradicts this document's original assumption that the ADC
 protection was unfitted — the assumption was wrong, and the count governs.
 
-**Identification is complete as of October 29.** Every fitted element of this
-build is now owner-confirmed or measured: no part remains unidentified and no
-fitted value remains assumed. Eight of the twelve original unknowns closed on
-that date, all from owner statements and part counts rather than from documents.
-What is left (U-05 through U-12) is **characterisation and analysis** — a pulse
-amplitude, a diode's low-current drop, two source impedances, signed ground
-offsets, resistor tolerances and the physical envelope — not questions about
-what is wired. Reviewers should read the remaining unknowns in that light.
+**Identification is substantially complete as of October 29**, with two named
+exceptions. Every circuit element is now owner-reported or measured, and no
+fitted *value* remains assumed. **Five of the thirteen register entries closed**
+on that date — U-01, U-02, U-03, U-04 and U-13 — all from owner statements and
+part counts rather than from documents. Still not identified: the optocoupler is
+only **PC817-class**, not a confirmed manufacturer part, and the ignition feed's
+**inline fuse rating is unstated**. What remains in U-05 through U-12 is
+**characterisation and analysis** — a pulse amplitude, a diode's low-current
+drop, two source impedances, signed ground offsets, resistor tolerances and the
+physical envelope — not questions about what is wired.
+
+Two kinds of October 29 evidence appear below and are not interchangeable:
+**owner-reported values and connections**, and **conclusions inferred from total
+part counts**. The counts are strong because each total matches its prediction
+exactly with nothing left over, but an inference from a total is not a
+part-by-part reading, and §3.2 says which is which.
 
 Companion document: [REV_A_INTERFACES.md](REV_A_INTERFACES.md) holds the
 proposed interface freeze. **This file records what exists; that file records
@@ -205,10 +213,14 @@ inserting isolation in series (§REV_A_INTERFACES.md 4):
 | VSS | ~91 Hz at 80 mph, from the published 4104.3 pulses/mile | not measured |
 | Brake, fuel, supply | level / minutes | — |
 
-The firmware's `GLITCH_US = 100` rejects edge pairs closer than 100 µs, so the
-whole chain has four decades of headroom over the fastest real signal. The
-sketch comment's "VSS at 80 mph a few hundred [Hz]" is conservative by about 3x
-against the project's own pulse constant.
+The firmware's `GLITCH_US = 100` rejects edge pairs closer than 100 µs. Against
+the fastest real signal that is a factor of about **46**: a 217 Hz tach has a
+4.62 ms period, not the four decades an earlier revision of this document
+claimed. 46x is comfortable for a nominal waveform, but minimum pulse width and
+edge integrity need their own evidence — neither is established here, and U-06
+is the open amplitude question on the other channel. The sketch comment's "VSS
+at 80 mph a few hundred [Hz]" is conservative by about 3x against the project's
+own pulse constant.
 
 ### 3.2 The two analog channels
 
@@ -270,10 +282,28 @@ unconfirmed element of rows 4a and 5a, and the only fire-risk item in the build.
 ### 3.2a Capacitor values, and the one real consequence
 
 Owner, October 29: **100 nF across the optocoupler output, 1 µF on each of the
-two ADC channels.** So both analog channels have the specified filter — the
-corner stays at 55 Hz on fuel against its 2889 Ω Thevenin and 41 Hz on supply
-against 3873 Ω, and the measured impulsive-noise threat is covered as designed.
-U-13 is closed.
+two ADC channels.** So both analog channels have the specified filter. U-13 is
+closed.
+
+**The filter poles, computed for the documented topology.** The specification's
+§4 diagram puts the capacitor on the *GPIO side* of the 1 kΩ, so the resistance
+charging it is the divider Thevenin **plus** that 1 kΩ:
+
+| Channel | Resistance seen by the 1 µF | Nominal pole |
+|---|---|---:|
+| Fuel | (7.5k ‖ 4.7k) + 1k = 3889.34 Ω | **40.92 Hz** |
+| Supply | (22k ‖ 4.7k) + 1k = 4872.66 Ω | **32.66 Hz** |
+
+Assumptions: ideal source, nominal values, negligible ADC and leakage loading,
+`fc = 1/(2πRC)`. **This corrects an error in an earlier revision of this
+document**, which used the Thevenin resistance alone and reported 55 Hz and
+41 Hz. Those figures came from the historical specification's own prose, which
+inherited the same omission; reproducing a source's arithmetic is not
+independent validation of it. The corrected poles are *lower*, i.e. more
+rejection than claimed, so the impulsive-noise case is unaffected — but the
+numbers now match the circuit as drawn. If the fitted capacitor is actually on
+the divider side of the 1 kΩ, that connection must be recorded explicitly rather
+than computed with an incompatible model.
 
 The 100 nF is on the position that matters, and it produces the one genuine
 electrical finding in this consolidation.
@@ -297,21 +327,38 @@ alone, before firmware samples anything:
 | Internal, 50 kΩ (fast end of the RP2040 spread) | 5.00 ms | **11.99 ms** | over |
 | Internal, ~60 kΩ (this project's working figure) | 6.00 ms | **14.39 ms** | over |
 | Internal, 80 kΩ (slow end of the spread) | 8.00 ms | **19.18 ms** | over |
-| **Rev A external 10 kΩ to switched 3V3** | 1.00 ms | **2.40 ms** | ok, 7.6 ms left |
+| A 10 kΩ pull-up, if the capacitor is retained on this node | 1.00 ms | **2.40 ms** | 7.6 ms left |
 
-The conclusion does not depend on the assumed pull-up value: it fails across the
-whole specified spread. One distinction matters for honesty — the *pin* reads
-logic HIGH sooner, 5.3 to 8.4 ms, because the RP2040's V<sub>IH</sub> is about
-2.15 V. It is the contract's deliberately stricter 3.0 V criterion that the RC
-cannot satisfy, not the silicon's threshold.
+The result does not depend on the assumed pull-up value: it exceeds the budget
+across the whole specified spread. Two qualifications, both material:
+
+- **This is nominal arithmetic**, for an ideal 100 nF charging from zero to a
+  nominal 3.3 V rail. It is not a worst-case timing qualification and it does
+  not by itself prove a firmware defect. Rail tolerance, capacitor tolerance and
+  bias behaviour, opto leakage and pull-up spread all have to be carried through
+  before anything is called closed.
+- **The pin reads logic HIGH sooner.** The RP2040 specifies V<sub>IH</sub> =
+  **2.0 V** at IOVDD = 3.3 V (datasheet §5.5.3.4, table 625); the
+  `0.65 × IOVDD` formula an earlier revision of this document used belongs to
+  the 1.8 V row, and that error is corrected here. Times to 2.0 V are **4.658 /
+  5.589 / 7.452 ms** at 50 / 60 / 80 kΩ. V<sub>IH</sub> is a guaranteed
+  input-level boundary, not a measured switching threshold. So it is the
+  contract's deliberately stricter 3.0 V criterion that the RC misses, not the
+  silicon's guaranteed level.
 
 Three consequences, and none of them is a defect in what is built:
 
-1. **The Rev A external 10 kΩ pull-up (D1) is now load-bearing for timing**, not
-   only for removing the DC path into GP5. At 10 kΩ the same capacitor settles
-   in 2.40 ms and the node corner moves to 159 Hz, which is still ample
-   immunity. D1 was already the plan; this is a second, independent reason it
-   cannot be dropped.
+1. **Rev A is a different circuit on this node, so the capacitor's fate is a
+   decision, not a carry-over.** Rev A disconnects the opto collector from GP5
+   altogether: the optocoupler output moves to the A5 qualification network, and
+   **QREPORT** — not the optocoupler — sinks the 10 kΩ pull-up on GP5
+   (`CUTOFF_MARGIN_REVIEW.md` §2). Whoever freezes that node must state
+   explicitly whether a 100 nF is placed on the QREPORT/GP5 report node. If it
+   is, the same arithmetic applies and gives 2.40 ms against the 3.0 V criterion
+   with a 159 Hz node corner; if it is not, the node is fast and the report
+   delay is QREPORT's own. Either way the external 10 kΩ remains the power
+   contract's existing candidate — this finding does not request a pin or
+   topology change, and it is not a timing closure.
 2. **If anyone ever proposes keeping the internal pull-up in qualified mode**,
    the capacitor must come down to **≤52 nF** to hold 10 ms at the worst-case
    80 kΩ (≤70 nF at 60 kΩ, ≤83 nF at 50 kΩ). Recording the limit so the trade is
@@ -430,12 +477,26 @@ output only has to hold GP5 low:
 | LED current at 14.4 V charging | 5.84 mA |
 | Collector current needed, as-built internal pull-up | 55 µA |
 | Collector current needed, Rev A 10 kΩ pull-up | 330 µA |
-| Available at the PC817's worst-case 50 % CTR bin | 2.36 mA |
-| Margin: as-built / Rev A | **43x / 7.2x** |
+| Conditional screen at 50 % CTR | 2.36 mA |
+| Ratio to the as-built requirement | **43x** |
 
-So the output saturates with room to spare in both configurations, which is why
-the value was never functionally critical and was never written down. It is
-**not** irrelevant to:
+**These are conditional screens, not guarantees.** Sharp's 50 % CTR minimum is
+specified at I<sub>F</sub> = 5 mA, V<sub>CE</sub> = 5 V and T<sub>a</sub> =
+25 °C. The fitted LED runs at **4.72 mA**, below that condition; the part is
+PC817-*class* from an assortment kit rather than an identified Sharp device; and
+hot CTR is unproved — `COMPONENT_MARGIN_CLOSURE.md` already records that "hot
+PC817 leakage/CTR at actual LED current is unproved" and that generic stock does
+not inherit Sharp's specifications. The 43x ratio says the as-built has large
+nominal headroom, which is consistent with it having worked on the road for
+months; it does not establish saturation at any corner.
+
+The Rev A figure is **not** a comparable number and an earlier revision of this
+document wrongly presented one. In Rev A the optocoupler drives IGN_A/IGN_RC in
+the A5 qualification network, not a 10 kΩ GP5 pull-up, so its endpoint and CTR
+requirements come from that network and must be analysed against it.
+
+So the resistor value was never functionally critical for the as-built, which is
+why it was never written down. It is **not** irrelevant to:
 
 - the LRA-01 opto endpoint and 400 ms qualification budget, which depends on
   actual LED current and the IGN_RC filter — now computable from a measured
@@ -446,7 +507,7 @@ the value was never functionally critical and was never written down. It is
   specifications;
 - the R02 protection decision — see the next point, which is the useful one.
 
-**The fitted 2.2k already solves a defect the power contract flagged.**
+**The fitted 2.2k is a candidate answer to a defect the power contract flagged.**
 `INTERFACE_CONTRACT.md` §6 rejects its own IGN sizing because "RLED upper sizing
 is 28²/990 = 0.792 W, above its 0.5 W rating" at the 28 V protected-input
 ceiling. The as-built value does not have that problem:
@@ -456,11 +517,14 @@ ceiling. The as-built value does not have that problem:
 | As-built 2.2k (measured) | **0.356 W** | inside rating |
 | Power candidate 990 Ω | 0.792 W | **over rating**, as the contract states |
 
-This is offered to the electrical lead as an input to R02, not as a decision:
-the Rev A chain feeds an analog qualification stage rather than a bare GPIO, so
-its CTR and endpoint requirements may not be satisfied by 4.7 mA. The point is
-that a measured, already-fitted value is a candidate answer to a defect
-currently marked open, and it is cheaper to evaluate than a new part.
+Both figures are **nominal arithmetic on resistance alone**. 0.356 W is not
+proof of the fitted resistor's wattage rating, tolerance, hot derating or pulse
+capability, none of which is known — the fitted part's power rating is not
+recorded anywhere, and R02 and R03 remain open. This is offered to the
+electrical lead as an input, not as a resolution: the Rev A chain feeds an
+analog qualification stage rather than a bare GPIO, so its CTR and endpoint
+requirements may not be satisfied by 4.7 mA. The point is only that a measured,
+already-fitted value is worth evaluating before a new part is specified.
 
 ### 3.5 SD
 
@@ -535,7 +599,7 @@ the DMM's own accuracy is unstated.
 The fuel channel's +21.2 mV residual is the same size as the measured 21 mV
 Pico-GND-to-chassis offset. That is noted and **not** explained: the signs were not
 reported, the two measurements are a minute apart, and a 1 % divider tolerance
-spans the same range. Resolving it is the §9-step-3 ground-offset check, not an
+spans the same range. Resolving it is the ground-offset check in the historical `fuel/ADC_INTERFACE_SPEC.md` §9 step 3, not an
 inference from these two numbers (U-05).
 
 ---
@@ -645,6 +709,14 @@ in the historical repository at the revision recorded in
 | SD pin map and 12 MHz clock as built | 2026-10-18 | `SPEC.md` §5.2; `logger/firmware/accord-logger/logger_sd.cpp` |
 | Buck 5 V branch: ~51 mA settled, maxima 88/96/101/89 mA, 72–80 mA after a drive | 2026-10-26 | `circuits.md`, "MEASURED 2026-10-26" |
 | Divider ratios published in the card header from the same constants the code uses | current | `logger/firmware/accord-logger/accord-logger.ino`, `card_header.h` |
+| Pi removed, clock-harness tap removed, ignition consolidated on B11 | 2026-10-29 | Owner statement, **reported** |
+| No capacitor at the SD module | 2026-10-29 | Owner statement, **reported** |
+| Three capacitors, eight diodes, thirteen resistors on the build | 2026-10-29 | Owner count, **reported** |
+| Both ADC channels carry 1 kΩ, 1 µF and two 1N5819; no input-side opto capacitor | 2026-10-29 | **Inferred** from the counts above matching prediction exactly, corroborated for the 1 kΩ by the Oct 24 midpoint-vs-GP26 reading |
+| Capacitor values: 100 nF opto output, 1 µF per ADC channel | 2026-10-29 | Owner statement, **reported** |
+| All eight diodes are 1N5819 | 2026-10-29 | Owner statement, **reported**; corroborated by the inventory holding 100x 1N5819 and no BAT54 |
+| Tap-end fuses and the ignition feed's inline fuse are in place | 2026-10-29 | Owner statement, **reported**; ratings not stated |
+| Opto series resistor 2.2k | 2026-10-29 | Owner **measurement** |
 
 Public artifacts in this repository that already carry part of this record:
 [`logger/hardware/REV_A_CONTEXT.md`](../REV_A_CONTEXT.md),
