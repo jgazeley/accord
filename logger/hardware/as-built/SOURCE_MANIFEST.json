@@ -1,0 +1,217 @@
+{
+  "artifact": "logger/hardware/as-built",
+  "kind": "derived documentation, not a file export",
+  "statement": "No bytes were copied from any source into this directory. AS_BUILT.md and REV_A_INTERFACES.md were written from the sources listed below, which are recorded with their revisions, paths, blob ids and hashes so every assertion can be traced. Hardware design content (circuit values, connections, pinouts) originates with the owner and the historical engineering sessions; this return consolidates and reviews it and claims no circuit authorship.",
+  "prepared_by": {
+    "tool": "Claude Code",
+    "model": "claude-opus-5",
+    "role": "hardware-integrator",
+    "task": "LRA-03",
+    "session": "23d6d0fb-9656-4e03-acb3-922537019a5b",
+    "session_id_basis": "Read from this session's harness-assigned working paths. This tool exposes no session/thread environment pair to cross-check it against, so the identity is single-sourced rather than independently verified.",
+    "resume": "claude --resume 23d6d0fb-9656-4e03-acb3-922537019a5b",
+    "date": "2026-10-29",
+    "scope": "logger/hardware/as-built/ only"
+  },
+  "destination_base": {
+    "repository": "jgazeley/accord",
+    "commit_written_against": "91a992c9de19c2c1c461fa1b78f5c921405a03ea",
+    "commit_rebased_onto": "eb33d17a98a0f9bb07872fee7baadf368d3e3e55",
+    "rebase_note": "The manager advanced main during this work with the LRA-04 dispatch update and the October 29 inventory clarification. Neither touches logger/hardware/as-built/, and the repository_sources hashes below are unchanged between the two commits.",
+    "branch": "task/LRA-03-23d6d0fb"
+  },
+  "historical_source": {
+    "repository": "jgazeley/accord-logger",
+    "commit": "1e994494f933da99636942d6ec135e857f2b3f6b",
+    "commit_author": "Jayson Gazeley <jayson@sjsu>",
+    "commit_date": "2026-10-27T17:47:00-07:00",
+    "commit_subject": "Stop tracking gardenslave",
+    "access": "A checkout of this repository is present on the development host at /srv/agent_share/pcb. Every read was performed with 'git show <rev>:<path>' pinned to the commit above, so the checkout's own working tree (which carries unrelated uncommitted deletions belonging to another session, and whose HEAD is 705b068) did not influence any quotation. Nothing in that repository was modified, staged or committed.",
+    "files": [
+      {
+        "path": "circuits.md",
+        "blob": "db55df9460abee3fba8769544cfc30b02685d7c9",
+        "sha256": "602e9a892b035f9eebe4ad27238008a041aabfa0fce49b9718de975b93b26216",
+        "bytes": 334021,
+        "consulted_for": "Dated as-built corrections and installation records: 1N5819 clamp correction and corrected divider table (Oct 24), C14 measured branch current and GP4 toggle verification (Oct 23), GP5 power-off quantification (Oct 24), ignition rewired to cluster B11/B16 (Oct 26), 5 V branch current (Oct 26), tach/VSS measurements (Oct 15), ignition cell derived from keyless U13 (Oct 16)"
+      },
+      {
+        "path": "CLUSTER_PINOUT.md",
+        "blob": "f1ecb2b71ae9a039040e3d467cc3634d76948773",
+        "sha256": "21d18c57be5636d4d37fd84d143ff3c20ff37a5b62e36bf819b4cf262b181dbb",
+        "bytes": 5508,
+        "consulted_for": "Cluster A/B/C connector map and the already-tapped table; its B11/B16 'specified, not pulled' status is superseded (conflict C-04)"
+      },
+      {
+        "path": "fuel/ADC_INTERFACE_SPEC.md",
+        "blob": "e2287e4090d9d960f0706aeb2a4affafa27f50d3",
+        "sha256": "7808b01f326c89a019e9b376e24fa9cfdc38f1aa4dd22ae9e0d1cfbf9c0f01ba",
+        "bytes": 26246,
+        "consulted_for": "ADC channel assignment, divider values and ratios, per-channel protection, divider placement and single-point grounding, measured leakage result"
+      },
+      {
+        "path": "fuel/READINGS.md",
+        "blob": "33833e9be728d58983acc3e9dbe36e9b8b709af2",
+        "sha256": "c30e853d3289810c651a49f578da3e2bbab1ae24fbe34c3078f86d57f0917ad1",
+        "bytes": 34971,
+        "consulted_for": "Installation and ground-topology entries only: fuel divider fitted, B11/B16 connected, DMM calibration point, B16 ground rail confirmation. Personal fuel, fill, gauge and odometer records were read and deliberately not transported"
+      },
+      {
+        "path": "benchlink/picow-logger/SPEC.md",
+        "blob": "ff7167cc8832f8f3980a122513c5350d20f48621",
+        "sha256": "c7b1dcf565cfd7fdf73c666472ca14897a5f512127084d7a148db7aeedc30f99",
+        "bytes": 30930,
+        "consulted_for": "Section 5.1 pin assignments and section 5.2 as-built SD wiring, measurements, rail-change gate and 3V3 current-budget caveat"
+      }
+    ]
+  },
+  "repository_sources": {
+    "repository": "jgazeley/accord",
+    "commit": "91a992c9de19c2c1c461fa1b78f5c921405a03ea",
+    "files": [
+      {
+        "path": "logger/firmware/accord-logger/accord-logger.ino",
+        "blob": "35ba7f2b6dbcd905418e30970e158dffcd0f88d7",
+        "sha256": "2e4ccb22c5f1f7e9686bd3d9610ef6279e43cc3b63871fd719038443f938d3a8",
+        "bytes": 31279,
+        "consulted_for": "Current pin constants, 12-bit ADC configuration, published divider resistors and header facts; its header comment's cell description is stale (conflicts C-01, C-02)"
+      },
+      {
+        "path": "logger/firmware/accord-logger/card_header.h",
+        "blob": "85aa9de0b99e31d816256acd366f941cc0f60c5f",
+        "sha256": "34b482065e1ce26000334811db730887de5054d66a4b5d3153f867794f9db27b",
+        "bytes": 7546,
+        "consulted_for": "Card header format: log.pins and log.adc.* fields, and the absence of any series-resistance term"
+      },
+      {
+        "path": "logger/firmware/accord-logger/logger_sd.cpp",
+        "blob": "2469ee8ec8b373fa17faa7a132819c1db5ab217c",
+        "sha256": "d5012192b9f202c2084463f3468a7cbc739f897e2265b964d52fa1c7a4beccef",
+        "bytes": 24657,
+        "consulted_for": "As-built SPI0 pin map, 12 MHz clock and the 3V3(OUT) rail rationale"
+      },
+      {
+        "path": "logger/firmware/accord-logger/logger_power.cpp",
+        "blob": "a3afada75e53dc62c112c765cfeffef7cfb3fab4",
+        "sha256": "d3486b9dda637e166587fa656905174a2b36ced0bdab3f416956f432dea9fbbd",
+        "bytes": 3707,
+        "consulted_for": "Candidate GP6 HOLD writer, 4 mA drive strength and LOW preload"
+      },
+      {
+        "path": "logger/hardware/REV_A_CONTEXT.md",
+        "blob": "11fd754fbb6e0ace8ecd0b361738ab76c54c7ae7",
+        "sha256": "e5538c320e7e0d0a7d9fbe495144ae657833d30f2e22c730c8594aeacda8e5ee",
+        "bytes": 7940,
+        "consulted_for": "Current public summary of the recorded baseline and the LRA-01/02 candidate conflicts"
+      },
+      {
+        "path": "logger/hardware/power/DESIGN.md",
+        "blob": "4b8d9a3c2ca9e9ea942faf3bbec28411e25b5ce8",
+        "sha256": "2d7a175a1cc1acb6b10b2addba9300dea4811556cf8609e00da546a36bdf552d",
+        "bytes": 25891,
+        "consulted_for": "Section 6 off-state/backfeed audit and illustrative injection currents"
+      },
+      {
+        "path": "logger/hardware/power/INTERFACE_CONTRACT.md",
+        "blob": "a559f5fc62274151c75effa01c1e02789fbd9a5d",
+        "sha256": "4617fd1616d96a4a9f13d198fc096b8e4797b6b6139a095a2b793140dd379627",
+        "bytes": 31566,
+        "consulted_for": "Candidate domains, pins, startup and shutdown contract, parked-current allocations, off-state isolation table and the LRA-03 interface selection gate"
+      },
+      {
+        "path": "logger/hardware/power/COMPONENT_MARGIN_CLOSURE.md",
+        "blob": "94c96c3b13a4f991b8abfbe07fd9416170964969",
+        "sha256": "5ebdef257da36ad2fbf37ad6ba606073e3a8fd1baafe305971552a875fca9b00",
+        "bytes": 30382,
+        "consulted_for": "Conditional component selections, parked ledger and the 10/25 microamp interface reservation"
+      },
+      {
+        "path": "logger/protocols/CARD_FORMAT.md",
+        "blob": "546f0f9495133a9d8aa160551445567da31684b0",
+        "sha256": "d774d8a6c927c289278640ea770436c144d881118500795789cb5970c0c32be8",
+        "bytes": 25124,
+        "consulted_for": "Published meaning of the header tags this proposal must not break"
+      },
+      {
+        "path": "keyless/hardware/hondaPico.kicad_sch",
+        "blob": "83958bd3915470c5a5190fb8412f41998a6fe684",
+        "sha256": "1dcbbcc3bd7bd6b9ffb0cfbb6bbc236a6089c77c5131f363b59b51b51fcdb744",
+        "bytes": 337247,
+        "consulted_for": "Reference blocks only: U13/R12/D4/C12 ignition cell, U10-U12 ground-active cells, LM2678 supply, TP1-TP7 test points and J7 reset header, J1/J2 connectors"
+      },
+      {
+        "path": "keyless/firmware/accord-keyless/accord-keyless.ino",
+        "blob": "589b5a51cb5e3be66fe420330d724960c4e4fae0",
+        "sha256": "e51a6b01a134ba4f187c26b18f14a46dee2665da4c7c77eed989493e2234e898",
+        "bytes": 42606,
+        "consulted_for": "Confirms the keyless ignition cell is read active-low on GP14 with INPUT_PULLUP and no external collector pull-up"
+      },
+      {
+        "path": "keyless/validation/kicad-20261027/README.md",
+        "blob": "e721b56841fa76605fe56598fc92203be8294176",
+        "sha256": "306e7640322b2bd6981620a25be1b83f08946b01788fc2f9bf772c06eab84450",
+        "bytes": 2038,
+        "consulted_for": "Known keyless validation exceptions to read before extracting any value: J2 absent from the PCB, R14/R15 value differences"
+      }
+    ]
+  },
+  "deliverables": [
+    {
+      "path": "logger/hardware/as-built/AS_BUILT.md",
+      "sha256": "4aa313eefdc6f6aea8170644eb3cc75fc9a4c2d5cb89cfc7636dfb526c35a741",
+      "bytes": 44506,
+      "origin": "written in this session; no source file was copied",
+      "note": "check_as_built_numbers.py is an addition beyond the three deliverables the task packet names. It is inside the claimed scope and follows the project's existing practice of shipping a check script beside an engineering document."
+    },
+    {
+      "path": "logger/hardware/as-built/REV_A_INTERFACES.md",
+      "sha256": "d9bf7d68b1842a30f324b59d3df40793594bf52f234bd11b6fce6485ccf141fb",
+      "bytes": 33511,
+      "origin": "written in this session; no source file was copied",
+      "note": "check_as_built_numbers.py is an addition beyond the three deliverables the task packet names. It is inside the claimed scope and follows the project's existing practice of shipping a check script beside an engineering document."
+    },
+    {
+      "path": "logger/hardware/as-built/check_as_built_numbers.py",
+      "sha256": "045fdd788e40d3f46f1911d5b7f868e60ef5c16d7291e1c30e18d1a0bf77b262",
+      "bytes": 7801,
+      "origin": "written in this session; no source file was copied",
+      "note": "check_as_built_numbers.py is an addition beyond the three deliverables the task packet names. It is inside the claimed scope and follows the project's existing practice of shipping a check script beside an engineering document."
+    }
+  ],
+  "excluded_deliberately": [
+    "Personal fuel readings, fill records, gauge positions, odometer values and road recordings",
+    "Trip CSV evidence files and snapshots referenced by the source notes",
+    "Credentials, configured firmware binaries and private runtime or database state",
+    "The unused keyless 3D model logger/../keyless/hardware/3d/039301160.stp, excluded pending license provenance",
+    "Keyless component values, which are reference context and are not transported into the logger as-built record"
+  ],
+  "validation": [
+    {
+      "check": "Existing power check scripts, rerun unchanged on this branch",
+      "command": "python3 -B logger/hardware/power/check_max_on_logic.py; check_cutoff_margins.py; check_interface_contract.py; check_component_margins.py",
+      "result": "11 + 8 + 14 + 11 = 44 checks pass, matching the manager's LRA-05 review"
+    },
+    {
+      "check": "Native firmware suites and the public power converter cases",
+      "command": "python3 -B logger/tools/test_native.py; python3 -B logger/tests/check_power_converter.py",
+      "result": "9 suites pass; 12 converter cases pass"
+    },
+    {
+      "check": "Every derived number asserted in the two documents",
+      "command": "python3 -B logger/hardware/as-built/check_as_built_numbers.py",
+      "result": "65 arithmetic checks pass. Three initial mismatches were found and the documents were corrected before commit: the supply/DMM difference (-43.7 mV / -0.37 percent, not -45 mV / -0.38 percent), the fuel difference (+21.2 mV / +1.15 percent) and the powered-rail clamp model for the tach cell"
+    },
+    {
+      "check": "No file outside the claimed scope was modified",
+      "command": "git status --short",
+      "result": "only logger/hardware/as-built/ is added; the historical checkout at /srv/agent_share/pcb was read with git show and left untouched"
+    }
+  ],
+  "not_established": [
+    "No bench access, measurement, flashing, wiring change or purchase occurred",
+    "No off-state current, inrush or transient figure exists for this build",
+    "No schematic, BOM, fabrication approval or acceptance is claimed",
+    "No fuel calibration or quantity model is provided or required here"
+  ],
+  "licensing": "Documentation under Apache-2.0 per LICENSING.md. Circuit connection and value content describes original hardware whose design terms are CERN-OHL-P-2.0; third-party datasheets are linked, never bundled."
+}
