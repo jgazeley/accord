@@ -3,14 +3,15 @@
 #include "logger_sd.h"
 #include "card_header.h"
 #include "adc_median.h"
+#include "logger_power.h"
 
 // Keep both cores at 8 KB stack; Wi-Fi stays on core 0.
 bool core1_separate_stack = true;
 
 // Core 0: the radio and the card. Both can block for hundreds of milliseconds
 // and neither is allowed anywhere near the 1 Hz report, which runs on core 1.
-void setup() { sdSetup(); networkSetup(); }
-void loop() { sdLoop(); networkLoop(); }
+void setup() { sdSetup(); networkSetup(); powerReady(0); }
+void loop() { sdLoop(); networkLoop(); powerProgress(0); }
 
 /* vsslog -- count the VSS and tach pulse trains on a bare Pico, in the car.
  *
@@ -206,7 +207,7 @@ const char VEHICLE_ID[] = "accord-1";
  * and ARCHITECTURE.md records that spare boards sometimes get sold; a VIN
  * written onto a card cannot be un-written, and nothing downstream needs it to
  * tell two cars apart. Change the label, not the kind of thing it is. */
-const char FW_VERSION[] = "0.8.1-dev";
+const char FW_VERSION[] = "0.8.1-lra05-dev";
 
 const uint16_t ADC_BITS = 12;
 /* The per-report statistic, published in the card header so a card-only reader
@@ -232,6 +233,7 @@ const char PPM_ASOF[]  = "2026-10-18";
  * unset here: logger_sd.cpp adds them on each open, and the boot-time copy over
  * USB deliberately has none. */
 void cardHeaderFacts(logger_card_header::Facts &f) {
+  f.power_qualified = LOGGER_POWER_QUALIFIED;
   f.chip = rp2040.getChipID();
   f.vehicle = VEHICLE_ID;
   f.fw = FW_VERSION;
@@ -365,6 +367,7 @@ bool applyHostTime(const char *burst, uint8_t len) {
 }
 
 void setup1() {
+  powerSetup1(); // before USB wait, output, ADC or radio initialization
   /* No pull-up: the divider's lower leg sets the resting level, and an
    * internal pull-up would fight it. It also holds the pin low if the tap
    * ever falls off, so a disconnected probe reads zero instead of counting
@@ -424,6 +427,7 @@ void setup1() {
   sdPrintStatus();
   lastReport = millis();
   networkCounterReady();
+  powerReady(1);
 }
 
 // Every command runs here, one character at a time, only after its burst has
@@ -540,6 +544,8 @@ void statusNotes() {
 }
 
 void loop1() {
+  powerProgress(1);
+  sdProducerPoll();
   // Independent of the unchanged 1 Hz raw IGN column. Retry a contended
   // mailbox on the next 20 ms sample; never wait for network work here.
   static uint32_t lastNetworkIgn = 0;
@@ -556,7 +562,8 @@ void loop1() {
   static bool burstBad = false;
   static uint32_t burstLastMs = 0;
 
-  while (Serial.available()) {
+  unsigned inputBudget = 128;
+  while (Serial.available() && (!LOGGER_POWER_QUALIFIED || inputBudget--)) {
     const int c = Serial.read();
     burstLastMs = millis();
     if (burstLastMs - serialReadyMs < INPUT_GUARD_MS) continue;
@@ -577,7 +584,13 @@ void loop1() {
       // sending rubbish shows up in the same place as an echo would.
       if (!applyHostTime(burst, burstLen)) ++ignoredBursts;
     }
-    else for (uint8_t i = 0; i < burstLen; ++i) command(burst[i]);
+    else for (uint8_t i = 0; i < burstLen; ++i) {
+      command(burst[i]);
+      // A finite command completes before refreshing health. Continuous input
+      // is bounded above so it cannot indefinitely starve reports/quiescence.
+      powerProgress(1);
+      sdProducerPoll();
+    }
     burstLen = 0;
     burstBad = false;
   }

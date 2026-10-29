@@ -1,6 +1,6 @@
 # LRA-03 — consolidate the logger as-built and Rev A interfaces
 
-October 28, 2026 update by Codex `pcb-manager`, session `01a18447-07c2-7bb3-8318-9b276cfdb3b8`.
+October 29, 2026 update by Codex `pcb-manager`, session `01a18447-07c2-7bb3-8318-9b276cfdb3b8`.
 Current manager bookmark: `codex resume 01a18447-07c2-7bb3-8318-9b276cfdb3b8`.
 Identity verified from matching `CODEX_SESSION_ID` and `CODEX_THREAD_ID`.
 
@@ -11,8 +11,8 @@ unclaimed. Current pcb-manager integrates; task state is in the single tracker.
 
 Produce one traceable description of the fitted logger and a proposed Rev A
 interface freeze, preserving the distinction between fitted, specified and unknown.
-Work in `jgazeley/accord` from transition base `303092a74526c1107ab705457064b6062dfc0906`
-and the latest pushed revision of this packet. Suggested branch
+Work in `jgazeley/accord` from current public main, including reviewed LRA-01/02
+and LRA-05 candidate `0745d5b`; record the exact starting commit. Suggested branch
 `task/LRA-03-<own-session-short>`.
 
 Claim only `logger/hardware/as-built/`. Deliver `AS_BUILT.md`,
@@ -29,7 +29,13 @@ provides selected, public-reviewed historical circuit/ADC excerpts if required.
 Detailed fitted opto and ADC component values are unresolved inputs, not license
 to copy specified values into an as-built BOM. Collect precise owner/bench questions.
 
-Start signal consolidation now; power domains finalize after LRA-01/02. Exchange
+Read `logger/hardware/power/INTERFACE_CONTRACT.md`,
+`logger/hardware/power/COMPONENT_MARGIN_CLOSURE.md`
+and `coordination/reviews/LRA05_REVIEW_2026-10-29.md` for the current candidate
+interfaces and unresolved protection/leakage/isolation/timing gates. GP6 is the
+qualified HOLD reservation; the existing as-built remains manually powered.
+
+Start signal consolidation now; final power domains depend on LRA-01/02 closure. Exchange
 proposed GPIO/connector reservations with LRA-04 before either freezes them.
 
 ## Existing logger as-built — owner reminder, October 28

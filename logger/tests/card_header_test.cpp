@@ -48,6 +48,7 @@ static const char EXPECTED_CARD[] =
     "# log.columns ms,vss_total,vss_hz,tach_total,tach_hz,rpm,brake,fuel_counts,"
     "fuel_lo,fuel_hi,supply_counts,die_counts,ms_since_ign,ign\n"
     "# log.stable 7\n"
+    "# log.power interface=manual ign_source=legacy-gp5 hold=none\n"
     "# log.pins vss=GP2 tach=GP3 brake=GP4 ign=GP5 fuel=GP26 supply=GP27\n"
     "# log.pulses vss_per_mile=4104.3 band=4103.19..4105.42 asof=2026-10-18"
     " source=tripd-refit authority=downstream\n"
@@ -101,7 +102,10 @@ int main(int argc, char **argv) {
         logger_card_header::Facts e = sketch_facts();
         e.file_name = argc > 2 ? argv[2] : "/20261024_101530.CSV";
         e.opened_ms = 540;
-        e.clock_trusted = true;
+        e.clock_trusted = strncmp(e.file_name, "/BOOT_", 6) != 0;
+        e.power_qualified = argc > 3 && strcmp(argv[3], "qualified") == 0;
+        e.fw = "0.8.1-lra05-dev";
+        e.upload_id = "0123456789abcdef0123456789abcdef";
         if (!logger_card_header::render(out, sizeof(out), e)) return 1;
         fputs(out, stdout);
         return 0;
@@ -187,10 +191,14 @@ int main(int argc, char **argv) {
         auto upload = sketch_facts();
         upload.file_name = "/BOOT_0123456789abcdef.CSV";
         upload.opened_ms = 540;
+        upload.power_qualified = true;
+        upload.fw = "0.8.1-lra05-dev";
+        upload.opened_ms = UINT32_MAX;
         upload.upload_id = "0123456789abcdef0123456789abcdef";
         char header[logger_card_header::BUFFER], name[65]; bool sealable;
         assert(logger_card_header::render(header, sizeof(header), upload));
         assert(logger_upload::identity(header, upload.file_name, upload.chip, name, sealable));
+        assert(strstr(header, "# log.power interface=lra01-v1 ign_source=hardware-qualified hold=GP6\n"));
         assert(sealable && !strcmp(name, "U_0123456789abcdef0123456789abcdef.CSV"));
         assert(logger_upload::identity(header, "/20261025_120000.CSV", upload.chip, name, sealable));
         printf("  ok  immutable upload identity fits full header and survives rename\n");

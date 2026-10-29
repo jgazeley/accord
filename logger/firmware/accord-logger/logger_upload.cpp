@@ -1,3 +1,4 @@
+#include "logger_power.h"
 #include <Arduino.h>
 #include <lwIP_CYW43.h>
 #include <lwip/tcp.h>
@@ -107,7 +108,7 @@ struct IO {
     const char *host() const { return UPLOAD_HOST; }
     unsigned port() const { return UPLOAD_PORT; }
     const char *token() const { return API_TOKEN; }
-    bool start(const char *p, size_t n) { return transport.start(p, n); }
+    bool start(const char *p, size_t n) { return powerBackgroundAllowed() && transport.start(p, n); }
     int poll(const char *name, logger_upload::Reply &r) { return transport.poll(name, r); }
     void stop() { transport.stop(); }
 };
@@ -115,6 +116,7 @@ IO io;
 logger_upload::Client<IO> client(io);
 }
 void uploadLoop(bool wifiUp) {
+    if (!powerBackgroundAllowed()) { uploadDisconnect(); return; }
     if (!UPLOAD_HOST[0]) return;
     io.up = wifiUp;
     client.step(time_us_64() / 1000);

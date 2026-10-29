@@ -29,6 +29,7 @@ namespace logger_card_header {
 constexpr char MAGIC[] = "# accord-log/1";
 
 struct Facts {
+    bool power_qualified = false;
     // identity
     const char *chip = "";          // RP2040 unique board id (= the USB serial)
     const char *vehicle = "";       // opaque local label, never a VIN
@@ -81,6 +82,7 @@ inline size_t render(char *out, size_t n, const Facts &f) {
         "# log.unit chip=%s vehicle=%s fw=%s\n"
         "# log.columns %s\n"
         "# log.stable %u\n"
+        "# log.power interface=%s ign_source=%s hold=%s\n"
         "# log.pins vss=GP%u tach=GP%u brake=GP%u ign=GP%u fuel=GP%u supply=GP%u\n"
         "# log.pulses vss_per_mile=%s band=%s asof=%s source=tripd-refit"
         " authority=downstream\n"
@@ -93,6 +95,9 @@ inline size_t render(char *out, size_t n, const Facts &f) {
         f.chip, f.vehicle, f.fw,
         f.columns,
         (unsigned)f.stable,
+        f.power_qualified ? "lra01-v1" : "manual",
+        f.power_qualified ? "hardware-qualified" : "legacy-gp5",
+        f.power_qualified ? "GP6" : "none",
         (unsigned)f.pin_vss, (unsigned)f.pin_tach, (unsigned)f.pin_brake,
         (unsigned)f.pin_ign, (unsigned)f.pin_fuel, (unsigned)f.pin_supply,
         f.ppm_value, f.ppm_band, f.ppm_asof,

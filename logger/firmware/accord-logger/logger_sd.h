@@ -33,7 +33,9 @@ public:
 extern OutTee Out;
 
 void sdSetup();          // core 0: pin assignment only, no card traffic
-void sdLoop();           // core 0: card init, ring drain, flush, rename
+void sdLoop();
+// Core 1, including idle passes with no Out writes: acknowledge line-boundary stop.
+void sdProducerPoll();           // core 0: card init, ring drain, flush, rename
 void sdPrintStatus();    // core 1: the one-line '# SD' note
 bool sdStatusChanged();  // core 1: true once after a state or filename change
 

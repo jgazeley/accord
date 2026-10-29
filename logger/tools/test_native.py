@@ -9,8 +9,8 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def main():
     tests = sorted((ROOT / "tests").glob("*_test.cpp"))
-    if len(tests) != 8:
-        raise SystemExit(f"Expected 8 native tests, found {len(tests)}")
+    if len(tests) != 9:
+        raise SystemExit(f"Expected 9 native tests, found {len(tests)}")
     with tempfile.TemporaryDirectory(prefix="accord-logger-tests-") as scratch:
         for source in tests:
             binary = Path(scratch) / source.stem

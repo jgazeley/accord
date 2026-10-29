@@ -85,6 +85,7 @@ Then 1 Hz CSV rows, with `#` status notes interleaved as they always have been.
 | `log.file` | `name`, `opened_ms`, `clock` | lets a card-only reader rebuild absolute time. `opened_ms` is the `millis()` at which the file opened and `clock=sntp\|none` says whether the name's timestamp is trustworthy. `cardconv.py` already reconstructs `wall` from exactly these anchors; this stops it having to infer them |
 | `log.columns` | the names, in order | removes all width guessing |
 | `log.stable` | the no-reorder count | tells an indexing parser how much it may index |
+| `log.power` | selected power interface, ignition source and HOLD pin | distinguishes hardware-qualified samples from historical/manual wiring (§10) |
 | `log.pins` | the pin map | identifies *which signal* each column came from, which no amount of data analysis recovers |
 | `log.pulses` | `vss_per_mile` + its band + provenance | ARCHITECTURE: "lives only in `tripd`. Card-only users have pulses and no path to miles" |
 | `log.adc`, `log.adc.*` | bits, vref, burst, dividers, ratios, full scale, dark threshold | ARCHITECTURE: "raw counts are logged, correctly, but counts -> volts needs 0.3852 and 0.1760" |
@@ -307,6 +308,58 @@ in half. The wait is bounded: core 1 pushes only complete lines, so the next
 drain that empties the ring leaves the file on a boundary. The header is
 written before the first drain and passes through the same `appendMetadata()`
 check (`hdr=lost` if incomplete, settled before the first drain).
+
+## 10. Power interface qualification — `log.power` (LRA-05 candidate)
+
+The `0.8.1-lra05-dev` candidate adds one per-file descriptor, including on
+reinsertion and a new ignition generation. The default manual build writes:
+
+```text
+# log.power interface=manual ign_source=legacy-gp5 hold=none
+```
+
+The explicit `LOGGER_POWER_QUALIFIED=1` build writes:
+
+```text
+# log.power interface=lra01-v1 ign_source=hardware-qualified hold=GP6
+```
+
+This identifies the firmware's selected wiring contract; it is not a claim that
+the connected hardware has passed electrical or timing qualification. Missing
+`log.power` means historical/unspecified legacy input, never proof of qualified
+hardware. Unknown tags retain rule 4 behavior; the format token remains
+`accord-log/1`.
+
+All 14 columns, order, units and polarity stay unchanged. `ign=1` still means
+ON (GP5 LOW), and `ms_since_ign` remains the existing 1 Hz sampled latch in
+milliseconds. In qualified mode that sample describes the hardware-qualified
+signal, so it cannot reconstruct raw key-edge timing. Shutdown deadlines use a
+separate 64-bit monotonic clock; host/SNTP adjustments do not renew them.
+
+Qualified mode can close and open a new file within one boot on an observed
+OFF-to-ON return. Its monotonic `ms` need not start at zero. The existing
+`log.file`, `log.upload` and `log.rename` semantics still apply; each new file
+gets a complete header and a fresh upload identity. A missing or unsynced header
+prevents qualified recording into that file. On failed media, queued bytes for
+the abandoned file are discarded after producer quiescence so a partial old
+row cannot become the first row of a new file. This is deliberate possible data
+loss, not a guarantee of recovery after a power cut.
+
+The USB mirror may omit bytes in qualified mode if its TX buffer is full; it is
+not an authoritative lossless copy of the card. The manual build retains the
+historical USB policy. `# POWER closed_generation=<n> clean=<0|1>` is an optional
+status diagnostic about the last core-0 close attempt. A clean result includes
+queue drain, line boundary, sync and close; absence is not evidence of success,
+and the diagnostic is not guaranteed to reach USB or the closing card file.
+Neither that status nor an upload acknowledgment authorizes HOLD.
+
+`tests/check_power_converter.py` runs the unchanged public converter on 12
+synthetic cases using the real C++ header renderer: legacy/manual/qualified,
+with dated, boot-before-clock, renamed and independently rendered reinsertion
+files. It checks metadata retention and byte-identical data columns. Physical
+card reinsertion, power-loss integrity and private downstream DB behavior
+remain separate qualification work. See `coordination/LRA05_HANDOFF.md` for
+implementation and build evidence.
 
 ## Review findings — `pcb` session, 2026-10-24, against a real card
 
