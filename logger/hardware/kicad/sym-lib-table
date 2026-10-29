@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "Custom")(type "KiCad")(uri "${KIPRJMOD}/Custom.kicad_sym")(options "")(descr "Project symbols: the LM2678 copied from keyless/hardware and the LRA-06 placeholders"))
+)

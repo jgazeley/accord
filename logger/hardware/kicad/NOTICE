@@ -1,0 +1,11 @@
+Accord logger Rev A hardware design files
+Copyright 2026 Jayson Gazeley
+
+Licensed under CERN-OHL-P-2.0 (see LICENSE), per LICENSING.md at the
+repository root.
+
+The LM2678T-5.0 symbol in Custom.kicad_sym was copied from
+keyless/hardware/Custom.kicad_sym, which carries the same licence.
+
+Standard KiCad symbol and footprint libraries are referenced, not
+redistributed here; they remain under their own terms.
