@@ -26,20 +26,23 @@ Prepared October 28, 2026 by Codex `pcb-manager`, session `01a17045-1855-7af2-b7
 
 ### Current manager claim — October 29, 2026
 
-Current manager: Codex `pcb-manager`, session
-`01a18447-07c2-7bb3-8318-9b276cfdb3b8`.
-Bookmark: `codex resume 01a18447-07c2-7bb3-8318-9b276cfdb3b8`.
-Resumed October 29 after the owner closed the Claude manager shift. Identity
-verified again from matching `CODEX_SESSION_ID` and `CODEX_THREAD_ID`.
-Current assignment: remove layout blockers using the existing project documents
-and design candidates; do not reconstruct transcripts or historical work.
+Current manager: Claude `pcb-manager`, session
+`42dd0e33-28b5-4936-847e-9c2e1d2488fa`.
+Bookmark: `claude --resume 42dd0e33-28b5-4936-847e-9c2e1d2488fa`.
+Identity read from this session's `CLAUDE_CODE_SESSION_ID`; this tool exposes no
+second identifier to cross-check it. Took over at the owner's request on
+October 29 while LRA-12 runs. Assignment unchanged: remove layout blockers using
+the existing project documents and design candidates; do not reconstruct
+transcripts or historical work.
 
-Preceding manager, historical attribution: Claude `pcb-manager`, session
-`630dea87-5e4d-4bad-a1ff-d41b3a5f509b`
-(`claude --resume 630dea87-5e4d-4bad-a1ff-d41b3a5f509b`). That shift completed
-the LRA-03 integration, integrated LRA-06, recorded the owner's measurements
-and board envelope, and reviewed the LRA-11 candidate. Earlier in the day this
-Codex session held the manager role before that Claude shift.
+Preceding managers, historical attribution, most recent first: Codex
+`pcb-manager`, session `01a18447-07c2-7bb3-8318-9b276cfdb3b8`
+(`codex resume 01a18447-07c2-7bb3-8318-9b276cfdb3b8`), which resumed after the
+Claude shift, audited the core documents and published the LRA-12 packet; and
+Claude `pcb-manager`, session `630dea87-5e4d-4bad-a1ff-d41b3a5f509b`
+(`claude --resume 630dea87-5e4d-4bad-a1ff-d41b3a5f509b`), which completed the
+LRA-03 integration, integrated LRA-06, recorded the owner's measurements and
+board envelope, and reviewed the LRA-11 candidate.
 
 Scope: root/coordination, task assignment and integration. Specialist claims and
 dependencies remain in `coordination/PROJECT_MILESTONES.md`. The preceding manager

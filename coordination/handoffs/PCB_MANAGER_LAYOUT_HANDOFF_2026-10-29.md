@@ -1,5 +1,13 @@
 # Current manager handoff — LRA-12 started, waiting on remote usage
 
+> **Update, October 29, by Claude `pcb-manager`, session
+> `42dd0e33-28b5-4936-847e-9c2e1d2488fa`
+> (`claude --resume 42dd0e33-28b5-4936-847e-9c2e1d2488fa`), now the manager.**
+> The owner supplied the LRA-12 claimant: Claude session
+> `b690946d-3a88-4626-8e7b-b321126a3d16`, working **locally** in
+> `/srv/agent_share/accord-lra12` on `task/LRA-12-b690946d`, not remotely. The
+> rest of this handoff still applies; the tracker has the current record.
+
 Prepared October 29, 2026 by Codex `pcb-manager`, session
 `01a18447-07c2-7bb3-8318-9b276cfdb3b8`.
 Resume: `codex resume 01a18447-07c2-7bb3-8318-9b276cfdb3b8`.
