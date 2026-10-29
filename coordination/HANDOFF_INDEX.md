@@ -19,6 +19,7 @@ This file is only a packet locator. Ready does not mean assigned or running.
 | LRA-04 communications | [Communications packet](handoffs/LRA-04_COMMUNICATIONS.md) |
 | LRA-06 schematic capture | [Rev A schematic capture packet](handoffs/LRA-06_SCHEMATIC_CAPTURE.md) |
 | LRA-11 B2 off-state isolation | [D4 resolution packet](handoffs/LRA-11_B2_OFFSTATE_ISOLATION.md) |
+| LRA-11 review | [B2 isolation candidate review](reviews/LRA11_REVIEW_2026-10-29.md) |
 | Other LRA tasks | Prepare from [template](TASK_PACKET_TEMPLATE.md) when assigned; scope/acceptance in tracker |
 
 Optional history remains in old `coordination/HANDOFF_INDEX.md` at `1e99449`.

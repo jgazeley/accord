@@ -32,5 +32,7 @@ logger board is claimed by this repository.
 The pin map above is the **as-built** firmware baseline. Rev A changes what
 GP5 means and adds GP6; see [as-built/REV_A_INTERFACES.md](as-built/REV_A_INTERFACES.md) §1.
 
+Input isolation study (LRA-11 candidate, not selected): [isolation/](isolation/).
+
 Current electrical/PCB context: [Rev A context](REV_A_CONTEXT.md).
 Active task authority: [project milestones](../../coordination/PROJECT_MILESTONES.md).
