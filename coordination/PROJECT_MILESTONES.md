@@ -111,7 +111,7 @@ for every row. Remote electrical work and local physical validation are distinct
 | FUEL-01 | Fuel analyst | Prepared post-fill assignment, successor delivery unverified. Existing data can support analysis; personal fixtures stay private |
 | STORE-01 | Logger/bridge | Ready: inspect actual capacity and define rotation/verified-retention policy; no automatic deletion currently |
 | TIME-01 | Logger/bridge | Deferred design: reset/offline time and retrospective drift policy; hardware reservations feed 03/04 if concrete |
-| KEY-02 | Keyless role | Ready, unclaimed: recover the RS-485 host tooling. `hp` and `cm5sim` at `/srv/agent_share/pcb/benchlink/` are the counterpart the migrated firmware names four times but the repository does not contain. Import with provenance and a public-review pass for private paths and credentials, and correct the stale "no MAX3485 fitted" comments while there. See `D-KEYLESS-485-01` |
+| KEY-02 | Keyless role | **Low priority, nothing blocked.** `hp` and `cm5sim` at `/srv/agent_share/pcb/benchlink/` are bench tooling, not a dependency: no active task needs them, and the logger has no RS-485 today. The actual defect is narrower — the migrated firmware names `cm5sim` four times as the tool to run and the repository does not ship it, so a reader follows a dead reference. Fix cheaply with a pointer to the tool's location, or import it with provenance and a scrub for private paths if the keyless role wants it in-tree. Becomes a real need at LRA-07 bench work, or if Rev A puts a bus on the logger. See `D-KEYLESS-485-01` |
 | KEY-01 | Proximity/keyless | Owner participation required: threshold/repeatability and parked operation independent of Pi/logger; installed settings unknown |
 | DIST-01 | Bridge/DB | Deferred: production-host cutover, packet checkpoints and independent server/VM comparison; not yet implemented |
 | DOC-01 | Claude pcb-manager, `630dea87-5e4d-4bad-a1ff-d41b3a5f509b` | Active manager from October 29. LRA-01/02/05 reviewed and integrated as candidates by the predecessor session; LRA-03 revised return reviewed and integrated at `dc07292`. LRA-04 browser return triaged: revisions required, not integrated. Next: the corrected LRA-04 pass, electrical gap closure, bounded LRA-05 timing follow-up and the LRA-06 start condition. No automatic-power deployment accepted |
@@ -130,8 +130,9 @@ for every row. Remote electrical work and local physical validation are distinct
   **Migration gap:** the host tooling never came across. `hp` and `cm5sim` live
   at `/srv/agent_share/pcb/benchlink/`, and the migrated firmware references
   `cm5sim` four times as the counterpart a reader should run, so the public
-  repository currently documents a tool it does not contain. Recovering it is
-  task `KEY-02`. Socketing is a Rev A input — vibration and contact resistance
+  repository currently documents a tool it does not contain. That dead reference
+  is the defect; the tooling itself blocks nothing today. Task `KEY-02`.
+  Socketing is a Rev A input — vibration and contact resistance
   for the electrical reviewer, and a real but unguaranteed disconnection
   measure for the off-state question.
 - **D-INVENTORY-01 — owner clarification, October 29:** the original reference is
