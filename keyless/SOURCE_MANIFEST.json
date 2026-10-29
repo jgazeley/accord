@@ -12,7 +12,8 @@
       "destination": "firmware/accord-keyless/accord-keyless.ino",
       "source_sha256": "e51a6b01a134ba4f187c26b18f14a46dee2665da4c7c77eed989493e2234e898",
       "copied_sha256": "e51a6b01a134ba4f187c26b18f14a46dee2665da4c7c77eed989493e2234e898",
-      "destination_sha256": "e51a6b01a134ba4f187c26b18f14a46dee2665da4c7c77eed989493e2234e898"
+      "destination_sha256": "6edea8acc9b70ec709aace9227a4ffa362bf41d51587667a2322732b7fa7f707",
+      "destination_diverges_from_source": "Comment-only correction, October 29, 2026. See adjustments. source_sha256 and copied_sha256 remain the historical values and are unchanged."
     },
     {
       "source": "benchlink/uart_main/bleprox.cpp",
@@ -158,11 +159,12 @@
   "adjustments": [
     "Renamed uart_main.ino to accord-keyless.ino; firmware contents unchanged.",
     "Adjusted two relative includes in tests/proximity_act_test.c.",
-    "Exported two embedded Custom symbols to hardware/Custom.kicad_sym and added sym-lib-table; original KiCad files unchanged."
+    "Exported two embedded Custom symbols to hardware/Custom.kicad_sym and added sym-lib-table; original KiCad files unchanged.",
+    "Corrected stale comments in accord-keyless.ino, October 29, 2026, on the owner's statement that the MAX3485 (U5) is fitted in an IC socket and the RS-485 link was tested extensively from the Pi 4. The header no longer says USB CDC works 'with no MAX3485 fitted' or that RS-485 waits 'once U5 is soldered', and the runtime banner no longer says the RS-485 line 'needs U5 fitted'. The four cm5sim references were dead for a reader of this repository: cm5sim is bench tooling that was not migrated, so the header now states once that it is the host-side CM5 stand-in, is reached through the 'hp' shortcut and is not part of this repository. Comments and one banner string only; no executable logic changed."
   ],
   "validation": {
     "source_files_unchanged": true,
-    "copied_file_hashes_verified": true,
+    "copied_file_hashes_verified": "Verified at migration. One destination file has since diverged by a documented comment-only correction; see files[].destination_diverges_from_source and adjustments.",
     "firmware_build": {
       "cli": "1.4.1",
       "core": "6.1.0",
@@ -170,7 +172,18 @@
       "flash_bytes": 482008,
       "static_ram_bytes": 89688,
       "warnings": 0,
-      "hardware_flashing": false
+      "hardware_flashing": false,
+      "rebuilt_2026-10-29": {
+        "reason": "comment-only correction above",
+        "cli": "1.4.1",
+        "fqbn": "rp2040:rp2040:rpipicow:ipbtstack=ipv4btcble",
+        "flash_bytes": 482008,
+        "static_ram_bytes": 89688,
+        "warnings": 0,
+        "result": "clean build, byte-identical flash and RAM figures to the original validation",
+        "native_tests": "interlock and relock pass; proximity_act 90 checks, 0 failures",
+        "hardware_flashing": false
+      }
     },
     "native_tests": {
       "interlock_test.c": "passed",

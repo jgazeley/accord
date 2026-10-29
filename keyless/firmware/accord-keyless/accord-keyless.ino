@@ -2,12 +2,19 @@
 //
 // The full board I/O set, driven by a framed protocol that is deliberately
 // transport-independent:
-//   * USB CDC      -- works today, with no MAX3485 fitted (Pi 4 on the bench)
-//   * RS-485       -- UART1 + DE on GP10, once U5 is soldered
+//   * USB CDC      -- works today (Pi 4 on the bench)
+//   * RS-485       -- UART1 + DE on GP10, through U5 (MAX3485, socketed);
+//                     exercised extensively from the Pi 4
 //   * BLE          -- phone pairing, RSSI proximity and a text command
 //                     characteristic; see bleprox.h. TR_BLE in reply() is still
 //                     reserved for carrying FRAMES over BLE later.
-// The same frames, the same handler, the same cm5sim. Only the wire changes.
+// The same frames, the same handler, the same host tool. Only the wire changes.
+//
+// That host tool is `cm5sim`, which stands in for the CM5 as the bus's only
+// initiator, usually reached through the `hp` shortcut (`./hp out lock pulse`,
+// `./hp io`, `./hp status`). It is bench tooling kept with the other bench
+// scripts on the development host and is NOT part of this repository, so the
+// cm5sim command lines below are usage notes, not paths into this tree.
 //
 // Carries over from the earlier version:
 //   * PIO-UART link to the expansion Pico: HELLO on boot, PING every 2 s
@@ -325,7 +332,7 @@ String hp_io_text() {
 SerialPIO expLink(PIN_TX, PIN_RX, 256);
 LinkRx    rx;        // expansion link
 LinkRx    bus;       // RS-485
-LinkRx    usb;       // USB CDC -- same frames, so cm5sim works with no U5 fitted
+LinkRx    usb;       // USB CDC -- same frames, so the host tool works without U5
 
 uint32_t lastPing = 0, lastStat = 0, pings = 0, pongs = 0, events = 0;
 bool     ledState = false;
@@ -577,8 +584,8 @@ void busPump() {
   }
 }
 
-// USB CDC carries the SAME frames, so the whole protocol is testable with no
-// MAX3485 fitted -- `cm5sim --port /dev/ttyACM0 ping`. The single-key bench
+// USB CDC carries the SAME frames, so the whole protocol is testable without
+// going through U5 -- `cm5sim --port /dev/ttyACM0 ping`. The single-key bench
 // commands still work alongside them: a frame always starts 0xA5, which is not
 // ASCII, so "is this a frame byte or a keypress" is decidable with no mode
 // switch. usb.n != 0 means we are already mid-frame and every byte belongs to it.
@@ -802,7 +809,7 @@ void setup() {
   Serial.println("=== uart_main (Pico W) -- full I/O, transport-independent ===");
   Serial.printf("link:  PIO UART tx=GP%d rx=GP%d @ %lu baud\n", PIN_TX, PIN_RX, (unsigned long)LINK_BAUD);
   Serial.printf("usb:   framed protocol on this port -- cm5sim --port /dev/ttyACM0\n");
-  Serial.printf("rs485: UART1 tx=GP%d rx=GP%d de=GP%d @ %lu baud (needs U5 fitted)\n",
+  Serial.printf("rs485: UART1 tx=GP%d rx=GP%d de=GP%d @ %lu baud (via U5)\n",
                 RS_TX, RS_RX, RS_DE, (unsigned long)RS_BAUD);
   Serial.printf("ble:   phone proximity + cmd characteristic (see bleprox.h)\n");
   Serial.printf("outs:");
