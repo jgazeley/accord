@@ -118,6 +118,32 @@ for every row. Remote electrical work and local physical validation are distinct
 
 ## Decisions and gates
 
+- **D-ENVELOPE-01 — owner direction, October 29, with a manager caution:** the
+  Rev A board is a **generic rectangle**, no enclosure, no mounting method
+  chosen. Mounting behind the gauge cluster was considered and set aside. It
+  must carry the Pico module, the SD module and the remaining circuitry. SD
+  needs `PinHeader_1x06_P2.54mm_Vertical` plus roughly a 16 mm square.
+  The owner gave the present breadboard area as the size reference: an
+  **82 × 55 mm half-size board plus a 46 × 36 mm mini**.
+  **That reference is not a target, and LRA-08 must not treat it as one.** Those
+  breadboards carry the *as-built*. Rev A adds the entire onboard power block —
+  QP, the LM2678, the inductor, the 820 µF output capacitor, the catch and
+  reverse diodes, the TVS and the latch transistors — plus twenty test points
+  and eight isolation/protection placeholders, none of which exists on the
+  bench today. Summing nominal package areas over the 81 captured parts that
+  have footprints gives **5,031 mm² of raw component area**; at a routine
+  1.6–2.0× allowance for routing and clearance that is **8,000–10,000 mm²**,
+  against 4,510 mm² for the half-size board and 6,166 mm² for both together.
+  **Ten parts are still unassigned** — J1, J2 and the eight placeholders — so
+  the figure can only grow. A board nearer **100 × 80 mm** is the floor and
+  100 × 100 or 120 × 80 leaves margin. This is a sanity estimate from package
+  nominals, not a layout; LRA-08 owns the real answer. The dominant driver is
+  that the BOM is almost entirely through-hole, which suits hand assembly and
+  the existing socketed practice.
+  **Open:** the chosen outline, mounting, harness lengths and connector
+  positions, and whether the SD figure means 16 mm on a side or a literal
+  16 mm². J1 and J2 stay unassigned deliberately — connector family is a
+  mechanical decision that resolves with the envelope.
 - **D-OFFSTATE-01 — owner measurement, October 29:** key out and parked, to
   chassis ground: **B2 (VSS) = 4.140 V, B1 (tach) = 0 V, C11 (fuel) = 0 V**.
   This closes U-10 and changes the biggest Rev A design item. **B2 is the only

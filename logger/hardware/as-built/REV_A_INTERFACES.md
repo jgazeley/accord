@@ -263,9 +263,14 @@ reading.
 
 ## 5. Connectors, mechanics, access and test points
 
-**Every dimension in this project is unknown.** No footprint, enclosure,
-mounting or harness length is recorded anywhere in the sources read, and none is
-invented here (U-11). What can be fixed now is the *interface shape*.
+**Updated October 29.** The owner has set a direction but not an outline: a
+generic rectangular board, no enclosure, no mounting chosen, with the present
+breadboard area (82 × 55 mm plus a 46 × 36 mm mini) given as the size reference.
+A manager estimate from the captured BOM puts Rev A at roughly **8,000 mm²**
+minimum against that reference's 4,510 mm², so the reference is **not** a target;
+see `D-ENVELOPE-01`. Outline, mounting, harness lengths and connector positions
+remain unknown (U-11) and none is invented here. What can be fixed now is the
+*interface shape*.
 
 ### 5.1 Connectors
 
@@ -424,7 +429,7 @@ For the firmware reviewer; no firmware change is proposed or made here.
 | Blocker | Held by | Why the freeze waits |
 |---|---|---|
 | R05 — five input isolation channels, DOR delta, bus/service paths, B16/PGND | LRA-02 / 03 / 04 analog and schematic review | D4 is unselected; §6 rows 1–6 and 12 have no accepted answer |
-| ~~U-10~~, U-11, U-12 | Owner | **U-10 closed October 29**, narrowing D4 to B2 alone. U-11 (physical envelope) and U-12 (divider tolerances) remain open; U-11 blocks LRA-08 outright. Exact opto identity and fuse/resistor ratings stay with the parts discussion |
+| ~~U-10~~, U-11 (part), U-12 | Owner | **U-10 closed October 29**, narrowing D4 to B2 alone. **U-11 partially closed the same day**: generic rectangular board, no enclosure or mounting, but no outline yet, and the owner's size reference is too small — `D-ENVELOPE-01`. U-12 (divider tolerances) remains. LRA-08 can begin placement studies but cannot fix an outline. Exact opto identity and fuse/resistor ratings stay with the parts discussion |
 | U-06, U-07, U-08 | Bench / datasheet work | D11 and the VSS off-state case depend on them |
 | LRA-04 bus allocation | Communications reviewer | GP8/GP9/GP10 and J3 are offers, not reservations |
 | R02 — P12 and IGN protection envelope | LRA-02 + owner vehicle exposure | Decides what J1 must survive. The as-built RLED value is a candidate answer to its open IGN dissipation defect; see D15 |
