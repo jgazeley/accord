@@ -55,14 +55,31 @@ be read as a real part in the SVG, and it appears in `BOM.csv` with a
 The fifth is a block the packet did not enumerate; §6 explains why it exists
 rather than being silently omitted.
 
-**D4 after `D-OFFSTATE-01`.** The owner's October 29 key-out measurement closed
-U-10: B2 reads 4.140 V while B1 and C11 read 0 V, and C14 and B11 were already
-recorded dead with the key out. All five positions are kept, as the amended
-packet directs. X1 carries the measured requirement — 75.3 µA through B2's
-fitted 55 kΩ, on its own about nine times the 8/20 µA allocated to all five
-branches. X2–X5 keep their positions with the parked-drain justification
-withdrawn; whether a fault or transient reason keeps them is the analog
-reviewer's call, not this task's. Neither outcome needs a redraw.
+**D4 after `D-OFFSTATE-01`.** The owner's October 29 key-out measurements closed
+U-10 and U-14: B2 reads **4.140 V loaded against 4.669 V open-circuit**, while B1
+and C11 read 0 V and C14 and B11 were already recorded dead with the key out. All
+five positions are kept, as the amended packet directs.
+
+X1 carries the measured requirement, and it is a **back-feed** case rather than
+only a drain. Every reading was taken with the dividers, clamps, Pico module and
+SD module seated and only the USB lead pulled, so the clamp is conducting and the
+divider was never the only load. B2 draws **134–141 µA**, of which **99–110 µA is
+back-fed into the Pico's unpowered 3V3 rail** through a forward-biased clamp,
+measured at **0.883 V on the clamp cathodes to chassis**. One branch alone exceeds
+the entire 100 µA whole-system parked budget, against 8/20 µA allocated to all
+five together — and it partially energizes a board that is meant to be off. This
+is the one row of `REV_A_INTERFACES` §6's off-state matrix that is now
+established by measurement rather than listed as established by nothing.
+
+**Two earlier figures do not appear anywhere in this capture, and should not be
+reintroduced:** 75.3 µA assumed the divider was the only load, and a 7.03 kΩ
+source impedance assumed the clamp was off. B2's parked source is **3.8–3.9 kΩ**,
+an always-on pull-up to about 4.67 V. Reading the 22k/33k junction would collapse
+the remaining clamp-V<sub>F</sub> range and fix every figure exactly.
+
+X2–X5 keep their positions with the parked-drain justification withdrawn; whether
+a fault or transient reason keeps them is the analog reviewer's call, not this
+task's. Neither outcome needs a redraw.
 
 `TVS` and `X7` are deliberately separate parts. `TVS` is the named inherited
 candidate 1.5KE30A-E3/54 from `DESIGN.md` §3; `X7` is the unselected

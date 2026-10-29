@@ -208,11 +208,11 @@
 			(at 0 0 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "Description" "LRA-06 placeholder: normally-open, power-off-safe signal isolation upstream of the B2 divider top (delta D4). Required on measured evidence: 75.3 uA at 4.140 V key-out through the fitted 55 kOhm, D-OFFSTATE-01. No part is selected."
+		(property "Description" "LRA-06 placeholder: normally-open, power-off-safe signal isolation upstream of the B2 divider top (delta D4). Required on measured evidence: key out, B2 draws 134-141 uA and back-feeds 99-110 uA into the unpowered 3V3 rail through a forward-biased clamp, D-OFFSTATE-01. No part is selected."
 			(at 0 0 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "ki_keywords" "placeholder isolation D4 required B2 unselected"
+		(property "ki_keywords" "placeholder isolation D4 required B2 backfeed unselected"
 			(at 0 0 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)

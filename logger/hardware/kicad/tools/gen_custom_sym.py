@@ -93,18 +93,21 @@ def placeholder(name, desc, keywords, pins, w, h, label):
 syms = [lm]
 
 # D4 input isolation. Two variants so the SVG shows at a glance which branch
-# still has a measured parked-drain case. D-OFFSTATE-01, October 29: key out,
-# B2 reads 4.140 V (75.3 uA through its fitted 55 kOhm) while B1 and C11 read
-# 0 V, and C14 and B11 were already recorded dead with the key out. All five
-# positions are kept; only the justification differs.
+# has a measured case. D-OFFSTATE-01, October 29, as corrected: key out, B2
+# reads 4.140 V loaded against 4.669 V open-circuit and draws 134-141 uA, of
+# which 99-110 uA is back-fed into the Pico's unpowered 3V3 rail through a
+# forward-biased clamp. B1 and C11 read 0 V, and C14 and B11 were already
+# recorded dead with the key out. All five positions are kept; only the
+# justification differs.
 iso_pins = [pin('1', 'TAP', -15.24, 0, 0), pin('2', 'DIV', 15.24, 0, 180)]
 syms.append(placeholder(
     'PLACEHOLDER_SIGNAL_ISO_REQ',
     'LRA-06 placeholder: normally-open, power-off-safe signal isolation '
     'upstream of the B2 divider top (delta D4). Required on measured evidence: '
-    '75.3 uA at 4.140 V key-out through the fitted 55 kOhm, D-OFFSTATE-01. '
-    'No part is selected.',
-    'placeholder isolation D4 required B2 unselected',
+    'key out, B2 draws 134-141 uA and back-feeds 99-110 uA into the unpowered '
+    '3V3 rail through a forward-biased clamp, D-OFFSTATE-01. No part is '
+    'selected.',
+    'placeholder isolation D4 required B2 backfeed unselected',
     iso_pins, 11.43, 8.89, 'REQUIRED, NOT SELECTED (D4)'))
 syms.append(placeholder(
     'PLACEHOLDER_SIGNAL_ISO_REVIEW',

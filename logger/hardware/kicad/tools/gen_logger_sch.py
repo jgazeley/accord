@@ -68,9 +68,14 @@ part('J2', 'Connector_Generic:Conn_01x08', 'Cluster harness 8-way',
 # with the parked-drain justification withdrawn.
 ISO_REQ = ('Custom:PLACEHOLDER_SIGNAL_ISO_REQ', 'SIGNAL_ISOLATION (required)',
            'REQUIRED_BEFORE_INTEGRATION',
-           'required on measured evidence: key out, B2 reads 4.140 V, which is '
-           '75.3 uA through the fitted 55 kOhm against an 8/20 uA allocation '
-           'for all five branches (D-OFFSTATE-01). ' + NOFP_PLACE)
+           'required on measured evidence (D-OFFSTATE-01, as corrected): key '
+           'out, B2 reads 4.140 V loaded against 4.669 V open-circuit and '
+           'draws 134-141 uA, of which 99-110 uA is back-fed into the Pico\'s '
+           'unpowered 3V3 rail through a forward-biased clamp measured at '
+           '0.883 V on the clamp cathodes. One branch alone exceeds the 100 uA '
+           'whole-system parked budget, against an 8/20 uA allocation for all '
+           'five. This is not only a current budget: the branch partially '
+           'energizes a board that is meant to be off. ' + NOFP_PLACE)
 ISO_REVIEW = ('Custom:PLACEHOLDER_SIGNAL_ISO_REVIEW',
               'SIGNAL_ISOLATION (under review)',
               'REQUIRED_BEFORE_INTEGRATION_UNDER_REVIEW',
@@ -500,9 +505,17 @@ NOTES = [
      'not resolve. X1-X5 are delta D4: normally-open, power-off-safe isolation\n'
      'upstream of a divider top. Five positions, one per branch, in two states\n'
      'after the owner key-out measurement of October 29 (D-OFFSTATE-01):\n'
-     '  REQUIRED  - B2 only. Key out it reads 4.140 V, which is 75.3 uA through\n'
-     '              the fitted 55 kOhm: on its own about nine times the 8/20 uA\n'
-     '              allocated to all five branches together.\n'
+     '  REQUIRED  - B2 only, and on a back-feed path rather than only a drain.\n'
+     '              Key out, B2 reads 4.140 V loaded against 4.669 V open-\n'
+     '              circuit and draws 134-141 uA. The divider is not the only\n'
+     '              load: a clamp is forward-biased, its cathodes measure\n'
+     '              0.883 V to chassis, and 99-110 uA of that current is\n'
+     '              back-fed into the Pico 3V3 rail while the board is off.\n'
+     '              One branch alone exceeds the whole 100 uA system parked\n'
+     '              budget, against 8/20 uA allocated to all five together,\n'
+     '              and it partially energizes a board meant to be dead.\n'
+     '              This is the one row of the S6 off-state matrix that is\n'
+     '              established by measurement rather than by nothing.\n'
      '  UNDER REVIEW - B1 and C11 measure 0 V key out, and C14 and B11 were\n'
      '              already recorded dead. The parked-drain justification is\n'
      '              withdrawn for these four; whether a fault or transient\n'
