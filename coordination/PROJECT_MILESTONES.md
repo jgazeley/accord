@@ -90,7 +90,7 @@ task packet before dispatch; record the claim and evidence here, not in a second
 | [LRA-01](handoffs/LRA-01_POWER_INTERFACE.md) | Electrical lead; firmware reviewer; manager integrates | Reviewed candidate `a85f185`; R01 disposition delivered by manager `01a18447-07c2-7bb3-8318-9b276cfdb3b8` in FIRMWARE_REVIEW.md; suitable for isolated 05 implementation, electrical/bench gates open | One agreed qualified-IGN/HOLD/startup/shutdown/reset/USB contract; numerical assumptions and faults explicit; current/protection decisions and reviewer disposition |
 | [LRA-02](handoffs/LRA-02_COMPONENT_MARGINS.md) | Electrical return by logger-power `01a18463-5ed7-7041-ad90-ec3a7480c4e6` | Candidate `c946f6f`, bounded paper return reviewed/integrated; R03/R04 remain open, no accepted consolidated BOM | Coherent power schematic/BOM, compatible protection, effective capacitance and current/leakage allocations; off-state paths and bench checklist |
 | [LRA-03](handoffs/LRA-03_AS_BUILT.md) | Returned by Claude hardware-integrator `23d6d0fb-9656-4e03-acb3-922537019a5b`; analog acceptance open | **Integrated** October 29 at `dc07292`. First return `a9c828b` reviewed, revisions R03-REV-1–6 applied in `f23e51c`, merge adds a documentation reconciliation. Baseline for LRA-06; accepts no hardware | Current as-built consolidated with unknowns, frozen Rev A pins/connectors/input loading/protection/grounds/mechanics/test points; no full fuel model |
-| [LRA-04](handoffs/LRA-04_COMMUNICATIONS.md) | Browser return, session identifiers unavailable; hardware/firmware accept | **Returned, revisions required.** Owner-supplied browser return preserved at `logger/coordination/LRA04_GROK.md`; [review](reviews/LRA04_REVIEW_2026-10-29.md) records six findings, two of them contradictions in the proposed topology. No bus selected, no pin reserved, nothing integrated | RS-485/CAN/daughterboard comparison with usable GPIO/peripheral/current/voltage/power-off contract; recommendation and fallback |
+| [LRA-04](handoffs/LRA-04_COMMUNICATIONS.md) | Browser return, session identifiers unavailable; hardware/firmware accept | **Returned, revisions required.** Owner-supplied browser return preserved at `logger/coordination/LRA04_GROK.md`; [review](reviews/LRA04_REVIEW_2026-10-29.md) records five standing findings, two of them contradictions in the proposed topology; a sixth was withdrawn as the reviewer's error, not the return's. No bus selected, no pin reserved, nothing integrated | RS-485/CAN/daughterboard comparison with usable GPIO/peripheral/current/voltage/power-off contract; recommendation and fallback |
 | [LRA-05](handoffs/LRA-05_FIRMWARE_POWER.md) | Returned by logger-power `01a18463-5ed7-7041-ad90-ec3a7480c4e6`; manager reviewed | Candidate `0745d5b` integrated October 29; manual default, opt-in qualified mode. Masked-IRQ release-bound analysis and physical qualification remain open; no active follow-up claimant | Isolated shutdown candidate: early HOLD, bounded SD finalization, IGN-return/reset/watchdog behavior; build/fault/replay tests and rollback; no implicit flash |
 | LRA-06 | KiCad schematic owner | Blocked for freeze on 01–04; known-block capture may start | Consolidated schematic/export/BOM, pin/part/footprint checks and ERC dispositions; explicitly unpopulated options |
 | LRA-07 | Local bench role; owner operates hardware | Blocked on testable 02/03 circuit and authorized bench setup; combined tests use 05 | Measured rails/startup/cutoff/reset/USB/energized-input-with-board-off results; conditions, limits, exceptions and artifacts |
@@ -111,6 +111,7 @@ for every row. Remote electrical work and local physical validation are distinct
 | FUEL-01 | Fuel analyst | Prepared post-fill assignment, successor delivery unverified. Existing data can support analysis; personal fixtures stay private |
 | STORE-01 | Logger/bridge | Ready: inspect actual capacity and define rotation/verified-retention policy; no automatic deletion currently |
 | TIME-01 | Logger/bridge | Deferred design: reset/offline time and retrospective drift policy; hardware reservations feed 03/04 if concrete |
+| KEY-02 | Keyless role | Ready, unclaimed: recover the RS-485 host tooling. `hp` and `cm5sim` at `/srv/agent_share/pcb/benchlink/` are the counterpart the migrated firmware names four times but the repository does not contain. Import with provenance and a public-review pass for private paths and credentials, and correct the stale "no MAX3485 fitted" comments while there. See `D-KEYLESS-485-01` |
 | KEY-01 | Proximity/keyless | Owner participation required: threshold/repeatability and parked operation independent of Pi/logger; installed settings unknown |
 | DIST-01 | Bridge/DB | Deferred: production-host cutover, packet checkpoints and independent server/VM comparison; not yet implemented |
 | DOC-01 | Claude pcb-manager, `630dea87-5e4d-4bad-a1ff-d41b3a5f509b` | Active manager from October 29. LRA-01/02/05 reviewed and integrated as candidates by the predecessor session; LRA-03 revised return reviewed and integrated at `dc07292`. LRA-04 browser return triaged: revisions required, not integrated. Next: the corrected LRA-04 pass, electrical gap closure, bounded LRA-05 timing follow-up and the LRA-06 start condition. No automatic-power deployment accepted |
@@ -118,17 +119,21 @@ for every row. Remote electrical work and local physical validation are distinct
 ## Decisions and gates
 
 - **D-KEYLESS-485-01 — owner statement, October 29:** the keyless board **has a
-  MAX3485 fitted, in an IC socket**. This supersedes
-  `keyless/firmware/accord-keyless/accord-keyless.ino` lines 5–6, which still
-  say USB CDC works "with no MAX3485 fitted" and that RS-485 runs "once U5 is
-  soldered"; the comment is stale and the part is socketed, not soldered. The
-  stale comment belongs to the keyless role to fix, like `D14` for the logger
-  sketch; nothing in `keyless/` was edited to record this. Fitted is not
-  exercised: no record here shows the RS-485 link carrying traffic, so treat the
-  precedent as built and socketed with bus operation unrecorded. Socketing is a
-  Rev A input — vibration and contact resistance for the electrical reviewer,
-  and a real but unguaranteed disconnection measure for the off-state question.
-  Do not re-ask whether the part is present.
+  MAX3485 fitted, in an IC socket**, and the **RS-485 link was tested
+  extensively** from the Pi 4 using a host CLI — `./hp out lock pulse`,
+  `./hp io`, `./hp status`. This is operational bus evidence, not a designed
+  precedent. Do not re-ask whether the part is present or whether the bus ran.
+  `keyless/firmware/accord-keyless/accord-keyless.ino` lines 5–6 and the
+  `cm5sim` docstring both still say "no MAX3485 fitted" / "once U5 is soldered";
+  both are stale. The keyless role owns that fix, as `D14` owns the logger
+  sketch comment; nothing in `keyless/` was edited to record this.
+  **Migration gap:** the host tooling never came across. `hp` and `cm5sim` live
+  at `/srv/agent_share/pcb/benchlink/`, and the migrated firmware references
+  `cm5sim` four times as the counterpart a reader should run, so the public
+  repository currently documents a tool it does not contain. Recovering it is
+  task `KEY-02`. Socketing is a Rev A input — vibration and contact resistance
+  for the electrical reviewer, and a real but unguaranteed disconnection
+  measure for the off-state question.
 - **D-INVENTORY-01 — owner clarification, October 29:** the original reference is
   `/srv/agent_share/inventory/inventory_list.md`; the historical logger-power
   copy is not the primary inventory. The original is mostly accurate but
@@ -240,3 +245,16 @@ powered-off bus current three orders of magnitude above it. Keyless RS-485 is a
 designed and so-far unpopulated precedent, not operational evidence. The
 corrected pass needs no bench access, purchase or new owner question. No bus is
 selected and `D-RA-04` is unchanged.
+
+October 29 LRA-04 correction by Claude `pcb-manager`,
+`630dea87-5e4d-4bad-a1ff-d41b3a5f509b`: finding R04-REV-3 is **withdrawn**. The
+return's "proven on keyless" was accurate; the review's two attempts to qualify
+it were not. Both came from reading stale firmware comments as current fact,
+which is the exact error the LRA-04 packet warns against and which the review
+quoted while committing. The owner's October 29 statement and the surviving
+`hp`/`cm5sim` tooling establish an exercised 115200 bus with a real
+request/response protocol and a worked half-duplex DE implementation at
+`keyless/firmware/accord-keyless/link.h:221`. The keyless precedent is
+operational evidence and the strongest argument for the RS-485 recommendation.
+Firmware comments in this project date from when they were written; the owner
+is the authority on what is physically built and run.
