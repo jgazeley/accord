@@ -12,9 +12,9 @@ Branch `task/LRA-06-73d7d954`, rebased onto public `main` at
 Reviewed by Claude `pcb-manager`, session
 `630dea87-5e4d-4bad-a1ff-d41b3a5f509b`, October 29:
 [LRA06_REVIEW_2026-10-29.md](../../../coordination/reviews/LRA06_REVIEW_2026-10-29.md).
-Accepted as a candidate with R06-REV-1 blocking and R06-REV-3 minor; both are
-applied here. R06-REV-2 is an electrical decision and is deliberately not acted
-on. Q1 was ratified, so X6 stands as a legitimate sixth placeholder.
+R06-REV-1 and R06-REV-3 from the first pass, and R06-REV-4 from the second, are
+all applied here. R06-REV-2 is an electrical decision and is deliberately not
+acted on. Q1 was ratified, so X6 stands as a legitimate sixth placeholder.
 
 **Disposition: capture for review. Nothing here is frozen, accepted, ordered or
 built.** Four blocks carry no selected part. The schematic reproduces the fitted
@@ -45,7 +45,7 @@ points and the reset header). Deltas deliberately untouched: **D4** (placeholder
 only), **D10, D11, D14, D15**. D3, D9 and D12 are closed in the source and
 needed nothing.
 
-## 2. Placeholders — four blocks, no part selected
+## 2. Placeholders — five blocks, no part selected
 
 A placeholder is a dashed symbol carrying a `?` and a state label, so it cannot
 be read as a real part in the SVG, and it appears in `BOM.csv` with a
@@ -59,7 +59,7 @@ be read as a real part in the SVG, and it appears in `BOM.csv` with a
 | **VEHICLE_PROTECTION** | 1 | X7 | `NOT SELECTED (R02)` |
 | **QREPORT stage** (see Q1) | 1 | X6 | `NOT SELECTED (QREPORT)` |
 
-The fifth is a block the packet did not enumerate; §6 explains why it exists
+The fifth is a block the packet did not enumerate; §7 explains why it exists
 rather than being silently omitted.
 
 **D4 after `D-OFFSTATE-01`.** The owner's October 29 key-out measurements closed
@@ -117,10 +117,58 @@ a fault or transient reason keeps them is the analog reviewer's call, not this
 task's. Neither outcome needs a redraw.
 
 `TVS` and `X7` are deliberately separate parts. `TVS` is the named inherited
-candidate 1.5KE30A-E3/54 from `DESIGN.md` §3; `X7` is the unselected
+candidate 1.5KE30A-E3/54 from `DESIGN.md` §3 — a real part, with a real
+orientation that §3 of these notes pins down; `X7` is the unselected
 `VEHICLE_PROTECTION` BOM row. Neither is vehicle-approved.
 
-## 3. ERC dispositions
+## 3. Polarity that no symbol in this schematic carries
+
+**Read this before building or laying out anything.** Three of the parts here
+are polarized, but their symbols cannot say so, and ERC therefore cannot check
+them. The orientation exists only in the footprint and in the physical part.
+
+**TVS (D111), the one that was wrong.** `Device:D_TVS` names its pins **A1 and
+A2** because it is a *bidirectional* symbol: it draws no cathode bar and asserts
+no polarity. The specified part, **Vishay 1.5KE30A-E3/54**, is **unidirectional**
+— the plain `A` suffix is single-polarity, and `1.5KE30CA` would be the
+bidirectional device. So:
+
+| | |
+|---|---|
+| **Pin 1** | the **banded cathode** end → **P12** |
+| **Pin 2** | the anode → **PGND** |
+| Footprint | `Diode_THT:D_DO-201AD_P12.70mm_Horizontal` puts **pad 1 at x=0** with the silkscreen band at **x=2.9–3.1 mm**, so pad 1 *is* the banded end |
+| Source | `DESIGN.md` §3: "P12 -- TVS cathode; TVS anode -- PGND" |
+
+Reversed, a unidirectional TVS is a forward-biased rectifier straight across the
+supply: it conducts at about a volt and shorts P12. `DESIGN.md` §3 records this
+exact part having been fitted backwards once already, which is why its BOM note
+says to check the cathode *net* rather than trust the footprint — and the first
+version of this capture then got the net backwards anyway, because the symbol
+had deleted the thing the note tells you to check. Review finding R06-REV-4.
+
+If a bidirectional device is actually wanted, that is a BOM change at R02 and
+`DESIGN.md` needs amending — not something to settle by leaving the orientation
+as drawn.
+
+**The electrolytics (CIN, COUT, C_SD).** `Device:C_Polarized` leaves both pins
+unnamed; **pin 1 is the + terminal**. CIN pin 1 → VIN_SW, COUT pin 1 → B5,
+C_SD pin 1 → the switched 3V3 SD supply, each with pin 2 to PGND. `DESIGN.md`
+§3 states "positive VIN_SW" and "Positive B5" explicitly.
+
+**The optocoupler (U2).** `Isolator:PC817` leaves all four pins unnamed.
+`AS_BUILT` §3.4a fixes the pinout: **pin 1** LED anode through the series
+resistor, **pin 2** LED cathode to the B16 conductor, **pin 4** collector,
+**pin 3** emitter.
+
+All of these are now asserted by pin number in `check_capture.py`, and a guard
+there fails if any *future* part arrives whose symbol cannot express polarity
+and which has no such assertion. That guard was tested by removing the TVS
+entry: it flags `D111` on its own. The remaining eleven diodes use `K`/`A`
+symbols, where a reversal is visible in the drawing and checkable, and were
+verified against `DESIGN.md` and `AS_BUILT` individually.
+
+## 4. ERC dispositions
 
 `validation/erc.json`, KiCad 9.0.2: **0 violations at `--severity-all`**, so
 there are no errors and no warnings to disposition. Specifically:
@@ -153,7 +201,7 @@ Rule-check results above are read from the JSON report. `kicad-cli` does not
 signal violations through its exit code unless `--exit-code-violations` is
 passed, so a zero exit is not evidence of a clean design.
 
-## 4. Footprints
+## 5. Footprints
 
 79 of the 89 real parts carry an installed footprint. The ten exceptions, and
 why:
@@ -173,7 +221,7 @@ F1/F2 as 5×20 mm clip holders, CIN/COUT as generic radials) are **package
 placeholders for layout planning, not part selections**; the BOM status column
 carries the real state.
 
-## 5. Annotation and designators
+## 6. Annotation and designators
 
 KiCad requires `<prefix><number>` references, so the descriptive names used
 while capturing are recorded in each symbol's `Source_designator` field and in
@@ -186,7 +234,7 @@ IDs D1–D15, and conventional diode designators D1–D15 on the same board woul
 unreadable next to it. No schematic designator here can be mistaken for a delta
 ID.
 
-## 6. Questions this capture could not resolve
+## 7. Questions this capture could not resolve
 
 Q1 is the one that matters; the rest are smaller. Q1 was ratified in review and
 Q7 is partly closed by R06-REV-1; both are kept with their outcome recorded.
@@ -264,7 +312,7 @@ here because §1 names it, not because a change is proposed: if the analog
 reviewer wants the reference filtered or decoupled on the carrier, that is a new
 requirement and a Rev A delta, not a correction to this capture.
 
-## 7. How to reproduce the checks
+## 8. How to reproduce the checks
 
 ```sh
 export HOME=$(mktemp -d)                 # temporary KiCad configuration
@@ -289,7 +337,7 @@ map, the deliberately unconnected pins, the §2 cell values and clamp
 orientations, the ignition cell, the HOLD path, D6, D7, D13, the J3/J4 state, the
 placeholder inventory and its D4 split, the footprint exceptions, that every
 library URI is `${KIPRJMOD}`-relative, and that all 53 declared nets still exist
-as separate nets with no unexpected extras. **201 checks pass.** It proves the
+as separate nets with no unexpected extras. **224 checks pass.** It proves the
 capture agrees with the written sources; it proves nothing about circuit
 behaviour.
 
@@ -301,7 +349,7 @@ check is the guard against it.
 
 Exact commands used, with the KiCad version, are in `validation/COMMANDS.txt`.
 
-## 8. Legibility of the SVG — checked, but not with human eyes
+## 9. Legibility of the SVG — checked, but not with human eyes
 
 The acceptance criterion is that a placeholder be visually unmistakable in the
 SVG. **No SVG rasterizer is installed on this host** (no `rsvg-convert`,
@@ -326,7 +374,7 @@ dashed placeholder bodies are as prominent on screen as intended. **A reviewer
 should open `validation/schematic.svg` or the project in the KiCad GUI once.**
 That is the one acceptance item this session could not close itself.
 
-## 9. What this does not do
+## 10. What this does not do
 
 No PCB layout (LRA-08, which additionally needs U-11). No part selection for D4,
 MAX_ON, VEHICLE_PROTECTION or the QREPORT stage. No divider ratio, pin

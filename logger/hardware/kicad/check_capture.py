@@ -279,7 +279,71 @@ for tbl in ('sym-lib-table', 'fp-lib-table'):
         check(f'{tbl} URI is KIPRJMOD-relative', uri.startswith('${KIPRJMOD}'),
               uri)
 
-# ------------------------------------- no net was silently merged away
+# --------------------------------- polarity of parts whose symbol hides it
+# R06-REV-4. A symbol that names its pins K and A lets ERC and a reader catch a
+# reversal. A symbol with pins named A1/A2, or with no pin names at all, does
+# not: the orientation exists only in the footprint and the physical part. Those
+# parts are listed here with the pin-to-net mapping the sources require, so the
+# fact is asserted rather than inferred from a symbol that cannot express it.
+# This is the R06-REV-1 lesson again -- assert the physical fact, not the
+# symbolic one.
+POLARITY = {
+    # ref source, {pin: net}, why
+    'TVS': ({'1': 'P12', '2': 'PGND'},
+            'pin 1 is the banded cathode end (footprint pad 1); DESIGN.md S3 '
+            'puts the cathode on P12. Device:D_TVS says A1/A2, so nothing '
+            'else catches a reversal, and the 1.5KE30A is unidirectional'),
+    'CIN': ({'1': 'VIN_SW', '2': 'PGND'},
+            'electrolytic; DESIGN.md S3 "positive VIN_SW". Device:C_Polarized '
+            'leaves both pins unnamed, pin 1 being the + terminal'),
+    'COUT': ({'1': 'B5', '2': 'PGND'},
+             'electrolytic; DESIGN.md S3 "Positive B5"'),
+    'C_SD': ({'1': 'P3V3_SW', '2': 'PGND'},
+             'electrolytic on the SD supply; pin 1 is the + terminal'),
+    'U2': ({'1': 'IGN_LED_A', '2': 'AGND', '3': 'PGND', '4': 'IGN_N'},
+           'PC817 pins are unnamed. AS_BUILT S3.4a fixes the pinout: pin 1 LED '
+           'anode through the series resistor, pin 2 LED cathode to the B16 '
+           'conductor, pin 4 collector, pin 3 emitter'),
+}
+for src, (mapping, why) in POLARITY.items():
+    ref = by_src[src]['reference']
+    for pin, net in mapping.items():
+        check(f'{ref} ({src}) pin {pin} on {net}',
+              pin_net.get((ref, pin)) == net,
+              f'got {pin_net.get((ref, pin))!r}; {why}')
+
+check('every part listed for polarity exists in the BOM',
+      set(POLARITY) <= {r['source_designator'] for r in bom},
+      'a listed reference is not in the BOM')
+
+# Guard, so a part added later cannot inherit the same blind spot silently.
+# The netlist labels each node with its symbol's pin name as `pinfunction`, and
+# omits it when the symbol leaves the pin unnamed. A part is orientation-opaque
+# when none of its pins carries a distinguishing name: no pinfunction at all, or
+# only the A1/A2 of a bidirectional symbol. Every such part with more than one
+# pin must either be genuinely orientation-free or be asserted in POLARITY.
+pinfunc = {}
+for m in re.finditer(r'\(node \(ref "([^"]+)"\) \(pin "([^"]+)"\)'
+                     r'(?: \(pinfunction "([^"]*)"\))?', text):
+    pinfunc.setdefault(m.group(1), set()).add(m.group(3) or '')
+ORIENTATION_FREE = {      # two or more interchangeable terminals
+    'Device:R', 'Device:C', 'Device:L', 'Device:Fuse', 'Jumper:Jumper_2_Open',
+    'Connector_Generic:Conn_01x02', 'Connector_Generic:Conn_01x04',
+    'Connector_Generic:Conn_01x06', 'Connector_Generic:Conn_01x08',
+}
+for r in bom:
+    ref, lib_id = r['reference'], r['symbol']
+    names = pinfunc.get(ref, set())
+    if len(names) < 2:
+        continue                  # single pin: nothing to get backwards
+    if names - {'', 'A1', 'A2'}:
+        continue                  # at least one pin is named distinguishably
+    if lib_id in ORIENTATION_FREE or lib_id.startswith('Custom:PLACEHOLDER'):
+        continue
+    check(f'{ref} ({r["source_designator"]}, {lib_id}) has an asserted '
+          f'orientation', r['source_designator'] in POLARITY,
+          'its symbol cannot express polarity and no POLARITY entry pins it '
+          'down; add one or justify it as orientation-free')
 # Connections are made by labels on short stubs. If a stub landed on another
 # component's pin, two named nets would merge and one name would disappear, so
 # every name this capture declares must still exist as its own net.

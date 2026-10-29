@@ -287,12 +287,22 @@ part('DREV', 'Device:D_Schottky', 'SB360-E3/54', 622.3, 48.26, rot=180,
      nets={2: 'BATT_F', 1: 'P12'}, fp=FP_DO201, mpn='Vishay SB360-E3/54',
      status='MISSING_OR_VERIFY_SPARE', source='DESIGN.md S3',
      note='input reverse-blocking diode; no part borrowed from the live keyless board')
-part('TVS', 'Device:D_TVS', '1.5KE30A-E3/54', 660.4, 68.58, rot=90,
-     nets={2: 'P12', 1: 'PGND'}, fp=FP_DO201, mpn='Vishay 1.5KE30A-E3/54',
+part('TVS', 'Device:D_TVS', '1.5KE30A-E3/54', 660.4, 68.58, rot=270,
+     nets={1: 'P12', 2: 'PGND'}, fp=FP_DO201, mpn='Vishay 1.5KE30A-E3/54',
      status='CANDIDATE_NOT_VEHICLE_APPROVED', source='DESIGN.md S3',
      note='inherited protection candidate only; energy and voltage coordination '
-          'open (R02). Check the cathode net, not the footprint orientation - '
-          'the keyless TVS reversal history makes that essential')
+          'open (R02). UNIDIRECTIONAL: the plain A suffix is single-polarity, '
+          'and 1.5KE30CA would be the bidirectional part. POLARITY, because no '
+          'symbol encodes it: pin 1 is the banded CATHODE end and goes to P12; '
+          'pin 2 is the anode and goes to PGND (DESIGN.md S3, "P12 -- TVS '
+          'cathode; TVS anode -- PGND"). Device:D_TVS names its pins A1/A2 '
+          'because it is a bidirectional symbol, so ERC cannot check this and '
+          'the schematic shows no cathode bar. Footprint pad 1 is the banded '
+          'end: Diode_THT D_DO-201AD puts pad 1 at x=0 with the silkscreen '
+          'band at x=2.9-3.1. Reversed, a unidirectional TVS is a forward-'
+          'biased rectifier across the supply and shorts P12 at about a volt. '
+          'R06-REV-4; DESIGN.md S3 records this part being fitted backwards '
+          'once already')
 part('C0', 'Device:C', '100nF/63V', 685.8, 68.58,
      nets={1: 'P12', 2: 'PGND'}, fp=FP_C_DISC, status='VERIFY_OR_SOURCE',
      source='DESIGN.md S3', note='always-on input ceramic')
