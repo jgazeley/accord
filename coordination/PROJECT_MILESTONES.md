@@ -32,17 +32,18 @@ remain in use until separately migrated. Do not maintain another active tracker.
   [power export](../logger/hardware/power/README.md) now contains the existing
   candidate, BOMs, handoffs and scripts with provenance; private access is not
   required for LRA-01 review.
-- **First blocker to resolve:** one qualified-IGN/HOLD/shutdown contract and
-  the cutoff candidate's power-budget/protection gaps.
-- **Next action:** LRA-01 electrical candidate returned as `a85f185` on
-  `task/LRA-01-01a18463`; firmware and manager review remain pending. The same
-  engineer has a [bounded LRA-02 continuation](handoffs/LRA-02_COMPONENT_MARGINS.md)
-  for component margins/current budget. LRA-03/04 remain available.
+- **First blockers to resolve:** implement the reviewed qualified-IGN/HOLD/shutdown
+  contract and close the cutoff candidate's power-budget/protection/isolation gaps.
+- **Next action:** LRA-01/02 returns `a85f185` / `c946f6f` reviewed and integrated
+  as engineering candidates. Manager covered the missing firmware review;
+  [LRA-05](handoffs/LRA-05_FIRMWARE_POWER.md) is ready for isolated remote
+  implementation. Electrical R02–R05 and all physical acceptance remain open.
+  LRA-03/04 remain available. See the [review](reviews/LRA01_LRA02_REVIEW_2026-10-28.md).
 - **Authority:** Codex `pcb-manager`, session `01a18447-07c2-7bb3-8318-9b276cfdb3b8`,
-  claims root/coordination on October 28, 2026. Predecessor remains historical.
-  LRA-01 electrical claimant: Codex `logger-power`,
-  `01a18463-5ed7-7041-ad90-ec3a7480c4e6`. Firmware, hardware-integrator and
-  communications reviewers remain unclaimed.
+  owns root/coordination and completed the bounded firmware interface review.
+  LRA-01/02 electrical returns: Codex `logger-power`,
+  `01a18463-5ed7-7041-ad90-ec3a7480c4e6`. LRA-05 implementation,
+  hardware-integrator and communications roles remain unclaimed.
 
 ## Milestones (existing IDs retained)
 
@@ -70,11 +71,11 @@ task packet before dispatch; record the claim and evidence here, not in a second
 
 | ID | Responsible role | State / dependencies | Outcome and acceptance |
 |---|---|---|---|
-| [LRA-01](handoffs/LRA-01_POWER_INTERFACE.md) | Electrical lead; firmware reviewer; manager integrates | Candidate `a85f185`, returned October 28 by Codex logger-power `01a18463-5ed7-7041-ad90-ec3a7480c4e6`; firmware and manager review pending | One agreed qualified-IGN/HOLD/startup/shutdown/reset/USB contract; numerical assumptions and faults explicit; current/protection decisions and reviewer disposition |
-| [LRA-02](handoffs/LRA-02_COMPONENT_MARGINS.md) | Returning logger-power engineer `01a18463-5ed7-7041-ad90-ec3a7480c4e6`; continuation acknowledgment pending | Ready: bounded R03/R04 component/current closure based on `a85f185`; final depends on 01 review | Coherent power schematic/BOM, compatible protection, effective capacitance and current/leakage allocations; off-state paths and bench checklist |
+| [LRA-01](handoffs/LRA-01_POWER_INTERFACE.md) | Electrical lead; firmware reviewer; manager integrates | Reviewed candidate `a85f185`; R01 disposition delivered by manager `01a18447-07c2-7bb3-8318-9b276cfdb3b8` in FIRMWARE_REVIEW.md; suitable for isolated 05 implementation, electrical/bench gates open | One agreed qualified-IGN/HOLD/startup/shutdown/reset/USB contract; numerical assumptions and faults explicit; current/protection decisions and reviewer disposition |
+| [LRA-02](handoffs/LRA-02_COMPONENT_MARGINS.md) | Electrical return by logger-power `01a18463-5ed7-7041-ad90-ec3a7480c4e6` | Candidate `c946f6f`, bounded paper return reviewed/integrated; R03/R04 remain open, no accepted consolidated BOM | Coherent power schematic/BOM, compatible protection, effective capacitance and current/leakage allocations; off-state paths and bench checklist |
 | [LRA-03](handoffs/LRA-03_AS_BUILT.md) | Hardware integrator; analog reviewer | Ready, unclaimed; packet prepared; finalize power domains with 01/02 | Current as-built consolidated with unknowns, frozen Rev A pins/connectors/input loading/protection/grounds/mechanics/test points; no full fuel model |
 | [LRA-04](handoffs/LRA-04_COMMUNICATIONS.md) | Bounded communications reviewer; hardware/firmware accept | Ready, unclaimed; packet prepared; coordinate 03 | RS-485/CAN/daughterboard comparison with usable GPIO/peripheral/current/voltage/power-off contract; recommendation and fallback |
-| LRA-05 | Logger firmware | Blocked on 01 contract | Isolated shutdown candidate: early HOLD, bounded SD finalization, IGN-return/reset/watchdog behavior; build/fault/replay tests and rollback; no implicit flash |
+| [LRA-05](handoffs/LRA-05_FIRMWARE_POWER.md) | Logger firmware, unclaimed | Ready for isolated implementation under reviewed 01 contract and F01–F05; physical acceptance remains blocked | Isolated shutdown candidate: early HOLD, bounded SD finalization, IGN-return/reset/watchdog behavior; build/fault/replay tests and rollback; no implicit flash |
 | LRA-06 | KiCad schematic owner | Blocked for freeze on 01–04; known-block capture may start | Consolidated schematic/export/BOM, pin/part/footprint checks and ERC dispositions; explicitly unpopulated options |
 | LRA-07 | Local bench role; owner operates hardware | Blocked on testable 02/03 circuit and authorized bench setup; combined tests use 05 | Measured rails/startup/cutoff/reset/USB/energized-input-with-board-off results; conditions, limits, exceptions and artifacts |
 | LRA-08 | PCB layout owner | Blocked on 06 baseline; resolve 07 material changes before release | Placement/routing, returns/current loops, antenna keepout, connectors, SD/USB access, mechanical review, DRC/parity dispositions |
@@ -96,7 +97,7 @@ for every row. Remote electrical work and local physical validation are distinct
 | TIME-01 | Logger/bridge | Deferred design: reset/offline time and retrospective drift policy; hardware reservations feed 03/04 if concrete |
 | KEY-01 | Proximity/keyless | Owner participation required: threshold/repeatability and parked operation independent of Pi/logger; installed settings unknown |
 | DIST-01 | Bridge/DB | Deferred: production-host cutover, packet checkpoints and independent server/VM comparison; not yet implemented |
-| DOC-01 | Codex pcb-manager, `01a18447-07c2-7bb3-8318-9b276cfdb3b8` | Active, claimed October 28: authority recorded; 01 refreshed and 03/04 prepared. Power export delivered with source hashes and 19 checks passing. LRA-01 candidate/identity received; LRA-02 continuation packet prepared. Next: review/integrate electrical return and obtain independent firmware disposition; LRA-03/04 remain available |
+| DOC-01 | Codex pcb-manager, `01a18447-07c2-7bb3-8318-9b276cfdb3b8` | Active, claimed October 28: authority recorded; 01 refreshed and 03/04 prepared. Power export and reviewed LRA-01/02 candidates integrated; manager supplied firmware review, 44 power checks and eight native suites pass. LRA-05 packet ready; implementation unclaimed. LRA-03/04 remain available |
 
 ## Decisions and gates
 
@@ -107,7 +108,9 @@ for every row. Remote electrical work and local physical validation are distinct
   Exact numeric acceptance/test envelope must be agreed, not inferred here.
   Old universal pre-PCB vehicle-duty wording is historical; this is not permission
   to fabricate an electrically unresolved design.
-- **D-RA-03 — pending 01:** one shared qualified-IGN/deadline contract. Never mix
+- **D-RA-03 — reviewed candidate 01:** use the shared qualified-IGN/deadline
+  contract and FIRMWARE_REVIEW for isolated implementation; runtime/electrical
+  acceptance remains open. Never mix
   the old raw-GP5/100 ms rules with the newer analog-qualified proposal.
 - **D-ASBUILT-01 — owner reminder, October 28:** the logger already has a physical
   as-built circuit documented outside KiCad. LRA-03 consolidates those corrected
@@ -155,3 +158,10 @@ October 28 return triage by the current pcb-manager: read the electrical
 [LRA01_HANDOFF](https://github.com/jgazeley/accord/blob/a85f185c4dfc593b0a5b7284170e904cbf8a54c1/logger/hardware/power/LRA01_HANDOFF.md)
 and contract follow-up gates. Engineer reports 33 checks passing; manager has
 not independently rerun or accepted this delivery. Branch remains unmerged.
+
+October 28 integration review by the current pcb-manager supersedes the return
+triage above: both original commits are preserved; [manager review](reviews/LRA01_LRA02_REVIEW_2026-10-28.md)
+and [firmware disposition](../logger/hardware/power/FIRMWARE_REVIEW.md) are delivered.
+The 44 model/arithmetic/integrity checks and eight existing native firmware
+suites pass independently. This closes the missing written R01 review, not
+implementation or bench acceptance. No new specialist is marked active.
