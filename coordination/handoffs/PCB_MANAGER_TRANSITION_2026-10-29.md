@@ -1,0 +1,91 @@
+# Manager shift close — October 29, 2026
+
+Prepared October 29, 2026 by Claude `pcb-manager`, session
+`630dea87-5e4d-4bad-a1ff-d41b3a5f509b`.
+Bookmark: `claude --resume 630dea87-5e4d-4bad-a1ff-d41b3a5f509b`.
+Session ID read from this session's harness-assigned working paths and confirmed
+against its transcript file; this tool exposes no second identifier to
+cross-check it against. Successors claim their own identity.
+
+This supplements, and does not replace,
+[the October 28 manager handoff](PCB_MANAGER_TRANSITION_2026-10-28.md), whose
+start prompt, reading order and role boundaries still apply.
+
+## Why this shift existed
+
+The preceding manager, Codex `pcb-manager`, session
+`01a18447-07c2-7bb3-8318-9b276cfdb3b8`, ended mid-integration: it had reviewed
+the revised LRA-03 return, staged the merge with `--no-commit` and applied a
+scripted reconciliation to the working tree, but never committed. This session
+picked that up from the predecessor's transcript, verified it, repaired what the
+scripted edit broke, and committed it.
+
+## What changed on `main` during this shift
+
+| Commit | What it is |
+|---|---|
+| `dc07292` | Merge of `task/LRA-03-23d6d0fb` at `f23e51c`, plus the integration reconciliation. Author is the predecessor manager session, which drafted the reconciliation; committer is this session |
+| `96508ec` | Tracker and `AGENTS.md`: LRA-03 integrated, manager handover recorded |
+| `6bc0ca7` | LRA-04 browser return preserved and reviewed; revisions required |
+| the commit carrying this file | This handoff and the packet-index update |
+
+Verification rerun on the merge result, not taken from the return: 70 arithmetic
+checks, 44 power checks, 9 native suites, 12 converter cases, and the three
+`logger/hardware/as-built/SOURCE_MANIFEST.json` deliverable hashes recomputed.
+
+`archive/reviews/LRA03-a9c828b` preserves the reviewed first return. The branch
+`task/LRA-03-23d6d0fb` is unmerged-from only in the sense that it is now merged;
+leave it in place.
+
+## Open item a successor must handle first
+
+**Those commits are on local `main` and were not pushed.** This session
+had no GitHub credential: HTTPS has no helper configured and the SSH key the
+predecessor session used is not reachable from here. Nothing is lost — the
+commits are in the shared checkout at `/srv/agent_share/accord` — but
+`origin/main` still points at `b7e44e6` until someone with the key runs:
+
+```sh
+git -C /tmp/accord-manager push git@github.com:jgazeley/accord.git main:main
+git -C /tmp/accord-manager push git@github.com:jgazeley/accord.git \
+    archive/reviews/LRA03-a9c828b
+```
+
+Confirm the push before citing GitHub links to `dc07292` or later in any new
+packet; until then those links 404.
+
+## Next actions
+
+1. **Push those commits**, or confirm the owner has.
+2. **LRA-04 corrected pass.** Six findings in
+   [the review](../reviews/LRA04_REVIEW_2026-10-29.md). Two are contradictions
+   inside the proposal itself, so they are correctable from the return's own
+   text plus `keyless/hardware/hondaPico.kicad_sch` and
+   `keyless/firmware/accord-keyless/accord-keyless.ino`. No bench access,
+   purchase or new owner question is needed. The deliverables land under
+   `logger/hardware/communications/` when they pass.
+3. **LRA-06 start condition.** `logger/hardware/as-built/REV_A_INTERFACES.md` is
+   now the documented pin/interface baseline, so known-block schematic capture
+   can begin. A freeze still needs the §10 dispositions: analog reviewer on
+   loading and protection, electrical lead on power boundaries, firmware
+   reviewer on the pin map, LRA-04 on bus allocation, manager acceptance.
+4. **Electrical R02–R05** and the bounded LRA-05 masked-interrupt follow-up are
+   unchanged and still open.
+
+## What this shift did not do
+
+No hardware is accepted, nothing is frozen, no part is selected or ordered, no
+firmware was flashed, no service or database touched, and no owner question was
+re-asked. Integration of LRA-03 makes its consolidation the documented baseline;
+it is not an acceptance of the circuit it documents.
+
+> **Required agent attribution:** Follow `logger/coordination/AGENT_ATTRIBUTION.md`
+> relative to this project root. Use your own tool, role and verified current
+> session ID for Git author and committer identity (`<Tool> <role> [<short-id>]`),
+> with per-command settings. End each new commit message with `Agent-Session: <role>`
+> and your full tool-specific session-ID trailer (`Codex-Session-ID`,
+> `Claude-Session-ID` or `Antigravity-Session-ID`). This includes documentation-only
+> commits. Identify yourself and your resume command in new coordination documents
+> and dated updates. Preserve predecessor bookmarks and original attribution when
+> transporting existing commits. If your ID is unavailable, say so rather than
+> inventing one. Include this requirement in any seeds or handoffs you create.
