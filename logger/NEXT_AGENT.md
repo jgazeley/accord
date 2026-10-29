@@ -1,38 +1,51 @@
-> LRA-05 candidate update, October 29, 2026 — Codex `logger-power`, session
-> `01a18463-5ed7-7041-ad90-ec3a7480c4e6`.
-> Resume: `codex resume 01a18463-5ed7-7041-ad90-ec3a7480c4e6`.
-> Firmware is now the isolated `0.8.1-lra05-dev` candidate described in
-> [LRA05_HANDOFF.md](coordination/LRA05_HANDOFF.md). The historical import
-> provenance below remains unchanged; its statement of unchanged behavior
-> describes the import, not this candidate.
->
-> Manual power remains the default: `firmware/accord-logger/power_config.h`
-> defines `LOGGER_POWER_QUALIFIED=0`. Qualified GP5/GP6 mode is an explicit
-> opt-in (`1`) pending manager/firmware review and hardware qualification.
-> Do not select it for the existing manual wiring merely to try the firmware.
->
-> From the repository root, run `python3 logger/tools/test_native.py` and
-> `python3 logger/tests/check_power_converter.py`. To compile both modes with
-> dummy credentials, run
-> `python3 logger/tests/build_power_candidates.py --output /tmp/lra05-builds`.
-> This stages isolated source copies and invokes the unchanged documented
-> `tools/build_candidate.py` helper; only the qualified copy's config default
-> changes to `1`. Manifests record effective source/config hashes. No private
-> secrets are read and neither profile is flashed. The ordinary build helper
-> still builds the checked-out manual default unless explicitly configured.
->
-> Rollback is a manual-mode build (`0`), which reserves no GP6, installs no
-> power alarm, and enables no application watchdog. For exact pre-LRA-05 source,
-> use reviewed main base `2c52afd7b5609444641d02cd420bc252a1f494c7` in an isolated
-> checkout. Deployment/physical wiring changes require their own authorization.
+# Logger build configuration and LRA-05 candidate notes
 
-> Current coordination, October 28, 2026: new work starts in this repository.
-> Read [current tasks](../coordination/PROJECT_MILESTONES.md); power/shutdown
-> interface agreement precedes that implementation. The configuration instructions
-> below remain applicable; this older packet does not itself assign a new task.
-> Updated by Codex pcb-manager, session `01a17045-1855-7af2-b76a-32c2b778cd64`.
+**This is a configuration reference, not a task assignment.** Despite the
+filename it does not tell you what to work on — the tracker does. It is
+[linked from AGENTS.md](../AGENTS.md) because the `secrets.h` gate below is
+still unconsumed: no private header exists in this tree, so nothing here has
+been done yet.
 
-# Next agent: logger configuration after restructuring
+Current state, October 29, 2026, consolidated by Claude `pcb-manager`, session
+`630dea87-5e4d-4bad-a1ff-d41b3a5f509b`, replacing three stacked dated banners
+that had to be reconciled in reverse order.
+
+- **Firmware** is the isolated `0.8.1-lra05-dev` candidate from LRA-05, now
+  integrated as a reviewed candidate. See
+  [LRA05_HANDOFF.md](coordination/LRA05_HANDOFF.md). The import-provenance
+  section further down describes the *original copy*, not this candidate.
+- **Manual power is the default.** `firmware/accord-logger/power_config.h`
+  sets `LOGGER_POWER_QUALIFIED=0`. Qualified GP5/GP6 mode is an explicit opt-in
+  pending hardware qualification. Do not select it against the existing manual
+  wiring just to try the firmware.
+- **Corrected October 29:** the original text below says receiver/server
+  migration is deferred. That is **no longer true** — `logger/server/` now holds
+  the raw receiver and trip conversion core. Database and dashboard migration
+  remain outside this repository.
+- **Superseded October 29:** the former note that power/shutdown interface
+  agreement must precede implementation. LRA-05 is implemented and integrated.
+
+Tests, from the repository root:
+
+```
+python3 logger/tools/test_native.py
+python3 logger/tests/check_power_converter.py
+python3 logger/tests/build_power_candidates.py --output /tmp/lra05-builds
+```
+
+The third compiles both modes with dummy credentials into isolated source
+copies, changing only the qualified copy's config default. No private secrets
+are read and nothing is flashed. Rollback is a manual-mode build; for exact
+pre-LRA-05 source use reviewed base `2c52afd7b5609444641d02cd420bc252a1f494c7`
+in an isolated checkout. Deployment and physical wiring need their own
+authorization.
+
+---
+
+## Original migration record — October 27, 2026
+
+Kept for provenance. Read the corrections above first.
+
 
 Prepared October 27, 2026 by Codex `logger-wifi-piless`.
 Current copying session: `01a17526-034c-78f1-9d09-24c3b88c3dc7`.
@@ -40,7 +53,8 @@ Bookmark: `codex resume 01a17526-034c-78f1-9d09-24c3b88c3dc7`.
 A successor must use its own verified session ID; retain this one as history.
 
 This copy is bounded to Pico W logger firmware, native tests and build tooling.
-Receiver/server migration is deferred. The copied source is v0.8.1-dev from
+Receiver/server migration is deferred. *(Corrected above: `logger/server/` now
+exists.)* The copied source is v0.8.1-dev from
 `session/logger-wifi-scheduling-01a17526` at `426a43d`, with source hashes in
 `SOURCE_MANIFEST.json`. The sketch is now
 `firmware/accord-logger/accord-logger.ino`.
