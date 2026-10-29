@@ -94,7 +94,7 @@ task packet before dispatch; record the claim and evidence here, not in a second
 | [LRA-05](handoffs/LRA-05_FIRMWARE_POWER.md) | Returned by logger-power `01a18463-5ed7-7041-ad90-ec3a7480c4e6`; manager reviewed | Candidate `0745d5b` integrated October 29; manual default, opt-in qualified mode. Masked-IRQ release-bound analysis and physical qualification remain open; no active follow-up claimant | Isolated shutdown candidate: early HOLD, bounded SD finalization, IGN-return/reset/watchdog behavior; build/fault/replay tests and rollback; no implicit flash |
 | [LRA-06](handoffs/LRA-06_SCHEMATIC_CAPTURE.md) | Returned by Claude `logger-schematic` `73d7d954-f82a-4038-8ff3-546a23fc5fa9` | **Integrated onto `main`** October 29; electrically sound as drawn. Candidate `c66fba6`, merged so the accepted capture is visible in the default checkout rather than only on its task branch. `logger/hardware/kicad/accord-logger.kicad_pro`. Integration of a reviewed candidate, **not a freeze**. [Review](reviews/LRA06_REVIEW_2026-10-29.md): R06-REV-1 (B16 orphaned from the ADC return), REV-3 and REV-4 (input TVS reversed) all closed and independently verified — 14/14 diode polarities correct, ERC 0, 224/224 checks, and the new orientation-opacity guard tamper-tested by reversing the TVS in a copy of the netlist. Both blocking findings shared one root cause: checks asserting the symbolic record instead of the physical fact. **Not integrated or frozen.** R06-REV-2 is with the electrical lead and blocks a freeze: bonding B16 put the opto LED cathode on the ADC return node, so D5 and the fitted LED return cannot both stand. Owner's GUI legibility pass outstanding; this host has no rasterizer | Consolidated schematic/export/BOM, pin/part/footprint checks and ERC dispositions; explicitly unpopulated options |
 | LRA-07 | Local bench role; owner operates hardware | Blocked on testable 02/03 circuit and authorized bench setup; combined tests use 05 | Measured rails/startup/cutoff/reset/USB/energized-input-with-board-off results; conditions, limits, exceptions and artifacts |
-| LRA-08 | PCB layout owner | Blocked on 06 baseline; resolve 07 material changes before release | Placement/routing, returns/current loops, antenna keepout, connectors, SD/USB access, mechanical review, DRC/parity dispositions |
+| LRA-08 | PCB layout owner, unclaimed | **Envelope resolved, no longer blocked on U-11.** Baseline is the integrated capture at `logger/hardware/kicad/`; outline is a generic 80 × 120 mm rectangle per `D-ENVELOPE-01`. **Now blocked on D4's part for X1**, which is required and has no footprint, and on the four placeholders under analog review. Resolve R06-REV-2 and any LRA-07 material changes before release. No packet written yet | Placement/routing, returns/current loops, antenna keepout, connectors, SD/USB access, mechanical review, DRC/parity dispositions |
 | LRA-09 | Manager and independent reviewer | Blocked on 06/07/08; 05 interface feasibility/bring-up path | Frozen prototype-order review package, hashes, BOM, test restrictions and residual-risk matrix; owner approval still required |
 | LRA-10 | Local bench/firmware | Blocked on 09 and owner order/assembly/testing authorization | Actual-board bring-up evidence, then separate unattended-vehicle acceptance |
 
@@ -118,32 +118,26 @@ for every row. Remote electrical work and local physical validation are distinct
 
 ## Decisions and gates
 
-- **D-ENVELOPE-01 — owner direction, October 29, with a manager caution:** the
-  Rev A board is a **generic rectangle**, no enclosure, no mounting method
-  chosen. Mounting behind the gauge cluster was considered and set aside. It
-  must carry the Pico module, the SD module and the remaining circuitry. SD
-  needs `PinHeader_1x06_P2.54mm_Vertical` plus roughly a 16 mm square.
-  The owner gave the present breadboard area as the size reference: an
-  **82 × 55 mm half-size board plus a 46 × 36 mm mini**.
-  **That reference is not a target, and LRA-08 must not treat it as one.** Those
-  breadboards carry the *as-built*. Rev A adds the entire onboard power block —
-  QP, the LM2678, the inductor, the 820 µF output capacitor, the catch and
-  reverse diodes, the TVS and the latch transistors — plus twenty test points
-  and eight isolation/protection placeholders, none of which exists on the
-  bench today. Summing nominal package areas over the 81 captured parts that
-  have footprints gives **5,031 mm² of raw component area**; at a routine
-  1.6–2.0× allowance for routing and clearance that is **8,000–10,000 mm²**,
-  against 4,510 mm² for the half-size board and 6,166 mm² for both together.
-  **Ten parts are still unassigned** — J1, J2 and the eight placeholders — so
-  the figure can only grow. A board nearer **100 × 80 mm** is the floor and
-  100 × 100 or 120 × 80 leaves margin. This is a sanity estimate from package
-  nominals, not a layout; LRA-08 owns the real answer. The dominant driver is
-  that the BOM is almost entirely through-hole, which suits hand assembly and
-  the existing socketed practice.
-  **Open:** the chosen outline, mounting, harness lengths and connector
-  positions, and whether the SD figure means 16 mm on a side or a literal
-  16 mm². J1 and J2 stay unassigned deliberately — connector family is a
-  mechanical decision that resolves with the envelope.
+- **D-ENVELOPE-01 — owner decision, October 29:** the Rev A board is a
+  **generic rectangle, 80 × 120 mm**, with **no enclosure** and no mounting
+  method chosen. Mounting behind the gauge cluster was considered and set
+  aside. It carries the Pico module, the SD module and the remaining
+  circuitry. The SD module occupies **16 × 16 mm** plus
+  `PinHeader_1x06_P2.54mm_Vertical`.
+  **This closes U-11 for layout purposes.** The owner first offered the present
+  bench footprint as a size reference — an 82 × 55 mm half-size breadboard plus
+  a 46 × 36 mm mini — and that was too small, because those breadboards carry
+  only the as-built. Rev A adds the whole onboard power block, twenty test
+  points and eight placeholders. Nominal package areas over the 81 captured
+  parts with footprints give **5,031 mm²** raw, so a 1.6–2.0× routing allowance
+  wants 8,000–10,000 mm². **80 × 120 is 9,600 mm², a 1.9× allowance**, which
+  clears the floor with margin for a through-hole two-layer board. Ten parts
+  — J1, J2 and the eight placeholders — are still unassigned and will eat into
+  that, so the margin is real but not generous.
+  **Consequences:** connector positions become LRA-08's choice rather than an
+  owner input, and LRA-08 should place generic corner mounting holes that
+  commit to no particular mounting method. **Residual and non-blocking:**
+  mounting method and harness lengths.
 - **D-OFFSTATE-01 — owner measurement, October 29:** key out and parked, to
   chassis ground: **B2 (VSS) = 4.140 V, B1 (tach) = 0 V, C11 (fuel) = 0 V**.
   This closes U-10 and changes the biggest Rev A design item. **B2 is the only

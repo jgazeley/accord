@@ -263,14 +263,12 @@ reading.
 
 ## 5. Connectors, mechanics, access and test points
 
-**Updated October 29.** The owner has set a direction but not an outline: a
-generic rectangular board, no enclosure, no mounting chosen, with the present
-breadboard area (82 × 55 mm plus a 46 × 36 mm mini) given as the size reference.
-A manager estimate from the captured BOM puts Rev A at roughly **8,000 mm²**
-minimum against that reference's 4,510 mm², so the reference is **not** a target;
-see `D-ENVELOPE-01`. Outline, mounting, harness lengths and connector positions
-remain unknown (U-11) and none is invented here. What can be fixed now is the
-*interface shape*.
+**Resolved October 29.** The board is a **generic rectangle, 80 × 120 mm**, with no enclosure and
+no mounting method chosen (`D-ENVELOPE-01`). The SD module takes **16 × 16 mm**
+plus its 1×6 vertical header. That outline is 9,600 mm² against 5,031 mm² of raw
+captured component area, a 1.9× allowance, so it clears the 8,000 mm² floor the
+manager estimate put on it. Mounting method and harness lengths are still open
+but no longer block placement; connector positions are now LRA-08's to choose.
 
 ### 5.1 Connectors
 
@@ -429,7 +427,7 @@ For the firmware reviewer; no firmware change is proposed or made here.
 | Blocker | Held by | Why the freeze waits |
 |---|---|---|
 | R05 — five input isolation channels, DOR delta, bus/service paths, B16/PGND | LRA-02 / 03 / 04 analog and schematic review | D4 is unselected; §6 rows 1–6 and 12 have no accepted answer |
-| ~~U-10~~, U-11 (part), U-12 | Owner | **U-10 closed October 29**, narrowing D4 to B2 alone. **U-11 partially closed the same day**: generic rectangular board, no enclosure or mounting, but no outline yet, and the owner's size reference is too small — `D-ENVELOPE-01`. U-12 (divider tolerances) remains. LRA-08 can begin placement studies but cannot fix an outline. Exact opto identity and fuse/resistor ratings stay with the parts discussion |
+| ~~U-10~~, ~~U-11~~, U-12 | Owner | **U-10 closed October 29**, narrowing D4 to B2 alone. **U-11 closed for layout the same day**: a generic 80 × 120 mm rectangle, `D-ENVELOPE-01`. U-12 (divider tolerances) remains. **LRA-08 is no longer blocked on the envelope**; it is blocked on D4's part for X1. Exact opto identity and fuse/resistor ratings stay with the parts discussion |
 | U-06, U-07, U-08 | Bench / datasheet work | D11 and the VSS off-state case depend on them |
 | LRA-04 bus allocation | Communications reviewer | GP8/GP9/GP10 and J3 are offers, not reservations |
 | R02 — P12 and IGN protection envelope | LRA-02 + owner vehicle exposure | Decides what J1 must survive. The as-built RLED value is a candidate answer to its open IGN dissipation defect; see D15 |
