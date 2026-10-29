@@ -92,7 +92,7 @@ task packet before dispatch; record the claim and evidence here, not in a second
 | [LRA-03](handoffs/LRA-03_AS_BUILT.md) | Returned by Claude hardware-integrator `23d6d0fb-9656-4e03-acb3-922537019a5b`; analog acceptance open | **Integrated** October 29 at `dc07292`. First return `a9c828b` reviewed, revisions R03-REV-1–6 applied in `f23e51c`, merge adds a documentation reconciliation. Baseline for LRA-06; accepts no hardware | Current as-built consolidated with unknowns, frozen Rev A pins/connectors/input loading/protection/grounds/mechanics/test points; no full fuel model |
 | [LRA-04](handoffs/LRA-04_COMMUNICATIONS.md) | Browser return, session identifiers unavailable; hardware/firmware accept | **Returned, revisions required.** Owner-supplied browser return preserved at `logger/coordination/LRA04_GROK.md`; [review](reviews/LRA04_REVIEW_2026-10-29.md) records five standing findings, two of them contradictions in the proposed topology; a sixth was withdrawn as the reviewer's error, not the return's. No bus selected, no pin reserved, nothing integrated | RS-485/CAN/daughterboard comparison with usable GPIO/peripheral/current/voltage/power-off contract; recommendation and fallback |
 | [LRA-05](handoffs/LRA-05_FIRMWARE_POWER.md) | Returned by logger-power `01a18463-5ed7-7041-ad90-ec3a7480c4e6`; manager reviewed | Candidate `0745d5b` integrated October 29; manual default, opt-in qualified mode. Masked-IRQ release-bound analysis and physical qualification remain open; no active follow-up claimant | Isolated shutdown candidate: early HOLD, bounded SD finalization, IGN-return/reset/watchdog behavior; build/fault/replay tests and rollback; no implicit flash |
-| LRA-06 | KiCad schematic owner | Blocked for freeze on 01–04; known-block capture may start | Consolidated schematic/export/BOM, pin/part/footprint checks and ERC dispositions; explicitly unpopulated options |
+| [LRA-06](handoffs/LRA-06_SCHEMATIC_CAPTURE.md) | KiCad schematic owner, unclaimed | **Ready to dispatch** October 29; packet written. Capture is not blocked — the freeze is. D4 isolation, J3 bus, `MAX_ON` and `VEHICLE_PROTECTION` are captured as marked placeholders, not resolved. New KiCad project at `logger/hardware/kicad/accord-logger.*`, scaffolding templated from `keyless/hardware/` per `D-REUSE-01` | Consolidated schematic/export/BOM, pin/part/footprint checks and ERC dispositions; explicitly unpopulated options |
 | LRA-07 | Local bench role; owner operates hardware | Blocked on testable 02/03 circuit and authorized bench setup; combined tests use 05 | Measured rails/startup/cutoff/reset/USB/energized-input-with-board-off results; conditions, limits, exceptions and artifacts |
 | LRA-08 | PCB layout owner | Blocked on 06 baseline; resolve 07 material changes before release | Placement/routing, returns/current loops, antenna keepout, connectors, SD/USB access, mechanical review, DRC/parity dispositions |
 | LRA-09 | Manager and independent reviewer | Blocked on 06/07/08; 05 interface feasibility/bring-up path | Frozen prototype-order review package, hashes, BOM, test restrictions and residual-risk matrix; owner approval still required |
@@ -114,7 +114,7 @@ for every row. Remote electrical work and local physical validation are distinct
 | KEY-02 | Keyless role | **Dead reference fixed; import still optional and unclaimed.** The sketch now states once that `cm5sim` is the host-side CM5 stand-in, reached through `hp`, and is not part of this repository, so no reader chases a file that is not here. The stale "no MAX3485 fitted" / "once U5 is soldered" / "needs U5 fitted" comments are corrected in the same pass. Importing the tooling itself remains optional: nothing is blocked, the logger has no RS-485 today, and it becomes a real need only at LRA-07 bench work or if Rev A puts a bus on the logger. See `D-KEYLESS-485-01` |
 | KEY-01 | Proximity/keyless | Owner participation required: threshold/repeatability and parked operation independent of Pi/logger; installed settings unknown |
 | DIST-01 | Bridge/DB | Deferred: production-host cutover, packet checkpoints and independent server/VM comparison; not yet implemented |
-| DOC-01 | Claude pcb-manager, `630dea87-5e4d-4bad-a1ff-d41b3a5f509b` | Active manager from October 29. LRA-01/02/05 reviewed and integrated as candidates by the predecessor session; LRA-03 revised return reviewed and integrated at `dc07292`. LRA-04 browser return triaged: revisions required, not integrated. Next: the corrected LRA-04 pass, electrical gap closure, bounded LRA-05 timing follow-up and the LRA-06 start condition. No automatic-power deployment accepted |
+| DOC-01 | Claude pcb-manager, `630dea87-5e4d-4bad-a1ff-d41b3a5f509b` | Active manager from October 29. LRA-01/02/05 reviewed and integrated as candidates by the predecessor session; LRA-03 revised return reviewed and integrated at `dc07292`. LRA-04 browser return triaged: revisions required, not integrated. LRA-06 packet written October 29 and the row set ready to dispatch. Next: the corrected LRA-04 pass, electrical gap closure, bounded LRA-05 timing follow-up, and the owner's U-10/U-11/U-12 measurements, of which U-11 gates LRA-08. No automatic-power deployment accepted |
 
 ## Decisions and gates
 
@@ -168,6 +168,16 @@ for every row. Remote electrical work and local physical validation are distinct
   and `keyless/validation/kicad-20261027/README.md`. Reuse applicable knowledge;
   record actual fitted evidence and logger-specific differences. Keep the two
   modules' pin maps, power lifecycle and artifact ownership separate.
+  **Sharpened October 29 by owner direction:** use the keyless project as a
+  template for *conventions and naming* — project-relative `${KIPRJMOD}`
+  library tables, one project-local `Custom` symbol library, a project
+  `.pretty`, the test-point/reset-header pattern and the `kicad-cli` validation
+  method — while the logger is a **separate, distinct board project** at
+  `logger/hardware/kicad/accord-logger.*`. Copy the scaffolding and the
+  `LM2678T-5.0` symbol, which the Rev A regulator reuses; copy no circuit. The
+  keyless project keeps the filename `hondaPico.kicad_pro` per `AGENTS.md`; the
+  new board taking a clean name is not a conflict with that and licenses no
+  renaming on the keyless side. See `handoffs/LRA-06_SCHEMATIC_CAPTURE.md`.
 - **D-POWER-02 — owner direction, October 28:** continue the existing `9527a14`
   power circuit. Reuse its design, BOMs and checks; limit new investigation to
   identified gaps. Replacement requires a documented defect or unmet requirement.

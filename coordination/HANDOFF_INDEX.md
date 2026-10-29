@@ -17,6 +17,7 @@ This file is only a packet locator. Ready does not mean assigned or running.
 | LRA-05 firmware power | [Isolated implementation packet](handoffs/LRA-05_FIRMWARE_POWER.md) |
 | LRA-03 as-built | [As-built/interface packet](handoffs/LRA-03_AS_BUILT.md) |
 | LRA-04 communications | [Communications packet](handoffs/LRA-04_COMMUNICATIONS.md) |
+| LRA-06 schematic capture | [Rev A schematic capture packet](handoffs/LRA-06_SCHEMATIC_CAPTURE.md) |
 | Other LRA tasks | Prepare from [template](TASK_PACKET_TEMPLATE.md) when assigned; scope/acceptance in tracker |
 
 Optional history remains in old `coordination/HANDOFF_INDEX.md` at `1e99449`.
