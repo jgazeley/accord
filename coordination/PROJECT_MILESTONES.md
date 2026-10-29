@@ -133,18 +133,22 @@ for every row. Remote electrical work and local physical validation are distinct
   4.140 V was read loaded or open-circuit is **answered the same day**: the owner
   lifted the VSS wire and read **4.669 V** open-circuit against 4.140 V loaded.
   So injection is real rather than an upper bound, and B2 is held up by an
-  always-on pull-up to about 4.67 V. **The source resistance is not settled:**
-  7.03 kΩ if the Pico was fitted for the loaded reading, about 3.9 kΩ if it was
-  not, and that question is with the owner. Do not quote either figure as final.
-  **A third reading, October 29, makes the back-feed concrete:** with everything
-  wired and the Pico unplugged, the band side of the 3V3-rail clamps reads
-  **0.883 V to chassis**, so B2's injection forward-biases a clamp and pushes
-  roughly **85–105 µA into a rail that should be dead**. D4 on B2 is therefore
-  not only a drain argument — it is a measured back-feed into an unpowered
-  board, the case REV_A_INTERFACES §6 had listed as established by nothing.
-  Open as **U-14**: the same reading with the Pico fitted, which is the
-  configuration Rev A actually cares about. Do not re-ask the three key-out
-  readings or the loaded/open-circuit pair.
+  always-on pull-up to about 4.67 V through **3.8–3.9 kΩ**.
+  **All three readings share one configuration**, which the owner confirmed:
+  dividers, clamps, Pico module and SD module all seated, the Pico unpowered
+  with the USB lead off. The clamp is therefore conducting throughout, and two
+  consequences follow. First, the clamp cathodes read **0.883 V to chassis**,
+  so B2's injection forward-biases a clamp and drives **99–110 µA into the
+  Pico's unpowered 3V3 rail** — the board is partially energized while parked,
+  and REV_A_INTERFACES §6's B2 row is now established by measurement rather
+  than listed as established by nothing. Second, total draw on B2 is
+  **134–141 µA**, so one branch by itself exceeds the entire 100 µA
+  whole-system parked budget.
+  **Two earlier figures were wrong and are corrected here:** 75.3 µA assumed
+  the divider was the only load, and 7.03 kΩ assumed the clamp was off. Neither
+  holds. Reading the 22k/33k junction would collapse the remaining clamp-V<sub>F</sub>
+  range and fix every figure exactly. Do not re-ask the three key-out readings,
+  the loaded/open-circuit pair or the rail reading.
 - **D-KEYLESS-485-01 — owner statement, October 29:** the keyless board **has a
   MAX3485 fitted, in an IC socket**, and the **RS-485 link was tested
   extensively** from the Pi 4 using a host CLI — `./hp out lock pulse`,
