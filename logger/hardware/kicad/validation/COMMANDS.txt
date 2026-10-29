@@ -1,11 +1,27 @@
-KiCad CLI 9.0.2. Run with HOME set to a temporary
-configuration holding only the installed global sym-lib-table and
-fp-lib-table; no global user configuration was created or changed.
+KiCad CLI 9.0.2. Run with HOME set to a temporary configuration
+holding only the installed global sym-lib-table and fp-lib-table; no
+global user configuration was created or changed.
+
+The schematic, Custom.kicad_sym and BOM.csv are generated from one
+parts table, so the drawing and the BOM cannot drift apart:
+
+  python3 tools/gen_custom_sym.py Custom.kicad_sym
+  python3 tools/gen_logger_sch.py .
 
 kicad-cli sch erc --format json --severity-all -o validation/erc.json accord-logger.kicad_sch
 kicad-cli sch export netlist --format kicadsexpr -o validation/netlist.net accord-logger.kicad_sch
 kicad-cli sch export svg --no-background-color --exclude-drawing-sheet -o validation accord-logger.kicad_sch
+mv -f validation/accord-logger.svg validation/schematic.svg
+
+  python3 check_capture.py   # 652 structural checks against the netlist
+  python3 fp_area.py         # courtyard study, writes courtyard_study.csv
+
+The SVG export is named after the sheet, so it is renamed to
+schematic.svg, which is the name the review documents point at.
 
 Rule-check results are read from erc.json, not from the process exit
 code: kicad-cli does not signal violations through the exit code unless
 --exit-code-violations is passed, so a zero exit is not a clean design.
+
+LRA-12 result, October 29 2026: 0 violations at --severity-all over 141
+parts, 141 of 141 with a footprint, 652/652 capture checks.

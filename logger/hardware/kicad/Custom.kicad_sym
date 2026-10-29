@@ -185,348 +185,778 @@
 			)
 		)
 	)
-	(symbol "PLACEHOLDER_SIGNAL_ISO_REQ"
+	(symbol "CD4011B"
 		(pin_names
-			(offset 1.016)
+			(offset 0.508)
 		)
-		(exclude_from_sim yes)
+		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(property "Reference" "X"
-			(at -11.43 11.43 0)
+		(property "Reference" "U"
+			(at -11.43 13.969999999999999 0)
 			(effects (font (size 1.27 1.27)) (justify left))
 		)
-		(property "Value" "PLACEHOLDER_SIGNAL_ISO_REQ"
-			(at -11.43 -11.43 0)
+		(property "Value" "CD4011B"
+			(at -11.43 -13.969999999999999 0)
 			(effects (font (size 1.27 1.27)) (justify left))
 		)
 		(property "Footprint" ""
 			(at 0 0 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/cd4011b.pdf"
 			(at 0 0 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "Description" "LRA-06 placeholder: normally-open, power-off-safe signal isolation upstream of the B2 divider top (delta D4). Required on measured evidence: key out, B2 draws 140.8 uA and back-feeds 109.2 uA into the unpowered 3V3 rail through a forward-biased clamp, D-OFFSTATE-01. No part is selected."
+		(property "Description" "Quad 2-input NAND gate, CMOS, PDIP-14. Used as the reset-dominant ARM/NARM latch (gates A and B) and the QUAL_N inverter (gate C); gate D is unused and its inputs 12 and 13 must be tied to a rail."
 			(at 0 0 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "ki_keywords" "placeholder isolation D4 required B2 backfeed unselected"
+		(property "ki_keywords" "CMOS 4011 NAND quad latch"
 			(at 0 0 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(symbol "PLACEHOLDER_SIGNAL_ISO_REQ_0_1"
+		(property "ki_fp_filters" "DIP*W7.62mm*"
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(symbol "CD4011B_0_1"
 			(rectangle
-				(start -11.43 8.89)
-				(end 11.43 -8.89)
-				(stroke (width 0.381) (type dash))
-				(fill (type none))
+				(start -11.43 11.43)
+				(end 11.43 -11.43)
+				(stroke (width 0.254) (type solid))
+				(fill (type background))
 			)
-			(text "?"
-				(at 0 5.08 0)
-				(effects (font (size 3.81 3.81) (bold yes)))
-			)
-			(text "REQUIRED, NOT SELECTED (D4)"
-				(at 0 -6.3500000000000005 0)
-				(effects (font (size 1.27 1.27) (italic yes)))
+			(text "A,B = ARM latch   C = QUAL_N inverter   D unused"
+				(at 0 -9.525 0)
+				(effects (font (size 1.0 1.0) (italic yes)))
 			)
 		)
-		(symbol "PLACEHOLDER_SIGNAL_ISO_REQ_1_1"
-			(pin passive line
-				(at -15.24 0 0)
+		(symbol "CD4011B_1_1"
+			(pin input line
+				(at -16.509999999999998 7.62 0)
 				(length 5.08)
-				(name "TAP"
+				(name "A1"
 					(effects (font (size 1.27 1.27)))
 				)
 				(number "1"
 					(effects (font (size 1.27 1.27)))
 				)
 			)
-			(pin passive line
-				(at 15.24 0 180)
+			(pin input line
+				(at -16.509999999999998 5.08 0)
 				(length 5.08)
-				(name "DIV"
+				(name "A2"
 					(effects (font (size 1.27 1.27)))
 				)
 				(number "2"
 					(effects (font (size 1.27 1.27)))
 				)
 			)
-		)
-	)
-	(symbol "PLACEHOLDER_SIGNAL_ISO_REVIEW"
-		(pin_names
-			(offset 1.016)
-		)
-		(exclude_from_sim yes)
-		(in_bom yes)
-		(on_board yes)
-		(property "Reference" "X"
-			(at -11.43 11.43 0)
-			(effects (font (size 1.27 1.27)) (justify left))
-		)
-		(property "Value" "PLACEHOLDER_SIGNAL_ISO_REVIEW"
-			(at -11.43 -11.43 0)
-			(effects (font (size 1.27 1.27)) (justify left))
-		)
-		(property "Footprint" ""
-			(at 0 0 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
-		)
-		(property "Datasheet" ""
-			(at 0 0 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
-		)
-		(property "Description" "LRA-06 placeholder: normally-open, power-off-safe signal isolation upstream of one divider top (delta D4). Position retained, but the parked-drain justification is withdrawn for this branch per D-OFFSTATE-01; it is under analog review. No part is selected."
-			(at 0 0 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
-		)
-		(property "ki_keywords" "placeholder isolation D4 under review unselected"
-			(at 0 0 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
-		)
-		(symbol "PLACEHOLDER_SIGNAL_ISO_REVIEW_0_1"
-			(rectangle
-				(start -11.43 8.89)
-				(end 11.43 -8.89)
-				(stroke (width 0.381) (type dash))
-				(fill (type none))
-			)
-			(text "?"
-				(at 0 5.08 0)
-				(effects (font (size 3.81 3.81) (bold yes)))
-			)
-			(text "UNDER REVIEW, NOT SELECTED (D4)"
-				(at 0 -6.3500000000000005 0)
-				(effects (font (size 1.27 1.27) (italic yes)))
-			)
-		)
-		(symbol "PLACEHOLDER_SIGNAL_ISO_REVIEW_1_1"
-			(pin passive line
-				(at -15.24 0 0)
+			(pin output line
+				(at -16.509999999999998 2.54 0)
 				(length 5.08)
-				(name "TAP"
-					(effects (font (size 1.27 1.27)))
-				)
-				(number "1"
-					(effects (font (size 1.27 1.27)))
-				)
-			)
-			(pin passive line
-				(at 15.24 0 180)
-				(length 5.08)
-				(name "DIV"
-					(effects (font (size 1.27 1.27)))
-				)
-				(number "2"
-					(effects (font (size 1.27 1.27)))
-				)
-			)
-		)
-	)
-	(symbol "PLACEHOLDER_VEHICLE_PROT"
-		(pin_names
-			(offset 1.016)
-		)
-		(exclude_from_sim yes)
-		(in_bom yes)
-		(on_board yes)
-		(property "Reference" "X"
-			(at -10.16 10.16 0)
-			(effects (font (size 1.27 1.27)) (justify left))
-		)
-		(property "Value" "PLACEHOLDER_VEHICLE_PROT"
-			(at -10.16 -10.16 0)
-			(effects (font (size 1.27 1.27)) (justify left))
-		)
-		(property "Footprint" ""
-			(at 0 0 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
-		)
-		(property "Datasheet" ""
-			(at 0 0 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
-		)
-		(property "Description" "LRA-06 placeholder: coordinated vehicle input/IGN protection and fault limiting (power BOM row VEHICLE_PROTECTION). No part is selected."
-			(at 0 0 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
-		)
-		(property "ki_keywords" "placeholder protection TVS unselected R02"
-			(at 0 0 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
-		)
-		(symbol "PLACEHOLDER_VEHICLE_PROT_0_1"
-			(rectangle
-				(start -10.16 7.62)
-				(end 10.16 -7.62)
-				(stroke (width 0.381) (type dash))
-				(fill (type none))
-			)
-			(text "?"
-				(at 0 3.81 0)
-				(effects (font (size 3.81 3.81) (bold yes)))
-			)
-			(text "NOT SELECTED (R02)"
-				(at 0 -5.08 0)
-				(effects (font (size 1.27 1.27) (italic yes)))
-			)
-		)
-		(symbol "PLACEHOLDER_VEHICLE_PROT_1_1"
-			(pin passive line
-				(at -15.24 0 0)
-				(length 5.08)
-				(name "LINE"
-					(effects (font (size 1.27 1.27)))
-				)
-				(number "1"
-					(effects (font (size 1.27 1.27)))
-				)
-			)
-			(pin passive line
-				(at 0 -15.24 90)
-				(length 5.08)
-				(name "GND"
-					(effects (font (size 1.27 1.27)))
-				)
-				(number "2"
-					(effects (font (size 1.27 1.27)))
-				)
-			)
-		)
-	)
-	(symbol "PLACEHOLDER_MAX_ON"
-		(pin_names
-			(offset 1.016)
-		)
-		(exclude_from_sim yes)
-		(in_bom yes)
-		(on_board yes)
-		(property "Reference" "X"
-			(at -22.86 20.32 0)
-			(effects (font (size 1.27 1.27)) (justify left))
-		)
-		(property "Value" "PLACEHOLDER_MAX_ON"
-			(at -22.86 -20.32 0)
-			(effects (font (size 1.27 1.27)) (justify left))
-		)
-		(property "Footprint" ""
-			(at 0 0 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
-		)
-		(property "Datasheet" ""
-			(at 0 0 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
-		)
-		(property "Description" "LRA-06 placeholder: independent maximum-on timer plus latched HOLD-path inhibit (power BOM row MAX_ON, not implemented in revision A). No part is selected."
-			(at 0 0 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
-		)
-		(property "ki_keywords" "placeholder timer cutoff MAX_ON unselected"
-			(at 0 0 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
-		)
-		(symbol "PLACEHOLDER_MAX_ON_0_1"
-			(rectangle
-				(start -22.86 17.78)
-				(end 22.86 -17.78)
-				(stroke (width 0.381) (type dash))
-				(fill (type none))
-			)
-			(text "?"
-				(at 0 13.97 0)
-				(effects (font (size 3.81 3.81) (bold yes)))
-			)
-			(text "NOT SELECTED (MAX_ON)"
-				(at 0 -15.240000000000002 0)
-				(effects (font (size 1.27 1.27) (italic yes)))
-			)
-		)
-		(symbol "PLACEHOLDER_MAX_ON_1_1"
-			(pin passive line
-				(at -27.94 10.16 0)
-				(length 5.08)
-				(name "P12"
-					(effects (font (size 1.27 1.27)))
-				)
-				(number "1"
-					(effects (font (size 1.27 1.27)))
-				)
-			)
-			(pin passive line
-				(at -27.94 2.54 0)
-				(length 5.08)
-				(name "HOLD_SENSE"
-					(effects (font (size 1.27 1.27)))
-				)
-				(number "2"
-					(effects (font (size 1.27 1.27)))
-				)
-			)
-			(pin passive line
-				(at -27.94 -10.16 0)
-				(length 5.08)
-				(name "GND"
+				(name "AY"
 					(effects (font (size 1.27 1.27)))
 				)
 				(number "3"
 					(effects (font (size 1.27 1.27)))
 				)
 			)
-			(pin passive line
-				(at 27.94 12.7 180)
+			(pin output line
+				(at -16.509999999999998 0.0 0)
 				(length 5.08)
-				(name "A5"
+				(name "BY"
 					(effects (font (size 1.27 1.27)))
 				)
 				(number "4"
 					(effects (font (size 1.27 1.27)))
 				)
 			)
-			(pin passive line
-				(at 27.94 7.62 180)
+			(pin input line
+				(at -16.509999999999998 -2.54 0)
 				(length 5.08)
-				(name "VCLK"
+				(name "B1"
 					(effects (font (size 1.27 1.27)))
 				)
 				(number "5"
 					(effects (font (size 1.27 1.27)))
 				)
 			)
-			(pin passive line
-				(at 27.94 2.54 180)
+			(pin input line
+				(at -16.509999999999998 -5.079999999999999 0)
 				(length 5.08)
-				(name "PGOOD"
+				(name "B2"
 					(effects (font (size 1.27 1.27)))
 				)
 				(number "6"
 					(effects (font (size 1.27 1.27)))
 				)
 			)
-			(pin passive line
-				(at 27.94 0 180)
+			(pin power_in line
+				(at -16.509999999999998 -7.62 0)
 				(length 5.08)
-				(name "ARM"
+				(name "VSS"
 					(effects (font (size 1.27 1.27)))
 				)
 				(number "7"
 					(effects (font (size 1.27 1.27)))
 				)
 			)
-			(pin passive line
-				(at 27.94 -2.54 180)
+			(pin power_in line
+				(at 16.509999999999998 7.62 180)
 				(length 5.08)
-				(name "EXPIRED"
+				(name "VDD"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "14"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin input line
+				(at 16.509999999999998 5.08 180)
+				(length 5.08)
+				(name "D2"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "13"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin input line
+				(at 16.509999999999998 2.54 180)
+				(length 5.08)
+				(name "D1"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "12"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin output line
+				(at 16.509999999999998 0.0 180)
+				(length 5.08)
+				(name "DY"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "11"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin output line
+				(at 16.509999999999998 -2.54 180)
+				(length 5.08)
+				(name "CY"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "10"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin input line
+				(at 16.509999999999998 -5.079999999999999 180)
+				(length 5.08)
+				(name "C2"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "9"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin input line
+				(at 16.509999999999998 -7.62 180)
+				(length 5.08)
+				(name "C1"
 					(effects (font (size 1.27 1.27)))
 				)
 				(number "8"
 					(effects (font (size 1.27 1.27)))
 				)
 			)
-			(pin passive line
-				(at 27.94 -7.62 180)
+		)
+	)
+	(symbol "CD4071B"
+		(pin_names
+			(offset 0.508)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "U"
+			(at -11.43 13.969999999999999 0)
+			(effects (font (size 1.27 1.27)) (justify left))
+		)
+		(property "Value" "CD4071B"
+			(at -11.43 -13.969999999999999 0)
+			(effects (font (size 1.27 1.27)) (justify left))
+		)
+		(property "Footprint" ""
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/cd4071b.pdf"
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Description" "Quad 2-input OR gate, CMOS, PDIP-14. Forms BASE_RESET, COUNT1_RESET, FAULT_RESET and ARM_RESET in the independent cutoff logic."
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "ki_keywords" "CMOS 4071 OR quad reset"
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "ki_fp_filters" "DIP*W7.62mm*"
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(symbol "CD4071B_0_1"
+			(rectangle
+				(start -11.43 11.43)
+				(end 11.43 -11.43)
+				(stroke (width 0.254) (type solid))
+				(fill (type background))
+			)
+			(text "reset OR tree: all four gates used"
+				(at 0 -9.525 0)
+				(effects (font (size 1.0 1.0) (italic yes)))
+			)
+		)
+		(symbol "CD4071B_1_1"
+			(pin input line
+				(at -16.509999999999998 7.62 0)
 				(length 5.08)
-				(name "HOLD_N"
+				(name "A1"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "1"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin input line
+				(at -16.509999999999998 5.08 0)
+				(length 5.08)
+				(name "A2"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "2"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin output line
+				(at -16.509999999999998 2.54 0)
+				(length 5.08)
+				(name "AY"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "3"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin output line
+				(at -16.509999999999998 0.0 0)
+				(length 5.08)
+				(name "BY"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "4"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin input line
+				(at -16.509999999999998 -2.54 0)
+				(length 5.08)
+				(name "B1"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "5"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin input line
+				(at -16.509999999999998 -5.079999999999999 0)
+				(length 5.08)
+				(name "B2"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "6"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin power_in line
+				(at -16.509999999999998 -7.62 0)
+				(length 5.08)
+				(name "VSS"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "7"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin power_in line
+				(at 16.509999999999998 7.62 180)
+				(length 5.08)
+				(name "VDD"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "14"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin input line
+				(at 16.509999999999998 5.08 180)
+				(length 5.08)
+				(name "D2"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "13"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin input line
+				(at 16.509999999999998 2.54 180)
+				(length 5.08)
+				(name "D1"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "12"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin output line
+				(at 16.509999999999998 0.0 180)
+				(length 5.08)
+				(name "DY"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "11"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin output line
+				(at 16.509999999999998 -2.54 180)
+				(length 5.08)
+				(name "CY"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "10"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin input line
+				(at 16.509999999999998 -5.079999999999999 180)
+				(length 5.08)
+				(name "C2"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "9"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin input line
+				(at 16.509999999999998 -7.62 180)
+				(length 5.08)
+				(name "C1"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "8"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+		)
+	)
+	(symbol "CD4093B"
+		(pin_names
+			(offset 0.508)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "U"
+			(at -11.43 13.969999999999999 0)
+			(effects (font (size 1.27 1.27)) (justify left))
+		)
+		(property "Value" "CD4093B"
+			(at -11.43 -13.969999999999999 0)
+			(effects (font (size 1.27 1.27)) (justify left))
+		)
+		(property "Footprint" ""
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/cd4093b.pdf"
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Description" "Quad 2-input Schmitt-trigger NAND gate, CMOS, PDIP-14. Qualifies the ignition RC filter (gate A), inverts the supervisor to BAD (gate B) and forms RESET_N and SET_N (gates C and D)."
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "ki_keywords" "CMOS 4093 Schmitt NAND quad qualification"
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "ki_fp_filters" "DIP*W7.62mm*"
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(symbol "CD4093B_0_1"
+			(rectangle
+				(start -11.43 11.43)
+				(end 11.43 -11.43)
+				(stroke (width 0.254) (type solid))
+				(fill (type background))
+			)
+			(text "Schmitt inputs: IGN filter, BAD, RESET_N, SET_N"
+				(at 0 -9.525 0)
+				(effects (font (size 1.0 1.0) (italic yes)))
+			)
+		)
+		(symbol "CD4093B_1_1"
+			(pin input line
+				(at -16.509999999999998 7.62 0)
+				(length 5.08)
+				(name "A1"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "1"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin input line
+				(at -16.509999999999998 5.08 0)
+				(length 5.08)
+				(name "A2"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "2"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin output line
+				(at -16.509999999999998 2.54 0)
+				(length 5.08)
+				(name "AY"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "3"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin output line
+				(at -16.509999999999998 0.0 0)
+				(length 5.08)
+				(name "BY"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "4"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin input line
+				(at -16.509999999999998 -2.54 0)
+				(length 5.08)
+				(name "B1"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "5"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin input line
+				(at -16.509999999999998 -5.079999999999999 0)
+				(length 5.08)
+				(name "B2"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "6"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin power_in line
+				(at -16.509999999999998 -7.62 0)
+				(length 5.08)
+				(name "VSS"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "7"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin power_in line
+				(at 16.509999999999998 7.62 180)
+				(length 5.08)
+				(name "VDD"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "14"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin input line
+				(at 16.509999999999998 5.08 180)
+				(length 5.08)
+				(name "D2"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "13"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin input line
+				(at 16.509999999999998 2.54 180)
+				(length 5.08)
+				(name "D1"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "12"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin output line
+				(at 16.509999999999998 0.0 180)
+				(length 5.08)
+				(name "DY"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "11"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin output line
+				(at 16.509999999999998 -2.54 180)
+				(length 5.08)
+				(name "CY"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "10"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin input line
+				(at 16.509999999999998 -5.079999999999999 180)
+				(length 5.08)
+				(name "C2"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "9"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin input line
+				(at 16.509999999999998 -7.62 180)
+				(length 5.08)
+				(name "C1"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "8"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+		)
+	)
+	(symbol "CD74HC4060"
+		(pin_names
+			(offset 0.508)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "U"
+			(at -11.43 15.240000000000002 0)
+			(effects (font (size 1.27 1.27)) (justify left))
+		)
+		(property "Value" "CD74HC4060"
+			(at -11.43 -15.240000000000002 0)
+			(effects (font (size 1.27 1.27)) (justify left))
+		)
+		(property "Footprint" ""
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/cd74hc4060.pdf"
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Description" "14-stage binary ripple counter with oscillator, high-speed CMOS, PDIP-16. Driven from an external 32.768 kHz clock on pin 11 with pins 9 and 10 open; Q14 on pin 3 supplies 2 falling edges per second."
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "ki_keywords" "HC4060 counter divider oscillator 14-stage"
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "ki_fp_filters" "DIP*W7.62mm*"
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(symbol "CD74HC4060_0_1"
+			(rectangle
+				(start -11.43 12.700000000000001)
+				(end 11.43 -12.700000000000001)
+				(stroke (width 0.254) (type solid))
+				(fill (type background))
+			)
+			(text "external clock on 11; 9 and 10 open; MR active high"
+				(at 0 -10.795000000000002 0)
+				(effects (font (size 1.0 1.0) (italic yes)))
+			)
+		)
+		(symbol "CD74HC4060_1_1"
+			(pin output line
+				(at -16.509999999999998 8.89 0)
+				(length 5.08)
+				(name "Q12"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "1"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin output line
+				(at -16.509999999999998 6.3500000000000005 0)
+				(length 5.08)
+				(name "Q13"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "2"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin output line
+				(at -16.509999999999998 3.8100000000000005 0)
+				(length 5.08)
+				(name "Q14"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "3"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin output line
+				(at -16.509999999999998 1.2700000000000005 0)
+				(length 5.08)
+				(name "Q6"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "4"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin output line
+				(at -16.509999999999998 -1.2699999999999996 0)
+				(length 5.08)
+				(name "Q5"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "5"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin output line
+				(at -16.509999999999998 -3.8099999999999987 0)
+				(length 5.08)
+				(name "Q7"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "6"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin output line
+				(at -16.509999999999998 -6.35 0)
+				(length 5.08)
+				(name "Q4"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "7"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin power_in line
+				(at -16.509999999999998 -8.89 0)
+				(length 5.08)
+				(name "VSS"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "8"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin power_in line
+				(at 16.509999999999998 8.89 180)
+				(length 5.08)
+				(name "VDD"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "16"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin output line
+				(at 16.509999999999998 6.3500000000000005 180)
+				(length 5.08)
+				(name "Q10"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "15"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin output line
+				(at 16.509999999999998 3.8100000000000005 180)
+				(length 5.08)
+				(name "Q8"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "14"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin output line
+				(at 16.509999999999998 1.2700000000000005 180)
+				(length 5.08)
+				(name "Q9"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "13"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin input line
+				(at 16.509999999999998 -1.2699999999999996 180)
+				(length 5.08)
+				(name "MR"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "12"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin input line
+				(at 16.509999999999998 -3.8099999999999987 180)
+				(length 5.08)
+				(name "CLK"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "11"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin input line
+				(at 16.509999999999998 -6.35 180)
+				(length 5.08)
+				(name "OSC1"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "10"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin output line
+				(at 16.509999999999998 -8.89 180)
+				(length 5.08)
+				(name "OSC2"
 					(effects (font (size 1.27 1.27)))
 				)
 				(number "9"
@@ -535,78 +965,478 @@
 			)
 		)
 	)
-	(symbol "PLACEHOLDER_IGN_QUAL"
+	(symbol "CD74HC4020"
 		(pin_names
-			(offset 1.016)
+			(offset 0.508)
 		)
-		(exclude_from_sim yes)
+		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(property "Reference" "X"
-			(at -17.78 15.239999999999998 0)
+		(property "Reference" "U"
+			(at -11.43 15.240000000000002 0)
 			(effects (font (size 1.27 1.27)) (justify left))
 		)
-		(property "Value" "PLACEHOLDER_IGN_QUAL"
-			(at -17.78 -15.239999999999998 0)
+		(property "Value" "CD74HC4020"
+			(at -11.43 -15.240000000000002 0)
 			(effects (font (size 1.27 1.27)) (justify left))
 		)
 		(property "Footprint" ""
 			(at 0 0 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/cd74hc4020.pdf"
 			(at 0 0 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "Description" "LRA-06 placeholder: A5-domain qualified-ignition stage whose open-drain QREPORT output is GP5 in REV_A_INTERFACES section 1. Its component-level design is not in this task input. No part is selected."
+		(property "Description" "14-stage binary ripple counter, high-speed CMOS, PDIP-16. Clocked from the HC4060 Q14 output; Q13 on pin 2 is the production 2048 s terminal count and Q8 on pin 13 the clearly labelled 64 s accelerated test tap."
 			(at 0 0 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "ki_keywords" "placeholder qualification QREPORT unselected LRA-01"
+		(property "ki_keywords" "HC4020 counter divider 14-stage"
 			(at 0 0 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(symbol "PLACEHOLDER_IGN_QUAL_0_1"
+		(property "ki_fp_filters" "DIP*W7.62mm*"
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(symbol "CD74HC4020_0_1"
 			(rectangle
-				(start -17.78 12.7)
-				(end 17.78 -12.7)
-				(stroke (width 0.381) (type dash))
-				(fill (type none))
+				(start -11.43 12.700000000000001)
+				(end 11.43 -12.700000000000001)
+				(stroke (width 0.254) (type solid))
+				(fill (type background))
 			)
-			(text "?"
-				(at 0 8.889999999999999 0)
-				(effects (font (size 3.81 3.81) (bold yes)))
-			)
-			(text "NOT SELECTED (QREPORT)"
-				(at 0 -10.16 0)
-				(effects (font (size 1.27 1.27) (italic yes)))
+			(text "negative-edge clock on 10; MR active high"
+				(at 0 -10.795000000000002 0)
+				(effects (font (size 1.0 1.0) (italic yes)))
 			)
 		)
-		(symbol "PLACEHOLDER_IGN_QUAL_1_1"
-			(pin passive line
-				(at -22.86 5.08 0)
+		(symbol "CD74HC4020_1_1"
+			(pin output line
+				(at -16.509999999999998 8.89 0)
 				(length 5.08)
-				(name "IGN_N"
+				(name "Q12"
 					(effects (font (size 1.27 1.27)))
 				)
 				(number "1"
 					(effects (font (size 1.27 1.27)))
 				)
 			)
-			(pin passive line
-				(at -22.86 0 0)
+			(pin output line
+				(at -16.509999999999998 6.3500000000000005 0)
 				(length 5.08)
-				(name "A5"
+				(name "Q13"
 					(effects (font (size 1.27 1.27)))
 				)
 				(number "2"
 					(effects (font (size 1.27 1.27)))
 				)
 			)
-			(pin passive line
-				(at -22.86 -7.62 0)
+			(pin output line
+				(at -16.509999999999998 3.8100000000000005 0)
+				(length 5.08)
+				(name "Q14"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "3"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin output line
+				(at -16.509999999999998 1.2700000000000005 0)
+				(length 5.08)
+				(name "Q6"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "4"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin output line
+				(at -16.509999999999998 -1.2699999999999996 0)
+				(length 5.08)
+				(name "Q5"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "5"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin output line
+				(at -16.509999999999998 -3.8099999999999987 0)
+				(length 5.08)
+				(name "Q7"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "6"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin output line
+				(at -16.509999999999998 -6.35 0)
+				(length 5.08)
+				(name "Q4"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "7"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin power_in line
+				(at -16.509999999999998 -8.89 0)
+				(length 5.08)
+				(name "VSS"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "8"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin power_in line
+				(at 16.509999999999998 8.89 180)
+				(length 5.08)
+				(name "VDD"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "16"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin output line
+				(at 16.509999999999998 6.3500000000000005 180)
+				(length 5.08)
+				(name "Q11"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "15"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin output line
+				(at 16.509999999999998 3.8100000000000005 180)
+				(length 5.08)
+				(name "Q10"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "14"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin output line
+				(at 16.509999999999998 1.2700000000000005 180)
+				(length 5.08)
+				(name "Q8"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "13"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin output line
+				(at 16.509999999999998 -1.2699999999999996 180)
+				(length 5.08)
+				(name "Q9"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "12"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin input line
+				(at 16.509999999999998 -3.8099999999999987 180)
+				(length 5.08)
+				(name "MR"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "11"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin input line
+				(at 16.509999999999998 -6.35 180)
+				(length 5.08)
+				(name "CLK"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "10"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin output line
+				(at 16.509999999999998 -8.89 180)
+				(length 5.08)
+				(name "Q1"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "9"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+		)
+	)
+	(symbol "TPS70950-Q1_DBV"
+		(pin_names
+			(offset 0.508)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "U"
+			(at -8.89 10.16 0)
+			(effects (font (size 1.27 1.27)) (justify left))
+		)
+		(property "Value" "TPS70950-Q1_DBV"
+			(at -8.89 -10.16 0)
+			(effects (font (size 1.27 1.27)) (justify left))
+		)
+		(property "Footprint" ""
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/tps709-q1.pdf"
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Description" "TPS70950QDBVRQ1 150 mA 30 V low-quiescent LDO with reverse-current protection, SOT-23-5 (DBV). EN left open to enable; its absolute maximum is 7 V, so it must never be tied to an unregulated rail."
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "ki_keywords" "LDO regulator 5V always-on TPS709 automotive"
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "ki_fp_filters" "SOT?23*"
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(symbol "TPS70950-Q1_DBV_0_1"
+			(rectangle
+				(start -8.89 7.62)
+				(end 8.89 -7.62)
+				(stroke (width 0.254) (type solid))
+				(fill (type background))
+			)
+			(text "EN open = enabled"
+				(at 0 -5.715 0)
+				(effects (font (size 1.0 1.0) (italic yes)))
+			)
+		)
+		(symbol "TPS70950-Q1_DBV_1_1"
+			(pin power_in line
+				(at -13.97 2.54 0)
+				(length 5.08)
+				(name "IN"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "1"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin power_in line
+				(at -13.97 0.0 0)
 				(length 5.08)
 				(name "GND"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "2"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin input line
+				(at -13.97 -2.54 0)
+				(length 5.08)
+				(name "EN"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "3"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin power_out line
+				(at 13.97 1.27 180)
+				(length 5.08)
+				(name "OUT"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "5"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin free line
+				(at 13.97 -1.27 180)
+				(length 5.08)
+				(name "NC"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "4"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+		)
+	)
+	(symbol "OV-7604-C7"
+		(pin_names
+			(offset 0.508)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "U"
+			(at -8.89 10.16 0)
+			(effects (font (size 1.27 1.27)) (justify left))
+		)
+		(property "Value" "OV-7604-C7"
+			(at -8.89 -10.16 0)
+			(effects (font (size 1.27 1.27)) (justify left))
+		)
+		(property "Footprint" ""
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Datasheet" "https://www.microcrystal.com/fileadmin/Media/Products/kHzOSC/Datasheet/OV-7604-C7.pdf"
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Description" "Micro Crystal OV-7604-C7 32.768 kHz low-power clock oscillator, SON-4 ceramic 3.2 x 1.5 x 1.0 mm. VDD 1.2-5.5 V; CLKOE enables the output."
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "ki_keywords" "oscillator 32.768kHz clock SON-4 micro crystal"
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "ki_fp_filters" "Oscillator*OV-7604*"
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(symbol "OV-7604-C7_0_1"
+			(rectangle
+				(start -8.89 7.62)
+				(end 8.89 -7.62)
+				(stroke (width 0.254) (type solid))
+				(fill (type background))
+			)
+			(text "CLKOE low = output low, oscillator still running"
+				(at 0 -5.715 0)
+				(effects (font (size 1.0 1.0) (italic yes)))
+			)
+		)
+		(symbol "OV-7604-C7_1_1"
+			(pin power_in line
+				(at -13.97 2.54 0)
+				(length 5.08)
+				(name "VDD"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "4"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin input line
+				(at -13.97 0.0 0)
+				(length 5.08)
+				(name "CLKOE"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "3"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin power_in line
+				(at -13.97 -2.54 0)
+				(length 5.08)
+				(name "GND"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "2"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin output line
+				(at 13.97 0.0 180)
+				(length 5.08)
+				(name "CLKOUT"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "1"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+		)
+	)
+	(symbol "ASSR-601JV"
+		(pin_names
+			(offset 0.508)
+		)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "U"
+			(at -11.43 15.240000000000002 0)
+			(effects (font (size 1.27 1.27)) (justify left))
+		)
+		(property "Value" "ASSR-601JV"
+			(at -11.43 -15.240000000000002 0)
+			(effects (font (size 1.27 1.27)) (justify left))
+		)
+		(property "Footprint" ""
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Datasheet" "https://docs.broadcom.com/doc/ASSR-601Jx-DS"
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Description" "Broadcom ASSR-601JV automotive photo-MOSFET relay, 1 Form A, 300 mil SO-16 with 12 populated leads. The output is a back-to-back avalanche MOSFET pair with no supply of its own, so the LED-dark state is open by construction. Pin 3 must be left unconnected: it is internally tied to the LED cathode. Pins 11-14 do not exist."
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "ki_keywords" "photomos relay solid state isolation automotive AEC-Q101 ASSR"
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "ki_fp_filters" "ASSR-601Jx*"
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(symbol "ASSR-601JV_0_1"
+			(rectangle
+				(start -11.43 12.700000000000001)
+				(end 11.43 -12.700000000000001)
+				(stroke (width 0.254) (type solid))
+				(fill (type background))
+			)
+			(text "1 Form A   pin 3 do not connect   no pins 11-14"
+				(at 0 -10.795000000000002 0)
+				(effects (font (size 1.0 1.0) (italic yes)))
+			)
+		)
+		(symbol "ASSR-601JV_1_1"
+			(pin free line
+				(at -16.509999999999998 8.89 0)
+				(length 5.08)
+				(name "NC"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "1"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin free line
+				(at -16.509999999999998 6.3500000000000005 0)
+				(length 5.08)
+				(name "NC"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "2"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin free line
+				(at -16.509999999999998 3.8100000000000005 0)
+				(length 5.08)
+				(name "NC_DNC"
 					(effects (font (size 1.27 1.27)))
 				)
 				(number "3"
@@ -614,12 +1444,92 @@
 				)
 			)
 			(pin passive line
-				(at 22.86 5.08 180)
+				(at -16.509999999999998 1.2700000000000005 0)
 				(length 5.08)
-				(name "QUAL_N_REPORT"
+				(name "AN"
 					(effects (font (size 1.27 1.27)))
 				)
 				(number "4"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin passive line
+				(at -16.509999999999998 -1.2699999999999996 0)
+				(length 5.08)
+				(name "CA"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "5"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin free line
+				(at -16.509999999999998 -3.8099999999999987 0)
+				(length 5.08)
+				(name "NC"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "6"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin free line
+				(at -16.509999999999998 -6.35 0)
+				(length 5.08)
+				(name "NC"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "7"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin free line
+				(at -16.509999999999998 -8.89 0)
+				(length 5.08)
+				(name "NC"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "8"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin passive line
+				(at 16.509999999999998 8.89 180)
+				(length 5.08)
+				(name "D1"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "16"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin passive line
+				(at 16.509999999999998 6.3500000000000005 180)
+				(length 5.08)
+				(name "D1"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "15"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin passive line
+				(at 16.509999999999998 -6.35 180)
+				(length 5.08)
+				(name "D2"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "10"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin passive line
+				(at 16.509999999999998 -8.89 180)
+				(length 5.08)
+				(name "D2"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "9"
 					(effects (font (size 1.27 1.27)))
 				)
 			)
