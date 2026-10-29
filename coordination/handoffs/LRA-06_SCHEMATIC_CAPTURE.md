@@ -76,7 +76,13 @@ Four reads. In this order.
 
 **Owner direction, October 29, 2026:** use the keyless KiCad project as a
 template for conventions and naming, and build the logger as a **distinct board
-project**. Copy the scaffolding; copy no circuit.
+project**. The original packet said “Copy the scaffolding; copy no circuit.”
+**Superseded by the owner's later clarification (D-REUSE-02):** reuse applicable
+working hondaPico circuits, retaining a separate logger project. LRA-12 completes
+that integration and the IGN-controlled shutdown addition. Correction recorded
+October 29 by Codex `pcb-manager`, session
+`01a18447-07c2-7bb3-8318-9b276cfdb3b8`
+(`codex resume 01a18447-07c2-7bb3-8318-9b276cfdb3b8`).
 
 Take from `keyless/hardware/`:
 

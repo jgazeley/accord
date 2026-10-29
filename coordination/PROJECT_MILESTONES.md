@@ -127,6 +127,18 @@ for every row. Remote electrical work and local physical validation are distinct
 
 ## Decisions and gates
 
+- **D-REUSE-02 — owner clarification, October 29:** the logger board largely
+  reuses the working accord-keyless/hondaPico circuitry with added IGN-sense,
+  power-hold and automatic shutoff. LRA-12 is integration of that base, the
+  documented logger as-built cells, and the existing power candidate. Reuse
+  applicable circuits by default; investigate concrete changes in nets, loads
+  and power-off behavior. Do not impose blanket redesign/requalification of the
+  inherited working blocks before layout. This supersedes the earlier LRA-06
+  “copy no circuit” restriction; independent board files and ownership remain.
+  Recorded by Codex `pcb-manager`, session
+  `01a18447-07c2-7bb3-8318-9b276cfdb3b8`
+  (`codex resume 01a18447-07c2-7bb3-8318-9b276cfdb3b8`).
+
 - **D-POWER-03 — owner correction, October 29:** the logger power front end is
   **not new work**. The keyless board already carries it, on a permanent 12 V
   body-harness feed, in the car, surviving cranking, and it was designed from
@@ -285,7 +297,9 @@ for every row. Remote electrical work and local physical validation are distinct
   `.pretty`, the test-point/reset-header pattern and the `kicad-cli` validation
   method — while the logger is a **separate, distinct board project** at
   `logger/hardware/kicad/accord-logger.*`. Copy the scaffolding and the
-  `LM2678T-5.0` symbol, which the Rev A regulator reuses; copy no circuit. The
+  `LM2678T-5.0` symbol, which the Rev A regulator reuses. The earlier instruction
+  here to “copy no circuit” is superseded by D-REUSE-02: reuse applicable
+  circuitry while keeping independent project files. The
   keyless project keeps the filename `hondaPico.kicad_pro` per `AGENTS.md`; the
   new board taking a clean name is not a conflict with that and licenses no
   renaming on the keyless side. See `handoffs/LRA-06_SCHEMATIC_CAPTURE.md`.

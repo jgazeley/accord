@@ -10,6 +10,29 @@ Identity verified from matching `CODEX_SESSION_ID` and `CODEX_THREAD_ID`.
 The owner explicitly requested this single assignment. No bench is available
 to the remote engineer and none is required to begin it.
 
+## Starting point — working hondaPico base plus logger additions
+
+**Owner clarification, October 29:** this board largely reuses the working
+accord-keyless/hondaPico circuitry, with the logger's IGN-sense, power-hold and
+automatic-shutoff addition. Treat this as integration of existing circuits.
+The logger's fitted input cells and SD wiring are also existing work; preserve
+those documented connections rather than substituting the keyless pin map.
+
+Inspect `keyless/hardware/hondaPico.kicad_sch` and the matching PCB directly for
+applicable supply, protection, connector and layout details. Carry reusable
+blocks forward by default, recording their source and the logger-specific net,
+load or lifecycle differences. The logger remains its own board/project and
+keyless files remain read-only. The earlier LRA-06 “copy no circuit” wording
+is superseded: separate projects do not prohibit circuit reuse.
+
+**Bound the engineering to the additions and their interactions.** Every proposed
+change to a working inherited block must identify a concrete incompatibility,
+changed operating condition or documented defect. Do not make blanket redesign
+or requalification of inherited circuitry a prerequisite to layout. In
+particular, the new A5 supply's compatibility and paths that could feed a
+powered-off Pico need resolution because the shutdown addition changes those
+conditions. The work order below is a completion checklist for that integration.
+
 ## Objective and completion boundary
 
 Return a **complete, footprint-assigned logger schematic and consolidated BOM**
