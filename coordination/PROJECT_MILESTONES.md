@@ -38,14 +38,17 @@ remain in use until separately migrated. Do not maintain another active tracker.
   candidate; manual power remains default. Nine native suites, 12 converter
   cases, 44 power checks and both dummy builds pass independently. The masked-
   interrupt/watchdog release-bound limitation remains an acceptance blocker;
-  see [LRA-05 review](reviews/LRA05_REVIEW_2026-10-29.md). Next ready remote
-  electrical task is LRA-03; LRA-04 also remains available. Electrical R02–R05
-  and physical acceptance remain open.
+  see [LRA-05 review](reviews/LRA05_REVIEW_2026-10-29.md). LRA-03 returned locally
+  as `a9c828b`; [review requires revisions](reviews/LRA03_REVIEW_2026-10-29.md)
+  before integration. LRA-04 remains ready alongside that revision. Electrical
+  R02–R05 and physical acceptance remain open.
 - **Authority:** Codex `pcb-manager`, session `01a18447-07c2-7bb3-8318-9b276cfdb3b8`,
   owns root/coordination and completed the firmware reviews. LRA-01/02/05
   returns: Codex `logger-power`, `01a18463-5ed7-7041-ad90-ec3a7480c4e6`.
-  Follow-up implementation, hardware-integrator and communications claims remain
-  unacknowledged; received delivery does not imply an agent is still running.
+  LRA-03 return: Claude `hardware-integrator`,
+  `23d6d0fb-9656-4e03-acb3-922537019a5b`. Follow-up implementation and
+  communications claims remain unacknowledged; receipt does not imply an agent
+  is still running.
 
 ## Milestones (existing IDs retained)
 
@@ -75,7 +78,7 @@ task packet before dispatch; record the claim and evidence here, not in a second
 |---|---|---|---|
 | [LRA-01](handoffs/LRA-01_POWER_INTERFACE.md) | Electrical lead; firmware reviewer; manager integrates | Reviewed candidate `a85f185`; R01 disposition delivered by manager `01a18447-07c2-7bb3-8318-9b276cfdb3b8` in FIRMWARE_REVIEW.md; suitable for isolated 05 implementation, electrical/bench gates open | One agreed qualified-IGN/HOLD/startup/shutdown/reset/USB contract; numerical assumptions and faults explicit; current/protection decisions and reviewer disposition |
 | [LRA-02](handoffs/LRA-02_COMPONENT_MARGINS.md) | Electrical return by logger-power `01a18463-5ed7-7041-ad90-ec3a7480c4e6` | Candidate `c946f6f`, bounded paper return reviewed/integrated; R03/R04 remain open, no accepted consolidated BOM | Coherent power schematic/BOM, compatible protection, effective capacitance and current/leakage allocations; off-state paths and bench checklist |
-| [LRA-03](handoffs/LRA-03_AS_BUILT.md) | Hardware integrator; analog reviewer | Ready, unclaimed; packet prepared; finalize power domains with 01/02 | Current as-built consolidated with unknowns, frozen Rev A pins/connectors/input loading/protection/grounds/mechanics/test points; no full fuel model |
+| [LRA-03](handoffs/LRA-03_AS_BUILT.md) | Returned by Claude hardware-integrator `23d6d0fb-9656-4e03-acb3-922537019a5b`; analog acceptance open | Candidate `a9c828b`, local first return reviewed October 29; revisions R03-REV-1–6 required before integration; see review | Current as-built consolidated with unknowns, frozen Rev A pins/connectors/input loading/protection/grounds/mechanics/test points; no full fuel model |
 | [LRA-04](handoffs/LRA-04_COMMUNICATIONS.md) | Bounded communications reviewer; hardware/firmware accept | Ready, unclaimed; October 29 packet supplies reviewed 01/02/05 constraints and browser-return route; coordinate 03, final freeze awaits electrical closure | RS-485/CAN/daughterboard comparison with usable GPIO/peripheral/current/voltage/power-off contract; recommendation and fallback |
 | [LRA-05](handoffs/LRA-05_FIRMWARE_POWER.md) | Returned by logger-power `01a18463-5ed7-7041-ad90-ec3a7480c4e6`; manager reviewed | Candidate `0745d5b` integrated October 29; manual default, opt-in qualified mode. Masked-IRQ release-bound analysis and physical qualification remain open; no active follow-up claimant | Isolated shutdown candidate: early HOLD, bounded SD finalization, IGN-return/reset/watchdog behavior; build/fault/replay tests and rollback; no implicit flash |
 | LRA-06 | KiCad schematic owner | Blocked for freeze on 01–04; known-block capture may start | Consolidated schematic/export/BOM, pin/part/footprint checks and ERC dispositions; explicitly unpopulated options |
@@ -99,7 +102,7 @@ for every row. Remote electrical work and local physical validation are distinct
 | TIME-01 | Logger/bridge | Deferred design: reset/offline time and retrospective drift policy; hardware reservations feed 03/04 if concrete |
 | KEY-01 | Proximity/keyless | Owner participation required: threshold/repeatability and parked operation independent of Pi/logger; installed settings unknown |
 | DIST-01 | Bridge/DB | Deferred: production-host cutover, packet checkpoints and independent server/VM comparison; not yet implemented |
-| DOC-01 | Codex pcb-manager, `01a18447-07c2-7bb3-8318-9b276cfdb3b8` | Active manager: LRA-01/02/05 reviewed and integrated as candidates; firmware review and independent build/test evidence recorded. Next: LRA-03/04 claims, electrical gap closure and bounded LRA-05 timing follow-up. No automatic-power deployment accepted |
+| DOC-01 | Codex pcb-manager, `01a18447-07c2-7bb3-8318-9b276cfdb3b8` | Active manager: LRA-01/02/05 reviewed and integrated as candidates; firmware review and independent build/test evidence recorded. LRA-03 first return reviewed: revisions required, not merged. Next: revised 03, LRA-04 claim, electrical gap closure and bounded LRA-05 timing follow-up. No automatic-power deployment accepted |
 
 ## Decisions and gates
 
@@ -182,3 +185,11 @@ received at `0745d5be562f9b340fa467b8242f33fef25d2f76`; original commit preserve
 on integration. [Review and evidence](reviews/LRA05_REVIEW_2026-10-29.md) supersede
 prior statements that 05 is unimplemented/unclaimed. The acknowledged claim
 covers this delivery, not an automatically continuing assignment.
+
+October 29 LRA-03 review by the current pcb-manager: local first return
+`a9c828bef0b5da1ab7192622f95575e8f2d33f52` received with the specialist's own
+attribution. All 65 arithmetic checks and 17 pinned source hash/blob/size checks
+pass, but model errors, contradictory fitted-status statements and unsupported
+closure claims require revision. [Detailed findings and return instructions](reviews/LRA03_REVIEW_2026-10-29.md).
+Original branch is preserved; no LRA-03 integration, new hardware action or
+repeat owner inventory/part-count questioning is authorized by this review.
