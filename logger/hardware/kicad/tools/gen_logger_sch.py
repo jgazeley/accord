@@ -56,9 +56,12 @@ def part(ref, lib_id, value, x, y, nets=None, rot=0, fp='', nc=(),
 part('J2', 'Connector_Generic:Conn_01x08', 'Cluster harness 8-way',
      40.64, 48.26, rot=180, fp='', nc=(7, 8),
      nets={1: 'B2_TAP', 2: 'B1_TAP', 3: 'C14_TAP', 4: 'C11_TAP',
-           5: 'B11_TAP', 6: 'B16'},
+           5: 'B11_TAP', 6: 'AGND'},
      status='PART_SELECTION_OPEN', source='REV_A_INTERFACES S5.1',
-     note=NOFP_CONN + '; pins 7-8 are the two spare contacts, unconnected')
+     note=NOFP_CONN + '; pins 7-8 are the two spare contacts, unconnected. '
+          'Pin 6 is the B16 cluster ground sense and is bonded to the single '
+          'AGND return node at one point, per REV_A_INTERFACES S4 and delta '
+          'D5 (R06-REV-1)')
 
 # AS_BUILT S2 rows 1-5a. Ratios, clamps and the fitted ADC protection are
 # carried forward with no value changed; D4 adds the isolation placeholder.
@@ -196,12 +199,17 @@ part('DR', 'Diode:1N4148', '1N4148', 177.8, 500.38, rot=270,
      status='MISSING', source='DESIGN.md S3',
      note='LED reverse clamp from the power candidate; not in the fitted cell')
 part('U2', 'Isolator:PC817', 'PC817', 228.6, 490.22,
-     nets={1: 'IGN_LED_A', 2: 'B16', 4: 'IGN_N', 3: 'PGND'},
+     nets={1: 'IGN_LED_A', 2: 'AGND', 4: 'IGN_N', 3: 'PGND'},
      fp='Package_DIP:DIP-4_W7.62mm', mpn='Sharp PC817XNNSZ1B or qualified equiv',
      status='VERIFY_STOCK', source='AS_BUILT S2 rows 6-7 / S3.4',
      note='fitted PC817-class part, identity and hot CTR unproved. LED cathode '
-          'returns to B16 as fitted, not to PGND as in DESIGN.md S3 - see '
-          'CAPTURE_NOTES question Q2')
+          'returns to the B16 cluster conductor as fitted, not to PGND as in '
+          'DESIGN.md S3. With B16 now bonded to the single AGND node '
+          '(R06-REV-1), that puts 4.7-5.8 mA of LED current through the ADC '
+          'reference node whenever the engine runs. D5 and the fitted return '
+          'cannot both stand; the choice is the electrical lead\'s and this '
+          'capture pre-empts neither - see CAPTURE_NOTES question Q2 and '
+          'review finding R06-REV-2')
 part('C_IGN', 'Device:C', '100nF', 266.7, 490.22,
      nets={1: 'IGN_N', 2: 'PGND'}, fp=FP_C_DISC,
      status='VERIFY_OR_SOURCE', source='AS_BUILT S2 row 7 / S3.4',
@@ -407,7 +415,7 @@ TP_NOTE = {
     'TP_HOLDN': 'A5-domain cutoff logic; no GPIO connection',
     'TP_GND_BUCK': 'buck return loop',
     'TP_GND_PICO': 'Pico return loop',
-    'TP_GND_HARNESS': 'harness-end loop on the B16 sense node - see Q7',
+    'TP_GND_HARNESS': 'harness-end loop on the bonded B16 / AGND sense node',
     'TP_GP11': 'unassigned GPIO brought to a pad (S1)',
     'TP_GP12': 'unassigned GPIO brought to a pad (S1)',
     'TP_GATE': 'from the power BOM TP row, additional to S5.3',
@@ -512,9 +520,13 @@ for x1, y1, x2, y2, title in BLOCKS:
 NOTES = [
     ('Vehicle inputs',
      'Five fitted cells, carried forward with no value changed (AS_BUILT S2).\n'
-     'Digital divider bottoms return to PGND; both ADC divider bottoms and the\n'
-     'B16 cluster sense land on ONE common node, then Pico AGND (S4, delta D5).\n'
-     'B16 must never become a power return: see the ignition note and Q2/Q7.\n'
+     'Digital divider bottoms return to PGND. Both ADC divider bottoms, their\n'
+     'filter and clamp returns, J2.6 (the B16 cluster ground sense) and Pico\n'
+     'AGND are ONE node, bonded at a single point (S4, delta D5, R06-REV-1).\n'
+     'Layout must not create a second path to it. B16 must never become a\n'
+     'power return - but the fitted opto LED returns on it, so as drawn it\n'
+     'carries 4.7-5.8 mA whenever the engine runs. See the ignition note, Q2\n'
+     'and review finding R06-REV-2: that conflict is the electrical lead\'s.\n'
      'Both ADC channels already carry 1k + 1uF + two 1N5819 - fitted, not new (D3 closed).'),
     ('Placeholders, and delta D4',
      'PLACEHOLDER (dashed, "?", NOT SELECTED) = a block LRA-06 captures but does\n'

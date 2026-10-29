@@ -9,6 +9,13 @@ tool-provided session/thread pair exists here to cross-check it against.
 Branch `task/LRA-06-73d7d954`, rebased onto public `main` at
 `21dfd163d904af002b55b248f84d855f412bb714`.
 
+Reviewed by Claude `pcb-manager`, session
+`630dea87-5e4d-4bad-a1ff-d41b3a5f509b`, October 29:
+[LRA06_REVIEW_2026-10-29.md](../../../coordination/reviews/LRA06_REVIEW_2026-10-29.md).
+Accepted as a candidate with R06-REV-1 blocking and R06-REV-3 minor; both are
+applied here. R06-REV-2 is an electrical decision and is deliberately not acted
+on. Q1 was ratified, so X6 stands as a legitimate sixth placeholder.
+
 **Disposition: capture for review. Nothing here is frozen, accepted, ordered or
 built.** Four blocks carry no selected part. The schematic reproduces the fitted
 circuit and the already-decided Rev A deltas; it selects no part, changes no
@@ -181,7 +188,8 @@ ID.
 
 ## 6. Questions this capture could not resolve
 
-Q1 is the one that matters; the rest are smaller.
+Q1 is the one that matters; the rest are smaller. Q1 was ratified in review and
+Q7 is partly closed by R06-REV-1; both are kept with their outcome recorded.
 
 **Q1 — the GP5 report path has no component-level source.**
 `REV_A_INTERFACES` §1 gives GP5 as `QUAL_N_REPORT`, "QREPORT drain, 10k to
@@ -197,8 +205,13 @@ capture does what the sources jointly require: the opto collector goes to
 that reading, or point to the document that specifies the stage.** The three test
 points it implies — TP_A5, TP_VCLK, TP_QUALN — are captured either way.
 
-**Q2 — the fitted ignition LED returns 4.7–5.8 mA through B16, which §4 says
-carries no current.** `AS_BUILT` §3.4 is explicit that the opto LED cathode goes
+**Q2 — the fitted ignition LED returns 4.7–5.8 mA through the ADC reference
+node, which §4 says carries no current.** Sharper since R06-REV-1: B16 is now
+bonded to the single ADC return as D5 requires, so that current no longer leaves
+the board through an isolated conductor — it flows in the node both ADC channels
+reference. A common-mode offset largely self-cancels in the fuel computation; a
+few milliamps of signal-dependent current in the reference does not. D5 and the
+fitted LED return cannot both stand, and the capture pre-empts neither. `AS_BUILT` §3.4 is explicit that the opto LED cathode goes
 to cluster B16 "with nothing in series", and §4 is equally explicit that B16 is
 reference-only and "must never become a power return". `DESIGN.md` §3 returns the
 same LED to PGND instead. This capture follows the fitted cell, per the packet,
@@ -235,12 +248,21 @@ records the interface without silently changing the reviewed latch.
 **Q7 — the ADC clamp and filter returns, and the third ground loop.** The fitted
 ADC protection is "1 µF to GND, 1N5819 to 3V3 and to GND" (§2 rows 4a/5a), and
 §3.3 says the rail carrying B16 and both divider bottoms is the one the Pico's
-AGND pin sits on. The capture puts those returns on AGND, which keeps the ADC
-reference consistent but means a clamp conducting during a fault puts current in
-B16 — the same concern as Q2. Relatedly, §5.3 asks for three ground loops
-"buck, Pico, harness"; TP_GND_BUCK and TP_GND_PICO are on PGND and
-TP_GND_HARNESS is on the B16 sense node, which is the reading that makes the
-third loop useful. Both choices are cheap to change and should be confirmed.
+AGND pin sits on. The capture puts those returns on that node, which keeps the
+ADC reference consistent but means a clamp conducting during a fault puts
+current in the B16 conductor — the same concern as Q2. §5.3 asks for three
+ground loops "buck, Pico, harness"; TP_GND_BUCK and TP_GND_PICO are on PGND and
+TP_GND_HARNESS is on the bonded B16/AGND node, which is the reading that makes
+the third loop useful. Both choices are cheap to change and should be confirmed.
+
+**Q8 — ADC_VREF is unconnected, deliberately** (review finding R06-REV-3). §1
+names the pin in its allocation table but states no requirement for it, and
+`AS_BUILT` records nothing fitted there. On a Pico W the pin is the module's own
+filtered reference output rather than an input needing a supply, so it is left
+unconnected with an explicit no-connect flag, matching the as-built. Recorded
+here because §1 names it, not because a change is proposed: if the analog
+reviewer wants the reference filtered or decoupled on the carrier, that is a new
+requirement and a Rev A delta, not a correction to this capture.
 
 ## 7. How to reproduce the checks
 

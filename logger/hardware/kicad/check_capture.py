@@ -165,9 +165,34 @@ check('ignition output capacitor is 100nF',
       ign['C_IGN'] and ign['C_IGN']['value'] == '100nF')
 check('no input-side capacitor on the opto LED',
       not any(r['source_designator'].startswith('C_IGN_IN') for r in bom))
-check('opto LED cathode returns to B16 as fitted',
-      pin_net.get(('U2', '2')) == 'B16',
-      f'got {pin_net.get(("U2", "2"))!r}')
+check('opto LED cathode returns on the cluster ground conductor as fitted',
+      pin_net.get(('U2', '2')) == pin_net.get(('J2', '6')),
+      f'got {pin_net.get(("U2", "2"))!r} against J2.6 '
+      f'{pin_net.get(("J2", "6"))!r}')
+
+# R06-REV-1. REV_A_INTERFACES section 4 and delta D5 require ONE node carrying
+# the cluster conductor, both ADC divider bottoms and the Pico's AGND pin. The
+# first version of this capture left J2.6 on a net of its own, which put both
+# ADC channels on local ground instead -- the exact error B16 exists to
+# prevent. Assert the single node, not that B16 exists separately.
+agnd = pin_net.get(('J2', '6'))
+check('J2.6 cluster ground sense is on a net at all', agnd is not None)
+single = {
+    'J2.6 cluster ground sense': ('J2', '6'),
+    'U1.33 Pico AGND': ('U1', '33'),
+    'fuel divider bottom': (by_src['R_FUEL_B']['reference'], '2'),
+    'supply divider bottom': (by_src['R_SUP_B']['reference'], '2'),
+    'fuel filter capacitor': (by_src['C_FUEL']['reference'], '2'),
+    'supply filter capacitor': (by_src['C_SUP']['reference'], '2'),
+    'fuel lower clamp': (by_src['D_FUEL_L']['reference'], '2'),
+    'supply lower clamp': (by_src['D_SUP_L']['reference'], '2'),
+}
+for label, node in single.items():
+    check(f'single ADC return node carries the {label}',
+          pin_net.get(node) == agnd,
+          f'on {pin_net.get(node)!r}, not the J2.6 node {agnd!r}')
+check('the single ADC return node is the one the Pico AGND pin names',
+      agnd == 'AGND', f'got {agnd!r}')
 check('opto emitter returns to PGND', pin_net.get(('U2', '3')) == 'PGND')
 check('opto collector does not reach GP5 directly',
       pin_net.get(('U2', '4')) != pin_net.get(('U1', '7')),
@@ -259,7 +284,7 @@ for tbl in ('sym-lib-table', 'fp-lib-table'):
 # component's pin, two named nets would merge and one name would disappear, so
 # every name this capture declares must still exist as its own net.
 DECLARED = {
-    'B2_TAP', 'B1_TAP', 'C14_TAP', 'C11_TAP', 'B11_TAP', 'B16',
+    'B2_TAP', 'B1_TAP', 'C14_TAP', 'C11_TAP', 'B11_TAP',
     'B2_ISO', 'B1_ISO', 'C14_ISO', 'C11_ISO', 'B11_ISO',
     'VSS_IN', 'TACH_IN', 'BRAKE_IN', 'FUEL_DIV', 'FUEL_ADC',
     'SUPPLY_DIV', 'SUPPLY_ADC', 'P3V3_SW', 'PGND', 'AGND',
