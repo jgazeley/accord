@@ -1,0 +1,14 @@
+{
+    "$schema": "https://schemas.kicad.org/erc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-29T10:13:52-0700",
+    "kicad_version": "9.0.2",
+    "sheets": [
+        {
+            "path": "/",
+            "uuid_path": "/0cc68058-5870-4ba7-ae3e-9fa6bb5834e5",
+            "violations": []
+        }
+    ],
+    "source": "accord-logger.kicad_sch"
+}

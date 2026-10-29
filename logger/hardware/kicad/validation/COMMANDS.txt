@@ -1,0 +1,11 @@
+KiCad CLI 9.0.2. Run with HOME set to a temporary
+configuration holding only the installed global sym-lib-table and
+fp-lib-table; no global user configuration was created or changed.
+
+kicad-cli sch erc --format json --severity-all -o validation/erc.json accord-logger.kicad_sch
+kicad-cli sch export netlist --format kicadsexpr -o validation/netlist.net accord-logger.kicad_sch
+kicad-cli sch export svg --no-background-color --exclude-drawing-sheet -o validation accord-logger.kicad_sch
+
+Rule-check results are read from erc.json, not from the process exit
+code: kicad-cli does not signal violations through the exit code unless
+--exit-code-violations is passed, so a zero exit is not a clean design.

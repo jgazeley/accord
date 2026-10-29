@@ -1,0 +1,628 @@
+(kicad_symbol_lib
+	(version 20241209)
+	(generator "gen_custom_sym.py")
+	(generator_version "9.0")
+	(symbol "LM2678T-5.0"
+		(pin_names
+			(offset 1.016)
+		)
+		(exclude_from_sim yes)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "U"
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "LM2678T-5.0"
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/lm2678.pdf"
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(symbol "LM2678T-5.0_0_1"
+			(rectangle
+				(start -12.7 10.16)
+				(end 12.7 -10.16)
+				(stroke
+					(width 0.254)
+					(type default)
+				)
+				(fill
+					(type background)
+				)
+			)
+		)
+		(symbol "LM2678T-5.0_1_1"
+			(pin power_in line
+				(at -15.24 5.08 0)
+				(length 2.54)
+				(name "VIN"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin input line
+				(at -15.24 -5.08 0)
+				(length 2.54)
+				(name "~{ON}/OFF"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "7"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin power_in line
+				(at 0 -12.7 90)
+				(length 2.54)
+				(name "GND"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "4"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 15.24 5.08 180)
+				(length 2.54)
+				(name "BOOST"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "3"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin output line
+				(at 15.24 0 180)
+				(length 2.54)
+				(name "SWITCH"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin input line
+				(at 15.24 -5.08 180)
+				(length 2.54)
+				(name "FEEDBACK"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "6"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin free line
+				(at -15.24 0 0)
+				(length 2.54)
+				(name "NC"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "5"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+		)
+	)
+	(symbol "PLACEHOLDER_SIGNAL_ISO_REQ"
+		(pin_names
+			(offset 1.016)
+		)
+		(exclude_from_sim yes)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "X"
+			(at -11.43 11.43 0)
+			(effects (font (size 1.27 1.27)) (justify left))
+		)
+		(property "Value" "PLACEHOLDER_SIGNAL_ISO_REQ"
+			(at -11.43 -11.43 0)
+			(effects (font (size 1.27 1.27)) (justify left))
+		)
+		(property "Footprint" ""
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Datasheet" ""
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Description" "LRA-06 placeholder: normally-open, power-off-safe signal isolation upstream of the B2 divider top (delta D4). Required on measured evidence: key out, B2 draws 140.8 uA and back-feeds 109.2 uA into the unpowered 3V3 rail through a forward-biased clamp, D-OFFSTATE-01. No part is selected."
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "ki_keywords" "placeholder isolation D4 required B2 backfeed unselected"
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(symbol "PLACEHOLDER_SIGNAL_ISO_REQ_0_1"
+			(rectangle
+				(start -11.43 8.89)
+				(end 11.43 -8.89)
+				(stroke (width 0.381) (type dash))
+				(fill (type none))
+			)
+			(text "?"
+				(at 0 5.08 0)
+				(effects (font (size 3.81 3.81) (bold yes)))
+			)
+			(text "REQUIRED, NOT SELECTED (D4)"
+				(at 0 -6.3500000000000005 0)
+				(effects (font (size 1.27 1.27) (italic yes)))
+			)
+		)
+		(symbol "PLACEHOLDER_SIGNAL_ISO_REQ_1_1"
+			(pin passive line
+				(at -15.24 0 0)
+				(length 5.08)
+				(name "TAP"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "1"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin passive line
+				(at 15.24 0 180)
+				(length 5.08)
+				(name "DIV"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "2"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+		)
+	)
+	(symbol "PLACEHOLDER_SIGNAL_ISO_REVIEW"
+		(pin_names
+			(offset 1.016)
+		)
+		(exclude_from_sim yes)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "X"
+			(at -11.43 11.43 0)
+			(effects (font (size 1.27 1.27)) (justify left))
+		)
+		(property "Value" "PLACEHOLDER_SIGNAL_ISO_REVIEW"
+			(at -11.43 -11.43 0)
+			(effects (font (size 1.27 1.27)) (justify left))
+		)
+		(property "Footprint" ""
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Datasheet" ""
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Description" "LRA-06 placeholder: normally-open, power-off-safe signal isolation upstream of one divider top (delta D4). Position retained, but the parked-drain justification is withdrawn for this branch per D-OFFSTATE-01; it is under analog review. No part is selected."
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "ki_keywords" "placeholder isolation D4 under review unselected"
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(symbol "PLACEHOLDER_SIGNAL_ISO_REVIEW_0_1"
+			(rectangle
+				(start -11.43 8.89)
+				(end 11.43 -8.89)
+				(stroke (width 0.381) (type dash))
+				(fill (type none))
+			)
+			(text "?"
+				(at 0 5.08 0)
+				(effects (font (size 3.81 3.81) (bold yes)))
+			)
+			(text "UNDER REVIEW, NOT SELECTED (D4)"
+				(at 0 -6.3500000000000005 0)
+				(effects (font (size 1.27 1.27) (italic yes)))
+			)
+		)
+		(symbol "PLACEHOLDER_SIGNAL_ISO_REVIEW_1_1"
+			(pin passive line
+				(at -15.24 0 0)
+				(length 5.08)
+				(name "TAP"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "1"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin passive line
+				(at 15.24 0 180)
+				(length 5.08)
+				(name "DIV"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "2"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+		)
+	)
+	(symbol "PLACEHOLDER_VEHICLE_PROT"
+		(pin_names
+			(offset 1.016)
+		)
+		(exclude_from_sim yes)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "X"
+			(at -10.16 10.16 0)
+			(effects (font (size 1.27 1.27)) (justify left))
+		)
+		(property "Value" "PLACEHOLDER_VEHICLE_PROT"
+			(at -10.16 -10.16 0)
+			(effects (font (size 1.27 1.27)) (justify left))
+		)
+		(property "Footprint" ""
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Datasheet" ""
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Description" "LRA-06 placeholder: coordinated vehicle input/IGN protection and fault limiting (power BOM row VEHICLE_PROTECTION). No part is selected."
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "ki_keywords" "placeholder protection TVS unselected R02"
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(symbol "PLACEHOLDER_VEHICLE_PROT_0_1"
+			(rectangle
+				(start -10.16 7.62)
+				(end 10.16 -7.62)
+				(stroke (width 0.381) (type dash))
+				(fill (type none))
+			)
+			(text "?"
+				(at 0 3.81 0)
+				(effects (font (size 3.81 3.81) (bold yes)))
+			)
+			(text "NOT SELECTED (R02)"
+				(at 0 -5.08 0)
+				(effects (font (size 1.27 1.27) (italic yes)))
+			)
+		)
+		(symbol "PLACEHOLDER_VEHICLE_PROT_1_1"
+			(pin passive line
+				(at -15.24 0 0)
+				(length 5.08)
+				(name "LINE"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "1"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin passive line
+				(at 0 -15.24 90)
+				(length 5.08)
+				(name "GND"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "2"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+		)
+	)
+	(symbol "PLACEHOLDER_MAX_ON"
+		(pin_names
+			(offset 1.016)
+		)
+		(exclude_from_sim yes)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "X"
+			(at -22.86 20.32 0)
+			(effects (font (size 1.27 1.27)) (justify left))
+		)
+		(property "Value" "PLACEHOLDER_MAX_ON"
+			(at -22.86 -20.32 0)
+			(effects (font (size 1.27 1.27)) (justify left))
+		)
+		(property "Footprint" ""
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Datasheet" ""
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Description" "LRA-06 placeholder: independent maximum-on timer plus latched HOLD-path inhibit (power BOM row MAX_ON, not implemented in revision A). No part is selected."
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "ki_keywords" "placeholder timer cutoff MAX_ON unselected"
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(symbol "PLACEHOLDER_MAX_ON_0_1"
+			(rectangle
+				(start -22.86 17.78)
+				(end 22.86 -17.78)
+				(stroke (width 0.381) (type dash))
+				(fill (type none))
+			)
+			(text "?"
+				(at 0 13.97 0)
+				(effects (font (size 3.81 3.81) (bold yes)))
+			)
+			(text "NOT SELECTED (MAX_ON)"
+				(at 0 -15.240000000000002 0)
+				(effects (font (size 1.27 1.27) (italic yes)))
+			)
+		)
+		(symbol "PLACEHOLDER_MAX_ON_1_1"
+			(pin passive line
+				(at -27.94 10.16 0)
+				(length 5.08)
+				(name "P12"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "1"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin passive line
+				(at -27.94 2.54 0)
+				(length 5.08)
+				(name "HOLD_SENSE"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "2"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin passive line
+				(at -27.94 -10.16 0)
+				(length 5.08)
+				(name "GND"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "3"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin passive line
+				(at 27.94 12.7 180)
+				(length 5.08)
+				(name "A5"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "4"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin passive line
+				(at 27.94 7.62 180)
+				(length 5.08)
+				(name "VCLK"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "5"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin passive line
+				(at 27.94 2.54 180)
+				(length 5.08)
+				(name "PGOOD"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "6"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin passive line
+				(at 27.94 0 180)
+				(length 5.08)
+				(name "ARM"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "7"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin passive line
+				(at 27.94 -2.54 180)
+				(length 5.08)
+				(name "EXPIRED"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "8"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin passive line
+				(at 27.94 -7.62 180)
+				(length 5.08)
+				(name "HOLD_N"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "9"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+		)
+	)
+	(symbol "PLACEHOLDER_IGN_QUAL"
+		(pin_names
+			(offset 1.016)
+		)
+		(exclude_from_sim yes)
+		(in_bom yes)
+		(on_board yes)
+		(property "Reference" "X"
+			(at -17.78 15.239999999999998 0)
+			(effects (font (size 1.27 1.27)) (justify left))
+		)
+		(property "Value" "PLACEHOLDER_IGN_QUAL"
+			(at -17.78 -15.239999999999998 0)
+			(effects (font (size 1.27 1.27)) (justify left))
+		)
+		(property "Footprint" ""
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Datasheet" ""
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Description" "LRA-06 placeholder: A5-domain qualified-ignition stage whose open-drain QREPORT output is GP5 in REV_A_INTERFACES section 1. Its component-level design is not in this task input. No part is selected."
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "ki_keywords" "placeholder qualification QREPORT unselected LRA-01"
+			(at 0 0 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(symbol "PLACEHOLDER_IGN_QUAL_0_1"
+			(rectangle
+				(start -17.78 12.7)
+				(end 17.78 -12.7)
+				(stroke (width 0.381) (type dash))
+				(fill (type none))
+			)
+			(text "?"
+				(at 0 8.889999999999999 0)
+				(effects (font (size 3.81 3.81) (bold yes)))
+			)
+			(text "NOT SELECTED (QREPORT)"
+				(at 0 -10.16 0)
+				(effects (font (size 1.27 1.27) (italic yes)))
+			)
+		)
+		(symbol "PLACEHOLDER_IGN_QUAL_1_1"
+			(pin passive line
+				(at -22.86 5.08 0)
+				(length 5.08)
+				(name "IGN_N"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "1"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin passive line
+				(at -22.86 0 0)
+				(length 5.08)
+				(name "A5"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "2"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin passive line
+				(at -22.86 -7.62 0)
+				(length 5.08)
+				(name "GND"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "3"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+			(pin passive line
+				(at 22.86 5.08 180)
+				(length 5.08)
+				(name "QUAL_N_REPORT"
+					(effects (font (size 1.27 1.27)))
+				)
+				(number "4"
+					(effects (font (size 1.27 1.27)))
+				)
+			)
+		)
+	)
+)
