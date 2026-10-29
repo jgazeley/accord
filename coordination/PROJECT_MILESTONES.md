@@ -103,6 +103,15 @@ for every row. Remote electrical work and local physical validation are distinct
 
 ## Decisions and gates
 
+- **D-INVENTORY-01 — owner clarification, October 29:** the original reference is
+  `/srv/agent_share/inventory/inventory_list.md`; the historical logger-power
+  copy is not the primary inventory. The original is mostly accurate but
+  incomplete, and some listed parts may have been consumed. Owner additionally
+  reports **four P6KE30A diodes**, absent from that list. Reconcile exact available
+  project stock later during parts discussions; an inventory audit is not a
+  prerequisite for current documentation/design work. Stock does not establish
+  electrical suitability or authorize a BOM substitution. Keep the full inventory
+  private unless a selected export is separately reviewed for publication.
 - **D-RA-01 — owner direction:** prioritize integrated-power Rev A; fuel curve,
   dashboard and future-network completion do not gate it.
 - **D-RA-02 — planning distinction:** prototype fabrication recommendation,

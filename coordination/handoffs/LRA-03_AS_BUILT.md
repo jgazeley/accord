@@ -38,6 +38,14 @@ qualified HOLD reservation; the existing as-built remains manually powered.
 Start signal consolidation now; final power domains depend on LRA-01/02 closure. Exchange
 proposed GPIO/connector reservations with LRA-04 before either freezes them.
 
+Owner inventory clarification, October 29: the original reference is
+`/srv/agent_share/inventory/inventory_list.md`, not the historical logger-power
+copy. It is mostly accurate, incomplete, and may include consumed stock. The
+owner additionally reports four P6KE30As. Exact stock reconciliation is deferred
+until parts discussions; do not block this assignment on it or equate stock with
+fitted parts/electrical suitability. Remote agents need not access or reconstruct
+the full private inventory to perform LRA-03.
+
 ## Existing logger as-built — owner reminder, October 28
 
 Current pcb-manager verified the historical as-built records following the owner's
