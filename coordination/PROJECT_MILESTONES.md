@@ -48,8 +48,8 @@ remain in use until separately migrated. Do not maintain another active tracker.
   at `dc07292`: the revised return `f23e51c` applied all six findings of the
   [review](reviews/LRA03_REVIEW_2026-10-29.md), and the merge adds a documentation
   reconciliation only. The consolidation is now the documented baseline for
-  LRA-06. LRA-04 is dispatchable and a browser return has arrived; see the
-  triage below. Analog acceptance, electrical R02–R05 and physical acceptance
+  LRA-06. An LRA-04 browser return arrived the same day and is **reviewed,
+  revisions required**; see [that review](reviews/LRA04_REVIEW_2026-10-29.md). Analog acceptance, electrical R02–R05 and physical acceptance
   remain open.
 - **Authority:** Claude `pcb-manager`, session `630dea87-5e4d-4bad-a1ff-d41b3a5f509b`,
   owns root/coordination from October 29 and integrated LRA-03. Codex
@@ -90,7 +90,7 @@ task packet before dispatch; record the claim and evidence here, not in a second
 | [LRA-01](handoffs/LRA-01_POWER_INTERFACE.md) | Electrical lead; firmware reviewer; manager integrates | Reviewed candidate `a85f185`; R01 disposition delivered by manager `01a18447-07c2-7bb3-8318-9b276cfdb3b8` in FIRMWARE_REVIEW.md; suitable for isolated 05 implementation, electrical/bench gates open | One agreed qualified-IGN/HOLD/startup/shutdown/reset/USB contract; numerical assumptions and faults explicit; current/protection decisions and reviewer disposition |
 | [LRA-02](handoffs/LRA-02_COMPONENT_MARGINS.md) | Electrical return by logger-power `01a18463-5ed7-7041-ad90-ec3a7480c4e6` | Candidate `c946f6f`, bounded paper return reviewed/integrated; R03/R04 remain open, no accepted consolidated BOM | Coherent power schematic/BOM, compatible protection, effective capacitance and current/leakage allocations; off-state paths and bench checklist |
 | [LRA-03](handoffs/LRA-03_AS_BUILT.md) | Returned by Claude hardware-integrator `23d6d0fb-9656-4e03-acb3-922537019a5b`; analog acceptance open | **Integrated** October 29 at `dc07292`. First return `a9c828b` reviewed, revisions R03-REV-1–6 applied in `f23e51c`, merge adds a documentation reconciliation. Baseline for LRA-06; accepts no hardware | Current as-built consolidated with unknowns, frozen Rev A pins/connectors/input loading/protection/grounds/mechanics/test points; no full fuel model |
-| [LRA-04](handoffs/LRA-04_COMMUNICATIONS.md) | Bounded communications reviewer; hardware/firmware accept | Ready, unclaimed; October 29 packet supplies reviewed 01/02/05 constraints and browser-return route; coordinate 03, final freeze awaits electrical closure | RS-485/CAN/daughterboard comparison with usable GPIO/peripheral/current/voltage/power-off contract; recommendation and fallback |
+| [LRA-04](handoffs/LRA-04_COMMUNICATIONS.md) | Browser return, session identifiers unavailable; hardware/firmware accept | **Returned, revisions required.** Owner-supplied browser return preserved at `logger/coordination/LRA04_GROK.md`; [review](reviews/LRA04_REVIEW_2026-10-29.md) records six findings, two of them contradictions in the proposed topology. No bus selected, no pin reserved, nothing integrated | RS-485/CAN/daughterboard comparison with usable GPIO/peripheral/current/voltage/power-off contract; recommendation and fallback |
 | [LRA-05](handoffs/LRA-05_FIRMWARE_POWER.md) | Returned by logger-power `01a18463-5ed7-7041-ad90-ec3a7480c4e6`; manager reviewed | Candidate `0745d5b` integrated October 29; manual default, opt-in qualified mode. Masked-IRQ release-bound analysis and physical qualification remain open; no active follow-up claimant | Isolated shutdown candidate: early HOLD, bounded SD finalization, IGN-return/reset/watchdog behavior; build/fault/replay tests and rollback; no implicit flash |
 | LRA-06 | KiCad schematic owner | Blocked for freeze on 01–04; known-block capture may start | Consolidated schematic/export/BOM, pin/part/footprint checks and ERC dispositions; explicitly unpopulated options |
 | LRA-07 | Local bench role; owner operates hardware | Blocked on testable 02/03 circuit and authorized bench setup; combined tests use 05 | Measured rails/startup/cutoff/reset/USB/energized-input-with-board-off results; conditions, limits, exceptions and artifacts |
@@ -113,7 +113,7 @@ for every row. Remote electrical work and local physical validation are distinct
 | TIME-01 | Logger/bridge | Deferred design: reset/offline time and retrospective drift policy; hardware reservations feed 03/04 if concrete |
 | KEY-01 | Proximity/keyless | Owner participation required: threshold/repeatability and parked operation independent of Pi/logger; installed settings unknown |
 | DIST-01 | Bridge/DB | Deferred: production-host cutover, packet checkpoints and independent server/VM comparison; not yet implemented |
-| DOC-01 | Claude pcb-manager, `630dea87-5e4d-4bad-a1ff-d41b3a5f509b` | Active manager from October 29. LRA-01/02/05 reviewed and integrated as candidates by the predecessor session; LRA-03 revised return reviewed and integrated at `dc07292`. Next: triage the LRA-04 browser return, electrical gap closure, bounded LRA-05 timing follow-up and the LRA-06 start condition. No automatic-power deployment accepted |
+| DOC-01 | Claude pcb-manager, `630dea87-5e4d-4bad-a1ff-d41b3a5f509b` | Active manager from October 29. LRA-01/02/05 reviewed and integrated as candidates by the predecessor session; LRA-03 revised return reviewed and integrated at `dc07292`. LRA-04 browser return triaged: revisions required, not integrated. Next: the corrected LRA-04 pass, electrical gap closure, bounded LRA-05 timing follow-up and the LRA-06 start condition. No automatic-power deployment accepted |
 
 ## Decisions and gates
 
@@ -216,3 +216,15 @@ power checks, 9 native suites, 12 converter cases, and the three deliverable
 hashes recomputed in `SOURCE_MANIFEST.json`. Integration makes the consolidation
 the documented baseline; it accepts no hardware, freezes nothing, and authorizes
 no purchase, bench work or repeat owner questioning.
+
+October 29 LRA-04 triage by Claude `pcb-manager`,
+`630dea87-5e4d-4bad-a1ff-d41b3a5f509b`: an owner-supplied browser return against
+the `eb33d17` packet is preserved verbatim at `logger/coordination/LRA04_GROK.md`
+and reviewed in [reviews/LRA04_REVIEW_2026-10-29.md](reviews/LRA04_REVIEW_2026-10-29.md).
+The survey is usable and its RS-485-primary direction is not rejected, but the
+proposal both ties DE//RE and costs an unreachable shutdown mode, and it
+recommends RS-485 as the best fit to the 2/5 µA allocation after recording a
+powered-off bus current three orders of magnitude above it. Keyless RS-485 is a
+designed and so-far unpopulated precedent, not operational evidence. The
+corrected pass needs no bench access, purchase or new owner question. No bus is
+selected and `D-RA-04` is unchanged.
