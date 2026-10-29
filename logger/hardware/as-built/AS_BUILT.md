@@ -640,7 +640,7 @@ bench questions are collected in §7 so they can be asked in one pass.
 | U-07 | 1N5819 forward voltage at 10–100 µA, hot and cold | Sets the tach cell's clamp onset, now estimated 0.45 V above its measured idle | Bench I–V sweep of one specimen, or a part with a specified low-current V<sub>F</sub> | Analog reviewer |
 | U-08 | Source impedance of B2 (PCM output) and B1 (tach driver), and each one's permissible load | Required before any loading change; only C14's source is actually measured | FSM figures where they exist, otherwise a bench measurement with the existing divider in and out | Analog reviewer + owner |
 | U-09 | C11 open-circuit voltage and the FSM's unexplained 5–8 V unloaded band | The 0.3852 ratio was chosen for an 8 V ceiling that the measured supply law cannot reach | Analysis against the FSM; no hardware change until it resolves | Fuel analyst (FUEL-01), not a Rev A gate |
-| U-10 | Whether B2/B1/C11 are genuinely de-energized with the key out | The parked-current case for the five vehicle branches rests on this; two of five have evidence, three are inferred | One DMM pass at each tap, key out (§7 Q6) | Owner |
+| ~~U-10~~ | **CLOSED October 29** by owner measurement, key out and parked: **B2 = 4.140 V**, **B1 = 0 V**, **C11 = 0 V** to chassis | B1 and C11 are confirmed dead. **B2 is energized when parked, which the design assumed it was not.** Through the fitted 55 kΩ divider that is **75.3 µA**, against an 8/20 µA allocation for all five branches and a 100 µA whole-system parked budget | Narrows D4 to B2 alone. Still open: whether 4.140 V was read with the divider connected (loaded) or disconnected (open-circuit), which sets the true injection; that belongs with U-08 | Closed |
 | U-11 | Physical envelope: board footprint, enclosure, mounting, harness lengths, connector locations | Nothing in the record states a dimension; LRA-08 cannot place connectors without it | Owner measures the available space; **until then every dimension is unknown and no mechanical claim may be made** | Owner, then LRA-08 |
 | U-12 | Fitted resistor tolerances and series on all five dividers | The specification asks for 1 % metal film, 50–100 ppm/°C, all four ADC parts from one series, so the tempcos partly cancel in the ratio | Owner reads the bands / part labels | Owner |
 
@@ -667,8 +667,11 @@ or nearly so; U-10 and U-12 remain):
    means for the Rev A timing budget.
 5. What are the resistor tolerances and the series/type of the five dividers'
    parts?
-6. Key out, car parked: what does a DMM read at B2, B1 and C11 to chassis? Two
-   of the five branches already have key-off evidence; these three are inferred.
+6. **Answered October 29**, key out and parked: B2 = **4.140 V**, B1 = **0 V**,
+   C11 = **0 V** to chassis. B2 is live with the key out; the other two are not.
+   One follow-up: was that 4.140 V read with the logger's divider connected or
+   disconnected? Loaded, it is 75.3 µA flowing today; open-circuit, the real
+   figure depends on B2's source impedance, which is still U-08.
 7. What physical space does the logger have to live in — rough envelope,
    mounting, and where the cluster harness and the aux-battery feed enter it?
 

@@ -114,10 +114,25 @@ for every row. Remote electrical work and local physical validation are distinct
 | KEY-02 | Keyless role | **Dead reference fixed; import still optional and unclaimed.** The sketch now states once that `cm5sim` is the host-side CM5 stand-in, reached through `hp`, and is not part of this repository, so no reader chases a file that is not here. The stale "no MAX3485 fitted" / "once U5 is soldered" / "needs U5 fitted" comments are corrected in the same pass. Importing the tooling itself remains optional: nothing is blocked, the logger has no RS-485 today, and it becomes a real need only at LRA-07 bench work or if Rev A puts a bus on the logger. See `D-KEYLESS-485-01` |
 | KEY-01 | Proximity/keyless | Owner participation required: threshold/repeatability and parked operation independent of Pi/logger; installed settings unknown |
 | DIST-01 | Bridge/DB | Deferred: production-host cutover, packet checkpoints and independent server/VM comparison; not yet implemented |
-| DOC-01 | Claude pcb-manager, `630dea87-5e4d-4bad-a1ff-d41b3a5f509b` | Active manager from October 29. LRA-01/02/05 reviewed and integrated as candidates by the predecessor session; LRA-03 revised return reviewed and integrated at `dc07292`. LRA-04 browser return triaged: revisions required, not integrated. LRA-06 packet written October 29 and the row set ready to dispatch. Next: the corrected LRA-04 pass, electrical gap closure, bounded LRA-05 timing follow-up, and the owner's U-10/U-11/U-12 measurements, of which U-11 gates LRA-08. No automatic-power deployment accepted |
+| DOC-01 | Claude pcb-manager, `630dea87-5e4d-4bad-a1ff-d41b3a5f509b` | Active manager from October 29. LRA-01/02/05 reviewed and integrated as candidates by the predecessor session; LRA-03 revised return reviewed and integrated at `dc07292`. LRA-04 browser return triaged: revisions required, not integrated. LRA-06 packet written October 29, claimed by Claude `logger-schematic` `73d7d954-f82a-4038-8ff3-546a23fc5fa9` at `3fe8795`. Owner's U-10 readings recorded the same day as `D-OFFSTATE-01`, narrowing D4 to B2; the LRA-06 packet was amended to match. Next: the corrected LRA-04 pass, electrical gap closure, bounded LRA-05 timing follow-up, and the owner's U-10/U-11/U-12 measurements, of which U-11 gates LRA-08. No automatic-power deployment accepted |
 
 ## Decisions and gates
 
+- **D-OFFSTATE-01 — owner measurement, October 29:** key out and parked, to
+  chassis ground: **B2 (VSS) = 4.140 V, B1 (tach) = 0 V, C11 (fuel) = 0 V**.
+  This closes U-10 and changes the biggest Rev A design item. **B2 is the only
+  one of the five vehicle branches that is energized while the car is parked**;
+  C14 and B11 were already recorded dead with the key out. Through B2's fitted
+  22k/33k divider, 4.140 V is **75.3 µA** — on its own, nine times the 8/20 µA
+  allocated to all five branches and three quarters of the entire 100 µA
+  whole-system parked budget. So isolation is still required, but **D4 narrows
+  from five branches to one**, and that one is a digital pulse input rather than
+  an analog channel. If the analog reviewer agrees C11 and B11 need no switch,
+  the ≤25 Ω fuel and ≤100 Ω supply top-leg limits disappear along with the
+  card-header calibration problem in REV_A_INTERFACES §8.2. **Open:** whether
+  4.140 V was read with the logger's divider connected or disconnected, which
+  decides whether 75.3 µA is flowing today or is an upper bound; the B2 source
+  itself is still U-08. Do not re-ask the three key-out readings.
 - **D-KEYLESS-485-01 — owner statement, October 29:** the keyless board **has a
   MAX3485 fitted, in an IC socket**, and the **RS-485 link was tested
   extensively** from the Pi 4 using a host CLI — `./hp out lock pulse`,

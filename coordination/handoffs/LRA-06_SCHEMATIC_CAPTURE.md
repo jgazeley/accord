@@ -113,11 +113,23 @@ D14, D15 — do not attempt to resolve them.
 ## Placeholders — three items, three instructions
 
 1. **D4, input isolation.** Normally-open, power-off-safe isolation upstream of
-   all five divider tops. **No part is selected and selecting one is not your
-   task.** Place a single-pin-pair placeholder symbol on each of the five
-   branches, reference-designated consistently, with its requirements in a
-   schematic text note (REV_A_INTERFACES §3.4). Five instances, not one. The
-   BOM already carries this as the `SIGNAL_ISOLATION` row.
+   the divider top. **No part is selected and selecting one is not your task.**
+   Place a single-pin-pair placeholder symbol, reference-designated
+   consistently, with its requirements in a schematic text note
+   (REV_A_INTERFACES §3.4). The BOM already carries this as the
+   `SIGNAL_ISOLATION` row.
+
+   **Amended October 29, after the owner's U-10 measurement** (`D-OFFSTATE-01`).
+   Key out and parked, B2 reads **4.140 V** while B1 and C11 read **0 V**; C14
+   and B11 were already recorded dead with the key out. So **B2 is the only
+   branch with a measured parked-drain case**, and D4's justification no longer
+   covers the other four. Keep **all five placeholder positions** — they are
+   placeholders and cost nothing — but annotate them differently: B2's as
+   **required, measured 75.3 µA at 4.140 V through the fitted 55 kΩ**, and the
+   other four as **under analog review, parked-drain justification withdrawn**.
+   Do not delete the four and do not promote them to real parts. If the reviewer
+   drops them, four symbols come out; if a fault or transient reason keeps them,
+   nothing has to be redrawn.
 2. **J3, bus and expansion.** LRA-04 returned with revisions required and no bus
    selected. GP8, GP9 and GP10 are **offers, not reservations**. Place J3 as an
    unpopulated header with its pins unconnected, and leave those three GPIOs
@@ -168,7 +180,7 @@ No `.kicad_pcb`. Layout is LRA-08.
 | ERC | Zero errors; every warning dispositioned in writing | ERC JSON + `CAPTURE_NOTES.md` |
 | Pin map | Matches REV_A_INTERFACES §1 Rev A column exactly; GP0/1, GP7, GP8–10, GP28 unconnected | Reviewer diff against §1 |
 | Input cells | Ratios and clamps match AS_BUILT §2 with no value changed | Reviewer diff against §2 |
-| Placeholders | Five D4 instances, J3 unpopulated, `MAX_ON` and `VEHICLE_PROTECTION` present and marked | SVG + BOM |
+| Placeholders | Five D4 positions with B2's marked required and the other four marked under review; J3 unpopulated; `MAX_ON` and `VEHICLE_PROTECTION` present and marked | SVG + BOM |
 | Libraries | All URIs `${KIPRJMOD}`-relative; no global library registration | `sym-lib-table`, `fp-lib-table` |
 | Footprints | Assigned, or listed with a reason | `CAPTURE_NOTES.md` |
 
