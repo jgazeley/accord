@@ -130,9 +130,15 @@ for every row. Remote electrical work and local physical validation are distinct
   an analog channel. If the analog reviewer agrees C11 and B11 need no switch,
   the ≤25 Ω fuel and ≤100 Ω supply top-leg limits disappear along with the
   card-header calibration problem in REV_A_INTERFACES §8.2. **Open:** whether
-  4.140 V was read with the logger's divider connected or disconnected, which
-  decides whether 75.3 µA is flowing today or is an upper bound; the B2 source
-  itself is still U-08. Do not re-ask the three key-out readings.
+  4.140 V was read loaded or open-circuit is **answered the same day**: the owner
+  lifted the VSS wire and read **4.669 V** open-circuit against 4.140 V loaded.
+  So 75.3 µA is flowing, not an upper bound, and B2's parked source is **7.03 kΩ**
+  — an always-on pull-up to about 4.67 V, partially closing U-08. That pull-up
+  already sinks ~664 µA whenever B2 is pulled low, so the logger's divider adds
+  about 11 % to a load the PCM output already carries; this bears on the loading
+  question but does not close it, because the parked pull-up is not proven to be
+  the operating source. Do not re-ask the three key-out readings or the
+  loaded/open-circuit pair.
 - **D-KEYLESS-485-01 — owner statement, October 29:** the keyless board **has a
   MAX3485 fitted, in an IC socket**, and the **RS-485 link was tested
   extensively** from the Pi 4 using a host CLI — `./hp out lock pulse`,
