@@ -1,5 +1,13 @@
 # LRA-11 — stop B2 energizing the board while it is parked
 
+> **Current continuation:** [LRA-12](LRA-12_LAYOUT_ELECTRICAL_CLOSURE.md)
+> consolidates the remaining electrical/capture work for owner layout. Read its
+> [readiness review](../reviews/LAYOUT_READINESS_2026-10-29.md) for source and
+> gate corrections before redispatching this historical packet.
+> October 29 update by Codex `pcb-manager`, session
+> `01a18447-07c2-7bb3-8318-9b276cfdb3b8`
+> (`codex resume 01a18447-07c2-7bb3-8318-9b276cfdb3b8`).
+
 Prepared October 29, 2026 by Claude `pcb-manager`, session
 `630dea87-5e4d-4bad-a1ff-d41b3a5f509b`.
 Identity read from this session's harness-assigned working paths.

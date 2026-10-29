@@ -1,5 +1,16 @@
 # LRA-06 — Rev A schematic capture notes
 
+> **October 29 manager correction after integration:** Q1 and Q6 have existing
+> component-level answers in `power/CUTOFF_MARGIN_REVIEW.md` §2 and
+> `power/MAX_ON_CUTOFF.md`; those sources were absent from the capture packet's
+> minimum input list. X6/X8 remain capture work, not missing-design research.
+> U-11 is resolved as 80 × 120 mm. Complete these and the remaining electrical
+> decisions under [LRA-12](../../../coordination/handoffs/LRA-12_LAYOUT_ELECTRICAL_CLOSURE.md).
+> See the [readiness review](../../../coordination/reviews/LAYOUT_READINESS_2026-10-29.md).
+> Update by Codex `pcb-manager`, session
+> `01a18447-07c2-7bb3-8318-9b276cfdb3b8`
+> (`codex resume 01a18447-07c2-7bb3-8318-9b276cfdb3b8`).
+
 October 29, 2026 by Claude Code `logger-schematic`, session
 `73d7d954-f82a-4038-8ff3-546a23fc5fa9`.
 Resume: `claude --resume 73d7d954-f82a-4038-8ff3-546a23fc5fa9`.

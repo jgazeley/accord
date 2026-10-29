@@ -46,28 +46,22 @@ remain in use until separately migrated. Do not maintain another active tracker.
   [power export](../logger/hardware/power/README.md) now contains the existing
   candidate, BOMs, handoffs and scripts with provenance; private access is not
   required for LRA-01 review.
-- **First blockers to resolve:** qualify the opt-in firmware's shutdown/reset
-  behavior and close the cutoff candidate's power-budget/protection/isolation gaps.
-- **Next action:** LRA-05 `0745d5b` reviewed/integrated as an opt-in firmware
-  candidate; manual power remains default. Nine native suites, 12 converter
-  cases, 44 power checks and both dummy builds pass independently. The masked-
-  interrupt/watchdog release-bound limitation remains an acceptance blocker;
-  see [LRA-05 review](reviews/LRA05_REVIEW_2026-10-29.md). LRA-03 is **integrated**
-  at `dc07292`: the revised return `f23e51c` applied all six findings of the
-  [review](reviews/LRA03_REVIEW_2026-10-29.md), and the merge adds a documentation
-  reconciliation only. The consolidation is now the documented baseline for
-  LRA-06. An LRA-04 browser return arrived the same day and is **reviewed,
-  revisions required**; see [that review](reviews/LRA04_REVIEW_2026-10-29.md). Analog acceptance, electrical R02–R05 and physical acceptance
-  remain open.
-- **Authority:** Claude `pcb-manager`, session `630dea87-5e4d-4bad-a1ff-d41b3a5f509b`,
-  owns root/coordination from October 29 and integrated LRA-03. Codex
-  `pcb-manager`, session `01a18447-07c2-7bb3-8318-9b276cfdb3b8`, held the role
-  before it and completed the firmware and LRA-01/02/03/05 reviews. LRA-01/02/05
-  returns: Codex `logger-power`, `01a18463-5ed7-7041-ad90-ec3a7480c4e6`.
-  LRA-03 return: Claude `hardware-integrator`,
-  `23d6d0fb-9656-4e03-acb3-922537019a5b`. Follow-up implementation and
-  communications claims remain unacknowledged; receipt does not imply an agent
-  is still running.
+- **Current next action:** dispatch [LRA-12](handoffs/LRA-12_LAYOUT_ELECTRICAL_CLOSURE.md),
+  the owner-requested single remote electrical/KiCad closure assignment. It must
+  deliver a complete footprint-assigned schematic/BOM for owner placement and
+  routing, using the existing power design. [Readiness review](reviews/LAYOUT_READINESS_2026-10-29.md)
+  closes the LRA-11 temperature-source question and identifies the actual capture,
+  protection, isolation/grounding and connector/expansion decisions remaining.
+  LRA-11's original return is integrated as a conditional design reference; its
+  enable circuit is not implemented. No new engineer is claimed or running yet.
+- **Authority:** Codex `pcb-manager`, session
+  `01a18447-07c2-7bb3-8318-9b276cfdb3b8`, resumed after the owner closed Claude
+  `pcb-manager` session `630dea87-5e4d-4bad-a1ff-d41b3a5f509b` for now.
+  LRA-01/02/05 returns: Codex `logger-power`,
+  `01a18463-5ed7-7041-ad90-ec3a7480c4e6`; LRA-03: Claude `hardware-integrator`,
+  `23d6d0fb-9656-4e03-acb3-922537019a5b`. Historical returns do not imply active
+  specialist claims. Firmware, bench and unattended-vehicle acceptance remain
+  separate from the electrical layout handoff.
 
 ## Milestones (existing IDs retained)
 
@@ -100,16 +94,20 @@ task packet before dispatch; record the claim and evidence here, not in a second
 | [LRA-03](handoffs/LRA-03_AS_BUILT.md) | Returned by Claude hardware-integrator `23d6d0fb-9656-4e03-acb3-922537019a5b`; analog acceptance open | **Integrated** October 29 at `dc07292`. First return `a9c828b` reviewed, revisions R03-REV-1–6 applied in `f23e51c`, merge adds a documentation reconciliation. Baseline for LRA-06; accepts no hardware | Current as-built consolidated with unknowns, frozen Rev A pins/connectors/input loading/protection/grounds/mechanics/test points; no full fuel model |
 | [LRA-04](handoffs/LRA-04_COMMUNICATIONS.md) | Browser return, session identifiers unavailable; hardware/firmware accept | **Returned, revisions required.** Owner-supplied browser return preserved at `logger/coordination/LRA04_GROK.md`; [review](reviews/LRA04_REVIEW_2026-10-29.md) records five standing findings, two of them contradictions in the proposed topology; a sixth was withdrawn as the reviewer's error, not the return's. No bus selected, no pin reserved, nothing integrated | RS-485/CAN/daughterboard comparison with usable GPIO/peripheral/current/voltage/power-off contract; recommendation and fallback |
 | [LRA-05](handoffs/LRA-05_FIRMWARE_POWER.md) | Returned by logger-power `01a18463-5ed7-7041-ad90-ec3a7480c4e6`; manager reviewed | Candidate `0745d5b` integrated October 29; manual default, opt-in qualified mode. Masked-IRQ release-bound analysis and physical qualification remain open; no active follow-up claimant | Isolated shutdown candidate: early HOLD, bounded SD finalization, IGN-return/reset/watchdog behavior; build/fault/replay tests and rollback; no implicit flash |
-| [LRA-06](handoffs/LRA-06_SCHEMATIC_CAPTURE.md) | Returned by Claude `logger-schematic` `73d7d954-f82a-4038-8ff3-546a23fc5fa9` | **Integrated onto `main`** October 29; electrically sound as drawn. Candidate `c66fba6`, merged so the accepted capture is visible in the default checkout rather than only on its task branch. `logger/hardware/kicad/accord-logger.kicad_pro`. Integration of a reviewed candidate, **not a freeze**. [Review](reviews/LRA06_REVIEW_2026-10-29.md): R06-REV-1 (B16 orphaned from the ADC return), REV-3 and REV-4 (input TVS reversed) all closed and independently verified — 14/14 diode polarities correct, ERC 0, 224/224 checks, and the new orientation-opacity guard tamper-tested by reversing the TVS in a copy of the netlist. Both blocking findings shared one root cause: checks asserting the symbolic record instead of the physical fact. **Not integrated or frozen.** R06-REV-2 is with the electrical lead and blocks a freeze: bonding B16 put the opto LED cathode on the ADC return node, so D5 and the fitted LED return cannot both stand. Owner's GUI legibility pass outstanding; this host has no rasterizer | Consolidated schematic/export/BOM, pin/part/footprint checks and ERC dispositions; explicitly unpopulated options |
+| [LRA-06](handoffs/LRA-06_SCHEMATIC_CAPTURE.md) | Returned by Claude `logger-schematic` `73d7d954-f82a-4038-8ff3-546a23fc5fa9` | **Integrated onto `main`** October 29 as a reviewed capture; electrical completion remains in LRA-12. Candidate `c66fba6`, merged so the accepted capture is visible in the default checkout rather than only on its task branch. `logger/hardware/kicad/accord-logger.kicad_pro`. Integration of a reviewed candidate, **not a freeze**. [Review](reviews/LRA06_REVIEW_2026-10-29.md): R06-REV-1 (B16 orphaned from the ADC return), REV-3 and REV-4 (input TVS reversed) all closed and independently verified — 14/14 diode polarities correct, ERC 0, 224/224 checks, and the new orientation-opacity guard tamper-tested by reversing the TVS in a copy of the netlist. Both blocking findings shared one root cause: checks asserting the symbolic record instead of the physical fact. **Not frozen.** R06-REV-2 is with the electrical lead and blocks a freeze: bonding B16 put the opto LED cathode on the ADC return node, so D5 and the fitted LED return cannot both stand. Visual legibility check remains for LRA-12; it is not an owner-only prerequisite | Consolidated schematic/export/BOM, pin/part/footprint checks and ERC dispositions; explicitly unpopulated options |
 | LRA-07 | Local bench role; owner operates hardware | Blocked on testable 02/03 circuit and authorized bench setup; combined tests use 05 | Measured rails/startup/cutoff/reset/USB/energized-input-with-board-off results; conditions, limits, exceptions and artifacts |
-| LRA-08 | PCB layout owner, unclaimed | **Envelope resolved, no longer blocked on U-11.** Baseline is the integrated capture at `logger/hardware/kicad/`; outline is a generic 80 × 120 mm rectangle per `D-ENVELOPE-01`. **Now blocked on [LRA-11](handoffs/LRA-11_B2_OFFSTATE_ISOLATION.md)**, which resolves D4 for X1, and on the four placeholders under analog review. Resolve R06-REV-2 and any LRA-07 material changes before release. No packet written yet | Placement/routing, returns/current loops, antenna keepout, connectors, SD/USB access, mechanical review, DRC/parity dispositions |
+| LRA-08 | Owner placement/routing; electrical handoff via LRA-12 | **Envelope resolved.** 80 × 120 mm rectangle; known-block floorplanning can start. Complete routing waits for [LRA-12](handoffs/LRA-12_LAYOUT_ELECTRICAL_CLOSURE.md): X1–X8 dispositions, coherent power protection, grounds, connector/expansion choices and verified footprints. The earlier “LRA-11 only” gate was incomplete | Placement/routing, returns/current loops, antenna keepout, connectors, SD/USB access, mechanical review, DRC/parity dispositions |
 | LRA-09 | Manager and independent reviewer | Blocked on 06/07/08; 05 interface feasibility/bring-up path | Frozen prototype-order review package, hashes, BOM, test restrictions and residual-risk matrix; owner approval still required |
 | LRA-10 | Local bench/firmware | Blocked on 09 and owner order/assembly/testing authorization | Actual-board bring-up evidence, then separate unattended-vehicle acceptance |
-| [LRA-11](handoffs/LRA-11_B2_OFFSTATE_ISOLATION.md) | Returned by Claude `analog-isolation`; **session ID genuinely unavailable** (ran as a subagent; declined to borrow or invent one, which is correct). **No resume bookmark exists** — re-dispatch as a top-level session if one is needed | **Returned, recommendation accepted as a candidate.** `d8a67f7` on `task/LRA-11-analog-isolation`. [Review](reviews/LRA11_REVIEW_2026-10-29.md). Recommends **Broadcom ASSR-601JV** photo-MOSFET relay in the B2 top leg, LED from switched B5. Verified independently: it corrected two of the manager packet's own numbers and both corrections are right. **Its most valuable result is not the part** — clamp-topology changes are dead on every branch, because the back-feed diode is the RP2040's own pin-to-IOVDD ESD structure, which closes rows 1–5 of §6. **R11-REV-1:** requirement 7 is not met as written — MAX_ON is unimplemented and even implemented its ARM gates only the QH branch, so BAD cannot drop B5 with ignition present; but a B5-fed LED tracks board power by construction, which may be the better reading. Electrical lead to rule. **Gating integration:** the leakage spec rests on a reading of Broadcom's table convention, not an explicit statement, and that exact distinction killed two rejected candidates. Availability checked and fine; the JV is the automotive variant | Selected part or topology with datasheet-backed evidence, enable path, failure behaviour, fallback and a placeable package |
+| [LRA-11](handoffs/LRA-11_B2_OFFSTATE_ISOLATION.md) | Returned by Claude `analog-isolation`; session ID unavailable, no resume bookmark | **Integrated as a conditional design reference**, original `d8a67f7` preserved. ASSR-601JV remains the working B2 candidate. [Follow-up review](reviews/LAYOUT_READINESS_2026-10-29.md) closes the datasheet temperature question; 24 arithmetic checks rerun. Actual hardware enable, timing conditions and footprint implementation are in LRA-12. X1 remains in the capture; no circuit acceptance is claimed | Existing analysis available directly on main; complete the enable/power-off implementation without repeating the survey |
+| [LRA-12](handoffs/LRA-12_LAYOUT_ELECTRICAL_CLOSURE.md) | One remote electrical/KiCad engineer, **unclaimed**; manager reviews | **Ready for dispatch**, explicitly requested by owner October 29. Completes the remaining 02/03/04/06/11 electrical decisions in one edit scope; no bench access required to start | Complete schematic, consolidated BOM, verified footprints, input/power state table and 80 × 120 mm fit/keepout guidance; owner does placement/routing. No new power-topology survey or paper-only closure |
 
-Critical path: 01 → 02 and 05 → 07 → 09; in parallel 03 + 04 → 06 → 08 → 09.
-**As of October 29 the live critical path is `11 → 08 → 09`.** LRA-06 is integrated and the envelope is
-fixed, so LRA-11 is the only thing standing between here and layout.
+**Current layout path: LRA-12 electrical completion → owner LRA-08 placement/routing
+→ LRA-09 prototype-order review.** LRA-06 is integrated and the envelope is fixed,
+but the drawing still omits existing qualified-IGN/cutoff circuitry and has
+unresolved protection and interface choices. LRA-11 alone does not close that.
+Bench evidence and firmware acceptance feed the relevant fabrication/bring-up
+restrictions; they are not blanket prerequisites to begin placement.
 One agent may perform successive responsibilities; do not create sessions merely
 for every row. Remote electrical work and local physical validation are distinct.
 
@@ -125,7 +123,7 @@ for every row. Remote electrical work and local physical validation are distinct
 | KEY-02 | Keyless role | **Dead reference fixed; import still optional and unclaimed.** The sketch now states once that `cm5sim` is the host-side CM5 stand-in, reached through `hp`, and is not part of this repository, so no reader chases a file that is not here. The stale "no MAX3485 fitted" / "once U5 is soldered" / "needs U5 fitted" comments are corrected in the same pass. Importing the tooling itself remains optional: nothing is blocked, the logger has no RS-485 today, and it becomes a real need only at LRA-07 bench work or if Rev A puts a bus on the logger. See `D-KEYLESS-485-01` |
 | KEY-01 | Proximity/keyless | Owner participation required: threshold/repeatability and parked operation independent of Pi/logger; installed settings unknown |
 | DIST-01 | Bridge/DB | Deferred: production-host cutover, packet checkpoints and independent server/VM comparison; not yet implemented |
-| DOC-01 | Claude pcb-manager, `630dea87-5e4d-4bad-a1ff-d41b3a5f509b` | Active manager from October 29. LRA-01/02/05 reviewed and integrated as candidates by the predecessor session; LRA-03 revised return reviewed and integrated at `dc07292`. LRA-04 browser return triaged: revisions required, not integrated. LRA-06 dispatched, claimed, returned and reviewed October 29: candidate `5fb1598`, revisions required, R06-REV-2 escalated to the electrical lead. Owner's U-10/U-08/U-14/U-07 measurements recorded the same day as `D-OFFSTATE-01`. **Next:** the corrected LRA-04 pass, R06-REV-2, the owner's U-11 envelope which blocks LRA-08 outright, and a GUI legibility pass on the schematic that this host cannot perform. No automatic-power deployment accepted |
+| DOC-01 | Codex pcb-manager, `01a18447-07c2-7bb3-8318-9b276cfdb3b8` | Active after resumption October 29. LRA-11 conditional reference integrated, temperature-source question closed, current layout blockers reconciled. LRA-12 prepared at owner request for one remote engineer; ready/unclaimed. Manager reviews the return before declaring the electrical handoff ready |
 
 ## Decisions and gates
 
@@ -146,9 +144,10 @@ for every row. Remote electrical work and local physical validation are distinct
   | Catch | D30 SS34 / STPS5L60 3 A | DCATCH SB360-E3/54 3 A | equivalent |
   | Reverse block | D20 1N5822 3 A | DREV SB360-E3/54 3 A | equivalent |
 
-  **The delta is only the autonomous switching** — QP, QI/QH, DZ, DOR and the
-  MAX_ON logic — which keyless does not need because it never turns off. The
-  supply itself is the same circuit with the same parts.
+  **The retained buck has in-service precedent.** The logger adds autonomous
+  switching (QP, QI/QH, DZ, DOR and MAX_ON) **and the always-on A5 supply**.
+  The latter's TPS709 voltage limit is a genuine compatibility difference;
+  it is not qualified by the keyless LM2678/TVS success. LRA-12 must close it.
 
   **Consequences.**
   1. **R02 is better supported than the record says.** `BOM.csv` marks the TVS
@@ -156,8 +155,8 @@ for every row. Remote electrical work and local physical validation are distinct
      It is the same part, in the same role, on a board that has taken cranking
      transients in this vehicle. That is not a logger qualification — different
      board, layout and load — but it is in-vehicle evidence, not inheritance,
-     and R02 should be reframed as *qualify the delta* rather than *choose a
-     protection scheme*.
+     and R02 should focus on the logger delta. Its new A5 regulator still needs
+     compatible protection; the shared 41.4 V clamp is not sufficient for it.
   2. **Keyless protects its signal lines and the logger does not.** Seven
      **P6KE30A** sit on the keyless harness lines; the logger has none, and the
      owner reports four P6KE30A on hand. A direct template for the logger input

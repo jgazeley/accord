@@ -2,9 +2,12 @@
 
 Prepared October 28, 2026 by Codex `pcb-manager`, session `01a17045-1855-7af2-b76a-32c2b778cd64`. Historical bookmark: `codex resume 01a17045-1855-7af2-b76a-32c2b778cd64`. Successors use their own identities.
 
-October 29, 2026 update by Claude `pcb-manager`, session `630dea87-5e4d-4bad-a1ff-d41b3a5f509b`.
-Current manager bookmark: `claude --resume 630dea87-5e4d-4bad-a1ff-d41b3a5f509b`.
-Preceding manager, historical: Codex `pcb-manager`, `01a18447-07c2-7bb3-8318-9b276cfdb3b8`.
+October 29, 2026 preceding update by Claude `pcb-manager`, session
+`630dea87-5e4d-4bad-a1ff-d41b3a5f509b`.
+Historical bookmark: `claude --resume 630dea87-5e4d-4bad-a1ff-d41b3a5f509b`.
+Current update after resumption: Codex `pcb-manager`, session
+`01a18447-07c2-7bb3-8318-9b276cfdb3b8`.
+Resume: `codex resume 01a18447-07c2-7bb3-8318-9b276cfdb3b8`.
 
 [PROJECT_MILESTONES.md](PROJECT_MILESTONES.md) owns all current states/claims.
 This file is only a packet locator. Ready does not mean assigned or running.
@@ -20,6 +23,7 @@ This file is only a packet locator. Ready does not mean assigned or running.
 | LRA-06 schematic capture | [Rev A schematic capture packet](handoffs/LRA-06_SCHEMATIC_CAPTURE.md) |
 | LRA-11 B2 off-state isolation | [D4 resolution packet](handoffs/LRA-11_B2_OFFSTATE_ISOLATION.md) |
 | LRA-11 review | [B2 isolation candidate review](reviews/LRA11_REVIEW_2026-10-29.md) |
+| **LRA-12 electrical closure for owner layout — next dispatch** | [Single remote-engineer assignment](handoffs/LRA-12_LAYOUT_ELECTRICAL_CLOSURE.md), [current readiness review](reviews/LAYOUT_READINESS_2026-10-29.md) |
 | Other LRA tasks | Prepare from [template](TASK_PACKET_TEMPLATE.md) when assigned; scope/acceptance in tracker |
 
 Optional history remains in old `coordination/HANDOFF_INDEX.md` at `1e99449`.

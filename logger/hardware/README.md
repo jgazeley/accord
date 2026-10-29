@@ -24,15 +24,18 @@ input records ADC measurements, not an independently calibrated fuel quantity.
 A reviewed, consolidated logger schematic and BOM are now published in
 [kicad/](kicad/) as `accord-logger.kicad_pro`, integrated October 29 after
 review. It is a reviewed candidate, **not frozen and not fabrication-ready**:
-one electrical question is open on the ignition optocoupler's return, the
-input-isolation part is unselected, and no layout exists. Automatic power
-cutoff is not implemented in this firmware baseline. No fabrication-ready
-logger board is claimed by this repository.
+the qualified-ignition and independent cutoff circuits still need capture,
+input protection/isolation and grounding need completion, and connector/footprint
+choices remain. The existing power design is in [power/](power/); it must be
+completed in the capture before a full board can be routed. Automatic-power
+firmware exists as an opt-in candidate; manual power remains the default.
+No fabrication-ready logger board is claimed by this repository.
 
 The pin map above is the **as-built** firmware baseline. Rev A changes what
 GP5 means and adds GP6; see [as-built/REV_A_INTERFACES.md](as-built/REV_A_INTERFACES.md) §1.
 
-Input isolation study (LRA-11 candidate, not selected): [isolation/](isolation/).
+Input isolation candidate: [B2 study](isolation/B2_ISOLATION.md), with linked
+review conditions; not yet implemented in the schematic.
 
 Current electrical/PCB context: [Rev A context](REV_A_CONTEXT.md).
 Active task authority: [project milestones](../../coordination/PROJECT_MILESTONES.md).

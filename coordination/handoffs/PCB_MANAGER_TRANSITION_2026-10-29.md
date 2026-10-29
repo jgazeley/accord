@@ -18,8 +18,14 @@
 > U-10, U-11 and U-14 and part of U-07 and U-08; D4 narrowed from five branches
 > to one and became `LRA-11`; the board envelope was fixed at 80 × 120 mm.
 >
-> **For current state read [the tracker](../PROJECT_MILESTONES.md).** The live
-> critical path is `LRA-11 → LRA-08 → LRA-09`.
+> **For current state read [the tracker](../PROJECT_MILESTONES.md).** The
+> critical path at that checkpoint was `LRA-11 → LRA-08 → LRA-09`.
+> Later manager review corrected it to **LRA-12 electrical completion → owner
+> LRA-08 layout → LRA-09**, because the capture still omits existing power
+> circuitry. See [LRA-12](LRA-12_LAYOUT_ELECTRICAL_CLOSURE.md).
+> Correction by Codex `pcb-manager`, session
+> `01a18447-07c2-7bb3-8318-9b276cfdb3b8`
+> (`codex resume 01a18447-07c2-7bb3-8318-9b276cfdb3b8`), October 29.
 
 
 Prepared October 29, 2026 by Claude `pcb-manager`, session
