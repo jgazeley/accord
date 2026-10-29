@@ -9,6 +9,9 @@
 #include "logger_network.h"
 #include "card_tail.h"
 #include "upload_identity.h"
+#include "logger_power.h"
+#include "power_queue.h"
+#include "logger_upload.h"
 
 namespace {
 // SPI0, wired as built 2026-10-18 (SPEC 5.2). The module's own 3V3 pin is fed
@@ -22,16 +25,25 @@ constexpr uint8_t PIN_SD_MISO = 16, PIN_SD_CS = 17, PIN_SD_SCK = 18,
 constexpr uint32_t SD_CLOCK_MHZ = 12;
 
 constexpr size_t RING_SIZE = 8192;   // power of two; ~200 lines of 1 Hz report
-constexpr size_t RING_MASK = RING_SIZE - 1;
 constexpr size_t CHUNK = 512;        // one sector per write call
 constexpr size_t MAX_DRAIN = 8;      // chunks per core-0 pass
 constexpr uint32_t RETRY_MS = 5000;  // card re-init backoff
 
-char ring[RING_SIZE];
-// SPSC: core 1 writes head, core 0 writes tail. 32-bit aligned loads and
-// stores are single instructions on this core, so neither index can be seen
-// half-updated; the barriers order the data against the index.
-volatile uint32_t ringHead = 0, ringTail = 0;
+logger_power::Queue<RING_SIZE> queue;
+#if LOGGER_POWER_QUALIFIED
+uint32_t producerCommand = 0, producerAck = 0, fileGeneration = 0;
+logger_power::Producer<512> producer;
+uint32_t atomicRead(const uint32_t &v) { return __atomic_load_n(&v, __ATOMIC_ACQUIRE); }
+void atomicWrite(uint32_t &v, uint32_t n) { __atomic_store_n(&v, n, __ATOMIC_RELEASE); }
+bool qualifiedActive();
+#endif
+bool backgroundAllowed() {
+#if LOGGER_POWER_QUALIFIED
+    return qualifiedActive();
+#else
+    return true;
+#endif
+}
 uint32_t droppedLines = 0;           // core 1 only (producer side)
 
 enum class SdState : uint8_t { Init, Ok, Fail };
@@ -45,9 +57,13 @@ struct Status {
     uint32_t revision = 0;
     bool renameNoteLost = false;
     bool headerLost = false;
+    uint32_t powerGeneration = 0;
+    bool powerClean = false;
     uint8_t code = 0, data = 0;      // SdFat's own card error, see sdPrintStatus
 };
 auto_init_mutex(sdStatusMutex);
+uint32_t lastPowerGeneration = 0;
+bool lastPowerClean = false;
 Status published;                    // core 0 writes, core 1 reads
 
 SdFs sd;
@@ -97,6 +113,8 @@ void publish() {
     published.renameNoteLost = renameNoteLost;
     published.headerLost = headerLost;
     published.revision = statusRevision;
+    published.powerGeneration = lastPowerGeneration;
+    published.powerClean = lastPowerClean;
     published.code = errCode;
     published.data = errData;
     mutex_exit(&sdStatusMutex);
@@ -117,8 +135,8 @@ void fail(const char *reason, uint8_t code = 0, uint8_t data = 0) {
 
 /* Name the file for the instant it was opened, in UTC, once that instant is
  * knowable. Before the first SNTP reply the clock is not trusted, so the file
- * opens as /BOOT_<ms>.CSV and is renamed the moment a trusted clock arrives --
- * one file per boot either way, and no file ever carries a wrong date. */
+ * opens as /BOOT_<ms>.CSV and is renamed when a trusted clock arrives. Qualified
+ * mode can create another file after ON return or a card failure in one boot. */
 void nameFor(char *out, size_t n, uint32_t openedMs) {
     if (networkClockTrusted()) {
         struct timeval tv;
@@ -148,6 +166,8 @@ void dateTimeCallback(uint16_t *date, uint16_t *time) {
 }
 
 bool openCard() {
+    if (!powerBackgroundAllowed()) return false;
+    const uint32_t openingGeneration = powerSnapshot().generation;
     const uint32_t t0 = millis();
     ++cardGeneration;
     syncedBytes = 0;
@@ -163,6 +183,7 @@ bool openCard() {
         fail(code ? "no-card" : "mount", code, data);
         return false;
     }
+    if (!powerBackgroundAllowed() || powerSnapshot().generation != openingGeneration) return false;
     const uint32_t openedMs = millis();
     nameFor(filePath, sizeof(filePath), openedMs);
     // Never reopen an old recording. This invariant makes completion a fact:
@@ -171,6 +192,7 @@ bool openCard() {
              (unsigned long long)get_rand_64(), (unsigned long long)get_rand_64());
     if (sd.exists(filePath))
         snprintf(filePath, sizeof(filePath), "/BOOT_%.16s.CSV", uploadId);
+    if (!powerBackgroundAllowed() || powerSnapshot().generation != openingGeneration) return false;
     file = sd.open(filePath, O_RDWR | O_CREAT | O_EXCL | O_APPEND);
     trackWorst(t0);
     if (!file) {
@@ -233,6 +255,7 @@ bool openCard() {
  * can never gain a fictitious rename event.
  */
 void renameWhenClockArrives() {
+    if (!backgroundAllowed()) return;
     if (!nameIsBoot || !networkClockTrusted()) return;
     /* WAIT FOR A LINE BOUNDARY. The note is written directly to the file, and
      * drain() writes raw ring chunks that respect no line boundary, so doing
@@ -250,7 +273,8 @@ void renameWhenClockArrives() {
     memcpy(from, filePath, sizeof(from));
 
     const uint32_t t0 = millis();
-    const bool ok = !sd.exists(wanted) && file.sync() && file.rename(wanted);
+    const bool ok = !sd.exists(wanted) && backgroundAllowed() && file.sync()
+                    && backgroundAllowed() && file.rename(wanted);
     trackWorst(t0);
     if (!ok) {
         // Keep logging under the boot name rather than lose the stream over a
@@ -313,34 +337,69 @@ bool settleTail() {
     return true;
 }
 
-bool drain() {
-    // Never append to a file whose tail is an orphaned fragment; sdLoop()
-    // settles first, so this is a guard, not a path.
+bool drain(bool finalizing = false) {
     if (!tail.mayDrain()) return true;
     for (size_t pass = 0; pass < MAX_DRAIN; ++pass) {
-        const uint32_t head = ringHead;
-        __dmb();
-        const uint32_t rtail = ringTail;
-        uint32_t avail = head - rtail;
-        if (!avail) return true;
-        const size_t index = rtail & RING_MASK;
-        size_t n = avail;
-        if (n > CHUNK) n = CHUNK;
-        if (n > RING_SIZE - index) n = RING_SIZE - index;  // no wrap in one write
+        if (!finalizing && !backgroundAllowed()) return true;
+        size_t n = CHUNK;
+        const char *bytes = queue.peek(n, queue.head());
+        if (!n) return true;
         const uint32_t t0 = millis();
-        const bool whole = tail.appendChunk(file, ring + index, n);
+        const bool whole = tail.appendChunk(file, bytes, n);
         trackWorst(t0);
-        if (!whole) {
-            fail("write");   // ring tail NOT advanced: these bytes are retried
-            return false;
-        }
-        __dmb();
-        ringTail = rtail + n;
+        if (!whole) { fail("write"); return false; }
+        queue.consume(n);
         fileBytes += n;
         sinceSync += n;
     }
     return true;
 }
+#if LOGGER_POWER_QUALIFIED
+struct PowerStorage {
+    bool retryReady() { return state != SdState::Fail || int32_t(millis() - retryAt) >= 0; }
+    bool good() { return state == SdState::Ok && bool(file); }
+    bool open() {
+        // A prior failed partial row has been discarded at a stable boundary.
+        tail = logger_card_tail::Tail<FsFile>();
+        const bool ok = openCard();
+        if (ok && headerLost) { fail("power-header"); return false; }
+        return ok;
+    }
+    void generation(uint32_t g) { atomicWrite(fileGeneration, g); }
+    void command(uint32_t c) { atomicWrite(producerCommand, c); }
+    uint32_t ack() { return atomicRead(producerAck); }
+    uint32_t head() { return queue.head(); }
+    void invalidate() { ++cardGeneration; uploadDisconnect(); }
+    int drain(uint32_t watermark) {
+        if (!good() || !settleTail() || !::drain(true)) {
+            // Failed media may have written an unknown prefix. Never carry its
+            // remaining half-row into a fresh file, even on card reinsertion.
+            queue.discard(watermark);
+            return -1;
+        }
+        return queue.tail() == watermark ? 1 : 0;
+    }
+    bool settle() { return good() && settleTail() && tail.noteAllowed(); }
+    bool sync() { return good() && file.sync(); }
+    bool close() {
+        ++cardGeneration;
+        bool ok = true;
+        if (uploadDir) ok = uploadDir.close();
+        if (file) ok = file.close() && ok;
+        return ok;
+    }
+    void result(uint32_t g, bool clean) {
+        // Diagnostic result only. Neither this nor an old completion alters
+        // power policy, producer permission, or a later generation's handle.
+        lastPowerGeneration = g; lastPowerClean = clean;
+        if (state != SdState::Fail) { state = SdState::Init; err = clean ? "power-closed" : "power-loss"; }
+        ++statusRevision; publish();
+    }
+};
+PowerStorage powerStorage;
+logger_power::Session<PowerStorage> powerSession;
+bool qualifiedActive() { return powerSession.active(powerSnapshot()); }
+#endif
 } // namespace
 
 OutTee Out;
@@ -349,34 +408,41 @@ size_t OutTee::write(uint8_t b) {
     return write(&b, 1);
 }
 
+void sdProducerPoll() {
+#if LOGGER_POWER_QUALIFIED
+    atomicWrite(producerAck, producer.poll(atomicRead(producerCommand)));
+#endif
+}
 size_t OutTee::write(const uint8_t *data, size_t n) {
-    // One line of the report is ~40 bytes and the longest note is under 100,
-    // so a line that does not fit is a bug, not a long line: push what we have
-    // and keep the stream aligned rather than silently splice two lines.
+#if LOGGER_POWER_QUALIFIED
+    for (size_t i = 0; i < n; ++i) {
+        const auto snapshot = powerSnapshot();
+        const uint32_t command = atomicRead(producerCommand);
+        const bool allowed = snapshot.recording() && snapshot.generation == atomicRead(fileGeneration);
+        if (producer.put(char(data[i]), command, allowed,
+                         [](const char *p, size_t size) { return queue.push(p, size); })) ++droppedLines;
+        atomicWrite(producerAck, producer.poll(command));
+    }
+    // USB is a best-effort mirror in qualified mode. Don't wait for a sleeping
+    // host's TX buffer; real card records still pass through the full assembler.
+    const int available = Serial.availableForWrite();
+    if (available > 0) Serial.write(data, n < size_t(available) ? n : size_t(available));
+    return n;
+#else
+    // Preserve the manual build's historical 160-byte framing/USB behavior.
     static char line[160];
     static size_t len = 0;
     for (size_t i = 0; i < n; ++i) {
         const char c = char(data[i]);
-        if (c == '\r') continue;                 // CDC prints CRLF; the card gets LF
+        if (c == '\r') continue;
         if (len < sizeof(line)) line[len++] = c;
         if (c == '\n' || len == sizeof(line)) {
-            // Push the whole line or none of it: a partial line on the card is
-            // a bare row to whatever reads it later (rule 4.1).
-            const uint32_t head = ringHead;
-            __dmb();
-            const uint32_t used = head - ringTail;
-            if (len <= RING_SIZE - 1 - used) {
-                for (size_t k = 0; k < len; ++k)
-                    ring[(head + k) & RING_MASK] = line[k];
-                __dmb();
-                ringHead = head + len;
-            } else {
-                ++droppedLines;
-            }
+            if (!queue.push(line, len)) ++droppedLines;
             len = 0;
         }
     }
     return Serial.write(data, n);
+#endif
 }
 
 void sdSetup() {
@@ -388,6 +454,10 @@ void sdSetup() {
 }
 
 void sdLoop() {
+#if LOGGER_POWER_QUALIFIED
+    powerSession.step(powerSnapshot(), powerStorage);
+    if (!qualifiedActive()) return;
+#endif
     if (state != SdState::Ok) {
         // Not fatal and not urgent: a missing card retries every 5 s forever
         // while the counter keeps counting and printing.
@@ -396,8 +466,8 @@ void sdLoop() {
         return;
     }
     renameWhenClockArrives();
-    if (!settleTail()) return;
-    if (!drain()) return;
+    if (!backgroundAllowed() || !settleTail()) return;
+    if (!drain() || !backgroundAllowed()) return;
     const bool due = int32_t(millis() - syncAt) >= 0;
     if (sinceSync && (due || sinceSync >= SD_SYNC_BYTES)) {
         const uint32_t t0 = millis();
@@ -449,6 +519,13 @@ void sdPrintStatus() {
                  s.code, s.data, (unsigned long)droppedLines);
     }
     Out.println(line);
+#if LOGGER_POWER_QUALIFIED
+    if (s.powerGeneration) {
+        snprintf(line, sizeof(line), "# POWER closed_generation=%lu clean=%u",
+                 (unsigned long)s.powerGeneration, unsigned(s.powerClean));
+        Out.println(line);
+    }
+#endif
 }
 
 bool sdStatusChanged() {
@@ -464,7 +541,7 @@ bool sdStatusChanged() {
 // opened read-only. Every operation is measured in the existing wmax_ms.
 bool sdUploadReady() {
     __dmb();
-    return state == SdState::Ok && ringHead == ringTail && tail.mayDrain();
+    return backgroundAllowed() && state == SdState::Ok && queue.head() == queue.tail() && tail.mayDrain();
 }
 void sdUploadRewind() {
     const uint32_t t0 = millis();
@@ -472,7 +549,7 @@ void sdUploadRewind() {
     trackWorst(t0);
 }
 bool sdUploadValid(const logger_upload::File &item) {
-    return state == SdState::Ok && item.generation == cardGeneration;
+    return backgroundAllowed() && state == SdState::Ok && item.generation == cardGeneration;
 }
 int sdUploadNext(logger_upload::File &item) {
     if (!sdUploadReady()) return 0;

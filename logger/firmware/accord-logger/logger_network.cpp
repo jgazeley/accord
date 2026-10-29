@@ -1,3 +1,4 @@
+#include "logger_power.h"
 #include <Arduino.h>
 #include <lwIP_CYW43.h>
 #include <pico/cyw43_arch.h>
@@ -314,6 +315,10 @@ void networkSetup() {
 }
 
 void networkLoop() {
+    if (!powerBackgroundAllowed()) {
+        uploadDisconnect();
+        return;
+    }
     bool ready, led, known, on;
     uint64_t askedMs = 0, askedAt = 0;
     mutex_enter_blocking(&mailboxMutex);

@@ -1,3 +1,31 @@
+> LRA-05 candidate update, October 29, 2026 — Codex `logger-power`, session
+> `01a18463-5ed7-7041-ad90-ec3a7480c4e6`.
+> Resume: `codex resume 01a18463-5ed7-7041-ad90-ec3a7480c4e6`.
+> Firmware is now the isolated `0.8.1-lra05-dev` candidate described in
+> [LRA05_HANDOFF.md](coordination/LRA05_HANDOFF.md). The historical import
+> provenance below remains unchanged; its statement of unchanged behavior
+> describes the import, not this candidate.
+>
+> Manual power remains the default: `firmware/accord-logger/power_config.h`
+> defines `LOGGER_POWER_QUALIFIED=0`. Qualified GP5/GP6 mode is an explicit
+> opt-in (`1`) pending manager/firmware review and hardware qualification.
+> Do not select it for the existing manual wiring merely to try the firmware.
+>
+> From the repository root, run `python3 logger/tools/test_native.py` and
+> `python3 logger/tests/check_power_converter.py`. To compile both modes with
+> dummy credentials, run
+> `python3 logger/tests/build_power_candidates.py --output /tmp/lra05-builds`.
+> This stages isolated source copies and invokes the unchanged documented
+> `tools/build_candidate.py` helper; only the qualified copy's config default
+> changes to `1`. Manifests record effective source/config hashes. No private
+> secrets are read and neither profile is flashed. The ordinary build helper
+> still builds the checked-out manual default unless explicitly configured.
+>
+> Rollback is a manual-mode build (`0`), which reserves no GP6, installs no
+> power alarm, and enables no application watchdog. For exact pre-LRA-05 source,
+> use reviewed main base `2c52afd7b5609444641d02cd420bc252a1f494c7` in an isolated
+> checkout. Deployment/physical wiring changes require their own authorization.
+
 > Current coordination, October 28, 2026: new work starts in this repository.
 > Read [current tasks](../coordination/PROJECT_MILESTONES.md); power/shutdown
 > interface agreement precedes that implementation. The configuration instructions
