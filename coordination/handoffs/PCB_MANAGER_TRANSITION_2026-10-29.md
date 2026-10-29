@@ -37,39 +37,39 @@ checks, 44 power checks, 9 native suites, 12 converter cases, and the three
 `task/LRA-03-23d6d0fb` is unmerged-from only in the sense that it is now merged;
 leave it in place.
 
-## Open item a successor must handle first
+## Pushing from this host
 
-**Those commits are on local `main` and were not pushed.** This session
-had no GitHub credential: HTTPS has no helper configured and the SSH key the
-predecessor session used is not reachable from here. Nothing is lost — the
-commits are in the shared checkout at `/srv/agent_share/accord` — but
-`origin/main` still points at `b7e44e6` until someone with the key runs:
+All of the above is pushed: `origin/main` is at the shift-close commit and
+`archive/reviews/LRA03-a9c828b` exists on the remote.
+
+The push needs an explicit identity file. There is no `ssh-agent` and no
+`~/.ssh/config` here, so a bare `git push git@github.com:...` fails with
+`Permission denied (publickey)` even though the right key is on disk. Use:
 
 ```sh
-git -C /tmp/accord-manager push git@github.com:jgazeley/accord.git main:main
-git -C /tmp/accord-manager push git@github.com:jgazeley/accord.git \
-    archive/reviews/LRA03-a9c828b
+git -c core.sshCommand='ssh -i ~/.ssh/id_ed25519_accord_public -o IdentitiesOnly=yes' \
+    push git@github.com:jgazeley/accord.git main:main
 ```
 
-Confirm the push before citing GitHub links to `dc07292` or later in any new
-packet; until then those links 404.
+`~/.ssh/id_ed25519_accord_public` is the key for the public `accord` repository;
+the older `id_ed25519_accord_logger` belongs to the historical repository. Do
+not cite a GitHub link to a commit before confirming it is pushed.
 
 ## Next actions
 
-1. **Push those commits**, or confirm the owner has.
-2. **LRA-04 corrected pass.** Six findings in
+1. **LRA-04 corrected pass.** Six findings in
    [the review](../reviews/LRA04_REVIEW_2026-10-29.md). Two are contradictions
    inside the proposal itself, so they are correctable from the return's own
    text plus `keyless/hardware/hondaPico.kicad_sch` and
    `keyless/firmware/accord-keyless/accord-keyless.ino`. No bench access,
    purchase or new owner question is needed. The deliverables land under
    `logger/hardware/communications/` when they pass.
-3. **LRA-06 start condition.** `logger/hardware/as-built/REV_A_INTERFACES.md` is
+2. **LRA-06 start condition.** `logger/hardware/as-built/REV_A_INTERFACES.md` is
    now the documented pin/interface baseline, so known-block schematic capture
    can begin. A freeze still needs the §10 dispositions: analog reviewer on
    loading and protection, electrical lead on power boundaries, firmware
    reviewer on the pin map, LRA-04 on bus allocation, manager acceptance.
-4. **Electrical R02–R05** and the bounded LRA-05 masked-interrupt follow-up are
+3. **Electrical R02–R05** and the bounded LRA-05 masked-interrupt follow-up are
    unchanged and still open.
 
 ## What this shift did not do
