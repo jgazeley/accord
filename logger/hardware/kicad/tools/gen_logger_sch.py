@@ -68,13 +68,14 @@ part('J2', 'Connector_Generic:Conn_01x08', 'Cluster harness 8-way',
 # with the parked-drain justification withdrawn.
 ISO_REQ = ('Custom:PLACEHOLDER_SIGNAL_ISO_REQ', 'SIGNAL_ISOLATION (required)',
            'REQUIRED_BEFORE_INTEGRATION',
-           'required on measured evidence (D-OFFSTATE-01, as corrected): key '
-           'out, B2 reads 4.140 V loaded against 4.669 V open-circuit and '
-           'draws 134-141 uA, of which 99-110 uA is back-fed into the Pico\'s '
-           'unpowered 3V3 rail through a forward-biased clamp measured at '
-           '0.883 V on the clamp cathodes. One branch alone exceeds the 100 uA '
-           'whole-system parked budget, against an 8/20 uA allocation for all '
-           'five. This is not only a current budget: the branch partially '
+           'required on measured evidence (D-OFFSTATE-01, measured exactly): '
+           'key out, B2 reads 4.669 V open-circuit, 4.140 V loaded at the tap, '
+           '1.042 V at the 22k/33k junction and 0.883 V on the clamp cathodes. '
+           'It draws 140.8 uA, of which 109.2 uA is back-fed into the Pico\'s '
+           'unpowered 3V3 rail through a forward-biased clamp and only 31.6 uA '
+           'reaches ground through the 33k. One branch is 141 percent of the '
+           'whole 100 uA system parked budget and 17.6x the 8 uA allocated to '
+           'all five. This is not only a current budget: the branch partially '
            'energizes a board that is meant to be off. ' + NOFP_PLACE)
 ISO_REVIEW = ('Custom:PLACEHOLDER_SIGNAL_ISO_REVIEW',
               'SIGNAL_ISOLATION (under review)',
@@ -84,13 +85,21 @@ ISO_REVIEW = ('Custom:PLACEHOLDER_SIGNAL_ISO_REVIEW',
               'out (D-OFFSTATE-01). Whether a fault or transient reason keeps '
               'it is the analog reviewer\'s call. ' + NOFP_PLACE)
 ISO = {'VSS': ISO_REQ}
+ISO_EXTRA = {
+    'TACH': (" Separately, for whoever picks up D11: the B2 clamp measurement"
+             " gives U-07 its first measured point, 159 mV at 109 uA at room"
+             " temperature. V_F keeps falling below that current, so this"
+             " branch's clamp onset is lower than a 0.3 V assumption gives and"
+             " D11's margin is smaller than estimated. D11 is not LRA-06's and"
+             " nothing here acts on it."),
+}
 
 
 def iso_part(key, Y, tap, iso):
     lib_id, value, status, note = ISO.get(key, ISO_REVIEW)
     part(f'XISO_{key}', lib_id, value, 109.22, Y, nets={1: tap, 2: iso}, fp='',
          status=status, source='REV_A_INTERFACES D4/S3.4, D-OFFSTATE-01',
-         note=note)
+         note=note + ISO_EXTRA.get(key, ''))
 
 
 DIG = [
@@ -107,10 +116,17 @@ for key, desc, Y, rt, rb, tap, iso, sig in DIG:
     part(f'R_{key}_B', 'Device:R', rb, 203.2, Y, nets={1: sig, 2: 'PGND'},
          fp=FP_R, status='VERIFY_STOCK', source='AS_BUILT S2',
          note='fitted divider bottom, value unchanged')
+    dnote = 'fitted clamp, anode at the pin, cathode to switched 3V3'
+    if key == 'VSS':
+        dnote += ('. This is the specimen behind U-07\'s first measured point: '
+                  'the parked B2 readings give it 159 mV at 109 uA at room '
+                  'temperature, a Schottky drop, which corroborates the '
+                  'reported 1N5819 rather than merely repeating it. Hot and '
+                  'cold V_F remain open')
     part(f'D_{key}', 'Diode:1N5819', '1N5819', 248.92, Y, rot=180,
          nets={2: sig, 1: 'P3V3_SW'}, fp=FP_DO41, mpn='Chanzon 1N5819',
-         status='VERIFY_STOCK', source='AS_BUILT S2/S3.4a',
-         note='fitted clamp, anode at the pin, cathode to switched 3V3')
+         status='VERIFY_STOCK', source='AS_BUILT S2/S3.4a, U-07',
+         note=dnote)
 
 ADC = [
     ('FUEL', 'C11 fuel sender', 330.2, '7.5k', '4.7k', 'C11_TAP', 'C11_ISO',
@@ -506,16 +522,18 @@ NOTES = [
      'upstream of a divider top. Five positions, one per branch, in two states\n'
      'after the owner key-out measurement of October 29 (D-OFFSTATE-01):\n'
      '  REQUIRED  - B2 only, and on a back-feed path rather than only a drain.\n'
-     '              Key out, B2 reads 4.140 V loaded against 4.669 V open-\n'
-     '              circuit and draws 134-141 uA. The divider is not the only\n'
-     '              load: a clamp is forward-biased, its cathodes measure\n'
-     '              0.883 V to chassis, and 99-110 uA of that current is\n'
-     '              back-fed into the Pico 3V3 rail while the board is off.\n'
-     '              One branch alone exceeds the whole 100 uA system parked\n'
-     '              budget, against 8/20 uA allocated to all five together,\n'
-     '              and it partially energizes a board meant to be dead.\n'
-     '              This is the one row of the S6 off-state matrix that is\n'
-     '              established by measurement rather than by nothing.\n'
+     '              Four readings in one configuration fix it with nothing\n'
+     '              estimated: 4.669 V open-circuit, 4.140 V loaded at the\n'
+     '              tap, 1.042 V at the 22k/33k junction, 0.883 V on the clamp\n'
+     '              cathodes. B2 draws 140.8 uA. The divider is not the only\n'
+     '              load: a clamp is forward-biased, so only 31.6 uA reaches\n'
+     '              ground through the 33k and 109.2 uA is back-fed into the\n'
+     '              Pico 3V3 rail while the board is off. One branch is 141%\n'
+     '              of the whole 100 uA system parked budget and 17.6x the\n'
+     '              8 uA allocated to all five together, and it partially\n'
+     '              energizes a board meant to be dead. This is the one row\n'
+     '              of the S6 off-state matrix established by measurement\n'
+     '              rather than by nothing. Parked source 3,757 ohm.\n'
      '  UNDER REVIEW - B1 and C11 measure 0 V key out, and C14 and B11 were\n'
      '              already recorded dead. The parked-drain justification is\n'
      '              withdrawn for these four; whether a fault or transient\n'

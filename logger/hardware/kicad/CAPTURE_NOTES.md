@@ -61,21 +61,49 @@ and C11 read 0 V and C14 and B11 were already recorded dead with the key out. Al
 five positions are kept, as the amended packet directs.
 
 X1 carries the measured requirement, and it is a **back-feed** case rather than
-only a drain. Every reading was taken with the dividers, clamps, Pico module and
-SD module seated and only the USB lead pulled, so the clamp is conducting and the
-divider was never the only load. B2 draws **134–141 µA**, of which **99–110 µA is
-back-fed into the Pico's unpowered 3V3 rail** through a forward-biased clamp,
-measured at **0.883 V on the clamp cathodes to chassis**. One branch alone exceeds
-the entire 100 µA whole-system parked budget, against 8/20 µA allocated to all
-five together — and it partially energizes a board that is meant to be off. This
-is the one row of `REV_A_INTERFACES` §6's off-state matrix that is now
-established by measurement rather than listed as established by nothing.
+only a drain. Every reading was taken in one configuration — dividers, clamps,
+Pico module and SD module seated, only the USB lead pulled — so the clamp is
+conducting and the divider was never the only load. Four readings now fix the
+branch with nothing estimated:
 
-**Two earlier figures do not appear anywhere in this capture, and should not be
-reintroduced:** 75.3 µA assumed the divider was the only load, and a 7.03 kΩ
-source impedance assumed the clamp was off. B2's parked source is **3.8–3.9 kΩ**,
-an always-on pull-up to about 4.67 V. Reading the 22k/33k junction would collapse
-the remaining clamp-V<sub>F</sub> range and fix every figure exactly.
+| Reading | Value |
+|---|---|
+| B2 open-circuit | 4.669 V |
+| B2 loaded at the tap | 4.140 V |
+| 22k/33k junction | 1.042 V |
+| Clamp cathodes to chassis | 0.883 V |
+
+From those: B2 draws **140.8 µA**, of which only **31.6 µA** reaches ground
+through the 33k and **109.2 µA is back-fed into the Pico's unpowered 3V3 rail**
+through a forward-biased clamp. One branch is **141 % of the entire 100 µA
+whole-system parked budget** and **17.6×** the 8 µA allocated to all five
+together — and it partially energizes a board that is meant to be off. B2's
+parked source is **3,757 Ω**, an always-on pull-up to about 4.67 V. This is the
+one row of `REV_A_INTERFACES` §6's off-state matrix now established by
+measurement rather than listed as established by nothing.
+
+**Superseded figures. None appears anywhere in this capture, and none should be
+reintroduced:**
+
+| Superseded | Current | Why it was wrong |
+|---|---|---|
+| 75.3 µA drawn | 140.8 µA | assumed the divider was the only load; the clamp conducts |
+| 7.03 kΩ parked source | 3,757 Ω | assumed the clamp was off |
+| 134–141 µA drawn | 140.8 µA | assumed a clamp forward drop, since measured |
+| 99–110 µA back-fed | 109.2 µA | same assumed clamp drop |
+| 3.8–3.9 kΩ parked source | 3,757 Ω | same assumed clamp drop |
+
+The ranges in the last three rows came from bracketing the clamp V<sub>F</sub>
+between 0.15 V and 0.30 V. The junction reading removed that bracket.
+
+**A by-product worth not losing: U-07 has its first measured point.** The same
+readings give the B2 clamp **159 mV at 109 µA at room temperature** — a Schottky
+drop, which corroborates the 1N5819 the record has only ever *reported*. It cuts
+against D11 rather than for it: V<sub>F</sub> keeps falling below 109 µA, so the
+tach cell's clamp onset is lower than a 0.3 V assumption gives and its margin is
+smaller than estimated. Hot and cold V<sub>F</sub> stay open. D11 is not
+LRA-06's and nothing here acts on it; the X2 placeholder and the B2 clamp both
+carry a pointer so the next reader gets it without hunting.
 
 X2–X5 keep their positions with the parked-drain justification withdrawn; whether
 a fault or transient reason keeps them is the analog reviewer's call, not this

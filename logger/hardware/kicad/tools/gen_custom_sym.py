@@ -93,18 +93,19 @@ def placeholder(name, desc, keywords, pins, w, h, label):
 syms = [lm]
 
 # D4 input isolation. Two variants so the SVG shows at a glance which branch
-# has a measured case. D-OFFSTATE-01, October 29, as corrected: key out, B2
-# reads 4.140 V loaded against 4.669 V open-circuit and draws 134-141 uA, of
-# which 99-110 uA is back-fed into the Pico's unpowered 3V3 rail through a
-# forward-biased clamp. B1 and C11 read 0 V, and C14 and B11 were already
-# recorded dead with the key out. All five positions are kept; only the
-# justification differs.
+# has a measured case. D-OFFSTATE-01, October 29, measured exactly: key out, B2
+# reads 4.669 V open-circuit, 4.140 V loaded at the tap, 1.042 V at the 22k/33k
+# junction and 0.883 V on the clamp cathodes, which fixes the branch with
+# nothing estimated: 140.8 uA drawn, 109.2 uA of it back-fed into the Pico's
+# unpowered 3V3 rail through a forward-biased clamp and only 31.6 uA reaching
+# ground. B1 and C11 read 0 V, and C14 and B11 were already recorded dead with
+# the key out. All five positions are kept; only the justification differs.
 iso_pins = [pin('1', 'TAP', -15.24, 0, 0), pin('2', 'DIV', 15.24, 0, 180)]
 syms.append(placeholder(
     'PLACEHOLDER_SIGNAL_ISO_REQ',
     'LRA-06 placeholder: normally-open, power-off-safe signal isolation '
     'upstream of the B2 divider top (delta D4). Required on measured evidence: '
-    'key out, B2 draws 134-141 uA and back-feeds 99-110 uA into the unpowered '
+    'key out, B2 draws 140.8 uA and back-feeds 109.2 uA into the unpowered '
     '3V3 rail through a forward-biased clamp, D-OFFSTATE-01. No part is '
     'selected.',
     'placeholder isolation D4 required B2 backfeed unselected',
