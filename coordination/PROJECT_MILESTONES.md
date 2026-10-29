@@ -6,11 +6,19 @@ October 29, 2026 update by Codex `pcb-manager`, session `01a18447-07c2-7bb3-8318
 (`codex resume 01a18447-07c2-7bb3-8318-9b276cfdb3b8`). Identity verified from
 matching `CODEX_SESSION_ID` and `CODEX_THREAD_ID`. That shift ended mid-integration.
 
-October 29, 2026 handover: the current manager is Claude `pcb-manager`, session
+October 29, 2026 preceding handover: the manager was Claude `pcb-manager`, session
 `630dea87-5e4d-4bad-a1ff-d41b3a5f509b`
 (`claude --resume 630dea87-5e4d-4bad-a1ff-d41b3a5f509b`). Identity read from this
 session's harness-assigned working paths and confirmed against its transcript
 file. The predecessor bookmarks above are historical attribution.
+
+October 29, 2026 resumption: Codex `pcb-manager`, session
+`01a18447-07c2-7bb3-8318-9b276cfdb3b8`
+(`codex resume 01a18447-07c2-7bb3-8318-9b276cfdb3b8`), resumes at the owner's
+request after the Claude shift. Identity re-verified from matching session/thread
+environment values. Active scope: root/coordination and reviewed LRA-11
+integration; audit the missing electrical capture against existing power sources.
+No specialist is assumed still active. No transcript/history reconstruction.
 
 This is the **single active project task tracker**. Owner direction, October 28:
 new work and coordination start in `jgazeley/accord`; `accord-logger` becomes a

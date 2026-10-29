@@ -26,19 +26,20 @@ Prepared October 28, 2026 by Codex `pcb-manager`, session `01a17045-1855-7af2-b7
 
 ### Current manager claim — October 29, 2026
 
-Current manager: Claude `pcb-manager`, session
-`630dea87-5e4d-4bad-a1ff-d41b3a5f509b`.
-Bookmark: `claude --resume 630dea87-5e4d-4bad-a1ff-d41b3a5f509b`.
-Identity read from this session's harness-assigned working paths and confirmed
-against its transcript file; this tool exposes no second identifier to
-cross-check it against.
+Current manager: Codex `pcb-manager`, session
+`01a18447-07c2-7bb3-8318-9b276cfdb3b8`.
+Bookmark: `codex resume 01a18447-07c2-7bb3-8318-9b276cfdb3b8`.
+Resumed October 29 after the owner closed the Claude manager shift. Identity
+verified again from matching `CODEX_SESSION_ID` and `CODEX_THREAD_ID`.
+Current assignment: remove layout blockers using the existing project documents
+and design candidates; do not reconstruct transcripts or historical work.
 
-Preceding manager, historical attribution: Codex `pcb-manager`, session
-`01a18447-07c2-7bb3-8318-9b276cfdb3b8`
-(`codex resume 01a18447-07c2-7bb3-8318-9b276cfdb3b8`), identity verified from
-matching `CODEX_SESSION_ID` and `CODEX_THREAD_ID`. That shift ended with the
-LRA-03 merge prepared but uncommitted; this session reviewed, repaired and
-committed it.
+Preceding manager, historical attribution: Claude `pcb-manager`, session
+`630dea87-5e4d-4bad-a1ff-d41b3a5f509b`
+(`claude --resume 630dea87-5e4d-4bad-a1ff-d41b3a5f509b`). That shift completed
+the LRA-03 integration, integrated LRA-06, recorded the owner's measurements
+and board envelope, and reviewed the LRA-11 candidate. Earlier in the day this
+Codex session held the manager role before that Claude shift.
 
 Scope: root/coordination, task assignment and integration. Specialist claims and
 dependencies remain in `coordination/PROJECT_MILESTONES.md`. The preceding manager
