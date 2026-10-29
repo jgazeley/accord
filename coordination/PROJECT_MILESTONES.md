@@ -133,22 +133,30 @@ for every row. Remote electrical work and local physical validation are distinct
   4.140 V was read loaded or open-circuit is **answered the same day**: the owner
   lifted the VSS wire and read **4.669 V** open-circuit against 4.140 V loaded.
   So injection is real rather than an upper bound, and B2 is held up by an
-  always-on pull-up to about 4.67 V through **3.8–3.9 kΩ**.
-  **All three readings share one configuration**, which the owner confirmed:
-  dividers, clamps, Pico module and SD module all seated, the Pico unpowered
-  with the USB lead off. The clamp is therefore conducting throughout, and two
-  consequences follow. First, the clamp cathodes read **0.883 V to chassis**,
-  so B2's injection forward-biases a clamp and drives **99–110 µA into the
-  Pico's unpowered 3V3 rail** — the board is partially energized while parked,
-  and REV_A_INTERFACES §6's B2 row is now established by measurement rather
-  than listed as established by nothing. Second, total draw on B2 is
-  **134–141 µA**, so one branch by itself exceeds the entire 100 µA
-  whole-system parked budget.
-  **Two earlier figures were wrong and are corrected here:** 75.3 µA assumed
-  the divider was the only load, and 7.03 kΩ assumed the clamp was off. Neither
-  holds. Reading the 22k/33k junction would collapse the remaining clamp-V<sub>F</sub>
-  range and fix every figure exactly. Do not re-ask the three key-out readings,
-  the loaded/open-circuit pair or the rail reading.
+  always-on pull-up to about 4.67 V through **3,757 Ω**.
+  **All readings share one configuration**, which the owner confirmed: dividers,
+  clamps, Pico module and SD module all seated, the Pico unpowered with the USB
+  lead off. Four readings now close the branch with nothing assumed — 4.669 V
+  open-circuit, 4.140 V at the tap loaded, **1.042 V at the 22k/33k junction**
+  and 0.883 V on the clamp cathodes:
+
+  - B2 draws **140.8 µA**, of which **109.2 µA is back-fed through a
+    forward-biased clamp into the Pico's own 3V3 rail** and only 31.6 µA
+    reaches ground through the 33k. **The board is partially energized while
+    parked.**
+  - That one branch is **141 % of the entire 100 µA whole-system parked
+    budget** and **17.6×** the 8 µA allocated to all five together.
+  - The clamp drop is **159 mV at 109 µA** — a Schottky value, which
+    corroborates the 1N5819 the record claims and gives **U-07** its first
+    measured point. It does not close U-07, and because V<sub>F</sub> keeps
+    falling below 109 µA, **D11's clamp margin is smaller than estimated**.
+  - REV_A_INTERFACES §6 says nothing in its off-state matrix is established.
+    The B2 row now is, and it fails.
+
+  **Three earlier figures are superseded and must not be requoted:** 75.3 µA
+  (assumed the divider was the only load), 7.03 kΩ (assumed the clamp was off),
+  and the 134–141 µA / 3.8–3.9 kΩ ranges (assumed a clamp drop now measured).
+  Do not re-ask any of the four readings.
 - **D-KEYLESS-485-01 — owner statement, October 29:** the keyless board **has a
   MAX3485 fitted, in an IC socket**, and the **RS-485 link was tested
   extensively** from the Pi 4 using a host CLI — `./hp out lock pulse`,
