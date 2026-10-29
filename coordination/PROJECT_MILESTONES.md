@@ -117,6 +117,18 @@ for every row. Remote electrical work and local physical validation are distinct
 
 ## Decisions and gates
 
+- **D-KEYLESS-485-01 — owner statement, October 29:** the keyless board **has a
+  MAX3485 fitted, in an IC socket**. This supersedes
+  `keyless/firmware/accord-keyless/accord-keyless.ino` lines 5–6, which still
+  say USB CDC works "with no MAX3485 fitted" and that RS-485 runs "once U5 is
+  soldered"; the comment is stale and the part is socketed, not soldered. The
+  stale comment belongs to the keyless role to fix, like `D14` for the logger
+  sketch; nothing in `keyless/` was edited to record this. Fitted is not
+  exercised: no record here shows the RS-485 link carrying traffic, so treat the
+  precedent as built and socketed with bus operation unrecorded. Socketing is a
+  Rev A input — vibration and contact resistance for the electrical reviewer,
+  and a real but unguaranteed disconnection measure for the off-state question.
+  Do not re-ask whether the part is present.
 - **D-INVENTORY-01 — owner clarification, October 29:** the original reference is
   `/srv/agent_share/inventory/inventory_list.md`; the historical logger-power
   copy is not the primary inventory. The original is mostly accurate but
