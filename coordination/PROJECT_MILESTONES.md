@@ -16,9 +16,11 @@ October 29, 2026 resumption: Codex `pcb-manager`, session
 `01a18447-07c2-7bb3-8318-9b276cfdb3b8`
 (`codex resume 01a18447-07c2-7bb3-8318-9b276cfdb3b8`), resumes at the owner's
 request after the Claude shift. Identity re-verified from matching session/thread
-environment values. Active scope: root/coordination and reviewed LRA-11
-integration; audit the missing electrical capture against existing power sources.
-No specialist is assumed still active. No transcript/history reconstruction.
+environment values. Current scope: root/coordination, core-document maintenance
+and review of the future LRA-12 return; its implementation belongs to the
+owner-assigned remote engineer.
+LRA-12 is now owner-confirmed as started remotely; identity pending below.
+No transcript/history reconstruction.
 
 This is the **single active project task tracker**. Owner direction, October 28:
 new work and coordination start in `jgazeley/accord`; `accord-logger` becomes a
@@ -46,14 +48,16 @@ remain in use until separately migrated. Do not maintain another active tracker.
   [power export](../logger/hardware/power/README.md) now contains the existing
   candidate, BOMs, handoffs and scripts with provenance; private access is not
   required for LRA-01 review.
-- **Current next action:** dispatch [LRA-12](handoffs/LRA-12_LAYOUT_ELECTRICAL_CLOSURE.md),
-  the owner-requested single remote electrical/KiCad closure assignment. It must
-  deliver a complete footprint-assigned schematic/BOM for owner placement and
-  routing, using the existing power design. [Readiness review](reviews/LAYOUT_READINESS_2026-10-29.md)
-  closes the LRA-11 temperature-source question and identifies the actual capture,
-  protection, isolation/grounding and connector/expansion decisions remaining.
-  LRA-11's original return is integrated as a conditional design reference; its
-  enable circuit is not implemented. No new engineer is claimed or running yet.
+- **Current next action:** let the existing remote engineer resume
+  [LRA-12](handoffs/LRA-12_LAYOUT_ELECTRICAL_CLOSURE.md). **Owner reports it has
+  started**, building on `logger/hardware/kicad/accord-logger.kicad_pro` and its
+  current schematic. Execution is temporarily waiting on usage (owner estimated
+  another 1–2 hours when reporting it; not an automatic restart deadline).
+  Tool/session/branch and partial results have not been supplied here; no LRA-12
+  remote-tracking branch was visible at this audit. The scope is already assigned:
+  **do not redispatch or edit the engineer's implementation paths**.
+  On return, review the completed schematic/BOM/footprints before owner layout.
+  [Current manager handoff](handoffs/PCB_MANAGER_LAYOUT_HANDOFF_2026-10-29.md).
 - **Authority:** Codex `pcb-manager`, session
   `01a18447-07c2-7bb3-8318-9b276cfdb3b8`, resumed after the owner closed Claude
   `pcb-manager` session `630dea87-5e4d-4bad-a1ff-d41b3a5f509b` for now.
@@ -81,10 +85,11 @@ requirement. Do not import every historical proposed signal into Rev A.
 
 ## Task graph — roles are owners; sessions are replaceable claimants
 
-State: ready / active / blocked / candidate / accepted / deferred. `Active`
-requires an acknowledged claimant and date. Candidate is not deployed/accepted.
-LRA-01 electrical claim and returned candidate are recorded below. Other
-specialist claims remain unacknowledged. Every row requires a
+State: ready / assigned / active / blocked / candidate / accepted / deferred.
+`Active` requires an acknowledged claimant and date. `Assigned` may record an
+owner-confirmed start while the specialist session/branch metadata is pending.
+Candidate is not deployed/accepted. Claims and returned candidates are recorded
+below; a past return does not imply a specialist is still running. Every row requires a
 task packet before dispatch; record the claim and evidence here, not in a second tracker.
 
 | ID | Responsible role | State / dependencies | Outcome and acceptance |
@@ -100,7 +105,7 @@ task packet before dispatch; record the claim and evidence here, not in a second
 | LRA-09 | Manager and independent reviewer | Blocked on 06/07/08; 05 interface feasibility/bring-up path | Frozen prototype-order review package, hashes, BOM, test restrictions and residual-risk matrix; owner approval still required |
 | LRA-10 | Local bench/firmware | Blocked on 09 and owner order/assembly/testing authorization | Actual-board bring-up evidence, then separate unattended-vehicle acceptance |
 | [LRA-11](handoffs/LRA-11_B2_OFFSTATE_ISOLATION.md) | Returned by Claude `analog-isolation`; session ID unavailable, no resume bookmark | **Integrated as a conditional design reference**, original `d8a67f7` preserved. ASSR-601JV remains the working B2 candidate. [Follow-up review](reviews/LAYOUT_READINESS_2026-10-29.md) closes the datasheet temperature question; 24 arithmetic checks rerun. Actual hardware enable, timing conditions and footprint implementation are in LRA-12. X1 remains in the capture; no circuit acceptance is claimed | Existing analysis available directly on main; complete the enable/power-off implementation without repeating the survey |
-| [LRA-12](handoffs/LRA-12_LAYOUT_ELECTRICAL_CLOSURE.md) | One remote electrical/KiCad engineer, **unclaimed**; manager reviews | **Ready for dispatch**, explicitly requested by owner October 29. Completes the remaining 02/03/04/06/11 electrical decisions in one edit scope; no bench access required to start | Complete schematic, consolidated BOM, verified footprints, input/power state table and 80 × 120 mm fit/keepout guidance; owner does placement/routing. No new power-topology survey or paper-only closure |
+| [LRA-12](handoffs/LRA-12_LAYOUT_ELECTRICAL_CLOSURE.md) | Owner-assigned remote electrical/KiCad engineer; tool/session/branch **not yet supplied**; manager reviews | **Started, owner-confirmed October 29; temporarily waiting on usage.** Continue the existing KiCad project. Preserve its single edit scope; do not duplicate the assignment. No return or partial implementation independently reviewed here | Complete schematic, consolidated BOM, verified footprints, input/power state table and 80 × 120 mm fit/keepout guidance; owner does placement/routing. Reuse working circuits and the existing power candidate |
 
 **Current layout path: LRA-12 electrical completion → owner LRA-08 placement/routing
 → LRA-09 prototype-order review.** LRA-06 is integrated and the envelope is fixed,
@@ -123,7 +128,7 @@ for every row. Remote electrical work and local physical validation are distinct
 | KEY-02 | Keyless role | **Dead reference fixed; import still optional and unclaimed.** The sketch now states once that `cm5sim` is the host-side CM5 stand-in, reached through `hp`, and is not part of this repository, so no reader chases a file that is not here. The stale "no MAX3485 fitted" / "once U5 is soldered" / "needs U5 fitted" comments are corrected in the same pass. Importing the tooling itself remains optional: nothing is blocked, the logger has no RS-485 today, and it becomes a real need only at LRA-07 bench work or if Rev A puts a bus on the logger. See `D-KEYLESS-485-01` |
 | KEY-01 | Proximity/keyless | Owner participation required: threshold/repeatability and parked operation independent of Pi/logger; installed settings unknown |
 | DIST-01 | Bridge/DB | Deferred: production-host cutover, packet checkpoints and independent server/VM comparison; not yet implemented |
-| DOC-01 | Codex pcb-manager, `01a18447-07c2-7bb3-8318-9b276cfdb3b8` | Active after resumption October 29. LRA-11 conditional reference integrated, temperature-source question closed, current layout blockers reconciled. LRA-12 prepared at owner request for one remote engineer; ready/unclaimed. Manager reviews the return before declaring the electrical handoff ready |
+| DOC-01 | Codex pcb-manager, `01a18447-07c2-7bb3-8318-9b276cfdb3b8` | Active after resumption October 29. LRA-11 conditional reference integrated, temperature-source question closed, current layout blockers reconciled. LRA-12 started by owner-assigned remote engineer, temporarily waiting on usage; identity/branch pending. Core-document audit and current manager handoff published; manager reviews the return before declaring the electrical handoff ready |
 
 ## Decisions and gates
 

@@ -12,7 +12,7 @@ Owner direction: this repository is the authoritative home for new active
 Accord development, hardware and coordination. `jgazeley/accord-logger` is
 historical reference and retained deployment storage, not a competing tracker.
 Read [current tasks](coordination/PROJECT_MILESTONES.md) and the
-[manager handoff](coordination/handoffs/PCB_MANAGER_TRANSITION_2026-10-28.md).
+[current manager handoff](coordination/handoffs/PCB_MANAGER_LAYOUT_HANDOFF_2026-10-29.md).
 New agents start here; recover only missing material with provenance/public review.
 The successor manager claims its own identity; predecessor sessions are history.
 
@@ -44,6 +44,31 @@ Codex session held the manager role before that Claude shift.
 Scope: root/coordination, task assignment and integration. Specialist claims and
 dependencies remain in `coordination/PROJECT_MILESTONES.md`. The preceding manager
 identities and bookmarks are historical attribution.
+
+## Core-document maintenance — owner direction, October 29
+
+Current project documents are the first source for onboarding and handoff.
+Use `coordination/PROJECT_MILESTONES.md` for live claims, decisions and next
+steps; `coordination/HANDOFF_INDEX.md` locates the current handoff and packets.
+`logger/hardware/REV_A_CONTEXT.md` summarizes hardware and links the detailed
+as-built, electrical and KiCad sources. Keep module READMEs accurate about
+implemented behavior and limitations.
+
+At each material status change and before a manager handoff, audit those core
+entry points against the current artifacts and owner statements. Correct stale
+summaries and links; mark historical records clearly instead of stacking
+contradictory current instructions. Record what was checked and any unresolved
+metadata in the handoff. Do not create another task tracker.
+
+Git, detailed reviews, session IDs/bookmarks and transcripts provide deeper
+history when a specific question needs it; they are not mandatory onboarding
+reads. Preserve attribution and provenance. Record an owner-reported task as
+already assigned even if its agent identity/branch is not yet supplied; a usage
+wait does not authorize dispatching a duplicate or editing its claimed scope.
+
+Recorded by Codex `pcb-manager`, session
+`01a18447-07c2-7bb3-8318-9b276cfdb3b8`
+(`codex resume 01a18447-07c2-7bb3-8318-9b276cfdb3b8`).
 
 ## Project boundaries
 

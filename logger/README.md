@@ -5,7 +5,7 @@ them over Wi-Fi during ignition-off windows. It captures speed/tachometer
 pulses, ignition and brake-warning states, and analog readings, with clock
 synchronization for timestamped records.
 
-The current firmware is **v0.8.1-dev**. The sketch is
+The current source is the **v0.8.1-lra05-dev** firmware candidate. The sketch is
 [accord-logger.ino](firmware/accord-logger/accord-logger.ino); firmware messages
 retain the `picow-logger` name. The [server](server/README.md) receives uploads and converts them to trip JSON.
 Database and dashboard applications are separate consumers.
@@ -21,10 +21,11 @@ python3 tools/test_native.py
 python3 tools/build_candidate.py --build-dir /tmp/build-accord-logger-dummy
 ```
 
-All eight native tests pass, and the firmware builds with zero warnings on this
-toolchain. The tests cover sampling helpers, card records, time parsing, the
-upload protocol and Wi-Fi scheduling; they do not replace device or receiver
-integration testing.
+The native runner contains nine suites, including the power supervisor. The
+LRA-05 integration review recorded passing native tests and both dummy build
+modes on this toolchain; see [configuration and validation](NEXT_AGENT.md).
+Tests cover sampling helpers, card records, time parsing, uploads, Wi-Fi and
+power-state logic; they do not replace device or receiver integration testing.
 
 The default build uses dummy credentials and is marked
 **DUMMY-CREDENTIALS-DO-NOT-FLASH**. The helper never flashes a board.
@@ -49,10 +50,14 @@ and generated source can contain credentials.
 
 ## Current limits
 
-The firmware does not yet implement automatic board power-off or SD retention
-and deletion. A full SD card does not overwrite the oldest recordings. The
-current arrangement keeps the Pico powered between journeys; Wi-Fi scheduling
-controls connection attempts separately.
+Manual power remains the default (`LOGGER_POWER_QUALIFIED=0`). An opt-in
+qualified-ignition/HOLD shutdown implementation exists, but its hardware and
+fault-timing acceptance remain open. It is not enabled for the existing manual
+wiring. See [configuration notes](NEXT_AGENT.md).
+
+SD retention/deletion is not implemented: a full card does not overwrite the
+oldest recordings. Wi-Fi scheduling controls connection attempts separately
+from board power.
 
 Source provenance and validation are recorded in
 [SOURCE_MANIFEST.json](SOURCE_MANIFEST.json).

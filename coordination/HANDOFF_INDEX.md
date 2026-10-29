@@ -14,7 +14,7 @@ This file is only a packet locator. Ready does not mean assigned or running.
 
 | Task/role | Packet |
 |---|---|
-| Successor pcb-manager / DOC-01 | [Manager handoff](handoffs/PCB_MANAGER_TRANSITION_2026-10-28.md), then [October 29 shift close](handoffs/PCB_MANAGER_TRANSITION_2026-10-29.md) |
+| Successor pcb-manager / DOC-01 | [Current layout-stage handoff](handoffs/PCB_MANAGER_LAYOUT_HANDOFF_2026-10-29.md). Earlier [October 28 transition](handoffs/PCB_MANAGER_TRANSITION_2026-10-28.md) and [superseded October 29 shift close](handoffs/PCB_MANAGER_TRANSITION_2026-10-29.md) are optional history |
 | LRA-01 power interface | [Power-interface packet](handoffs/LRA-01_POWER_INTERFACE.md) |
 | LRA-02 component margins/current budget | [Returning power-engineer packet](handoffs/LRA-02_COMPONENT_MARGINS.md) |
 | LRA-05 firmware power | [Isolated implementation packet](handoffs/LRA-05_FIRMWARE_POWER.md) |
@@ -23,7 +23,7 @@ This file is only a packet locator. Ready does not mean assigned or running.
 | LRA-06 schematic capture | [Rev A schematic capture packet](handoffs/LRA-06_SCHEMATIC_CAPTURE.md) |
 | LRA-11 B2 off-state isolation | [D4 resolution packet](handoffs/LRA-11_B2_OFFSTATE_ISOLATION.md) |
 | LRA-11 review | [B2 isolation candidate review](reviews/LRA11_REVIEW_2026-10-29.md) |
-| **LRA-12 electrical closure for owner layout — next dispatch** | [Single remote-engineer assignment](handoffs/LRA-12_LAYOUT_ELECTRICAL_CLOSURE.md), [current readiness review](reviews/LAYOUT_READINESS_2026-10-29.md) |
+| **LRA-12 electrical closure for owner layout — already assigned** | [Single remote-engineer assignment](handoffs/LRA-12_LAYOUT_ELECTRICAL_CLOSURE.md), [current readiness review](reviews/LAYOUT_READINESS_2026-10-29.md) |
 | Other LRA tasks | Prepare from [template](TASK_PACKET_TEMPLATE.md) when assigned; scope/acceptance in tracker |
 
 Optional history remains in old `coordination/HANDOFF_INDEX.md` at `1e99449`.

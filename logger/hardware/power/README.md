@@ -22,8 +22,13 @@ remaining current-budget gaps. The delta is not an accepted consolidated BOM.
 
 ## Read the existing design in revision order
 
-1. [Current LRA-01 packet](../../../coordination/handoffs/LRA-01_POWER_INTERFACE.md)
-   defines the active assignment, firmware baseline and ownership.
+1. [LRA-12](../../../coordination/handoffs/LRA-12_LAYOUT_ELECTRICAL_CLOSURE.md)
+   is the current electrical-completion packet; live ownership is in the
+   [tracker](../../../coordination/PROJECT_MILESTONES.md). Read the
+   [interface contract](INTERFACE_CONTRACT.md) and
+   [component review](COMPONENT_MARGIN_CLOSURE.md) for the later decisions.
+   The LRA-05 firmware candidate is integrated with manual power as default;
+   physical qualification remains open.
 2. [Cutoff margin review](CUTOFF_MARGIN_REVIEW.md) controls its listed changes:
    clock, reset/IGN, always-on supply and gate/current calculations.
 3. [Maximum-on cutoff](MAX_ON_CUTOFF.md) and [incremental BOM](MAX_ON_BOM.csv)
@@ -39,7 +44,7 @@ remaining current-budget gaps. The delta is not an accepted consolidated BOM.
 All eleven imported files retain their original bytes. Old `logger-power/`,
 firmware paths, commands, ownership, stock and deployment statements describe
 October 25 history. They do not redirect active work to the old repository.
-Use the current LRA-01 packet for task instructions and current firmware review.
+Use LRA-12 for the current continuation and the tracker for its assignment.
 The old README and full inventory are not exported; historical references to
 those files do not create prerequisites. Original engineering attribution,
 source commits and hashes are in [SOURCE_MANIFEST.json](SOURCE_MANIFEST.json)

@@ -5,7 +5,8 @@ Prepared October 29, 2026 by Codex `pcb-manager`, session
 Resume: `codex resume 01a18447-07c2-7bb3-8318-9b276cfdb3b8`.
 Identity verified from matching `CODEX_SESSION_ID` and `CODEX_THREAD_ID`.
 
-**Parent:** M5. **Responsible:** one remote electrical/KiCad engineer; unclaimed.
+**Parent:** M5. **Responsible:** one remote electrical/KiCad engineer; current
+assignment/claim is recorded in `coordination/PROJECT_MILESTONES.md`.
 **Reviewer/integration owner:** current pcb-manager. The owner will do layout.
 The owner explicitly requested this single assignment. No bench is available
 to the remote engineer and none is required to begin it.
