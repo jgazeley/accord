@@ -5,6 +5,12 @@ Prepared October 28, 2026 by Codex `pcb-manager`, session `01a17045-1855-7af2-b7
 October 28 export update by Codex `pcb-manager`, session `01a18447-07c2-7bb3-8318-9b276cfdb3b8`
 (`codex resume 01a18447-07c2-7bb3-8318-9b276cfdb3b8`).
 
+October 29 update by Claude `pcb-manager`, session
+`630dea87-5e4d-4bad-a1ff-d41b3a5f509b`: a reviewed schematic now exists at
+[kicad/](kicad/), integrated as a candidate — not frozen. The owner's October 29
+measurements closed several unknowns this document treats as open; where it and
+[AS_BUILT.md](as-built/AS_BUILT.md) §6 disagree, the register is current.
+
 This is active task context, **not a complete verified schematic**. It replaces
 transcript reconstruction for onboarding. Task state belongs only in
 [the project tracker](../../coordination/PROJECT_MILESTONES.md).

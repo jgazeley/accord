@@ -1,5 +1,27 @@
 # Manager shift close — October 29, 2026
 
+> **SUPERSEDED, later the same day. Do not act on the "Next actions" below.**
+>
+> This was written as a shift-close handoff at 06:38 on October 29. The shift
+> did not end: the same manager session continued through the day and
+> everything this document proposes as next work is finished or overtaken.
+> It is kept as a point-in-time record, not as guidance.
+>
+> Two things in it are now wrong. The LRA-04 review has **five** standing
+> findings, not six — R04-REV-3 was withdrawn as the reviewer's error at
+> `564bd7d`, and the browser return's "proven on keyless" claim was correct.
+> And the "LRA-06 start condition" is long past: LRA-06 was packaged, claimed,
+> returned, reviewed over four revisions and **integrated onto `main`** at
+> `logger/hardware/kicad/`.
+>
+> What happened after this was written: the owner measured the car, closing
+> U-10, U-11 and U-14 and part of U-07 and U-08; D4 narrowed from five branches
+> to one and became `LRA-11`; the board envelope was fixed at 80 × 120 mm.
+>
+> **For current state read [the tracker](../PROJECT_MILESTONES.md).** The live
+> critical path is `LRA-11 → LRA-08 → LRA-09`.
+
+
 Prepared October 29, 2026 by Claude `pcb-manager`, session
 `630dea87-5e4d-4bad-a1ff-d41b3a5f509b`.
 Bookmark: `claude --resume 630dea87-5e4d-4bad-a1ff-d41b3a5f509b`.

@@ -21,9 +21,16 @@ pin map alone is not a wiring schematic. The brake-warning signal can represent
 parking brake or low fluid, not an unambiguous parking-brake state. The fuel
 input records ADC measurements, not an independently calibrated fuel quantity.
 
-A reviewed, consolidated logger schematic/BOM remains to be published.
-Automatic power cutoff is not implemented in this firmware baseline.
-No fabrication-ready logger board is claimed by this repository.
+A reviewed, consolidated logger schematic and BOM are now published in
+[kicad/](kicad/) as `accord-logger.kicad_pro`, integrated October 29 after
+review. It is a reviewed candidate, **not frozen and not fabrication-ready**:
+one electrical question is open on the ignition optocoupler's return, the
+input-isolation part is unselected, and no layout exists. Automatic power
+cutoff is not implemented in this firmware baseline. No fabrication-ready
+logger board is claimed by this repository.
+
+The pin map above is the **as-built** firmware baseline. Rev A changes what
+GP5 means and adds GP6; see [as-built/REV_A_INTERFACES.md](as-built/REV_A_INTERFACES.md) §1.
 
 Current electrical/PCB context: [Rev A context](REV_A_CONTEXT.md).
 Active task authority: [project milestones](../../coordination/PROJECT_MILESTONES.md).
