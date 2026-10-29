@@ -121,6 +121,48 @@ for every row. Remote electrical work and local physical validation are distinct
 
 ## Decisions and gates
 
+- **D-POWER-03 — owner correction, October 29:** the logger power front end is
+  **not new work**. The keyless board already carries it, on a permanent 12 V
+  body-harness feed, in the car, surviving cranking, and it was designed from
+  study of the original Honda keyless PCB. Verified from
+  `keyless/hardware/hondaPico.kicad_sch` by `kicad-cli` BOM export:
+
+  | Block | Keyless, in service | Logger candidate | |
+  |---|---|---|---|
+  | Regulator | U3 LM2678T-5.0 | UREG LM2678T-5.0/NOPB | identical |
+  | Input TVS | RV20 **1.5KE30A** | TVS **1.5KE30A-E3/54** | identical |
+  | Output bulk | C30 820 µF 16 V | COUT 820 µF/16 V | identical |
+  | Input bulk | C20 100 µF 50 V | CIN 100 µF/50 V | identical |
+  | Boost | C15 10 nF | CBOOST 10 nF/50 V | identical |
+  | Inductor | L1 22 µH 2 A, D10.0 | L1 22 µH Bourns RLB0912, D8.7 | same value, **keyless part is larger** |
+  | Catch | D30 SS34 / STPS5L60 3 A | DCATCH SB360-E3/54 3 A | equivalent |
+  | Reverse block | D20 1N5822 3 A | DREV SB360-E3/54 3 A | equivalent |
+
+  **The delta is only the autonomous switching** — QP, QI/QH, DZ, DOR and the
+  MAX_ON logic — which keyless does not need because it never turns off. The
+  supply itself is the same circuit with the same parts.
+
+  **Consequences.**
+  1. **R02 is better supported than the record says.** `BOM.csv` marks the TVS
+     `CANDIDATE_NOT_VEHICLE_APPROVED` and "inherited protection candidate only".
+     It is the same part, in the same role, on a board that has taken cranking
+     transients in this vehicle. That is not a logger qualification — different
+     board, layout and load — but it is in-vehicle evidence, not inheritance,
+     and R02 should be reframed as *qualify the delta* rather than *choose a
+     protection scheme*.
+  2. **Keyless protects its signal lines and the logger does not.** Seven
+     **P6KE30A** sit on the keyless harness lines; the logger has none, and the
+     owner reports four P6KE30A on hand. A direct template for the logger input
+     protection, and an input to R02.
+  3. **The permanent-12 V question is already answered in the family.** Keyless
+     runs exactly the architecture the owner is considering for the logger.
+  4. **Check the inductor against keyless before trusting the logger BOM note.**
+     The logger row warns its RLB0912 saturation is below the LM2678 fault
+     limit. Keyless runs a physically larger 2 A part at the same 22 µH in the
+     same role; the comparison is worth making rather than re-deriving.
+  5. Keyless carries **both** connector families in service — a Molex Mini-Fit
+     Jr 16P body harness and the JAE IL-AG5 22P experiment — so both are
+     already proven in this car.
 - **D-ENVELOPE-01 — owner decision, October 29:** the Rev A board is a
   **generic rectangle, 80 × 120 mm**, with **no enclosure** and no mounting
   method chosen. Mounting behind the gauge cluster was considered and set
