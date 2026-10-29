@@ -1,6 +1,6 @@
 # LRA-04 — choose bounded Rev A communications provisioning
 
-October 28, 2026 update by Codex `pcb-manager`, session `01a18447-07c2-7bb3-8318-9b276cfdb3b8`.
+October 29, 2026 update by Codex `pcb-manager`, session `01a18447-07c2-7bb3-8318-9b276cfdb3b8`.
 Current manager bookmark: `codex resume 01a18447-07c2-7bb3-8318-9b276cfdb3b8`.
 Identity verified from matching `CODEX_SESSION_ID` and `CODEX_THREAD_ID`.
 
@@ -12,8 +12,9 @@ firmware reviewers, unclaimed. Current pcb-manager integrates; tracker owns stat
 Compare onboard RS-485, CAN controller plus transceiver, and a host-side
 daughterboard interface with neither bus populated. Return one recommendation,
 a fallback and the unresolved constraints needed for schematic freeze.
-Work in `jgazeley/accord` from transition base `303092a74526c1107ab705457064b6062dfc0906`
-and the latest pushed packet revision; branch `task/LRA-04-<own-session-short>`.
+Work in `jgazeley/accord` from current public main containing reviewed LRA-01/02
+and LRA-05 candidate `0745d5b`; record the exact starting revision. Branch
+`task/LRA-04-<own-session-short>` when Git tools are available.
 Own only `logger/hardware/communications/`; deliver `REV_A_OPTIONS.md` and
 `INTERFACE_PROPOSAL.md`. Firmware and other hardware artifacts are read-only.
 Environment: remote documentation/source review; no bench presumed.
@@ -27,9 +28,35 @@ needed. Keyless already uses RS-485; no factory CAN connection is established.
 The tested 5 V RS-485 module/dividers remain an interim option. Do not reopen
 that completed feasibility question or promise CAN interoperability with keyless.
 
-Analysis may begin alongside LRA-03. Obtain LRA-01/02 rail/current/off-state
-constraints and agree pin reservations with LRA-03 before recommending a freeze.
-GP6/GP7 HOLD and GP8/GP9 bus suggestions are not accepted allocations.
+**Ready to assign now.** The reviewed LRA-01/02 papers provide a provisional
+power interface; completion of every electrical/bench gate is not a prerequisite
+for this comparison and interface proposal. Work alongside LRA-03; coordinate
+final pin/connector reservations before schematic freeze. Do not declare a
+completed vehicle interface while protection/isolation requirements remain open.
+
+Read these current documents after the historical/context summaries above:
+
+- [LRA-01 interface](../../logger/hardware/power/INTERFACE_CONTRACT.md), especially
+  sections 2, 6–8: GP5 qualified IGN, GP6 HOLD, power and off-state boundaries.
+- [LRA-02 margins](../../logger/hardware/power/COMPONENT_MARGIN_CLOSURE.md), especially
+  sections 4–5: unresolved current guarantees and interface allocations.
+- [LRA-05 review](../reviews/LRA05_REVIEW_2026-10-29.md) and
+  [implementation handoff](../../logger/coordination/LRA05_HANDOFF.md): actual
+  firmware resources and the remaining timing fault limitation.
+
+Apply these constraints to every option:
+
+| Constraint | Required treatment |
+|---|---|
+| Existing logger resources | Preserve GP2/3 capture, GP4 brake, GP5 IGN, GP26/27 ADC and SD SPI0 GP16–19. Reserve GP6 for candidate HOLD; GP7 is not an alternate HOLD assignment. GP8/9 are suggestions only until this review/LRA-03 agree. |
+| Firmware resources | Core 0 owns SD/Wi-Fi; core 1 capture and the power supervisor. Qualified mode dynamically claims a hardware alarm and uses the watchdog. Account for bus IRQ/peripheral/PIO/DMA and any masking/blocking interaction; no automatic spare-alarm assumption. |
+| Power domains | Identify the switched rail and logic levels for each device. Do not assign a continuously powered bus load to A5 or assume undocumented regulator/current headroom. Separate active demand, shutdown demand and externally supplied current while the logger is off. |
+| Off-state allocation | Whole-system targets remain 100 uA at 20–30 C / 500 uA at 85 C. All independently energized interfaces together have 10/25 uA allocation; LRA-02 tentatively reserves 2/5 uA of that total for future bus/service and 8/20 uA for five vehicle inputs. These are unproved allocations, not measured capacity. Show a compliant path or explicitly request a tradeoff; do not silently enlarge them. |
+| Isolation/protection | Demonstrate specified powered-off bus and GPIO behavior, including external power/debug and connector paths. Unpopulated/disconnected fallback is permissible. R02 vehicle protection and R05 isolation remain open and require later electrical review. |
+
+An unresolved component limit should produce a conditional recommendation and
+a precise follow-up, not a blanket refusal to perform LRA-04. Inventory is
+incomplete and exact reconciliation is deferred; do not block on stock access.
 
 ## Existing RS-485 implementation to consult first
 
@@ -75,5 +102,13 @@ Acknowledge claimant/scope to manager first. Return comparison and explicit pin/
 power proposal, sources, pushed branch/commit, checks and their limits, reviewer
 status and blockers. No selected bus, delivery or acceptance is claimed here.
 Name remaining uncommitted artifacts and the next bounded action in the return.
+
+For a browser LLM without repository write tools, return the proposed contents
+of `REV_A_OPTIONS.md` and `INTERFACE_PROPOSAL.md` with source links and the
+repository revision inspected. Manager performs local verification, publication
+review and integration; inability to push is not a blocker. If a required source
+cannot be accessed, name that exact file and continue independent comparisons.
+Use the available tool/model/role identity and explicitly state unavailable
+session identifiers; never invent an ID or claim executed tests/commits.
 
 > **Required agent attribution:** Follow `logger/coordination/AGENT_ATTRIBUTION.md` relative to this repository root. Use your own tool, role and verified current session ID for Git author and committer (`<Tool> <role> [<short-id>]`), using per-command settings. End commits with `Agent-Session: <role>` and your full tool-specific session-ID trailer (`Codex-Session-ID`, `Claude-Session-ID` or `Antigravity-Session-ID`). This includes documentation-only work. Identify yourself and your resume command in coordination documents and dated updates. Preserve predecessor identity and original attribution when transporting commits. If an ID is unavailable, state that explicitly; never invent or borrow one. Include this requirement in subsequent seeds and handoffs.
