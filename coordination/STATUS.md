@@ -30,13 +30,16 @@ bench test and vehicle test.
 - Engineering record: `logger/hardware/power/LAYOUT_CLOSURE.md`; risks,
   bring-up tests and firmware follow-up: `logger/hardware/LRA12_HANDOFF.md`.
 
-- **The board is staged by subsystem** (D-STAGE-11). On the board now:
-  power block, Pico, SD header, J1 and the four holes. Everything else is
-  "Exclude from board" until the owner asks for it:
+- **The board is staged by subsystem** (D-STAGE-11). Laid out: power
+  block, Pico, SD header, J1, four holes. Switched on next (October 30), for
+  the owner's "Update PCB from Schematic": the timer batch (a5_supply, hold,
+  clock, cutoff; 39 parts). After that: ignition_opto + qualified_ignition.
+  Open placement items: R32/C14 courtyard overlap; Pico antenna end is
+  mid-board. Everything else stays "Exclude from board" until asked for:
   `python3 tools/board_chunks.py add <chunk>` (in `logger/hardware/kicad`,
-  KiCad closed), then "Update PCB from Schematic". Chunks: inputs,
-  a5_supply, ignition_opto, qualified_ignition, iso_enable, hold, clock,
-  cutoff, rs485, spare_reset, testpoints. Checks must use the full netlist
+  KiCad closed), then "Update PCB from Schematic". Chunks still off: inputs,
+  ignition_opto, qualified_ignition, iso_enable, rs485, spare_reset,
+  testpoints. Checks must use the full netlist
   (`board_chunks.py full-netlist`).
 
 ## Next, in order
