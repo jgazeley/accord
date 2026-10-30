@@ -8,6 +8,16 @@ October 29 evening were carried over from the retired tracker
 
 ## October 29, 2026
 
+**D-CONN-06 resolved: the 10-pin Molex.** Owner: *"/srv/agent_share/pcb/old_hondaPCB/footprints.pretty/CON_39301100.kicad_mod
+is the 10 pin molex connector I have"*. That is **Molex 39-30-1100**
+(Mini-Fit Jr 5569-10A2, 2×5, right-angle, pegs), the same family as keyless
+J1. It becomes the **single board connector**, replacing J1 (power), J2
+(signals) and the interim RS-485 connector. Footprint: KiCad standard
+`Molex_Mini-Fit_Jr_5569-10A2_2x05_P4.20mm_Horizontal`. Geometry checked
+identical to the owner's file (1.8 mm drills, 4.2 mm pitch, 5.5 mm rows,
+3.0 mm pegs), just drawn rotated 180° with smaller pads. All ten pins used;
+the RS-485 ground shares PGND.
+
 **D-PROCESS-07: one agent, no multi-agent process.** Owner: *"I might as
 well have just opened one agent, have them use git and just go. So many
 little details and nuances keep getting missed."* The manager/specialist/
