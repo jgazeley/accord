@@ -39,7 +39,11 @@ the ignition-qualified power hold and independent cutoff.
 | Grounds | AGND and PGND join only inside the Pico module; don't add a board-level bond. B16 is a sense reference, never a return |
 | Other | SD module header (J5), spare GP13 + switched power (J3), RUN/GND reset (J4), HOLD link, test points |
 
-Envelope: 80 × 120 mm, no enclosure, generic corner holes. Courtyard
+Envelope: 80 × 120 mm, no enclosure. The board file
+[accord-logger.kicad_pcb](kicad/accord-logger.kicad_pcb) has the outline (2 mm
+corner radii) and four unplated M3 holes 4 mm in from each edge, made by
+`kicad/tools/gen_board_outline.py`; parts come in with "Update PCB from
+Schematic". Courtyard
 allowance 1.43× (`kicad/validation/courtyard_study.csv`).
 
 ## Fitted logger baseline (breadboard, in the car today)

@@ -32,8 +32,9 @@ bench test and vehicle test.
 
 1. **Owner opens the schematic in KiCad once.** This host can't render it, so
    no one has looked at it.
-2. **Owner places and routes** the board: create the `.kicad_pcb` in the
-   same project and use "Update PCB from Schematic".
+2. **Owner places and routes** the board. `accord-logger.kicad_pcb` already
+   has the 80 × 120 mm outline and four M3 corner holes; open it and use
+   "Update PCB from Schematic" to bring in the parts.
 3. Pre-order review of the routed board, then order (owner approval), then
    bring-up, bench and vehicle tests (`LRA12_HANDOFF.md` §5).
 4. Firmware for the board: GP7 isolation enable and the shutdown order

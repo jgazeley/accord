@@ -72,3 +72,17 @@ UUID regression passes with 1457 unique UUIDs; closure 67 ok, no overruns;
 1.43x courtyard allowance. Two consecutive generations are byte-identical;
 schematic SHA256:
 bb1851e24fe565d25b17bab8e89c2c8c71fb19ce5a4a023ed1cac2c34cf2dcd1
+
+Board file, October 29 2026: accord-logger.kicad_pcb was created ONCE by
+
+  python3 tools/gen_board_outline.py accord-logger.kicad_pcb
+
+(80 x 120 mm Edge.Cuts with 2 mm corner radii; four board-only
+MountingHole_3.2mm_M3, unplated, centres 4 mm in from each edge). The
+script refuses to overwrite an existing board: from here the .kicad_pcb is
+the owner's layout. kicad-cli pcb drc on the empty board: 0 violations;
+with --schematic-parity it lists only the 148 parts not yet imported.
+
+Caution: kicad-cli pcb drc REWRITES accord-logger.kicad_pro and drops its
+"erc" section. Run it on a copy of the project, or restore the .kicad_pro
+from git afterwards.
