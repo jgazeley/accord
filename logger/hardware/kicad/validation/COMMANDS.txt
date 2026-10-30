@@ -158,3 +158,12 @@ capture checks (new RTC section asserts the datasheet pin numbers); the
 reference pin map was refreshed after confirming the only pins that moved
 were the 29 RTC pins and U1.26/27/29; closure 67/67; 153 BOM rows;
 courtyard allowance 1.72x.
+
+Staging in small steps, October 30 2026 (D-STAGE-11 revised): the 16
+subsystem chunks in tools/board_chunks.py became 32 ordered steps (four
+already placed, 28 to go) of 2-10 parts, each with its test points and a
+placement note. Commands: status, next, add <step>, off <step>,
+only <steps>, full-netlist. Flags reset to the board as the owner left it
+(power, pico, sd, connector): 45 flipped off (the 39 timer-batch parts and
+the 6 RTC parts). DRC schematic parity 0 on a scratch copy; ERC 0;
+782/782 capture; closure 67/67.

@@ -8,6 +8,16 @@ October 29 evening were carried over from the retired tracker
 
 ## October 30, 2026
 
+**D-STAGE-11 revised: small ordered steps, not subsystem chunks.** After
+importing the 39-part timer batch the owner removed it from the board:
+*"I removed the timer and clock hardware for now. Too many pieces at once
+all tangled together, I need a structured logical way to add small groups
+of components at a time"*. `board_chunks.py` now holds an ordered list of
+small steps (2-10 parts), each one a single function that connects to parts
+already placed, each with its test points and a placement note;
+`board_chunks.py next` switches on the next step. Flags reset to match the
+board: power, pico, sd and connector on, everything else off.
+
 **D-RTC-14: DS3231 chip on the board, not the module.** Offered a soldered
 DS3231SN (SOIC-16W) with a coin-cell holder, or the stocked DS3231 +
 AT24C32 module on a header, the owner said: *"go with the DS3231 chip"*.

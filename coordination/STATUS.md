@@ -34,19 +34,17 @@ bench test and vehicle test.
 - Engineering record: `logger/hardware/power/LAYOUT_CLOSURE.md`; risks,
   bring-up tests and firmware follow-up: `logger/hardware/LRA12_HANDOFF.md`.
 
-- **The board is staged by subsystem** (D-STAGE-11). Laid out: power
-  block (placement reviewed and accepted), Pico, SD header, J1, four holes.
-  Imported, not yet placed (sitting off the right edge): the timer batch
-  (a5_supply, hold, clock, cutoff; 39 parts). Switched on October 30, waiting
-  for "Update PCB from Schematic": rtc (6 parts). After that:
-  ignition_opto + qualified_ignition. Open: nylon hardware at H4 (next to
-  the antenna); a solid PGND return between C14, D115 and C10 when routing.
-  Everything else stays "Exclude from board" until asked for:
-  `python3 tools/board_chunks.py add <chunk>` (in `logger/hardware/kicad`,
-  KiCad closed), then "Update PCB from Schematic". Chunks still off: inputs,
-  ignition_opto, qualified_ignition, iso_enable, rs485, spare_reset,
-  testpoints. Checks must use the full netlist
-  (`board_chunks.py full-netlist`).
+- **The board is staged in small ordered steps** (D-STAGE-11 revised,
+  October 30). On the board: power block (placement reviewed and accepted),
+  Pico, SD header, J1, four holes. Everything else is "Exclude from board".
+  `python3 tools/board_chunks.py status` lists the 28 remaining steps in
+  build order with the next one marked; `next` switches it on and prints
+  where it goes (in `logger/hardware/kicad`, KiCad's schematic closed), then
+  the owner reopens the schematic and runs "Update PCB from Schematic".
+  Next step: `rtc`. The timer batch was imported once and removed by the
+  owner as too much at once. Open: nylon hardware at H4 (next to the
+  antenna); a solid PGND return between C14, D115 and C10 when routing.
+  Checks must use the full netlist (`board_chunks.py full-netlist`).
 
 ## Next, in order
 
