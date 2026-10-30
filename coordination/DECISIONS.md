@@ -8,6 +8,15 @@ October 29 evening were carried over from the retired tracker
 
 ## October 30, 2026
 
+**D-RTC-14: DS3231 chip on the board, not the module.** Offered a soldered
+DS3231SN (SOIC-16W) with a coin-cell holder, or the stocked DS3231 +
+AT24C32 module on a header, the owner said: *"go with the DS3231 chip"*.
+The module was turned down for its LIR2032 charging circuit (unsafe with a
+CR2032), power LED, size and header mounting. Recommended cell: BR2032
+(rated to +85 °C) rather than CR2032. New schematic chunk `rtc`; needs
+ordering and a firmware change.
+Same message: *"yes push it"*, covering the 13 commits then on `main`.
+
 **D-THT-13: power-block resistors back to through-hole.** Owner: *"R31, R32,
 R33, R34, R35, R36, R37: I would like to use through hole after all. I have
 small thorugh hole footprints, R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal,
