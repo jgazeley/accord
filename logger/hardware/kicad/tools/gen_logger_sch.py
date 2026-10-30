@@ -286,8 +286,8 @@ part('U1', 'MCU_Module:RaspberryPi_Pico_W', 'RaspberryPi_Pico_W',
      status='FITTED', source='REV_A_INTERFACES S1',
      note='fitted module; Rev A column of the pin map. GP7 (pin 10) is the '
           'ISO_EN reservation LRA-12 takes up, confirmed free in S1. GP8/GP9 '
-          '(UART1) and GP10 (DE//RE) go to the DNP expansion header, and GP13 '
-          'is offered there as a spare; those are offers, not reservations',
+          '(UART1) and GP10 (DE//RE) go to onboard RS-485, and GP13 '
+          'is offered on J3 as a spare. GP8/9/10 are now assigned to RS-485',
      nets={4: 'VSS_IN', 5: 'TACH_IN', 6: 'BRAKE_IN', 7: 'QUAL_N_REPORT',
            9: 'HOLD_RAW', 10: 'ISO_EN', 11: 'UART1_TX', 12: 'UART1_RX',
            14: 'BUS_DE', 15: 'SPARE_GP11', 16: 'SPARE_GP12',
@@ -579,24 +579,13 @@ part('C_SD', 'Device:C_Polarized', '47uF/16V', 474.98, 381,
           'pin 1 is the + terminal and goes to the switched 3V3 rail')
 
 # ==================================== expansion and service (LRA-04 bounded)
-part('J3', 'Connector_Generic:Conn_01x08', 'Expansion 8-way (DNP bus)',
-     403.86, 480, rot=180, fp=FP_HDR8,
-     nets={1: 'B5', 2: 'PGND', 3: 'P3V3_SW', 4: 'UART1_TX', 5: 'UART1_RX',
-           6: 'BUS_DE', 7: 'SPARE_GP13', 8: 'PGND'},
-     status='SELECTED', source='LRA04_REVIEW_2026-10-29 / '
-                               'communications/REV_A_PROVISION.md',
-     note='the bounded Rev A communications provision: a passive expansion '
-          'header for a DNP daughterboard, with NO transceiver, bias or '
-          'termination on this board. That is why no off-state claim is '
-          'needed - an unpopulated header has no quiescent current and no bus '
-          'pins. Pinout 1 B5, 2 GND, 3 switched 3V3, 4 UART1 TX (GP8), '
-          '5 UART1 RX (GP9), 6 DE//RE (GP10), 7 spare GP13, 8 GND. The tied '
-          'DE//RE line follows the keyless arrangement that was physically '
-          'exercised; LRA-04 finding R04-REV-1 is resolved by dropping every '
-          'claim that depended on an unreachable shutdown state, not by '
-          'spending a second GPIO. A daughterboard may take power only from '
-          'pins 1 or 3, both switched: connecting an externally powered '
-          'adapter here breaks the off-state contract')
+part('J3', 'Connector_Generic:Conn_01x04', 'Spare GP13 / switched power',
+     403.86, 480, rot=180,
+     fp='Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical',
+     nets={1: 'B5', 2: 'PGND', 3: 'P3V3_SW', 4: 'SPARE_GP13'},
+     status='SELECTED', source='D-RS485-05 / communications/REV_A_PROVISION.md',
+     note='Trimmed to four pins. UART1 and DE//RE go only to onboard MAX3485. '
+          'No external powered logic or supply may backfeed this header.')
 part('R_DE', 'Device:R', '10k', 474.98, 492.76,
      nets={1: 'BUS_DE', 2: 'PGND'}, fp=FP_R, status='VERIFY_STOCK',
      source='communications/REV_A_PROVISION.md',
@@ -1121,6 +1110,7 @@ PREFIX = [
     ('Jumper:', 'JP', 1),
     ('MCU_Module:', 'U', 1),
     ('Isolator:', 'U', 1),
+    ('Interface_UART:', 'U', 1),
     ('Power_Supervisor:', 'U', 1),
     ('74xGxx:', 'U', 1),
     ('Custom:LM2678T', 'U', 1),
@@ -1137,6 +1127,50 @@ PREFIX = [
     ('Device:D_', 'D', 101),
     ('Diode:', 'D', 101),
 ]
+# R12-REV-4: keyless RS-485 source U5/C13/R13-R16/JP1; read-only reuse.
+part('U485', 'Interface_UART:MAX3485', 'MAX3485', 558.8, 355.6,
+     fp='Package_DIP:DIP-8_W7.62mm', mpn='Analog Devices MAX3485EPA+',
+     nets={1:'UART1_RX', 2:'BUS_DE', 3:'BUS_DE', 4:'UART1_TX',
+           5:'PGND', 6:'RS485_A', 7:'RS485_B', 8:'P3V3_SW'},
+     status='SELECTED', source='keyless U5 / D-RS485-05',
+     note='Socketed DIP-8 footprint as keyless. Tied DE//RE: low listen, '
+          'high transmit; shutdown unreachable. Switched 3V3 does not isolate '
+          'energized bus pins: up to 1 mA per pin at +12 V with VCC=0.')
+part('C485', 'Device:C', '100nF', 635, 330.2,
+     fp='Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder',
+     nets={1:'P3V3_SW',2:'PGND'}, status='SELECTED', source='keyless C13',
+     note='Place at MAX3485 pins 8/5. Same 0805 handsolder footprint as keyless.')
+part('R485_A', 'Device:R', '390R', 711.2, 330.2, fp=FP_R,
+     nets={1:'RS485_BIAS_HI',2:'RS485_A'}, status='SELECTED',
+     source='keyless R14 / D-RS485-05',
+     note='1%; keyless schematic 270R differs from PCB 390R. Owner direction '
+          'uses 390R. Bias enabled only with both bias shunts installed.')
+part('R485_B', 'Device:R', '390R', 711.2, 381, fp=FP_R,
+     nets={1:'RS485_B',2:'RS485_BIAS_LO'}, status='SELECTED',
+     source='keyless R15 / D-RS485-05', note='1%; jumper-isolated low bias leg.')
+part('R485_TERM', 'Device:R', '120R', 635, 381, fp=FP_R,
+     nets={1:'RS485_A',2:'RS485_TERM'}, status='SELECTED',
+     source='keyless R16', note='1%; enabled only by termination shunt at a bus end.')
+for ref, val, x, y, ns, source in (
+    ('JP485_TERM','TERM default OPEN',635,431.8,{1:'RS485_TERM',2:'RS485_B'},'keyless JP1'),
+    ('JP485_HI','BIAS HI default OPEN',787.4,330.2,{1:'P3V3_SW',2:'RS485_BIAS_HI'},'D-RS485-05'),
+    ('JP485_LO','BIAS LO default OPEN',787.4,381,{1:'RS485_BIAS_LO',2:'PGND'},'D-RS485-05')):
+    part(ref,'Jumper:Jumper_2_Open',val,x,y,fp=FP_HDR2,nets=ns,
+         status='FIT_HEADER_NO_SHUNT',source=source,
+         note='Fit header; ship WITHOUT shunt. Bias HI and LO are a pair; '
+              'only link at the designated bias node. No bus TVS, as keyless.')
+
+# Interim owner-approved connector; consolidation is a separate task.
+part('J485', 'Connector_Generic:Conn_01x04', 'RS-485 interim A/B/GND',
+     711.2, 444.5, rot=180,
+     fp='Connector_Molex:Molex_Mini-Fit_Jr_5569-04A2_2x02_P4.20mm_Horizontal',
+     mpn='Molex 39-30-1040 (5569-04A2)',
+     nets={1:'RS485_A',2:'RS485_B',3:'PGND'},nc=(4,),
+     status='SELECTED_INTERIM',source='Owner approval, R12-REV-4',
+     note='1 A, 2 B, 3 bus ground to PGND, 4 unused. Dedicated bus-ground '
+          'wire; do not use B16/AGND. Interim 4-position Mini-Fit Jr; owner '
+          'will consolidate connectors separately. No PCB placement assigned.')
+
 # U1/U2 and J1-J5 are fixed by the written sources, so start after them.
 counters = {'U': 2, 'J': 5}
 for p in P:
@@ -1186,6 +1220,7 @@ for p in P:
 
 # ------------------------------------------------------------- block frames
 BLOCKS = [
+    (523.24, 305.0, 828.04, 490.0, 'RS-485 - keyless circuit; bias and termination OPEN by default'),
     (17.78, 20.32, 360.68, 460.0,
      'VEHICLE INPUTS  -  AS_BUILT S2, ratios and clamps unchanged; '
      'B2 series isolation fitted, other four branches bypassed'),
@@ -1193,7 +1228,7 @@ BLOCKS = [
     (373.38, 213.36, 510.54, 320.04, 'HOLD DRIVER  -  delta D2'),
     (373.38, 332.74, 510.54, 410.0, 'SD  -  AS_BUILT S3.5, delta D6'),
     (373.38, 420.0, 510.54, 571.5,
-     'EXPANSION (DNP BUS) AND RESET  -  LRA-04 bounded provision'),
+     'SPARE GP13 / SWITCHED POWER AND RESET'),
     (17.78, 470.0, 360.68, 571.5,
      'IGNITION OPTO CELL, VEHICLE SIDE  -  AS_BUILT S3.4; LED return moved '
      'to PGND'),
@@ -1291,8 +1326,8 @@ NOTES = [
     ('Pico W pin map',
      'GP0/GP1, GP14/GP15, GP20-GP22 and GP28 are deliberately unconnected.\n'
      'GP7 is now ISO_EN, the B2 isolation enable, confirmed free in S1.\n'
-     'GP8/GP9 (UART1) and GP10 (tied DE//RE) go to the DNP expansion\n'
-     'header, with GP13 offered there as a spare - offers, not reservations.\n'
+     'GP8/GP9 (UART1) and GP10 (tied DE//RE) drive onboard RS-485.\n'
+     'GP13 is offered on the trimmed J3 spare/power header.\n'
      'ARM, EXPIRED, PGOOD and HOLD_N stay off the GPIOs: A5-domain test\n'
      'points only, and firmware has no ARM feedback in this revision.\n'
      'GP11 and GP12 are brought to pads per S1. ADC_VREF, 3V3_EN and VBUS\n'
@@ -1318,12 +1353,11 @@ NOTES = [
      '1 ms inside 100 mV of droop needs 2 uF, so this is an order of\n'
      'margin without an oversized can. Any move of this module to a 5 V\n'
      'rail re-opens the MISO clearance gate of AS_BUILT S3.5.\n'
-     'J3 is a passive expansion header for a DNP daughterboard. There is\n'
-     'no transceiver, bias or termination on this board, which is why no\n'
-     'off-state current claim is needed. A daughterboard may take power\n'
-     'only from J3.1 (B5) or J3.3 (switched 3V3), both switched; an\n'
-     'externally powered adapter on this header breaks the off-state\n'
-     'contract. No bus interoperability is claimed.\n'
+     'RS-485 reuses keyless MAX3485, DIP-8, tied DE//RE and 10k pulldown.\n'
+     '390R bias pair and 120R termination have OPEN-by-default shunts.\n'
+     'External bus drive when off can draw 1 mA per A/B pin at +12 V;\n'
+     'linked high bias can backfeed dead 3V3. See communications notes.\n'
+     'J3 now carries GP13, switched power and ground only. No TVS added.\n'
      'J4 is the RUN-to-GND reset pair and nothing else.'),
     ('Onboard switched power',
      'Reuses the existing power candidate as DESIGN.md S3 lists it\n'

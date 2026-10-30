@@ -498,22 +498,58 @@ check('the SD bulk value is selected, not a range',
       by_src['C_SD']['value'] == '47uF/16V',
       f'got {by_src["C_SD"]["value"]!r}')
 
-# ------------------------------------- expansion header and reset header
-wires('expansion', 'J3', {1: 'B5', 2: 'PGND', 3: 'P3V3_SW', 4: 'UART1_TX',
-                          5: 'UART1_RX', 6: 'BUS_DE', 7: 'SPARE_GP13',
-                          8: 'PGND'})
-wires('expansion', 'R_DE', {1: 'BUS_DE', 2: 'PGND'})
-check('the DE//RE default is a pulldown, not a pullup',
-      pin_net.get((R('R_DE'), '2')) == 'PGND',
-      'a pullup here would feed an off GPIO')
-check('the expansion header offers only switched power',
-      pin_net.get(('J3', '1')) == 'B5'
-      and pin_net.get(('J3', '3')) == 'P3V3_SW',
-      'an always-on rail here would break the off-state contract')
-check('no transceiver, bias or termination is fitted on this board',
-      not any(v in r['value'].upper()
-              for r in bom for v in ('MAX3485', 'MCP2515', 'SN65HVD')),
-      'the Rev A provision is a DNP daughterboard, not an onboard bus')
+# R12-REV-4: onboard keyless RS-485 and default-open topology.
+wires('spare header', 'J3', {1:'B5',2:'PGND',3:'P3V3_SW',4:'SPARE_GP13'})
+wires('RS485 default listen', 'R_DE', {1:'BUS_DE',2:'PGND'})
+value('R_DE','10k')
+wires('keyless U5 pin map', 'U485', {1:'UART1_RX',2:'BUS_DE',3:'BUS_DE',
+      4:'UART1_TX',5:'PGND',6:'RS485_A',7:'RS485_B',8:'P3V3_SW'})
+wires('RS485 decoupling', 'C485', {1:'P3V3_SW',2:'PGND'})
+wires('RS485 high bias', 'R485_A', {1:'RS485_BIAS_HI',2:'RS485_A'})
+wires('RS485 low bias', 'R485_B', {1:'RS485_B',2:'RS485_BIAS_LO'})
+wires('RS485 termination', 'R485_TERM', {1:'RS485_A',2:'RS485_TERM'})
+wires('RS485 term jumper', 'JP485_TERM', {1:'RS485_TERM',2:'RS485_B'})
+wires('RS485 bias HI jumper', 'JP485_HI', {1:'P3V3_SW',2:'RS485_BIAS_HI'})
+wires('RS485 bias LO jumper', 'JP485_LO', {1:'RS485_BIAS_LO',2:'PGND'})
+for src,v in [('R485_A','390R'),('R485_B','390R'),('R485_TERM','120R'),('C485','100nF')]:
+    value(src,v)
+only('UART1_TX', [('U1',11),('U485',4)])
+only('UART1_RX', [('U1',12),('U485',1)])
+only('BUS_DE', [('U1',14),('U485',2),('U485',3),('R_DE',1)])
+for src in ('JP485_TERM','JP485_HI','JP485_LO'):
+    check(src + ' header fitted without shunt',
+          by_src[src]['symbol']=='Jumper:Jumper_2_Open'
+          and by_src[src]['status']=='FIT_HEADER_NO_SHUNT')
+# Traverse only the bias/termination passives and selected closed jumpers.
+# MAX3485 is deliberately excluded: its finite input current is checked in
+# the power ledger, not asserted away by this passive-path test.
+def bus_reaches(start, target, closed=()):
+    adj={}
+    for src in ('R485_A','R485_B','R485_TERM',*closed):
+        a=pin_net[(R(src),'1')]; b=pin_net[(R(src),'2')]
+        adj.setdefault(a,set()).add(b);adj.setdefault(b,set()).add(a)
+    seen={start};todo=[start]
+    while todo:
+        for n in adj.get(todo.pop(),()):
+            if n not in seen:seen.add(n);todo.append(n)
+    return target in seen
+for start,target,jp in [('RS485_A','RS485_B','JP485_TERM'),
+                         ('RS485_A','P3V3_SW','JP485_HI'),
+                         ('RS485_B','PGND','JP485_LO')]:
+    check(jp+' removed breaks passive path',not bus_reaches(start,target))
+    check(jp+' installed restores passive path',bus_reaches(start,target,(jp,)))
+# Exact footprint parity with read-only keyless source, checked at export.
+for src,fp in [('U485','Package_DIP:DIP-8_W7.62mm'),
+               ('C485','Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder')]:
+    check(src+' matches keyless footprint',by_src[src]['footprint']==fp)
+for src in ('R_DE','R485_A','R485_B','R485_TERM'):
+    check(src+' matches keyless resistor footprint',by_src[src]['footprint']==
+          'Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical')
+for src in ('JP485_TERM','JP485_HI','JP485_LO'):
+    check(src+' matches keyless JP1 footprint',by_src[src]['footprint']==
+          'Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical')
+wires('RS485 connector','J485',{1:'RS485_A',2:'RS485_B',3:'PGND'})
+check('RS485 connector spare is NC', unconnected(R('J485'),'4'))
 wires('reset header', 'J4', {1: 'RUN', 2: 'PGND'})
 check('J4 has no unconnected pins left over', ('J4', '3') not in pin_net,
       'capture question Q5: a service header with NC pins was the problem')
@@ -659,6 +695,7 @@ DECLARED = {
     'SD_MISO', 'SD_CS', 'SD_SCK', 'SD_MOSI', 'RUN',
     'SPARE_GP11', 'SPARE_GP12', 'SPARE_GP13',
     'UART1_TX', 'UART1_RX', 'BUS_DE',
+    'RS485_A', 'RS485_B', 'RS485_BIAS_HI', 'RS485_BIAS_LO', 'RS485_TERM',
 }
 for n in sorted(DECLARED):
     check(f'net {n} exists as its own net', n in nets,

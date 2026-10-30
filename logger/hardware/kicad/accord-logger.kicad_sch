@@ -4331,6 +4331,206 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Connector_Generic:Conn_01x04"
+			(pin_names
+				(offset 1.016)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "J"
+				(at 0 5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "Conn_01x04"
+				(at 0 -7.62 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "connector"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "Connector*:*_1x??_*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "Conn_01x04_1_1"
+				(rectangle
+					(start -1.27 3.81)
+					(end 1.27 -6.35)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(rectangle
+					(start -1.27 2.667)
+					(end 0 2.413)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start -1.27 0.127)
+					(end 0 -0.127)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start -1.27 -2.413)
+					(end 0 -2.667)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start -1.27 -4.953)
+					(end 0 -5.207)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at -5.08 2.54 0)
+					(length 3.81)
+					(name "Pin_1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 0 0)
+					(length 3.81)
+					(name "Pin_2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 -2.54 0)
+					(length 3.81)
+					(name "Pin_3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 -5.08 0)
+					(length 3.81)
+					(name "Pin_4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "Connector_Generic:Conn_01x02"
 			(pin_names
 				(offset 1.016)
@@ -8173,6 +8373,452 @@
 					)
 					(fill
 						(type none)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Interface_UART:MAX3485"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "U"
+				(at -6.985 13.97 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "MAX3485"
+				(at 1.905 13.97 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
+				(at 0 -22.86 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "https://datasheets.maximintegrated.com/en/ds/MAX3483-MAX3491.pdf"
+				(at 0 1.27 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "True RS-485/RS-422, 10Mbps, Slew-Rate Limited, with low-power shutdown, with receiver/driver enable, 32 receiver drive capacitity, DIP-8 and SOIC-8"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "RS-485 RS-422 UART line-driver transceiver"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "DIP*W7.62mm* SOIC*3.9x4.9mm*P1.27mm*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "MAX3485_0_1"
+				(rectangle
+					(start -7.62 12.7)
+					(end 7.62 -12.7)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(polyline
+					(pts
+						(xy -4.191 2.54)
+						(xy -1.27 2.54)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -4.191 0)
+						(xy -0.889 0)
+						(xy -0.889 -2.286)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -3.175 5.08)
+						(xy -4.191 5.08)
+						(xy -4.064 5.08)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -2.54 -5.08)
+						(xy -4.191 -5.08)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -2.413 -5.08)
+						(xy -2.413 -1.27)
+						(xy 2.667 -4.826)
+						(xy -2.413 -8.89)
+						(xy -2.413 -5.08)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -0.635 -7.62)
+						(xy 5.08 -7.62)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 0.381 -2.54)
+					(radius 0.508)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.889 -2.54)
+						(xy 3.81 -2.54)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.032 7.62)
+						(xy 5.715 7.62)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 3.048 2.54)
+						(xy 5.715 2.54)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 3.81 2.54)
+					(radius 0.2794)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(polyline
+					(pts
+						(xy 3.81 -2.54)
+						(xy 3.81 2.54)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 5.08 -7.62)
+						(xy 5.08 7.62)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "MAX3485_1_1"
+				(circle
+					(center -0.762 2.54)
+					(radius 0.508)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.032 4.826)
+						(xy 2.032 8.636)
+						(xy -3.048 5.08)
+						(xy 2.032 1.016)
+						(xy 2.032 4.826)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 2.54 2.54)
+					(radius 0.508)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 5.08 7.62)
+					(radius 0.2794)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(pin output line
+					(at -10.16 5.08 0)
+					(length 2.54)
+					(name "RO"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -10.16 2.54 0)
+					(length 2.54)
+					(name "~{RE}"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -10.16 0 0)
+					(length 2.54)
+					(name "DE"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -10.16 -5.08 0)
+					(length 2.54)
+					(name "DI"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 15.24 270)
+					(length 2.54)
+					(name "VCC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 -15.24 90)
+					(length 2.54)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 10.16 7.62 180)
+					(length 2.54)
+					(name "A"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at 10.16 2.54 180)
+					(length 2.54)
+					(name "B"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
 					)
 				)
 			)
@@ -17480,7 +18126,7 @@
 		(uuid "8896a4a0-593b-5583-a4cf-01e5cdf386b2")
 	)
 	(symbol
-		(lib_id "Connector_Generic:Conn_01x08")
+		(lib_id "Connector_Generic:Conn_01x04")
 		(at 403.86 480.06 180)
 		(unit 1)
 		(exclude_from_sim no)
@@ -17489,22 +18135,22 @@
 		(dnp no)
 		(uuid "66824dac-c625-5a32-82e5-d1549d5a056e")
 		(property "Reference" "J3"
-			(at 402.59 466.85 0)
+			(at 402.59 471.93 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Value" "Expansion 8-way (DNP bus)"
-			(at 402.59 491.49 0)
+		(property "Value" "Spare GP13 / switched power"
+			(at 402.59 486.41 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x08_P2.54mm_Vertical"
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical"
 			(at 403.86 480.06 0)
 			(effects
 				(font
@@ -17540,7 +18186,7 @@
 				(hide yes)
 			)
 		)
-		(property "Source" "LRA04_REVIEW_2026-10-29 / communications/REV_A_PROVISION.md"
+		(property "Source" "D-RS485-05 / communications/REV_A_PROVISION.md"
 			(at 403.86 480.06 0)
 			(effects
 				(font
@@ -17561,18 +18207,6 @@
 		(pin "4"
 			(uuid "7fdee63e-8c79-57bf-8e3f-ec2c3f13486f")
 		)
-		(pin "5"
-			(uuid "b14b0e77-5962-5d58-b3ca-f2bcdd13952b")
-		)
-		(pin "6"
-			(uuid "f441f06c-5245-5a9b-89b7-c21371c4a4c2")
-		)
-		(pin "7"
-			(uuid "a9fcbe85-6d96-54ec-a9d0-0beb739b15f2")
-		)
-		(pin "8"
-			(uuid "d7e72642-736f-5074-b6db-a7d5c71e44aa")
-		)
 		(instances
 			(project "accord-logger"
 				(path "/d6403372-a8d4-5433-aa98-182e137307f3"
@@ -17581,46 +18215,6 @@
 				)
 			)
 		)
-	)
-	(wire
-		(pts
-			(xy 408.94 487.68)
-			(xy 411.48 487.68)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "901d518e-a186-5282-aaf5-40b84739b598")
-	)
-	(label "B5"
-		(at 411.48 487.68 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "3c9ffc89-e311-5b90-b1c1-59dc6457e4d9")
-	)
-	(wire
-		(pts
-			(xy 408.94 485.14)
-			(xy 411.48 485.14)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "e18839d5-cd0e-5902-89ad-eb9c231d9f16")
-	)
-	(label "PGND"
-		(at 411.48 485.14 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "a65bbd5a-8baa-531e-a664-c7bbbe92dcbe")
 	)
 	(wire
 		(pts
@@ -17633,14 +18227,14 @@
 		)
 		(uuid "a36e6a44-361e-54f6-8b97-76578dcb2a33")
 	)
-	(label "P3V3_SW"
+	(label "B5"
 		(at 411.48 482.60 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 		)
-		(uuid "de04f5ca-833e-5aa2-9d0d-2575e2eecd89")
+		(uuid "007fa35f-15d3-594b-ac87-5c1d1dd8b4b7")
 	)
 	(wire
 		(pts
@@ -17653,14 +18247,14 @@
 		)
 		(uuid "696d1ec8-b257-5866-b0ee-c3b6df8809df")
 	)
-	(label "UART1_TX"
+	(label "PGND"
 		(at 411.48 480.06 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 		)
-		(uuid "86ac6191-cda4-56b3-897e-e03238ef5026")
+		(uuid "caaa73b7-98bc-531a-8d93-25cc3e6df4ee")
 	)
 	(wire
 		(pts
@@ -17673,14 +18267,14 @@
 		)
 		(uuid "29b381ec-e908-5f35-80f1-39e93625accb")
 	)
-	(label "UART1_RX"
+	(label "P3V3_SW"
 		(at 411.48 477.52 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 		)
-		(uuid "4901d1f5-a148-544d-9924-1333c6215b40")
+		(uuid "a9241a09-aba1-5ef2-b428-851d9a1ca4f9")
 	)
 	(wire
 		(pts
@@ -17693,54 +18287,14 @@
 		)
 		(uuid "0ea8914c-0e19-5892-a5ff-19839d1734be")
 	)
-	(label "BUS_DE"
+	(label "SPARE_GP13"
 		(at 411.48 474.98 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 		)
-		(uuid "36140d6a-be0a-5760-992c-ba0009caa4c7")
-	)
-	(wire
-		(pts
-			(xy 408.94 472.44)
-			(xy 411.48 472.44)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "32ff5978-a5fa-5e3c-9d9d-30cd231ffa48")
-	)
-	(label "SPARE_GP13"
-		(at 411.48 472.44 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "13a4fdf1-c0ce-52e9-80cd-697abd2a4c64")
-	)
-	(wire
-		(pts
-			(xy 408.94 469.90)
-			(xy 411.48 469.90)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4abe7166-f7dc-5985-b299-c10a9e60c8e4")
-	)
-	(label "PGND"
-		(at 411.48 469.90 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "cc222cdd-7eec-5800-9afc-0f54b5126db8")
+		(uuid "0442cee1-eb0d-5f44-b827-84160a21a2bb")
 	)
 	(symbol
 		(lib_id "Device:R")
@@ -29933,6 +30487,1421 @@
 		)
 		(uuid "0397de37-36c8-589c-862a-a7e2bfe388f9")
 	)
+	(symbol
+		(lib_id "Interface_UART:MAX3485")
+		(at 558.80 355.60 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "92e976a8-f15e-5f84-b06b-b88668be2aab")
+		(property "Reference" "U15"
+			(at 548.64 338.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "MAX3485"
+			(at 548.64 373.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_DIP:DIP-8_W7.62mm"
+			(at 558.80 355.60 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 558.80 355.60 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 558.80 355.60 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Status" "SELECTED"
+			(at 558.80 355.60 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Source" "keyless U5 / D-RS485-05"
+			(at 558.80 355.60 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "Analog Devices MAX3485EPA+"
+			(at 558.80 355.60 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Source_designator" "U485"
+			(at 558.80 355.60 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "b2d01d86-3a28-53bd-bbb4-aba5a15770dd")
+		)
+		(pin "2"
+			(uuid "c88eed96-db79-5937-8034-a0b7b8481904")
+		)
+		(pin "3"
+			(uuid "420d27bf-c4c0-57b0-9113-1828978aa19b")
+		)
+		(pin "4"
+			(uuid "3da6ecb3-aa34-5656-be64-1dab20b2d345")
+		)
+		(pin "5"
+			(uuid "768072e1-8117-519b-a34c-dfdf2d2c6faa")
+		)
+		(pin "6"
+			(uuid "0be9ce72-759e-55d8-b6f9-c0b236e88463")
+		)
+		(pin "7"
+			(uuid "cd8c60d5-9582-5ebe-84db-1e228d785bb4")
+		)
+		(pin "8"
+			(uuid "2b5674dd-3dd9-5ec0-8f51-5f26a1166727")
+		)
+		(instances
+			(project "accord-logger"
+				(path "/d6403372-a8d4-5433-aa98-182e137307f3"
+					(reference "U15")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 548.64 350.52)
+			(xy 546.10 350.52)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5c24b36d-174f-52d0-b56b-5ced53073ef3")
+	)
+	(label "UART1_RX"
+		(at 546.10 350.52 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "58716753-3b60-5882-be8c-4cc324d8b101")
+	)
+	(wire
+		(pts
+			(xy 548.64 353.06)
+			(xy 546.10 353.06)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "cccaff21-efe0-53ed-aa39-2001dc3e3c01")
+	)
+	(label "BUS_DE"
+		(at 546.10 353.06 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "290a5387-3d50-53fb-9ee8-9253d3e7eedd")
+	)
+	(wire
+		(pts
+			(xy 548.64 355.60)
+			(xy 546.10 355.60)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "727cc826-de4b-511b-8d1f-7ed7587ff6ef")
+	)
+	(label "BUS_DE"
+		(at 546.10 355.60 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "6eafdb13-d7b4-5891-84cb-44ca22a6b747")
+	)
+	(wire
+		(pts
+			(xy 548.64 360.68)
+			(xy 546.10 360.68)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0d6db738-13d1-51c0-a67d-c45ddade8b9a")
+	)
+	(label "UART1_TX"
+		(at 546.10 360.68 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "a83e4f1d-b2a8-5452-9eb2-ab144ffe6eff")
+	)
+	(wire
+		(pts
+			(xy 558.80 370.84)
+			(xy 558.80 373.38)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "106be777-0edf-5de3-bbe9-071a6c69c1d7")
+	)
+	(label "PGND"
+		(at 558.80 373.38 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "e802869b-2599-58b5-bf27-b62f092d2bc2")
+	)
+	(wire
+		(pts
+			(xy 568.96 347.98)
+			(xy 571.50 347.98)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c75be745-29fd-5646-89e6-2c77135b005f")
+	)
+	(label "RS485_A"
+		(at 571.50 347.98 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "9f9c811f-4737-5e5d-b11c-82f26c50688f")
+	)
+	(wire
+		(pts
+			(xy 568.96 353.06)
+			(xy 571.50 353.06)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "157e4887-998d-598f-a349-3fcac3d8a952")
+	)
+	(label "RS485_B"
+		(at 571.50 353.06 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "a7f7d857-0588-5c49-b50f-8e1f49516c35")
+	)
+	(wire
+		(pts
+			(xy 558.80 340.36)
+			(xy 558.80 337.82)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6f2b39d9-5928-5bb2-86d5-1317e1475217")
+	)
+	(label "P3V3_SW"
+		(at 558.80 337.82 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "fc11760a-8eea-5f53-8a3a-e1bd6865a03c")
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 635.00 330.20 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "a7a86836-6713-5b94-82ed-e0f170dc9d80")
+		(property "Reference" "C24"
+			(at 638.30 328.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "100nF"
+			(at 638.30 331.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
+			(at 635.00 330.20 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 635.00 330.20 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 635.00 330.20 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Status" "SELECTED"
+			(at 635.00 330.20 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Source" "keyless C13"
+			(at 635.00 330.20 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Source_designator" "C485"
+			(at 635.00 330.20 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "36fef1a5-e2de-57d2-884c-37004e384c00")
+		)
+		(pin "2"
+			(uuid "36106dfe-c5d1-589a-9b9c-728490bc35b5")
+		)
+		(instances
+			(project "accord-logger"
+				(path "/d6403372-a8d4-5433-aa98-182e137307f3"
+					(reference "C24")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 635.00 326.39)
+			(xy 635.00 323.85)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0480be01-ec25-5a7b-8b34-7eb7a55f497e")
+	)
+	(label "P3V3_SW"
+		(at 635.00 323.85 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "5dc2c4d0-f6a1-51d0-82c1-98e1b936e3d3")
+	)
+	(wire
+		(pts
+			(xy 635.00 334.01)
+			(xy 635.00 336.55)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "58c8e48b-60c3-5de8-811d-722ee82e011b")
+	)
+	(label "PGND"
+		(at 635.00 336.55 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "12ad8030-81ec-5b67-813f-0da2b0ce0819")
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 711.20 330.20 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "a7386a8d-62d5-5580-8bfb-bb70a67deffc")
+		(property "Reference" "R47"
+			(at 713.49 328.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "390R"
+			(at 713.49 331.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+			(at 711.20 330.20 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 711.20 330.20 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 711.20 330.20 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Status" "SELECTED"
+			(at 711.20 330.20 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Source" "keyless R14 / D-RS485-05"
+			(at 711.20 330.20 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Source_designator" "R485_A"
+			(at 711.20 330.20 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "2eb8b5cf-cbf7-5117-bb24-e03ec68337bd")
+		)
+		(pin "2"
+			(uuid "412c095f-e03d-5414-86bc-436cba36ec78")
+		)
+		(instances
+			(project "accord-logger"
+				(path "/d6403372-a8d4-5433-aa98-182e137307f3"
+					(reference "R47")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 711.20 326.39)
+			(xy 711.20 323.85)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fe190628-6df6-5e0c-99d6-a91ffdeda4ad")
+	)
+	(label "RS485_BIAS_HI"
+		(at 711.20 323.85 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "9a779256-978d-5173-9177-0f71c3f44d26")
+	)
+	(wire
+		(pts
+			(xy 711.20 334.01)
+			(xy 711.20 336.55)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a8f8fb0f-a17f-59d1-8b1f-9c4c0a1bfd06")
+	)
+	(label "RS485_A"
+		(at 711.20 336.55 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "f248593e-7933-5781-b341-5bfa9bfc5015")
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 711.20 381.00 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "197ec4e7-f794-5e01-82d2-ba84b251737a")
+		(property "Reference" "R48"
+			(at 713.49 379.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "390R"
+			(at 713.49 382.78 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+			(at 711.20 381.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 711.20 381.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 711.20 381.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Status" "SELECTED"
+			(at 711.20 381.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Source" "keyless R15 / D-RS485-05"
+			(at 711.20 381.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Source_designator" "R485_B"
+			(at 711.20 381.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "f7945059-484b-5beb-bf5a-e1ff22eb8f82")
+		)
+		(pin "2"
+			(uuid "6f10f159-d745-5415-8ac3-c3a4d057a5eb")
+		)
+		(instances
+			(project "accord-logger"
+				(path "/d6403372-a8d4-5433-aa98-182e137307f3"
+					(reference "R48")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 711.20 377.19)
+			(xy 711.20 374.65)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "38d6e53a-54f1-5af8-a918-ec6d321d73b9")
+	)
+	(label "RS485_B"
+		(at 711.20 374.65 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "2566a734-0088-5e0f-bcaf-c0149d069c3a")
+	)
+	(wire
+		(pts
+			(xy 711.20 384.81)
+			(xy 711.20 387.35)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7b3360b9-ba41-5aba-951d-551207a2be57")
+	)
+	(label "RS485_BIAS_LO"
+		(at 711.20 387.35 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "ce102955-3c3a-526a-bcf2-60517e7ae5af")
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 635.00 381.00 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "574ef412-3efa-5847-a98d-eab987080eb8")
+		(property "Reference" "R49"
+			(at 637.29 379.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "120R"
+			(at 637.29 382.78 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+			(at 635.00 381.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 635.00 381.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 635.00 381.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Status" "SELECTED"
+			(at 635.00 381.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Source" "keyless R16"
+			(at 635.00 381.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Source_designator" "R485_TERM"
+			(at 635.00 381.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "daf5edcd-7adb-5db9-af11-0cd5a14206ad")
+		)
+		(pin "2"
+			(uuid "ef5e5301-0915-5585-a4d6-a5c8db535bb1")
+		)
+		(instances
+			(project "accord-logger"
+				(path "/d6403372-a8d4-5433-aa98-182e137307f3"
+					(reference "R49")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 635.00 377.19)
+			(xy 635.00 374.65)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "52747702-397d-50ce-8fea-9cc57905ee43")
+	)
+	(label "RS485_A"
+		(at 635.00 374.65 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "8f4fbe7d-afb3-5784-98a8-5ded19f350f6")
+	)
+	(wire
+		(pts
+			(xy 635.00 384.81)
+			(xy 635.00 387.35)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "04280898-6478-530f-ae11-e1852cafc720")
+	)
+	(label "RS485_TERM"
+		(at 635.00 387.35 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "eff83ac5-3506-5e3f-8551-3fdd63ca0b1b")
+	)
+	(symbol
+		(lib_id "Jumper:Jumper_2_Open")
+		(at 635.00 431.80 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "17944c87-15b2-5215-9350-128831ac613c")
+		(property "Reference" "JP2"
+			(at 629.92 428.24 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "TERM default OPEN"
+			(at 629.92 434.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
+			(at 635.00 431.80 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 635.00 431.80 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 635.00 431.80 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Status" "FIT_HEADER_NO_SHUNT"
+			(at 635.00 431.80 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Source" "keyless JP1"
+			(at 635.00 431.80 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Source_designator" "JP485_TERM"
+			(at 635.00 431.80 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "c5848b9d-67bd-592d-888e-ed566b904864")
+		)
+		(pin "2"
+			(uuid "9f058a67-c2bf-595b-b77e-91b3a787756e")
+		)
+		(instances
+			(project "accord-logger"
+				(path "/d6403372-a8d4-5433-aa98-182e137307f3"
+					(reference "JP2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 629.92 431.80)
+			(xy 627.38 431.80)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "cb7e56bd-d49f-5aee-ba31-c9ee1d6249c5")
+	)
+	(label "RS485_TERM"
+		(at 627.38 431.80 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "43580e46-d481-566a-9bd2-e11c19254118")
+	)
+	(wire
+		(pts
+			(xy 640.08 431.80)
+			(xy 642.62 431.80)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "bf863770-3b92-55c1-9e5e-2c7cb3d45991")
+	)
+	(label "RS485_B"
+		(at 642.62 431.80 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "5539c4c8-2058-50f5-aee0-f220e1fe41d7")
+	)
+	(symbol
+		(lib_id "Jumper:Jumper_2_Open")
+		(at 787.40 330.20 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "1a687729-a007-5b3d-a2e0-7ebd89e0f4a7")
+		(property "Reference" "JP3"
+			(at 782.32 326.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "BIAS HI default OPEN"
+			(at 782.32 333.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
+			(at 787.40 330.20 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 787.40 330.20 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 787.40 330.20 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Status" "FIT_HEADER_NO_SHUNT"
+			(at 787.40 330.20 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Source" "D-RS485-05"
+			(at 787.40 330.20 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Source_designator" "JP485_HI"
+			(at 787.40 330.20 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "0bd7d0f1-0b4f-5273-94b6-dc7351cfae4d")
+		)
+		(pin "2"
+			(uuid "59c0f6a2-984f-54e2-9b43-f4977e5049ac")
+		)
+		(instances
+			(project "accord-logger"
+				(path "/d6403372-a8d4-5433-aa98-182e137307f3"
+					(reference "JP3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 782.32 330.20)
+			(xy 779.78 330.20)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "932a3754-f649-54f0-b05f-20b40e476f54")
+	)
+	(label "P3V3_SW"
+		(at 779.78 330.20 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "d4cba283-89d2-5069-9c84-30baf83812cf")
+	)
+	(wire
+		(pts
+			(xy 792.48 330.20)
+			(xy 795.02 330.20)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4e68acfc-3f41-5972-a81a-84aca1bb6508")
+	)
+	(label "RS485_BIAS_HI"
+		(at 795.02 330.20 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "0af4f183-3d3e-5d66-ab6d-2b3b57557c5c")
+	)
+	(symbol
+		(lib_id "Jumper:Jumper_2_Open")
+		(at 787.40 381.00 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "778170d2-0ef6-57b8-825e-c36669e9b319")
+		(property "Reference" "JP4"
+			(at 782.32 377.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "BIAS LO default OPEN"
+			(at 782.32 384.05 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
+			(at 787.40 381.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 787.40 381.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 787.40 381.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Status" "FIT_HEADER_NO_SHUNT"
+			(at 787.40 381.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Source" "D-RS485-05"
+			(at 787.40 381.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Source_designator" "JP485_LO"
+			(at 787.40 381.00 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "a6c52eff-bdb1-51c8-9bb9-7e2f2f48dc64")
+		)
+		(pin "2"
+			(uuid "35124201-c6cc-5030-8f62-d4828bf8d1d4")
+		)
+		(instances
+			(project "accord-logger"
+				(path "/d6403372-a8d4-5433-aa98-182e137307f3"
+					(reference "JP4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 782.32 381.00)
+			(xy 779.78 381.00)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "21698089-5860-5929-a8be-9ea5503b71ad")
+	)
+	(label "RS485_BIAS_LO"
+		(at 779.78 381.00 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "28d09fcd-acbc-58bf-952d-2c12a1d390de")
+	)
+	(wire
+		(pts
+			(xy 792.48 381.00)
+			(xy 795.02 381.00)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9eb89045-b354-57df-945b-ed43b0459ed5")
+	)
+	(label "PGND"
+		(at 795.02 381.00 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "1577b9ba-1b06-567e-9b93-2b77126cc1c7")
+	)
+	(symbol
+		(lib_id "Connector_Generic:Conn_01x04")
+		(at 711.20 444.50 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "74104187-503f-5c9a-81cc-3220c2c1231c")
+		(property "Reference" "J6"
+			(at 709.93 436.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "RS-485 interim A/B/GND"
+			(at 709.93 450.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_Molex:Molex_Mini-Fit_Jr_5569-04A2_2x02_P4.20mm_Horizontal"
+			(at 711.20 444.50 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 711.20 444.50 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 711.20 444.50 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Status" "SELECTED_INTERIM"
+			(at 711.20 444.50 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Source" "Owner approval, R12-REV-4"
+			(at 711.20 444.50 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "Molex 39-30-1040 (5569-04A2)"
+			(at 711.20 444.50 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Source_designator" "J485"
+			(at 711.20 444.50 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "ad616c87-3c5c-54a8-a041-3c8377ffcf47")
+		)
+		(pin "2"
+			(uuid "b702c4aa-f87c-52f9-b1b0-cb814e5a6624")
+		)
+		(pin "3"
+			(uuid "9f6c3076-090d-5aa1-8912-5fc92a688641")
+		)
+		(pin "4"
+			(uuid "44482db7-3878-5863-a7ce-e96d0a0b92a8")
+		)
+		(instances
+			(project "accord-logger"
+				(path "/d6403372-a8d4-5433-aa98-182e137307f3"
+					(reference "J6")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 716.28 447.04)
+			(xy 718.82 447.04)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ee107df9-0445-5938-bf12-43334c0eaf35")
+	)
+	(label "RS485_A"
+		(at 718.82 447.04 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "a8f26568-e7fd-5fd0-81e3-8fb56ad5f9b0")
+	)
+	(wire
+		(pts
+			(xy 716.28 444.50)
+			(xy 718.82 444.50)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "273ab01e-6be4-55be-a48e-11865ac16bd2")
+	)
+	(label "RS485_B"
+		(at 718.82 444.50 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "3c4999c7-8def-5f9a-b9e9-988052fda412")
+	)
+	(wire
+		(pts
+			(xy 716.28 441.96)
+			(xy 718.82 441.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "98ef4c6a-ad7a-5573-a517-0301ccd43d99")
+	)
+	(label "PGND"
+		(at 718.82 441.96 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "9c9ca054-8213-5042-8a42-4df9fe7de615")
+	)
+	(no_connect
+		(at 716.28 439.42)
+		(uuid "3140fca0-be5d-5475-9f84-ed972f81a835")
+	)
+	(rectangle
+		(start 523.24 305.00)
+		(end 828.04 490.00)
+		(stroke
+			(width 0.3)
+			(type solid)
+		)
+		(fill
+			(type none)
+		)
+		(uuid "f6aeb2b4-fb15-5228-9b62-4c1838fef12c")
+	)
+	(text "RS-485 - keyless circuit; bias and termination OPEN by default"
+		(at 525.78 306.27 0)
+		(effects
+			(font
+				(size 2.0 2.0)
+				(bold yes)
+			)
+			(justify left top)
+		)
+		(uuid "7074904f-d908-57ba-b9d3-3dcf81e03dc3")
+	)
 	(rectangle
 		(start 17.78 20.32)
 		(end 360.68 460.00)
@@ -30037,7 +32006,7 @@
 		)
 		(uuid "201984b2-d0b0-597b-a7a1-11f0f2584a21")
 	)
-	(text "EXPANSION (DNP BUS) AND RESET  -  LRA-04 bounded provision"
+	(text "SPARE GP13 / SWITCHED POWER AND RESET"
 		(at 375.92 421.27 0)
 		(effects
 			(font
@@ -30046,7 +32015,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "083eb68a-e1ac-5dbd-9f45-4fdeec01b18c")
+		(uuid "f81653dc-1bda-51af-8e44-c001bd743d4f")
 	)
 	(rectangle
 		(start 17.78 470.00)
@@ -30350,7 +32319,7 @@
 		)
 		(uuid "20f2a1d6-a3a2-5b9d-9653-751a207502de")
 	)
-	(text "GP0/GP1, GP14/GP15, GP20-GP22 and GP28 are deliberately unconnected.\nGP7 is now ISO_EN, the B2 isolation enable, confirmed free in S1.\nGP8/GP9 (UART1) and GP10 (tied DE//RE) go to the DNP expansion\nheader, with GP13 offered there as a spare - offers, not reservations.\nARM, EXPIRED, PGOOD and HOLD_N stay off the GPIOs: A5-domain test\npoints only, and firmware has no ARM feedback in this revision.\nGP11 and GP12 are brought to pads per S1. ADC_VREF, 3V3_EN and VBUS\nare unconnected as fitted; VBUS has no buck connection.\nNo GPIO carries a pullup to any rail but switched 3V3."
+	(text "GP0/GP1, GP14/GP15, GP20-GP22 and GP28 are deliberately unconnected.\nGP7 is now ISO_EN, the B2 isolation enable, confirmed free in S1.\nGP8/GP9 (UART1) and GP10 (tied DE//RE) drive onboard RS-485.\nGP13 is offered on the trimmed J3 spare/power header.\nARM, EXPIRED, PGOOD and HOLD_N stay off the GPIOs: A5-domain test\npoints only, and firmware has no ARM feedback in this revision.\nGP11 and GP12 are brought to pads per S1. ADC_VREF, 3V3_EN and VBUS\nare unconnected as fitted; VBUS has no buck connection.\nNo GPIO carries a pullup to any rail but switched 3V3."
 		(at 845.82 234.44 0)
 		(effects
 			(font
@@ -30358,7 +32327,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "1cd61ebe-3fdc-5af3-adf6-8aa85f886247")
+		(uuid "152568d3-3533-5fa3-84e7-75975f5ed81d")
 	)
 	(text "HOLD driver and the cutoff path"
 		(at 845.82 261.30 0)
@@ -30392,7 +32361,7 @@
 		)
 		(uuid "5f3fdde4-204a-5123-b7c1-28aa653c01ac")
 	)
-	(text "SPI0 at 12 MHz on switched 3V3 only (GP16 MISO, GP17 CS, GP18 SCK,\nGP19 MOSI). D6 bulk is now a selected 47 uF: a 200 mA write spike for\n1 ms inside 100 mV of droop needs 2 uF, so this is an order of\nmargin without an oversized can. Any move of this module to a 5 V\nrail re-opens the MISO clearance gate of AS_BUILT S3.5.\nJ3 is a passive expansion header for a DNP daughterboard. There is\nno transceiver, bias or termination on this board, which is why no\noff-state current claim is needed. A daughterboard may take power\nonly from J3.1 (B5) or J3.3 (switched 3V3), both switched; an\nexternally powered adapter on this header breaks the off-state\ncontract. No bus interoperability is claimed.\nJ4 is the RUN-to-GND reset pair and nothing else."
+	(text "SPI0 at 12 MHz on switched 3V3 only (GP16 MISO, GP17 CS, GP18 SCK,\nGP19 MOSI). D6 bulk is now a selected 47 uF: a 200 mA write spike for\n1 ms inside 100 mV of droop needs 2 uF, so this is an order of\nmargin without an oversized can. Any move of this module to a 5 V\nrail re-opens the MISO clearance gate of AS_BUILT S3.5.\nRS-485 reuses keyless MAX3485, DIP-8, tied DE//RE and 10k pulldown.\n390R bias pair and 120R termination have OPEN-by-default shunts.\nExternal bus drive when off can draw 1 mA per A/B pin at +12 V;\nlinked high bias can backfeed dead 3V3. See communications notes.\nJ3 now carries GP13, switched power and ground only. No TVS added.\nJ4 is the RUN-to-GND reset pair and nothing else."
 		(at 845.82 308.48 0)
 		(effects
 			(font
@@ -30400,10 +32369,10 @@
 			)
 			(justify left top)
 		)
-		(uuid "9c0d011f-9418-5226-9c4d-b7af789e78f1")
+		(uuid "62099c57-416f-5f5f-81fe-6d3ea651c740")
 	)
 	(text "Onboard switched power"
-		(at 845.82 342.96 0)
+		(at 845.82 340.42 0)
 		(effects
 			(font
 				(size 2.2 2.2)
@@ -30411,20 +32380,20 @@
 			)
 			(justify left top)
 		)
-		(uuid "5b3a02cd-793c-538e-a9e4-64aefeb64a37")
+		(uuid "02f5af19-61cb-50f1-9ea7-6400c6609578")
 	)
 	(text "Reuses the existing power candidate as DESIGN.md S3 lists it\n(D-POWER-02), with the reviewed deltas D7 and D13 and the LRA-02\ncomponent selections. The LM2678, its TVS role, bulk capacitors,\nboost cap, inductor value and both Schottky positions all have\nin-service precedent on the keyless board in this car (D-POWER-03);\nthe logger adds QP, QI/QH, DZ, DOR, the A5 rail and MAX_ON.\nRail nets: P12 always-on, P_AON the clamped A5 feed, A5 always-on 5 V,\nVCLK the filtered oscillator rail, VIN_SW switched, B5 buck output,\nVSYS through DOR, P3V3_SW from the Pico regulator.\nRGS is 10k, not the 100k of DESIGN.md S3: the MAX_ON revision needs\nit so that the 0.2 V off-gate limit allows 19.80 uA of total sink\nleakage instead of 2 uA.\nQP body diode is drain-to-source: it blocks P12 to VIN_SW when off\nbut does not block reverse energy, so USB backfeed testing has to\ncover VIN_SW as well as B5. The DPAK tab is DRAIN and carries\nswitched battery voltage - a clearance and thermal item for layout.\nFor every diode, check the NET rather than the footprint name."
-		(at 845.82 348.04 0)
+		(at 845.82 345.50 0)
 		(effects
 			(font
 				(size 1.8 1.8)
 			)
 			(justify left top)
 		)
-		(uuid "28841ce1-3468-5b3d-94eb-908a6b125669")
+		(uuid "485562e3-cfe0-56ae-a70a-69a0b429c1b9")
 	)
 	(text "Independent cutoff - what it does and does not cover"
-		(at 845.82 395.22 0)
+		(at 845.82 392.68 0)
 		(effects
 			(font
 				(size 2.2 2.2)
@@ -30432,20 +32401,20 @@
 			)
 			(justify left top)
 		)
-		(uuid "8e25dda3-1b92-5254-b92c-754eab72033f")
+		(uuid "4ea36189-6ad2-5918-b2bc-3c968ba221c4")
 	)
 	(text "Nominal 2048 s from qualified ignition loss, on its own always-on\nsupply and its own clock. The Pico cannot refresh it with HOLD,\nresets, network traffic or watchdog servicing; releasing HOLD disarms\nit, and only a qualified ignition assertion can grant it again.\nReset dominates set in the settled Boolean model. UCOUNT is reset by\nBAD OR IGN_Q and deliberately NOT by NARM, which would erase EXPIRED\nas it disarmed the latch; instead the clock stops when disarmed.\nNot covered, and stated here so nobody reads more into it: a stopped\nclock, failed timer logic, a shorted QS or QP, an ignition line stuck\nhigh, repeated raw pulses that energize QI, or external backfeed. A5\nfaults can remove power before the deadline. No SD integrity claim\nsurvives a forced cutoff.\nEvery unused CMOS input is tied to a rail (ULATCH 12 and 13 to\nground) and every package has its own 100 nF across its own supply\npins - both are layout requirements as much as BOM lines."
-		(at 845.82 400.30 0)
+		(at 845.82 397.76 0)
 		(effects
 			(font
 				(size 1.8 1.8)
 			)
 			(justify left top)
 		)
-		(uuid "15e16718-2846-5a45-9631-9729e47235bd")
+		(uuid "b9461a13-e3a3-5323-95b2-6da03b952fd3")
 	)
 	(text "Test points and ground loops"
-		(at 845.82 442.40 0)
+		(at 845.82 439.86 0)
 		(effects
 			(font
 				(size 2.2 2.2)
@@ -30453,20 +32422,20 @@
 			)
 			(justify left top)
 		)
-		(uuid "bf2121d0-0ec7-510f-bd6b-8bb288addc54")
+		(uuid "8a9f7f39-def6-5510-8a6d-f52d120a95d1")
 	)
 	(text "Twenty-five test loops. Three separate ground loops follow the\nkeyless pattern: buck, Pico and harness end, the last on the bonded\nB16/AGND sense node. J4 shorts RUN to GND for a reset without\ncutting power.\nTP_PAON is where the <=28 V protected-rail criterion is measured.\nTP_GATE against TP_P12 is where the QP -14 to +1 V gate acceptance\nband is measured. TP_CLK32 carries the clock frequency and startup\nmeasurements the whole 2048 s arithmetic rests on.\nCurrent-sensitive nodes must be measurable without the instrument\nsupplying the current being measured, and probes must be removable\nfor the final leakage reading - a layout requirement, not only a\nprocedure."
-		(at 845.82 447.48 0)
+		(at 845.82 444.94 0)
 		(effects
 			(font
 				(size 1.8 1.8)
 			)
 			(justify left top)
 		)
-		(uuid "e6c8f03f-4e72-5333-bbfd-fac371f567f8")
+		(uuid "eee844e3-c9da-5ddf-b57f-e28520d11236")
 	)
 	(text "What is still open - none of it a layout blocker"
-		(at 845.82 481.96 0)
+		(at 845.82 479.42 0)
 		(effects
 			(font
 				(size 2.2 2.2)
@@ -30474,17 +32443,17 @@
 			)
 			(justify left top)
 		)
-		(uuid "2a6a2f25-c950-588a-8fc6-2ec97ea54521")
+		(uuid "3a6ab074-9b96-5833-9fe8-ba31acacd7fb")
 	)
 	(text "Classified in full in LRA12_HANDOFF.md. In short:\nORDER GATE   ASSR-601JV availability (fallback AQY221N2S specified,\n             strictly smaller, same keepout); exact fuse family and\n             curve; capacitor approval-sheet bias/aging/IR data.\nBRING-UP     A5 ground current below 100 uA load; hot leakage of QP,\n             QI, QH, QMON, QS, QREPORT and the opto; clock startup\n             and loaded ramps; opto ON/OFF endpoints; ASSR turn-on\n             against a 55k rather than the specified 20k test load;\n             assembled rail decay with the larger COUT; LM2678 loop\n             stability with the selected output capacitor.\nVEHICLE      sustained-overvoltage and jump-start exposure; load\n             dump; harness impedance and fuse clearing; long-duration\n             hot and cold operation.\nFIRMWARE     ISO_EN sequencing contract - assert and wait 20 ms before\n             trusting VSS edges, deassert and wait 5 ms before\n             releasing HOLD; GP5 now means hardware-qualified\n             ignition; the 1770/1800/1801 s policy is unchanged.\nNothing here is frozen, ordered or fabricated. A complete, routable\ndesign is not an approved board."
-		(at 845.82 487.04 0)
+		(at 845.82 484.50 0)
 		(effects
 			(font
 				(size 1.8 1.8)
 			)
 			(justify left top)
 		)
-		(uuid "d226a613-d7b0-5894-9b6f-d3d60d0613aa")
+		(uuid "83ac8efd-9cdc-513a-9108-4215ed3fe770")
 	)
 	(sheet_instances
 		(path "/"

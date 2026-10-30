@@ -19,7 +19,7 @@ Readiness review: [LAYOUT_READINESS_2026-10-29](../../../coordination/reviews/LA
 frozen, ordered, fabricated, flashed or vehicle-approved.** Every one of the
 eight LRA-06 placeholders now has a real circuit or a recorded, justified
 bypass; every populated part carries a checked footprint; ERC is clean at
-`--severity-all`; the board fits 80 × 120 mm with a 1.52× courtyard
+`--severity-all`; the board fits 80 × 120 mm with a 1.42× courtyard
 allowance. What is still open is listed in
 [LRA12_HANDOFF.md](../LRA12_HANDOFF.md), classified, and none of it is a
 layout blocker.
@@ -426,7 +426,7 @@ table. If it is chosen, hot leakage must be measured.
    it.
 3. **The cost is concrete.** Four more ASSR relays would add 4 × 12.3 mA =
    49 mA of awake LED current — about doubling the awake branch baseline — and
-   four 10.4 × 7.5 mm packages on a board with a 1.52× area allowance, against
+   four 10.4 × 7.5 mm packages on a board with a 1.42× area allowance, against
    a fault-only benefit.
 4. Series resistance in the fuel or supply top leg would also re-open the
    card-header calibration question for no gain.
@@ -593,11 +593,22 @@ GPIO. A header with NC pins was the contradiction; this has none.
 
 ### 6.6 Communications
 
-Bounded in [communications/REV_A_PROVISION.md](../communications/REV_A_PROVISION.md).
-In one line: a passive 8-way expansion header for a **DNP daughterboard**, no
-transceiver or bias or termination on this board, switched power only, the
-tied DE//RE line kept and every claim that depended on an unreachable shutdown
-state dropped.
+R12-REV-4 supersedes the passive J3 provision under owner decision D-RS485-05.
+The board now carries the keyless MAX3485 circuit and matching footprints:
+GP8 TX, GP9 RX, GP10 tied DE//RE with 10 k pulldown, 100 nF decoupling,
+390 Ω bias and 120 Ω termination. Bias and termination headers are fitted
+without shunts. J3 is trimmed to switched power/ground/GP13. Interim J6 is
+the owner-approved four-position Mini-Fit Jr: A/B/PGND/NC. Connector
+consolidation and layout remain separate. No bus TVS is added.
+
+[Communications revision](../communications/REV_A_PROVISION.md) records source
+netlist verification, footprint parity, population and residual gates.
+**External bus drive while parked is a conditional exposure:** up to 2 mA
+from the bus at the +12 V two-pin corner, outside the 2/5 µA allocation.
+With high bias linked, a 3.3 V external A line can additionally inject 8.55 mA
+through 390 Ω into a held-dead rail; 12 V gives 31.08 mA / 0.373 W.
+Default-open bias removes that resistor path, not the MAX3485 input paths.
+Measure external-source current, rail rise and rearm before bus/vehicle use.
 
 ---
 
@@ -619,7 +630,7 @@ screen, not an assembled maximum, and not a prediction.
 | **Whole-system screen** | **74.98** | **452.65** |
 | Unchanged acceptance target | 100 | 500 |
 
-**The whole-system targets close as component screens**, with 25 µA and 47 µA
+**With no externally energized RS-485 bus, the whole-system targets close as component screens**, with 25 µA and 47 µA
 of headroom, and they are not relaxed.
 
 **The former sub-allocations did not; the manager accepted redistribution.** The A5 row
@@ -674,16 +685,16 @@ the power logic, so it could not be re-quoted.
 
 | | |
 |---|---:|
-| Parts with a footprint | **141 of 141** |
-| Courtyard sum, fitted parts | **6,315 mm²** |
+| Parts with a footprint | **150 of 150** |
+| Courtyard sum, fitted parts | **6,759 mm²** |
 | Board 80 × 120 | 9,600 mm² |
-| **Allowance** | **1.52×** |
+| **Allowance** | **1.42×** |
 | Measured from pads rather than a courtyard | none |
 
 A courtyard sum is an occupancy floor including each part's own clearance, not
 a placement: it says nothing about routing channels or connector access. It is
 a tighter measure than the "nominal package area" the 1.6–2.0× guidance was
-written against, so 1.52× on courtyards is roughly comparable to about 1.9× on
+written against, so 1.42× on courtyards is roughly comparable to about 1.9× on
 raw package area. **It fits, with 3,285 mm² free, and the margin is real but
 not generous.**
 

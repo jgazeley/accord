@@ -46,3 +46,16 @@ changes and unrelated insertion. ERC JSON 0 violations, capture 652/652,
 using the manager-accepted redistribution. KiCad 9.0.2.
 The CSV files retain the generators' CRLF convention and the SVG is the raw
 KiCad export (including its trailing whitespace).
+
+
+R12-REV-4 follow-up, October 29 2026 (same session and branch):
+Run the same commands above; source keyless netlist exported read-only with:
+  kicad-cli sch export netlist --format kicadsexpr -o /tmp/lra12r-keyless.net ../../../keyless/hardware/hondaPico.kicad_sch
+Latest results supersede earlier counts: ERC JSON 0 violations (severity-all),
+capture 711/711, closure 67/67 with zero allocation overruns (external bus
+exposure reported separately), 150/150 footprints, fitted courtyard 6759 mm2,
+1.42x allowance. UUID regression passes with 1459 unique UUIDs.
+Two consecutive generations are byte-identical; latest schematic SHA256:
+bbfcba624c1ab658f25690dfadf0b9ae56eebc7b105e4850ddfb581423e74dd6
+The MAX3485 library mismatch was resolved by matching KiCad's inherited
+footprint behavior when the derived symbol's footprint property is empty.

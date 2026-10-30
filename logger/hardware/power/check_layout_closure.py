@@ -451,6 +451,33 @@ note('the two largest hot rows are the HC counters at 80 uA each and the '
      'oscillator slew qualification; LAYOUT_CLOSURE S7 records that option '
      'with its numbers rather than taking it.')
 
+# Conditional external-bus exposure is NOT inside the normal ledger or the
+# 2/5 uA interface allocation. ADI 19-0333 Rev 2 (5/24), DC table p3:
+# IIN2 per A/B pin with DE=0, VCC=0/3.6 V: +1 mA at +12 V, -0.8 mA at -7 V.
+hdr('4a. RS-485 external-source exposure (not ordinary parked current)')
+bus_positive = 2 * 1e-3
+bus_negative = 2 * 0.8e-3
+check('energized bus screen exceeds 500 uA target, explicitly conditional',
+      bus_positive > TARGET_HOT * 1e-6)
+note('External source: up to 2.0 mA with both A/B at +12 V, or 1.6 mA '
+     'magnitude at -7 V. Not guaranteed zero injection into the dead supply; '
+     'measure rail voltage and currents. The 2/5 uA allocation is not met '
+     'under that exposure; do not sum it silently into 74.98/452.65 uA.')
+r_bias_min=390 * 0.99
+for bus_v in (3.3,12):
+    injection=bus_v/r_bias_min
+    check('linked high bias at %.1f V exceeds 500 uA' % bus_v,
+          injection > TARGET_HOT*1e-6)
+    note('Linked high bias at %.1f V into a held-dead rail: %.3f mA, '
+         'resistor %.3f W. Finite source impedance reduces this; open link '
+         'removes this resistor path, not MAX3485 input current.'
+         % (bus_v,injection*1e3,bus_v*injection))
+# Two 120R end terminations in parallel; bias 390R each, 3.0 V minimum supply.
+v_idle=3.0*(120*0.99/2)/(2*390*1.01+120*0.99/2)
+check('unloaded two-end-termination bias screen exceeds 200 mV',v_idle>0.2)
+note('Worst resistor/supply corner %.3f V differential before receiver loading; '
+     'unknown node count/common mode/noise still requires topology validation.' % v_idle)
+
 # ===========================================================================
 # 5. Off-state path audit, read out of the netlist
 # ===========================================================================

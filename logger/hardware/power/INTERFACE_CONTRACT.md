@@ -469,3 +469,18 @@ supersede the corresponding LRA-12 change-record rows, not the reviewed body.
 | L04 | **Any sustained P12 above the selected 1.5KE20A's 17.1 V standoff is excluded**, explicitly including alternator/regulator overcharge faults and 24 V jump starts. Owner-deferred vehicle-acceptance risk D-OVERVOLT-04. SQD50P06-15L makes the 1.5KE30A alternative viable for QP; it was evaluated and not selected for the A5 and voltage-margin reasons in LAYOUT_CLOSURE §3.1. The old no-single-clamp argument does not rule out a two-stage solution. |
 | L07 | Manager accepted 65/355, 15/70, 12/50, 8/25 µA allocations, totals unchanged at 100/500. QP remains IPD50P04P4L-11 with 1/70 µA room/hot screens; system 74.98/452.65 µA. The original claim of 180 µA freed was arithmetic error: 200−70=130. Electrical acceptance remains open. BZX55C22 leakage is specified at **16 V**, not 18 V; no parked-current bound is claimed for 16–17.1 V. |
 | L03 follow-up | R_AON becomes 820 Ω/1%, required resistor rating ≥0.15 W at 85 °C. A5 thermal and voltage screens and their conditions are in LAYOUT_CLOSURE §3.3; bench validation remains required. |
+
+
+### R12-REV-4 — October 29, 2026
+
+Codex `logger-electrical`, session `01a18a47-2dc2-7aa3-a0d2-a4978e2b1ebc`;
+resume `codex resume 01a18a47-2dc2-7aa3-a0d2-a4978e2b1ebc`.
+D-RS485-05 supersedes the passive-header provision: onboard keyless MAX3485,
+GP8/9/10, switched 3V3, tied enables, 390 Ω jumper-isolated bias and
+jumper-selectable 120 Ω termination, all shunts omitted by default.
+J3 retains only GP13 and switched power; interim J6 carries A/B/PGND/NC.
+External bus drive while off is explicitly outside the 2/5 µA interface
+allocation: up to 2 mA two-pin +12 V screen, plus resistor injection if bias
+is linked. L07 normal totals apply without that external exposure. See
+`communications/REV_A_PROVISION.md` for conditional currents and bench/vehicle
+gates. No firmware, keyless, connector-consolidation or placement scope added.

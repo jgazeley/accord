@@ -1,3 +1,97 @@
+# Rev A communications — onboard keyless RS-485 (R12-REV-4)
+
+October 29, 2026, Codex `logger-electrical`, session
+`01a18a47-2dc2-7aa3-a0d2-a4978e2b1ebc`.
+Resume: `codex resume 01a18a47-2dc2-7aa3-a0d2-a4978e2b1ebc`.
+Identity verified from matching session/thread environment values.
+
+**Current authority: D-RS485-05 and the R12-REV-4 addendum on main at
+6f54be7.** This section supersedes the passive-header decision below.
+The original LRA-12 text is retained as historical attribution only.
+
+The keyless schematic was exported read-only with `kicad-cli sch export
+netlist --format kicadsexpr` to `/tmp/lra12r-keyless.net`. U5/C13/R13–R16/JP1
+pin connections and footprint properties were confirmed against that export.
+No keyless files were changed. No bus comparison or firmware implementation
+is part of this return.
+
+| Keyless | Logger source / reference | Reused circuit and footprint |
+|---|---|---|
+| U5 | U485 / U15 | MAX3485EPA+, DIP-8_W7.62mm, socket provision; 1 RO→GP9, 2 /RE and 3 DE→GP10, 4 DI←GP8, 5 PGND, 6 A, 7 B, 8 switched P3V3_SW |
+| C13 | C485 / C24 | 100 nF, C_0805_2012Metric_Pad1.18x1.45mm_HandSolder; VCC to PGND |
+| R13 | R_DE (existing) | 10 k, DIN0207 vertical; DE//RE to PGND, default listen |
+| R14, R15 | R485_A/B / R47/R48 | 390 Ω/1%, same DIN0207 vertical footprint; A high bias and B low bias |
+| R16, JP1 | R485_TERM / R49, JP485_TERM / JP2 | 120 Ω/1%, same axial footprint; A–R49–RS485_TERM–JP2–B; same 1×02 vertical pin-header footprint |
+
+Logger-specific differences and population:
+
+- Supply is switched 3V3, because the logger powers down. Tied DE//RE remains:
+  LOW listens, HIGH transmits. The shutdown combination is unreachable; no
+  shutdown-current claim is made. Place C24 at U15 pins 8/5.
+- Bias uses **390 Ω**, per owner direction: keyless schematic says 270 Ω,
+  PCB says 390 Ω. That discrepancy remains on keyless, untouched.
+- Two added 1×02 headers **JP3/JP4** isolate the high and low bias legs.
+  Fit both headers but **no shunts**. Fit JP2 likewise with **no shunt**.
+  The owner installs both bias shunts only at the designated bias node and
+  termination only at a bus end. A plain mid-bus node leaves all three open.
+- J3 is trimmed to four pins: 1 B5, 2 PGND, 3 switched 3V3, 4 spare GP13.
+  UART1 TX/RX and GP10 have no parallel header connection. Externally powered
+  logic or supplies must not be attached to J3 while the logger is off.
+- **Interim J6:** owner-approved 4-position Mini-Fit Jr 39-30-1040,
+  `Molex_Mini-Fit_Jr_5569-04A2_2x02_P4.20mm_Horizontal`.
+  Pin 1 A, 2 B, 3 bus ground to PGND, 4 NC. Route A/B as a pair with a
+  dedicated ground wire; do not use the B16/AGND conductor. Connector
+  consolidation is a separate owner task; no PCB placement work was done.
+- No bus TVS is added, matching keyless. Common-mode/transient exposure and
+  interoperability still need bench/vehicle acceptance.
+
+## Conditional bus exposure and acceptance
+
+[ADI MAX3483–MAX3491, 19-0333 Rev. 2, May 2024, DC table p3](https://www.analog.com/media/en/technical-documentation/data-sheets/MAX3483-MAX3491.pdf):
+with DE=0 and VCC=0 or 3.6 V, each A/B pin can draw 1 mA at +12 V or
+−0.8 mA at −7 V. Thus both pins at the positive corner permit **2.0 mA**,
+or **1.6 mA magnitude** at the negative corner. These are external-source
+currents, not local supply quiescent current. The datasheet does not establish
+zero current into the dead 3V3 rail. Open bias links leave these device paths.
+
+With the high bias linked, an external A line also feeds the dead rail through
+390 Ω: into a held-zero rail, **8.55 mA at 3.3 V** or **31.08 mA at 12 V**
+using −1% resistance. The 12 V case dissipates **0.373 W** in that resistor;
+the inherited axial part cannot be assumed safe continuously at that corner.
+Finite external-source impedance reduces current; a floating dead rail can
+rise instead. Open JP3 removes this resistor path. Open JP4 also removes the
+low-bias bus load. Open JP2 removes the 120 Ω differential termination load.
+Link configuration must be included in every off-state test.
+
+The unchanged **74.98/452.65 µA** system screen and **100/500 µA** targets
+are conditional on no externally energized bus (and the earlier input
+conditions). This bus exposure is **outside** the 2/5 µA interface allocation,
+not squeezed inside it. An active external node means that allocation is not
+met; topology and measured currents must be accepted before vehicle use.
+
+At 3.3 V with two 120 Ω ends, the unloaded 390/390 bias divider produces
+0.236 V differential and consumes 3.93 mA while powered. With 3.0 V supply,
++1% bias and −1% terminators it gives 0.210 V before receiver loading. This
+small margin is not a guarantee for an unknown node count or noisy bus.
+Only one node should supply bias. Verify loaded idle margin and waveform at
+the final topology. Active transceiver consumption and driver/termination
+current are additional switched-rail loads; they are not parked leakage.
+
+| Residual gate | Required evidence |
+|---|---|
+| Bench: bus driven/bias applied with logger off | A/B source currents, dead 3V3 and GPIO voltages, no unintended rearm; test every intended jumper state |
+| Bench/vehicle: bias/termination ownership | Node count, two physical ends, one bias node, loaded idle differential and communications waveform |
+| Vehicle: external node remains active while parked | Account for conditional bus current separately; decide whether isolation or an operating restriction is needed |
+| Vehicle: common mode/transients | Confirm the inherited unprotected bus is suitable for the actual harness; no automatic qualification from keyless precedent |
+
+Capture checks assert pin maps, exact reused footprints, tied enable and
+pulldown, UART exclusivity, and passive path removal with jumpers open, with
+closed-link counterchecks. Power closure reports the conditional currents.
+
+---
+
+## Historical LRA-12 provision — superseded in full above
+
 # Rev A communications — the bounded provision, so it cannot hold the PCB
 
 Prepared October 29, 2026 by Claude Code `logger-electrical`, session

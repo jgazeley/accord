@@ -502,3 +502,61 @@ acceptance is claimed. Main and the original engineer's worktree are untouched.
 > and dated updates. Preserve predecessor bookmarks and original attribution when
 > transporting existing commits. If your ID is unavailable, say so rather than
 > inventing one. Include this requirement in any seeds or handoffs you create.
+
+
+### Revision LRA-12R, R12-REV-4 follow-up — October 29, 2026
+
+Codex `logger-electrical`, session `01a18a47-2dc2-7aa3-a0d2-a4978e2b1ebc`.
+Resume: `codex resume 01a18a47-2dc2-7aa3-a0d2-a4978e2b1ebc`.
+Same branch `task/LRA-12R-01a18a47`; follows REV-1–3 commit
+`50d93c815ca4eac6a1536841a630f123b42f7394`. Scope added by manager packet on
+main at `6f54be7`, and owner approved the interim four-position connector.
+
+**Delivered:** onboard keyless RS-485, replacing the passive J3 provision.
+The keyless schematic was exported read-only and its U5 pin map and all
+RS-485 footprints checked. Logger U15/U485 is MAX3485EPA+ in the same
+DIP-8 socket footprint, C24 is the same 0805 100 nF, and R_DE retains the
+same 10 k axial pulldown. GP8 TX, GP9 RX and GP10 tied DE//RE connect only
+to the onboard circuit. No unreachable-shutdown current claim remains.
+R47/R48 use 390 Ω per direction (keyless schematic 270 Ω versus PCB 390 Ω
+is recorded without editing keyless). R49 and JP2 retain 120 Ω selectable
+termination with the same footprints. Added JP3/JP4 isolate both bias legs.
+All three headers are fitted **without shunts** by default.
+
+J3 is now four pins: B5/PGND/switched-3V3/GP13. Interim J6 is a four-position
+Mini-Fit Jr 39-30-1040: 1 A, 2 B, 3 PGND bus return, 4 NC. It does not use
+B16/AGND. Owner connector consolidation is separate; no placement work was
+done. No A/B TVS is added, matching keyless.
+
+Switched 3V3 does not eliminate external-bus exposure. The conditional
+bus-side screen is up to 2.0 mA total with both A/B at +12 V (or 1.6 mA
+magnitude at −7 V), outside the 2/5 µA allocation. If the high bias is
+linked, a stiff external A line can additionally inject 8.55 mA at 3.3 V,
+or 31.08 mA / 0.373 W at 12 V into a held-dead rail. Default-open bias
+removes that resistor path, not MAX3485 input current. No dead-rail voltage
+or zero-injection guarantee is inferred. These are explicit bench/vehicle
+gates in `communications/REV_A_PROVISION.md`; the earlier 74.98/452.65 µA
+screen applies without an energized external bus. Final node count, idle
+margin, jumper ownership and bus waveform remain acceptance work.
+
+The ERC `lib_symbol_mismatch` was a generator flattening issue: KiCad
+inherits a parent's footprint when the derived footprint is empty. The
+library resolver now does the same; no ERC exclusion was added, and the
+placed MAX3485 footprint stays DIP-8 as requested.
+
+| Final rerun | Result |
+|---|---|
+| Both generators, two consecutive schematic runs | byte-identical; SHA256 `bbfcba624c1ab658f25690dfadf0b9ae56eebc7b105e4850ddfb581423e74dd6` |
+| ERC JSON, KiCad 9.0.2, severity-all | 0 violations |
+| Capture, including pin maps, footprints and open/closed jumper paths | 711/711 |
+| Closure, including conditional external bus currents | 67/67, zero allocation overruns |
+| Footprints / fitted courtyard / allowance | 150/150; 6759 mm²; 1.42× on 80 × 120 mm |
+| UUID identity regression | passes; 1459 unique UUIDs |
+
+Netlist and SVG exports were refreshed; exact commands are in
+`kicad/validation/COMMANDS.txt`. The preceding 141-part counts and passive
+communications statements are historical. Existing component UUIDs remain
+stable across this addition. All original REV-1–3 thermal/vehicle limitations
+remain. No hardware, firmware, deployment, purchase or keyless edit occurred.
+Per the final owner instruction, this return ends after commit and push;
+connector consolidation and further tasks are not undertaken.

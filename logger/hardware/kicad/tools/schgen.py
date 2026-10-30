@@ -111,7 +111,11 @@ class Lib:
         node = []
         for x in parent:
             if isinstance(x, list) and x[0] == 'property':
-                node.append(over.pop(x[1][1:], x))
+                replacement = over.pop(x[1][1:], x)
+                # KiCad inherits an empty derived footprint from its parent.
+                if x[1][1:] == 'Footprint' and replacement[2] == sexp.q(''):
+                    replacement = x
+                node.append(replacement)
             elif isinstance(x, list) and x[0] == 'symbol':
                 sub = [y for y in x]
                 sub[1] = sexp.q(x[1][1:].replace(pname, name, 1))
