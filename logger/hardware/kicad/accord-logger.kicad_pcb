@@ -196,44 +196,48 @@
 		)
 		(property "Status" "MISSING_OR_VERIFY_SPARE"
 			(at 0 0 0)
-			(layer "F.SilkS")
+			(layer "F.Fab")
+			(hide yes)
 			(uuid "eac2b6d0-a610-4a0d-8169-fa75d17b6f4e")
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1 1)
 					(thickness 0.15)
 				)
 			)
 		)
 		(property "Source" "DESIGN.md S3 / D-POWER-03"
 			(at 0 0 0)
-			(layer "F.SilkS")
+			(layer "F.Fab")
+			(hide yes)
 			(uuid "09e92129-75a4-4bbe-b88d-c1b4619bb133")
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1 1)
 					(thickness 0.15)
 				)
 			)
 		)
 		(property "MPN" "TI LM2678T-5.0/NOPB"
 			(at 0 0 0)
-			(layer "F.SilkS")
+			(layer "F.Fab")
+			(hide yes)
 			(uuid "b2a4190e-da9e-4855-8342-624877d8a83a")
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1 1)
 					(thickness 0.15)
 				)
 			)
 		)
 		(property "Source_designator" "UREG"
 			(at 0 0 0)
-			(layer "F.SilkS")
+			(layer "F.Fab")
+			(hide yes)
 			(uuid "61005e10-b6a3-49cd-8522-85a8d643f896")
 			(effects
 				(font
-					(size 1.27 1.27)
+					(size 1 1)
 					(thickness 0.15)
 				)
 			)
