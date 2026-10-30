@@ -1,5 +1,10 @@
 # Reusable task packet and successor handoff
 
+> **Historical, frozen October 29, 2026.** The multi-agent process this
+> describes is retired (owner direction; see `AGENTS.md`). Current state:
+> [STATUS.md](STATUS.md). Owner decisions: [DECISIONS.md](DECISIONS.md).
+> Kept unchanged below for history; don't act on its assignments or next steps.
+
 Prepared October 28, 2026 by Codex `pcb-manager`, session `01a17045-1855-7af2-b76a-32c2b778cd64`. Historical bookmark: `codex resume 01a17045-1855-7af2-b76a-32c2b778cd64`. Successors use their own identities.
 
 Copy this format into a task packet under `coordination/handoffs/` when needed.

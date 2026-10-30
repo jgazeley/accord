@@ -1,165 +1,92 @@
-# Agent instructions and migration context
+# Agent instructions
 
-Prepared October 27, 2026 by Codex `logger-wifi-piless`, session
-`01a17526-034c-78f1-9d09-24c3b88c3dc7`.
-Bookmark: `codex resume 01a17526-034c-78f1-9d09-24c3b88c3dc7`.
-This identifies the migration/documentation work, not authorship of all copied
-firmware or hardware. Successors must use their own verified session identities.
+This repository (`jgazeley/accord`) holds two Pico W modules for the owner's
+Honda Accord, plus the logger's server side:
 
-## Active authority — October 28, 2026
+- `keyless/`: the keyless board (firmware, native tests, KiCad). In service in
+  the car. **It is the template for logger hardware.**
+- `logger/`: recording/upload firmware, native tests, build tooling, the
+  `server/` raw receiver and trip converter, and `hardware/` for the Rev A
+  board.
 
-Owner direction: this repository is the authoritative home for new active
-Accord development, hardware and coordination. `jgazeley/accord-logger` is
-historical reference and retained deployment storage, not a competing tracker.
-Read [current tasks](coordination/PROJECT_MILESTONES.md) and the
-[current manager handoff](coordination/handoffs/PCB_MANAGER_LAYOUT_HANDOFF_2026-10-29.md).
-New agents start here; recover only missing material with provenance/public review.
-The successor manager claims its own identity; predecessor sessions are history.
+The two modules are separate: keyless does not talk to the logger's VM bridge.
+The Pi 4 is a portable bench, not part of normal ingestion.
 
-Artifact owners: manager owns root/coordination; logger role owns logger firmware;
-bridge role owns logger/server; electrical/KiCad roles own logger/hardware with
-one claimed edit scope; keyless role owns keyless. Preserve others' work and stage
-only explicit task paths. The single tracker records actual claimants/dependencies.
-Publishing source does not authorize deployment, hardware changes or DB writes.
+## How work is done here (owner direction, October 29, 2026)
 
-Prepared October 28, 2026 by Codex `pcb-manager`, session `01a17045-1855-7af2-b76a-32c2b778cd64`. Historical bookmark: `codex resume 01a17045-1855-7af2-b76a-32c2b778cd64`. Successors use their own identities.
+**One agent works directly with the owner and commits to git.** The earlier
+multi-agent arrangement (manager and specialist sessions, task packets,
+reviews, claims and handoffs) is retired. Its records stay in `coordination/`
+as history; do not restart it.
 
-### Current manager claim — October 29, 2026
+1. **Read [coordination/STATUS.md](coordination/STATUS.md) first.** It says
+   where things stand and what's next. Rewrite it when that changes; don't
+   append to it.
+2. **Record owner statements the moment they are made** in
+   [coordination/DECISIONS.md](coordination/DECISIONS.md): dated, quoted
+   where possible, before carrying on. Lost owner statements caused most
+   past rework.
+3. **The owner is the authority on what is physically built and run.**
+   Firmware comments and older documents can be stale. If something matters
+   and isn't recorded, ask.
+4. **Keyless is the default template** for every logger block (buck,
+   protection, car inputs, RS-485, connectors) unless the owner or a
+   concrete logger-specific difference says otherwise (DECISIONS: D-REUSE-02).
+5. Check engineering against the physical fact (net, pin, part, polarity),
+   not against a symbolic record that might share your misreading.
 
-Current manager: Claude `pcb-manager`, session
-`42dd0e33-28b5-4936-847e-9c2e1d2488fa`.
-Bookmark: `claude --resume 42dd0e33-28b5-4936-847e-9c2e1d2488fa`.
-Identity read from this session's `CLAUDE_CODE_SESSION_ID`; this tool exposes no
-second identifier to cross-check it. Took over at the owner's request on
-October 29 while LRA-12 runs. Assignment unchanged: remove layout blockers using
-the existing project documents and design candidates; do not reconstruct
-transcripts or historical work.
+## Git
 
-Preceding managers, historical attribution, most recent first: Codex
-`pcb-manager`, session `01a18447-07c2-7bb3-8318-9b276cfdb3b8`
-(`codex resume 01a18447-07c2-7bb3-8318-9b276cfdb3b8`), which resumed after the
-Claude shift, audited the core documents and published the LRA-12 packet; and
-Claude `pcb-manager`, session `630dea87-5e4d-4bad-a1ff-d41b3a5f509b`
-(`claude --resume 630dea87-5e4d-4bad-a1ff-d41b3a5f509b`), which completed the
-LRA-03 integration, integrated LRA-06, recorded the owner's measurements and
-board envelope, and reviewed the LRA-11 candidate.
+- Keep the shared checkout `/srv/agent_share/accord` on `main`. Use a
+  separate worktree for branch work.
+- Commit identity per command, never by changing global config:
+  `git -c user.name='<Tool> <role> [<short-session-id>]' -c user.email='<tool>@local.invalid' commit …`.
+  End the message with your tool's session-ID trailer (`Claude-Session-ID:`,
+  `Codex-Session-ID:`), plus any trailer your tool requires.
+  This replaces `logger/coordination/AGENT_ATTRIBUTION.md`, which is kept
+  unchanged because the logger import manifest pins its hash.
+- Push needs the explicit key (no agent or SSH config on this host):
+  `git -c core.sshCommand='ssh -i ~/.ssh/id_ed25519_accord_public -o IdentitiesOnly=yes' push git@github.com:jgazeley/accord.git main:main`.
+  Ask the owner before pushing.
+- Inspect exactly what is staged before every commit. **Never commit**
+  credentials, `secrets.h`, configured firmware binaries, private runtime
+  data, or `keyless/hardware/3d/039301160.stp` (excluded pending licence
+  provenance).
 
-Scope: root/coordination, task assignment and integration. Specialist claims and
-dependencies remain in `coordination/PROJECT_MILESTONES.md`. The preceding manager
-identities and bookmarks are historical attribution.
+## Safety boundaries
 
-## Core-document maintenance — owner direction, October 29
+Publishing source does not authorize flashing, deployment, service changes,
+database writes, purchases, wiring or bench work. Each of those needs the
+owner's go-ahead at the time. To flash a Pico, use `pico-flash` (see the
+owner's global instructions), never bare `picotool load`.
 
-Current project documents are the first source for onboarding and handoff.
-Use `coordination/PROJECT_MILESTONES.md` for live claims, decisions and next
-steps; `coordination/HANDOFF_INDEX.md` locates the current handoff and packets.
-`logger/hardware/REV_A_CONTEXT.md` summarizes hardware and links the detailed
-as-built, electrical and KiCad sources. Keep module READMEs accurate about
-implemented behavior and limitations.
+## Configuration and licensing
 
-At each material status change and before a manager handoff, audit those core
-entry points against the current artifacts and owner statements. Correct stale
-summaries and links; mark historical records clearly instead of stacking
-contradictory current instructions. Record what was checked and any unresolved
-metadata in the handoff. Do not create another task tracker.
+- A configured logger build needs an independent private `secrets.h`; see
+  [logger/NEXT_AGENT.md](logger/NEXT_AGENT.md). The build helper uses dummy
+  credentials unless `--secrets` is given.
+- Before collecting or adapting server files, read
+  [docs/SERVER_MIGRATION_NOTES.md](docs/SERVER_MIGRATION_NOTES.md). The public
+  server stops at raw storage and trip JSON.
+- Original software and docs are Apache 2.0 and original hardware is
+  CERN-OHL-P-2.0; preserve notices and third-party terms
+  ([LICENSING.md](LICENSING.md)).
 
-Git, detailed reviews, session IDs/bookmarks and transcripts provide deeper
-history when a specific question needs it; they are not mandatory onboarding
-reads. Preserve attribution and provenance. Record an owner-reported task as
-already assigned even if its agent identity/branch is not yet supplied; a usage
-wait does not authorize dispatching a duplicate or editing its claimed scope.
+## Provenance
 
-Recorded by Codex `pcb-manager`, session
-`01a18447-07c2-7bb3-8318-9b276cfdb3b8`
-(`codex resume 01a18447-07c2-7bb3-8318-9b276cfdb3b8`).
+`jgazeley/accord-logger` is the historical repository: reference only, not a
+tracker. Each component's `SOURCE_MANIFEST.json` records source revisions and
+hashes; don't edit files a manifest pins. Path history is in
+[coordination/MIGRATION_MAP.md](coordination/MIGRATION_MAP.md).
 
-## Project boundaries
-
-- `keyless/` contains local Pico W keyless firmware, native tests and KiCad
-  hardware. It does not communicate with or depend on the logger's VM bridge.
-- `logger/` contains Pico W recording/upload firmware, native tests and build
-  tooling. `logger/server/` now contains the raw receiver and trip conversion core;
-  database/dashboard migration remains outside this public repository.
-- The Pi 4 is a portable bench, not a normal ingestion dependency.
-- Preserve the existing source repositories and other agents' worktrees.
-  Copying files here does not authorize flashing or service cutover.
-- Keep public READMEs focused on modules, build instructions and actual
-  limitations. Put agent bookmarks, migration details and handoffs here or in
-  linked coordination documents.
-
-## Source provenance
-
-### Historical name and path map
-
-| Historical name/path | Meaning in this project |
+| Historical name | Meaning here |
 |---|---|
-| `hondaPico` in documentation | Usually the accord-keyless board/module. Check context: the old name was also used for development sketches and directories. |
-| `hondaPico/hondaPico.ino` | Temporary Wi-Fi web dashboard; not the current keyless firmware. |
-| `benchlink/uart_main/` | Current keyless firmware, now `keyless/firmware/accord-keyless/`. |
-| `hondaPico-kicad/` | Keyless hardware, now `keyless/hardware/`; retain `hondaPico.kicad_pro` as the project filename. |
-| `picow-logger`, `benchlink/picow-logger/` | Accord logger firmware, now `logger/firmware/accord-logger/`. The old directory also held server tools and history; do not import it wholesale. |
-| `bridge`, `accord-bridge` | Logger upload/processing service; not part of keyless. |
+| `hondaPico` | Usually the keyless board. `hondaPico/hondaPico.ino` was a Wi-Fi dashboard sketch, not keyless firmware |
+| `benchlink/uart_main/` | Keyless firmware, now `keyless/firmware/accord-keyless/` |
+| `hondaPico-kicad/` | Keyless hardware, now `keyless/hardware/`; keep `hondaPico.kicad_pro` as its filename |
+| `picow-logger` | Logger firmware, now `logger/firmware/accord-logger/` |
+| `bridge`, `accord-bridge` | Logger upload/processing service, not keyless |
 
-The two Pico modules are distinct. Do not globally replace `hondaPico` in code,
-protocol identifiers or KiCad references merely to modernize the name.
-
-The historical repository is `jgazeley/accord-logger`. Each component's
-`SOURCE_MANIFEST.json` records the source revision, paths, hashes and validation.
-
-- Keyless firmware came from `benchlink/uart_main/`; its sketch was renamed
-  `accord-keyless.ino`. The older `hondaPico/hondaPico.ino` is a development
-  Wi-Fi dashboard and is not the live keyless source. Hardware came from
-  `hondaPico-kicad/`, with `hondaPico.kicad_pro` as the main project.
-- Logger firmware came from `session/logger-wifi-scheduling-01a17526` at
-  `426a43df1ea3bb60540b12e99b3ae9862dec3bb0`, with firmware bytes matching the
-  v0.8.1-dev build manifest. The historical master branch contains older logger
-  firmware and must not be substituted for this baseline.
-
-All copied firmware contents initially remained unchanged; sketch names,
-test include paths and build-tool paths were adapted. Historical comments may
-still refer to old paths. Hardware design files retain their original contents;
-a local Custom symbol library and table were added from embedded definitions.
-
-## Next work and configuration
-
-- **Before the next configured logger build**, prepare an independent private
-  `secrets.h`. The old shared `hondaPico/secrets.h` arrangement does not exist
-  here. Read [logger/NEXT_AGENT.md](logger/NEXT_AGENT.md). The build helper
-  requires explicit `--secrets`; otherwise it uses dummy credentials.
-- Read [server migration notes](docs/SERVER_MIGRATION_NOTES.md) before collecting
-  or adapting server files. They identify stale guidance, files absent from Git,
-  runtime data to retain and the guarded database-intake boundary.
-- Keep credentials, configured firmware binaries and private runtime data out
-  of source control. Inspect exact staged contents before every public commit/push.
-- Owner-approved licensing intent is free reuse with credit. Original software
-  and docs use Apache 2.0; original hardware uses CERN-OHL-P-2.0. Preserve
-  notices and third-party terms; see [LICENSING.md](LICENSING.md). The unused
-  local `keyless/hardware/3d/039301160.stp` is excluded from Git pending license
-  provenance. Do not force-add it or include it in a public archive.
-- The new GitHub repository is `jgazeley/accord`. The initial import is published. Inspect current Git state before proceeding.
-
-## Required attribution
-
-Follow [logger/coordination/AGENT_ATTRIBUTION.md](logger/coordination/AGENT_ATTRIBUTION.md).
-Preserve original authorship when transporting work. Do not change shared or
-global Git identity. Use this block in new or refreshed seeds and handoffs:
-
-> **Required agent attribution:** Follow `logger/coordination/AGENT_ATTRIBUTION.md`
-> relative to this project root. Use your own tool, role and verified current
-> session ID for Git author and committer identity (`<Tool> <role> [<short-id>]`),
-> with per-command settings. End each new commit message with `Agent-Session: <role>`
-> and your full tool-specific session-ID trailer (`Codex-Session-ID`,
-> `Claude-Session-ID` or `Antigravity-Session-ID`). This includes documentation-only
-> commits. Identify yourself and your resume command in new coordination documents
-> and dated updates. Preserve predecessor bookmarks and original attribution when
-> transporting existing commits. If your ID is unavailable, say so rather than
-> inventing one. Include this requirement in any seeds or handoffs you create.
-
-## Public server preparation — October 28, 2026
-
-Codex `pcb-manager`, session `01a17045-1855-7af2-b76a-32c2b778cd64`
-(`codex resume 01a17045-1855-7af2-b76a-32c2b778cd64`).
-Historical preparation checkpoint: the public server stops at raw storage and trip JSON. The historical server
-migration note describes a broader private installation; collecting its DB,
-renderer, personal recordings or private settings is not required here.
-Keep the private development repository and live services unchanged.
+Do not globally rename `hondaPico` in code, protocol identifiers or KiCad
+references. Keyless host tooling (`hp`, `cm5sim`) lives outside this repo at
+`/srv/agent_share/pcb/benchlink/`.

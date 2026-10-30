@@ -38,4 +38,4 @@ Input isolation candidate: [B2 study](isolation/B2_ISOLATION.md), with linked
 review conditions; not yet implemented in the schematic.
 
 Current electrical/PCB context: [Rev A context](REV_A_CONTEXT.md).
-Active task authority: [project milestones](../../coordination/PROJECT_MILESTONES.md).
+Current status: [STATUS.md](../../coordination/STATUS.md); owner decisions: [DECISIONS.md](../../coordination/DECISIONS.md).

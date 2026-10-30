@@ -21,8 +21,8 @@ trip JSON. Personal databases and dashboards are outside this repository.
 ## Development
 
 This is the active home for Accord firmware, hardware and coordination.
-See [current milestones and tasks](coordination/PROJECT_MILESTONES.md) and
-[task handoffs](coordination/HANDOFF_INDEX.md). Earlier experiments remain in
+See [current status](coordination/STATUS.md) and
+[owner decisions](coordination/DECISIONS.md). Earlier experiments remain in
 `accord-logger` as historical reference; useful missing material is migrated
 selectively. Installed services and private data are separate from this source tree.
 
