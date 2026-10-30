@@ -34,9 +34,9 @@ bench test and vehicle test.
   block, Pico, SD header, J1, four holes. Switched on next (October 30), for
   the owner's "Update PCB from Schematic": the timer batch (a5_supply, hold,
   clock, cutoff; 39 parts). After that: ignition_opto + qualified_ignition.
-  Open placement items (review of `611d70a`): SD module outline (J5) sits
-  behind the Pico antenna; C11 and C12 too far from U6; C14 far from L1;
-  nylon hardware at H4 (next to the antenna). Everything else stays "Exclude from board" until asked for:
+  Power block placement reviewed and accepted (third pass). Open: nylon
+  hardware at H4 (next to the antenna); a solid PGND return between C14,
+  D115 and C10 when routing. Everything else stays "Exclude from board" until asked for:
   `python3 tools/board_chunks.py add <chunk>` (in `logger/hardware/kicad`,
   KiCad closed), then "Update PCB from Schematic". Chunks still off: inputs,
   ignition_opto, qualified_ignition, iso_enable, rs485, spare_reset,
