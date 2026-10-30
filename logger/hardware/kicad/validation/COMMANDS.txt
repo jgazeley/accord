@@ -121,3 +121,20 @@ the harness carries a 1 A inline fuse. Board edited with the pcbnew API
 738/738 capture checks (a BOM with F1 restored fails the new no-fuse check);
 closure 67/67; every board pad net matches the schematic; courtyard
 allowance 1.97x.
+
+Board staged by subsystem, October 30 2026 (DECISIONS D-STAGE-11). The
+schematic is complete, but parts outside the active chunks carry "Exclude
+from board", and kicad-cli LEAVES THOSE OUT of its netlist export. So the
+check loop now exports the FULL netlist from a scratch copy:
+
+  python3 tools/board_chunks.py status
+  python3 tools/board_chunks.py add <chunk>      # KiCad closed; then Update PCB from Schematic
+  python3 tools/board_chunks.py full-netlist validation/netlist.net
+  python3 check_capture.py
+  python3 ../power/check_layout_closure.py
+
+Do not export validation/netlist.net with plain kicad-cli while chunks are
+off: the checks would see a partial circuit. First staging: power, pico, sd
+and connector on (27 parts + 4 holes on the board), 120 parts excluded.
+ERC 0; full netlist identical to before (147 parts, no pin changed net);
+738/738 capture; closure 67/67; no placed footprint moved.

@@ -8,6 +8,14 @@ October 29 evening were carried over from the retired tracker
 
 ## October 30, 2026
 
+**D-STAGE-11: build the board up by subsystem.** Owner: *"I think I want to
+remove everything except buck converter related components, and add chunks
+of components by subsystem as I go"*, then *"leave only U1, J5, J1, the
+mounting holes, and the buck / power block related components"*. The
+schematic stays complete; every other symbol is marked "Exclude from board"
+and its footprint removed, and chunks are switched back on as the owner asks
+(chunk list in `logger/hardware/kicad/tools/board_chunks.py`).
+
 **D-FUSE-10: no fuse on the board.** Owner: *"remove the fuse from the
 circuit and the board, I will use an inline fuse in the harness"*. F1 and
 its holder are removed; BATT_IN connects straight to the reverse-block

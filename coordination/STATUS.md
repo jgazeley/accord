@@ -30,6 +30,15 @@ bench test and vehicle test.
 - Engineering record: `logger/hardware/power/LAYOUT_CLOSURE.md`; risks,
   bring-up tests and firmware follow-up: `logger/hardware/LRA12_HANDOFF.md`.
 
+- **The board is staged by subsystem** (D-STAGE-11). On the board now:
+  power block, Pico, SD header, J1 and the four holes. Everything else is
+  "Exclude from board" until the owner asks for it:
+  `python3 tools/board_chunks.py add <chunk>` (in `logger/hardware/kicad`,
+  KiCad closed), then "Update PCB from Schematic". Chunks: inputs,
+  a5_supply, ignition_opto, qualified_ignition, iso_enable, hold, clock,
+  cutoff, rs485, spare_reset, testpoints. Checks must use the full netlist
+  (`board_chunks.py full-netlist`).
+
 ## Next, in order
 
 1. **Owner opens the schematic in KiCad once.** This host can't render it, so
