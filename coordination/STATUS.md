@@ -15,10 +15,11 @@ bench test and vehicle test.
 
 - KiCad project: `logger/hardware/kicad/accord-logger.kicad_pro`. Summary of
   what's on the board: `logger/hardware/REV_A_CONTEXT.md`.
-- The schematic and `BOM.csv` are **generated** by
-  `logger/hardware/kicad/tools/gen_logger_sch.py`. Make electrical changes
-  there, not in the KiCad GUI, or the next run overwrites them. Generation
-  is deterministic, so regenerating doesn't break schematic-to-PCB links.
+- **The hand-edited schematic is the master** (since October 30). The
+  owner edits it in KiCad; the generator that first produced it now refuses
+  to overwrite it. After each edit: ERC, netlist export, `check_capture.py`
+  (commands in `logger/hardware/kicad/validation/COMMANDS.txt`). A part
+  change also needs `BOM.csv` updated.
 - Includes the keyless RS-485 circuit (D-RS485-05), the single 14-way
   JAE IL-AG5-14P-D3L2-A board connector J1 (D-CONN-06), and mostly
   surface-mount parts (D-SMD-09: 114 SMD, 34 through-hole).

@@ -97,3 +97,19 @@ check that was tamper-tested (swapping QI's emitter and base fails only that
 check); closure 67/67, no overruns; UUID regression passes; courtyard
 allowance 1.90x (was 1.43x). Generation deterministic; schematic SHA256:
 a7bd56f43ae5ee25473824d4724e82b0c287032dce94333ae0d8d3518cd13ce5
+
+FROM OCTOBER 30, 2026 THE HAND-EDITED SCHEMATIC IS THE MASTER. The owner
+arranges accord-logger.kicad_sch in KiCad; tools/gen_logger_sch.py now
+refuses to overwrite it (--force only for a scratch copy). The check loop
+on the owner's file is:
+
+  kicad-cli sch erc --severity-all --format json -o validation/erc.json accord-logger.kicad_sch
+  kicad-cli sch export netlist --format kicadsexpr -o validation/netlist.net accord-logger.kicad_sch
+  python3 check_capture.py
+  python3 ../power/check_layout_closure.py
+
+BOM.csv is still the generator's output as of 01197dc. The parts have not
+changed since, so it is current; a hand edit that adds, removes or changes
+a part must update BOM.csv too, or check_capture.py will report it.
+First hand-edited check: ERC 0, 738/738, no pin changed net against 01197dc,
+and every board footprint and pad net matches the schematic.

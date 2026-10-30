@@ -8,9 +8,9 @@ are in Git.
 ## Start here
 
 - **KiCad project:** [accord-logger.kicad_pro](kicad/accord-logger.kicad_pro).
-  The schematic and [BOM.csv](kicad/BOM.csv) are **generated** by
-  `kicad/tools/gen_logger_sch.py`, so make electrical changes there.
-  Regenerating is deterministic, so links to a PCB survive. Commands and
+  Since October 30 the **hand-edited schematic is the master**; the
+  generator (`kicad/tools/gen_logger_sch.py`) that first produced it and
+  [BOM.csv](kicad/BOM.csv) refuses to overwrite it. Commands and
   checks: [kicad/validation/COMMANDS.txt](kicad/validation/COMMANDS.txt).
 - **Why it is the way it is:** [power/LAYOUT_CLOSURE.md](power/LAYOUT_CLOSURE.md)
   (voltage envelope, A5 supply, isolation, grounding, connectors, fit) and

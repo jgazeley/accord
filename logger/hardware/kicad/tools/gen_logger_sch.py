@@ -32,6 +32,14 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import schgen
 
 OUTDIR = sys.argv[1]
+# Since October 30, 2026 the owner edits accord-logger.kicad_sch by hand
+# and that file is the master. Regenerating would discard those edits, so
+# refuse unless the caller says --force (for a scratch directory, say).
+if (os.path.exists(os.path.join(OUTDIR, 'accord-logger.kicad_sch'))
+        and '--force' not in sys.argv[2:]):
+    sys.exit('accord-logger.kicad_sch exists and is hand-edited (the master '
+             'since 2026-10-30); refusing to overwrite it. Pass --force only '
+             'for a scratch copy.')
 CUSTOM = OUTDIR + '/Custom.kicad_sym'
 
 # ---------------------------------------------------------------- footprints
