@@ -130,3 +130,69 @@ Pushing from this host requires the explicit key:
 `git -c core.sshCommand='ssh -i ~/.ssh/id_ed25519_accord_public -o IdentitiesOnly=yes' push git@github.com:jgazeley/accord.git <branch>`.
 KiCad CLI runs with `HOME` set to a temporary directory holding only the
 installed global `sym-lib-table` and `fp-lib-table`; see `COMMANDS.txt`.
+
+## Addendum, October 29 — R12-REV-4: put the keyless RS-485 circuit on the board
+
+Added by Claude `pcb-manager`, session `42dd0e33-28b5-4936-847e-9c2e1d2488fa`
+(`claude --resume 42dd0e33-28b5-4936-847e-9c2e1d2488fa`), after the LRA-12R
+session had started. **Owner decision D-RS485-05:** Rev A carries the keyless
+RS-485 circuit onboard, **same circuit and same footprints**, and it must stay
+flexible for a bus topology that is not yet known. This replaces LRA-12's
+"no transceiver, passive J3 header" provision
+(`logger/hardware/communications/REV_A_PROVISION.md`). The keyless board is the
+template for the buck, the car inputs and RS-485 alike (D-REUSE-02).
+
+**Source circuit, read from `keyless/hardware/hondaPico.kicad_sch`** (read-only;
+export its netlist to confirm):
+
+| Keyless ref | Part / footprint | Connection |
+|---|---|---|
+| U5 | MAX3485, `Package_DIP:DIP-8_W7.62mm` (socketed in service) | 1 RO → GP9 (UART1 RX); 2 /RE and 3 DE tied → GP10; 4 DI ← GP8 (UART1 TX); 5 GND; 6 A; 7 B; 8 VCC +3V3 |
+| C13 | 100 nF, `C_0805_2012Metric_Pad1.18x1.45mm_HandSolder` | U5 VCC decoupling |
+| R13 | 10 k, axial DIN0207 vertical | DE//RE to GND: default listen |
+| R14 | bias, axial | A to +3V3 |
+| R15 | bias, axial | B to GND |
+| R16 + JP1 | 120 Ω axial + `PinHeader_1x02_P2.54mm_Vertical` | A – R16 – RS485_TERM – JP1 – B: jumper-selectable termination |
+
+On keyless, A and B leave on body harness J1 pins 14/15 (and the stock J2),
+with a dedicated bus ground.
+
+Implement it **unchanged** except where the logger forces a difference, and
+state each difference:
+
+1. **Pins:** GP8 TX, GP9 RX, GP10 DE//RE, as on keyless (these are the
+   offered GP8/9/10 in `REV_A_INTERFACES.md` §1). Keep the tied DE//RE line;
+   the shutdown-mode claim stays dropped (R04-REV-1). J3 must no longer
+   carry UART1/GP10 to a header in parallel with U5. Keep or trim J3 for
+   spare GP13 and power at your discretion, and say which.
+2. **Bias values:** the keyless schematic says 270 Ω, its PCB 390 Ω (a
+   recorded keyless parity warning). Use **390 Ω** unless the owner states
+   otherwise; the manager has asked. Record the discrepancy and do not edit
+   keyless.
+3. **Flexibility for unknown topology:** termination already sits behind JP1.
+   Also put the **bias pair behind its own jumper** (or fit-optional links),
+   so the board can be either the biasing node or a plain mid-bus node.
+   Default population: termination and bias **not linked**. The owner links
+   them for the end-of-line or biasing node.
+4. **Power-off paths, which keyless never had to meet:** the transceiver is on
+   **switched** 3V3, so it draws nothing while parked. But with the logger
+   off and another node biasing or driving the bus, (a) the MAX3485's bus
+   input current with V<sub>CC</sub> = 0 (up to 1 mA at 12 V per the
+   datasheet) and (b) R14 back-feeding a biased A line into the dead +3V3
+   rail are real paths. Quantify both. The bias jumper removes (b) when
+   unlinked; state what is left of (a). Carry the bus-side figure in the
+   ledger as **a conditional exposure that only applies while an external
+   node holds the bus active**, not inside the 2/5 µA allocation, and add it
+   to the residual-risk table as a bench/vehicle gate.
+5. **Connector:** bring A, B and a bus ground out on a connector the owner can
+   wire. A spare position on the existing harness connector, or a dedicated
+   3-position Mini-Fit Jr in the same family; your choice, stated.
+6. **Protection:** keyless fits no TVS on A/B; do not add one unless you can
+   name a concrete logger-specific reason.
+7. Update `communications/REV_A_PROVISION.md` (or supersede it with a dated
+   note), the BOM, the capture checks (assert U5's pin-to-net map, DE//RE
+   tied and R13 to ground, and that the termination and bias are open with
+   their jumpers out), the courtyard study, and the handoff.
+
+LRA-04's bus comparison is no longer needed for Rev A; the tracker records
+that. Do not redo it.
