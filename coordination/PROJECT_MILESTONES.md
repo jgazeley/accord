@@ -145,6 +145,22 @@ for every row. Remote electrical work and local physical validation are distinct
 
 ## Decisions and gates
 
+- **D-OVERVOLT-04 — owner decision, October 29: defer.** LRA-12 return
+  L04 / `LAYOUT_CLOSURE.md` §3.4: with the 1.5KE20A entry clamp, any
+  **sustained** P12 overvoltage above the 17.1 V standoff overheats the clamp
+  before the 1 A fuse clears. Rev A accepts option (a), no added cutoff
+  circuitry, and carries the gap as a **named residual risk for vehicle
+  acceptance**, not as a closed design question. The risk covers more than
+  the "24 V jump start" label: it includes any sustained source above about
+  17 V, explicitly an **alternator/regulator overcharge fault**. Operating
+  rule until resolved: do not jump start with the board connected except from
+  a 12 V source. Option (b), a series overvoltage cutoff, remains the candidate
+  if acceptance evidence or a later revision needs it. Conditional on the
+  LRA-12 review confirming the §3.1 clamp chain; if the 1.5KE30A is retained,
+  this decision is revisited. Recorded by Claude `pcb-manager`, session
+  `42dd0e33-28b5-4936-847e-9c2e1d2488fa`
+  (`claude --resume 42dd0e33-28b5-4936-847e-9c2e1d2488fa`).
+
 - **D-REUSE-02 — owner clarification, October 29:** the logger board largely
   reuses the working accord-keyless/hondaPico circuitry with added IGN-sense,
   power-hold and automatic shutoff. LRA-12 is integration of that base, the
