@@ -79,6 +79,16 @@ refs = [r['reference'] for r in bom]
 check('no duplicate KiCad reference', len(refs) == len(set(refs)))
 
 
+def by_role(src, role):
+    """Net on a transistor pin by its role (E/B/C), independent of package."""
+    for _blk in text.split('(net (code')[1:]:
+        _n = re.search(r'\(name "([^"]*)"', _blk).group(1).lstrip('/')
+        if re.search(r'\(node \(ref "%s"\) \(pin "[^"]+"\) \(pinfunction "%s"\)'
+                     % (re.escape(R(src)), role), _blk):
+            return _n
+    return None
+
+
 def R(src):
     """The KiCad reference for a source designator."""
     return by_src[src]['reference'] if src in by_src else '<missing:%s>' % src
@@ -450,7 +460,7 @@ only('QH_C', [('QH', 3), ('QS', 2)],
 check('QI still sinks directly, so raw ignition overrides the cutoff',
       pin_net.get((R('QI'), '3')) == 'SINK')
 check('QH keeps its emitter grounded',
-      pin_net.get((R('QH'), '2')) == 'PGND',
+      by_role('QH', 'E') == 'PGND',
       'interrupting the emitter would couple fault voltage into HOLD')
 wires('HOLD sense', 'QMON', {2: 'PGND', 1: 'MON_B', 3: 'HOLD_N'})
 wires('HOLD sense', 'R_MONB', {1: 'HOLD_RAW', 2: 'MON_B'})
@@ -784,20 +794,25 @@ for _blk in open(NET).read().split('(net (code')[1:]:
     for _r, _pin, _fn in re.findall(
             r'\(node \(ref "([^"]+)"\) \(pin "([^"]+)"\) \(pinfunction "([^"]*)"\)', _blk):
         _roles.setdefault(_r, {})[_fn] = _n
-for _src, (_e, _b, _c) in {'QI': ('PGND', 'IGN_B', 'SINK'),
-                           'QH': ('PGND', 'HOLD_B', 'QH_C'),
-                           'QRESET': ('PGND', 'RST_B', 'RST_C'),
-                           'QMON': ('PGND', 'MON_B', 'HOLD_N')}.items():
+# QI/QH are through-hole 2N3904 (owner's stock, D-THT-13); QRESET/QMON SMD.
+_PKG = {'2N3904': 'Package_TO_SOT_THT:TO-92_Inline',
+        'MMBT3904': 'Package_TO_SOT_SMD:SOT-23'}
+for _src, (_v, _e, _b, _c) in {'QI': ('2N3904', 'PGND', 'IGN_B', 'SINK'),
+                               'QH': ('2N3904', 'PGND', 'HOLD_B', 'QH_C'),
+                               'QRESET': ('MMBT3904', 'PGND', 'RST_B', 'RST_C'),
+                               'QMON': ('MMBT3904', 'PGND', 'MON_B', 'HOLD_N')}.items():
     _q = _roles.get(R(_src), {})
-    check(f'{_src} is an MMBT3904 on SOT-23 with E/B/C on the right nets',
-          by_src[_src]['value'] == 'MMBT3904'
-          and by_src[_src]['footprint'] == 'Package_TO_SOT_SMD:SOT-23'
+    check(f'{_src} is a {_v} on {_PKG[_v].split(":")[1]} with E/B/C on the right nets',
+          by_src[_src]['value'] == _v
+          and by_src[_src]['footprint'] == _PKG[_v]
           and (_q.get('E'), _q.get('B'), _q.get('C')) == (_e, _b, _c),
           f'roles {_q}')
 check('no through-hole resistor remains outside the kept set',
       not any(r['footprint'].startswith('Resistor_THT')
               and r['source_designator'] not in
-              {'R_DE', 'R485_A', 'R485_B', 'R485_TERM', 'RLED', 'RG'}
+              {'R_DE', 'R485_A', 'R485_B', 'R485_TERM', 'RLED', 'RG',
+               # D-THT-13: owner's choice for the power block
+               'RGS', 'RI', 'RBI', 'RBH', 'RBIN', 'RB5'}
               for r in bom))
 check('every 1N5819-class clamp is a SOD-123 1N5819HW',
       all(r['footprint'] == 'Diode_SMD:D_SOD-123' for r in bom

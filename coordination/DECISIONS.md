@@ -8,6 +8,23 @@ October 29 evening were carried over from the retired tracker
 
 ## October 30, 2026
 
+**D-THT-13: power-block resistors back to through-hole.** Owner: *"R31, R32,
+R33, R34, R35, R36, R37: I would like to use through hole after all. I have
+small thorugh hole footprints, R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal,
+let me know if any of these resistors need to be a specific rating"*. R31 and
+R33-R37 move to that footprint. **R32 (RG) stays on its 0.5 W DIN0414**: a
+shorted gate zener puts 0.26 W in it, beyond a 0204. R33 (RI) dissipates
+0.11 W at a sustained 17.1 V, so it needs >= 0.25 W (0.4 W preferred). The
+rest are under 30 mW; none is precision, and R37 stays exactly 1 k for the
+B5 decay test.
+Then: *"what about Q6 and Q7 do I have through hole equiv. in inventory"* and
+*"switch to the 2N3904s"*. QI (Q6) and QH (Q7) go back to through-hole
+2N3904 on TO-92_Inline, using the two in the CmpE 110 kit. The symbol was
+changed, not just the footprint, because TO-92 numbers the pins E-B-C and
+SOT-23 B-E-C. A 2N2222A (40 V) may substitute; a plain 2N2222 (30 V) or the
+S9013H (25 V) may not, because the hot entry clamp reaches 29.2 V. QRESET and
+QMON stay MMBT3904.
+
 **D-FP-12: LM2678 footprint matches keyless.** Owner: *"trying to change
 Package_TO_SOT_THT:TO-220-7_P2.54x3.7mm_StaggerEven_Lead3.8mm_Vertical to
 ...StaggerOdd... I think thats the one used for hondaPico/accord-keyless"*.
