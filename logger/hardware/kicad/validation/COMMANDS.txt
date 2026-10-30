@@ -1,11 +1,61 @@
-KiCad CLI 9.0.2. Run with HOME set to a temporary
-configuration holding only the installed global sym-lib-table and
-fp-lib-table; no global user configuration was created or changed.
+KiCad CLI 9.0.2. Run with HOME set to a temporary configuration
+holding only the installed global sym-lib-table and fp-lib-table; no
+global user configuration was created or changed.
+
+The schematic, Custom.kicad_sym and BOM.csv are generated from one
+parts table, so the drawing and the BOM cannot drift apart:
+
+  python3 tools/gen_custom_sym.py Custom.kicad_sym
+  python3 tools/gen_logger_sch.py .
 
 kicad-cli sch erc --format json --severity-all -o validation/erc.json accord-logger.kicad_sch
 kicad-cli sch export netlist --format kicadsexpr -o validation/netlist.net accord-logger.kicad_sch
 kicad-cli sch export svg --no-background-color --exclude-drawing-sheet -o validation accord-logger.kicad_sch
+mv -f validation/accord-logger.svg validation/schematic.svg
+
+  python3 check_capture.py   # 652 structural checks against the netlist
+  python3 fp_area.py         # courtyard study, writes courtyard_study.csv
+
+The SVG export is named after the sheet, so it is renamed to
+schematic.svg, which is the name the review documents point at.
 
 Rule-check results are read from erc.json, not from the process exit
 code: kicad-cli does not signal violations through the exit code unless
 --exit-code-violations is passed, so a zero exit is not a clean design.
+
+LRA-12 result, October 29 2026: 0 violations at --severity-all over 141
+parts, 141 of 141 with a footprint, 652/652 capture checks.
+
+LRA-12R, October 29 2026 (Codex logger-electrical [01a18a47]):
+  python3 tools/gen_custom_sym.py Custom.kicad_sym
+  python3 tools/gen_logger_sch.py .
+  task_schematic_copy=$(mktemp /tmp/lra12r-sch.XXXXXX)
+  cp accord-logger.kicad_sch "$task_schematic_copy"
+  python3 tools/gen_logger_sch.py .
+  cmp "$task_schematic_copy" accord-logger.kicad_sch
+  sha256sum accord-logger.kicad_sch
+  python3 tools/check_uuid_stability.py
+Then rerun the ERC/netlist/SVG/capture/area commands above, followed by:
+  python3 ../power/check_layout_closure.py
+
+Actual results: byte-identical consecutive generation;
+SHA256 6dbdd785955f6332bae98439328e57ad8609839daf0031cc731f936b9dd0dd7a;
+1383 unique UUIDs; symbol/pin identity survives movement, value/reference
+changes and unrelated insertion. ERC JSON 0 violations, capture 652/652,
+141/141 footprints, 1.52x allowance, closure 63/63, zero allocation overruns
+using the manager-accepted redistribution. KiCad 9.0.2.
+The CSV files retain the generators' CRLF convention and the SVG is the raw
+KiCad export (including its trailing whitespace).
+
+
+R12-REV-4 follow-up, October 29 2026 (same session and branch):
+Run the same commands above; source keyless netlist exported read-only with:
+  kicad-cli sch export netlist --format kicadsexpr -o /tmp/lra12r-keyless.net ../../../keyless/hardware/hondaPico.kicad_sch
+Latest results supersede earlier counts: ERC JSON 0 violations (severity-all),
+capture 711/711, closure 67/67 with zero allocation overruns (external bus
+exposure reported separately), 150/150 footprints, fitted courtyard 6759 mm2,
+1.42x allowance. UUID regression passes with 1459 unique UUIDs.
+Two consecutive generations are byte-identical; latest schematic SHA256:
+bbfcba624c1ab658f25690dfadf0b9ae56eebc7b105e4850ddfb581423e74dd6
+The MAX3485 library mismatch was resolved by matching KiCad's inherited
+footprint behavior when the derived symbol's footprint property is empty.

@@ -12,6 +12,15 @@ Only `logger/hardware/power/` is edited. The manager records the claim and
 integration disposition in the single project tracker. No assembly, firmware
 change, flash, service change or physical measurement accompanied this work.
 
+> **LRA-12 deltas, October 29, 2026.** Sections 2, 6, 7 and 8 each have one
+> or more decisions taken against them by LRA-12 and are to be read together
+> with the change record in **section 10** at the end of this document. The
+> body text of those sections is left as the reviewed LRA-01 candidate; where
+> section 10 supersedes a sentence it says so and says why. Recorded by
+> Claude Code `logger-electrical`, session
+> `b690946d-3a88-4626-8e7b-b321126a3d16`
+> (`claude --resume b690946d-3a88-4626-8e7b-b321126a3d16`).
+
 ## 1. Authority, decisions and preserved baseline
 
 Continue `9527a14153c7b06f3d59b641a2e681b28dcd1735`, exported at public
@@ -412,3 +421,66 @@ repository root. The new executable specification exercises candidate state
 transitions/races and the new arithmetic using the historical hardware model;
 it is not firmware, SPICE, a component guarantee or measured evidence.
 See [LRA01_HANDOFF.md](LRA01_HANDOFF.md) for validation and return protocol.
+
+---
+
+## 10. LRA-12 change record — October 29, 2026
+
+Recorded by Claude Code `logger-electrical`, session
+`b690946d-3a88-4626-8e7b-b321126a3d16`
+(`claude --resume b690946d-3a88-4626-8e7b-b321126a3d16`), under the
+[LRA-12 packet](../../../coordination/handoffs/LRA-12_LAYOUT_ELECTRICAL_CLOSURE.md).
+Full reasoning, calculations and sources: [LAYOUT_CLOSURE.md](LAYOUT_CLOSURE.md).
+These are decisions taken on the electrical design, not a new contract; the
+reviewer accepts or rejects them with the rest of the LRA-12 return.
+
+| # | Affects | Change, and why it was needed |
+|---|---|---|
+| L01 | §2 net table, §6 | **New net `P_AON`, and the ≤28 V criterion moves to it.** §6 required "P12/P_AON ≤28 V including specified surge overshoot". The selected entry clamp holds P12 to 27.7 V at 25 C and **29.20 V at 85 C** using its own 0.090 %/K coefficient, which clears every 40 V part by 10.8 V but not a 28 V target. A 330 Ω series resistor and a BZX55C22 now give the A5 regulator its own envelope: **worst P_AON 25.70 V**, 2.30 V inside the contract and 4.30 V inside TPS709's 30 V recommended maximum. **The ≤28 V criterion is measured at TP_PAON, not at P12.** P12's own envelope is the 40 V chain of LAYOUT_CLOSURE §3.2, with a declared **17.1 V sustained** ceiling. |
+| L02 | §6 | **1.5KE20A-E3/54 is selected, at both clamp positions.** §6 rejected the 1.5KE30A and called the 1.5KE20A "a bounded lower-clamp candidate ... not selected as completed protection", because 0.3 V to a 28 V target was insufficient allowance for temperature and overshoot. That objection is answered by L01: the target the clamp has to meet at P12 is now 40 V, not 28 V, and the 0.3 V in question was against a criterion that the second stage now enforces where it belongs. The same part also clamps the B11 harness entry, so one qualification covers both. |
+| L03 | §6 | **RLED's 0.792 W problem is closed.** §6 recorded `28²/990 = 0.792 W` against a 0.5 W part. With the measured 2.2 k of D15 and the 17.1 V sustained ceiling of L01, dissipation is **0.108 W**. RI likewise stays 0.25 W at 0.112 W. The 0.318 W that would have forced a 0.5 W RI came from the superseded 28 V number. |
+| L04 | §6, §9 R02 | **One exposure is declared excluded rather than left open.** No clamp of this family both stands off 24 V and limits to 28 V. At the 1 A branch fuse rating the clamp would dissipate about 19 W against its 6.5 W rating, so a sustained overvoltage has to be cleared by the fuse and will not be. **A 24 V jump start with the board connected is a declared excluded exposure.** The two alternatives, with what each costs, are in LAYOUT_CLOSURE §3.4. The owner inputs §6 asks for are still needed for vehicle acceptance; none of them is needed to lay the board out. |
+| L05 | §2 E03, §2 pin table | **GP7 is taken up as `ISO_EN`.** E03 said "no GP7 alternate in this contract" — about a HOLD alternate, which is not what this is. `REV_A_INTERFACES.md` §1 released GP7, and the packet names it as the preferred ISO_EN reservation if the source audit confirms it free. It is free: no firmware or document claims it. It drives the B2 isolation enable through 1 k with a 100 k pulldown, so the default out of reset is isolated. |
+| L06 | §2 ARM/EXPIRED/PGOOD row | **PGOOD gains a second, non-GPIO consumer.** It still has no GPIO connection and firmware still has no ARM feedback. It now also gates the B2 isolation permission channel in the A5 domain, which is what makes fail-open-on-BAD a hardware property rather than a rail assumption — necessary because, as the manager's follow-up established, **BAD does not necessarily remove B5**: the original design gates only QH and QI can hold power with ignition present. |
+| L07 | §7 allocations | **A re-allocation is proposed, totals untouched.** The 100/500 µA whole-system targets are not relaxed and the recomputed screens fit them at **74.98 / 452.65 µA**. The *sub*-allocations do not: the A5 row screens 59.98 / 346.85 against 50 / 250. The QP change freed 180 µA of hot headroom from the 200 µA switch allocation, so LAYOUT_CLOSURE §7 proposes A5 65/355, QP 15/70, gate sinks 12/50, interfaces 8/25. §7 already invites exactly this and says reviewers may redistribute within the total. **Needs reviewer acceptance.** |
+| L08 | §7 QP row | **QP is the IPD50P04P4L-11 of the LRA-02 paired proposal, with the BZX55C10.** §7 recorded the IRF4905's 25/250 µA screen as exceeding its own 200 µA allocation — a known component bound that cannot fit. The replacement specifies **70 µA at 125 C** at V<sub>DS</sub> = −32 V, conservative against the 12–16 V actually applied. Its asymmetric **+5/−16 V** gate rating is why the gate clamp drops to 10 V, and that pairing is not separable. This part's 40 V V<sub>DS</sub> is what forces L02. |
+| L09 | §8 isolation rows | **B2 takes a series switch; the other four branches are a decided bypass.** §8 required "normally-open, power-off-safe branch isolation before divider top" on all five. `D-OFFSTATE-01` then measured B2 as the only branch energized with the key out. The other four are ignition-fed and dead parked, so criterion A is met with no device and no device leakage; criterion B needs the key on **and** an upstream power fault, because ignition present drives QI and powers the board, and in that fault state the fitted 7.5–22 k series resistance bounds each branch below 0.91 mA. **Criterion B's 0.3 V dead-rail limit is not met in that state, and that is reported rather than claimed closed.** Reachable-state table and costs: LAYOUT_CLOSURE §4. |
+| L10 | §8 Fuel/supply row | **The ≤25 Ω and ≤100 Ω top-leg limits fall away**, with the card-header calibration problem of `REV_A_INTERFACES.md` §8.2, because no series element enters the fuel or supply top leg. `log.adc.fuel div=7500/4700` still has every term it needs. |
+| L11 | §8 future bus/service row | **The bus/service provision is a DNP expansion header**, with no transceiver, bias or termination on this board, switched power only and a DE pulldown. The 2/5 µA reserved for these paths is returned unspent. LRA-04 remains returned with revisions required and no bus is selected. See [../communications/REV_A_PROVISION.md](../communications/REV_A_PROVISION.md). |
+| L12 | §8 Grounds row | **The opto LED return moves from B16 to PGND** (R06-REV-2). The fitted cell put 4.7–5.8 mA of signal-dependent current through the node both ADC channels reference, which §8 and `REV_A_INTERFACES.md` §4 forbid. What B16 still carries is the two divider returns, ≤0.65 mA combined and only while the cluster is energized. Separately: **AGND and PGND are already joined inside the Pico module**, so that junction is the single point and layout must not add a board-level bond. |
+
+No change is proposed to the GPIO allocation other than L05, to any divider
+ratio, to the 1770/1800/1801 s policy, to the nominal 2048 s cutoff, to the
+4 mA / 2.6 V GP6 qualification targets, or to the 100/500 µA totals. R01
+(firmware review) remains unclaimed and unaccepted; L05 and L06 add the ISO_EN
+sequencing contract to what that review has to take up, and the hardware is
+safe before it exists because every default is open.
+
+
+### Revision LRA-12R — October 29, 2026
+
+Codex `logger-electrical`, session `01a18a47-2dc2-7aa3-a0d2-a4978e2b1ebc`.
+Resume: `codex resume 01a18a47-2dc2-7aa3-a0d2-a4978e2b1ebc`.
+Verified matching session/thread environment IDs. These attributed entries
+supersede the corresponding LRA-12 change-record rows, not the reviewed body.
+
+| Entry | Revised disposition |
+|---|---|
+| L04 | **Any sustained P12 above the selected 1.5KE20A's 17.1 V standoff is excluded**, explicitly including alternator/regulator overcharge faults and 24 V jump starts. Owner-deferred vehicle-acceptance risk D-OVERVOLT-04. SQD50P06-15L makes the 1.5KE30A alternative viable for QP; it was evaluated and not selected for the A5 and voltage-margin reasons in LAYOUT_CLOSURE §3.1. The old no-single-clamp argument does not rule out a two-stage solution. |
+| L07 | Manager accepted 65/355, 15/70, 12/50, 8/25 µA allocations, totals unchanged at 100/500. QP remains IPD50P04P4L-11 with 1/70 µA room/hot screens; system 74.98/452.65 µA. The original claim of 180 µA freed was arithmetic error: 200−70=130. Electrical acceptance remains open. BZX55C22 leakage is specified at **16 V**, not 18 V; no parked-current bound is claimed for 16–17.1 V. |
+| L03 follow-up | R_AON becomes 820 Ω/1%, required resistor rating ≥0.15 W at 85 °C. A5 thermal and voltage screens and their conditions are in LAYOUT_CLOSURE §3.3; bench validation remains required. |
+
+
+### R12-REV-4 — October 29, 2026
+
+Codex `logger-electrical`, session `01a18a47-2dc2-7aa3-a0d2-a4978e2b1ebc`;
+resume `codex resume 01a18a47-2dc2-7aa3-a0d2-a4978e2b1ebc`.
+D-RS485-05 supersedes the passive-header provision: onboard keyless MAX3485,
+GP8/9/10, switched 3V3, tied enables, 390 Ω jumper-isolated bias and
+jumper-selectable 120 Ω termination, all shunts omitted by default.
+J3 retains only GP13 and switched power; interim J6 carries A/B/PGND/NC.
+External bus drive while off is explicitly outside the 2/5 µA interface
+allocation: up to 2 mA two-pin +12 V screen, plus resistor injection if bias
+is linked. L07 normal totals apply without that external exposure. See
+`communications/REV_A_PROVISION.md` for conditional currents and bench/vehicle
+gates. No firmware, keyless, connector-consolidation or placement scope added.

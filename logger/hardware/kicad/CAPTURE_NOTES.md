@@ -1,5 +1,36 @@
 # LRA-06 — Rev A schematic capture notes
 
+> ## LRA-12 status — October 29, 2026: the eight placeholders are resolved
+>
+> Everything below is the **LRA-06 capture record** and is kept as written:
+> it is the history of how the fitted circuit and the already-decided deltas
+> got into KiCad, and its reasoning about polarity and about what the sources
+> jointly required is still the reasoning the drawing rests on.
+>
+> The drawing itself has moved on. LRA-12 completed the electrical design on
+> this capture, so the sections below that describe *unresolved* blocks are
+> historical. The current state is in
+> [`../power/LAYOUT_CLOSURE.md`](../power/LAYOUT_CLOSURE.md) and
+> [`../LRA12_HANDOFF.md`](../LRA12_HANDOFF.md).
+>
+> | Section below | Still current? |
+> |---|---|
+> | §1 what was captured, and from what | Yes, for the fitted cells and the already-decided deltas. LRA-12 added `CUTOFF_MARGIN_REVIEW.md`, `MAX_ON_CUTOFF.md`, `COMPONENT_MARGIN_CLOSURE.md`, `B2_ISOLATION.md` and the keyless schematic as further sources |
+> | §2 placeholders — five blocks, no part selected | **Superseded.** No placeholder remains: X1 is an ASSR-601JV with a two-channel enable, X2–X5 are a justified bypass, X6 and X8 are captured from their connection tables, X7 is a 1.5KE20A plus a second-stage A5 clamp. The measured B2 figures in that section are unchanged and still the evidence the switch rests on |
+> | §3 polarity that no symbol carries | **Still essential, and extended.** The TVS moved to `Diode:1.5KExxA`, which draws a cathode bar but still names its pins A1/A2, so `check_capture.py` asserts it by pin number. CCLK (tantalum) and the ASSR LED joined the list; the opto pinout is unchanged but its nets moved |
+> | §4 ERC dispositions | Yes in method. The run is fresh: **0 violations at `--severity-all`** over 141 parts |
+> | §5 footprints | **Superseded.** 141 of 141 parts carry a footprint; the J1/J2 and X1–X8 exceptions are gone. Two local footprints were created from manufacturer drawings. Axial parts moved to the keyless board's vertical mountings |
+> | §6 annotation and designators | Yes. Same scheme, more references |
+> | §7 questions Q1–Q8 | **All closed.** Q1 and Q6 by capturing the existing circuits; Q2 (R06-REV-2) by moving the opto LED return to PGND; Q3 by the bounded expansion header; Q4 by dropping the onboard FIGN; Q5 by making J4 the reset pair only; Q7 unchanged, the returns are confirmed as drawn; Q8 unchanged, ADC_VREF stays unconnected |
+> | §8 how to reproduce the checks | **Superseded** by `../power/LAYOUT_CLOSURE.md` §9, which adds `fp_area.py` and `check_layout_closure.py`. `check_capture.py` now runs 652 checks |
+> | §9 legibility of the SVG | **Still open, and still the one item that cannot be closed from here.** No SVG rasterizer exists on this host. A reviewer should open the project or `validation/schematic.svg` once |
+> | §10 what this does not do | **Superseded.** Layout is now the only thing left. Still true: nothing is frozen, ordered, fabricated or vehicle-approved, and the power stage is bench-rated |
+>
+> Recorded by Claude Code `logger-electrical`, session
+> `b690946d-3a88-4626-8e7b-b321126a3d16`
+> (`claude --resume b690946d-3a88-4626-8e7b-b321126a3d16`).
+
+
 > **October 29 manager correction after integration:** Q1 and Q6 have existing
 > component-level answers in `power/CUTOFF_MARGIN_REVIEW.md` §2 and
 > `power/MAX_ON_CUTOFF.md`; those sources were absent from the capture packet's
