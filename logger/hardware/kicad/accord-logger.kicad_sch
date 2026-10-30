@@ -9253,7 +9253,7 @@
 		)
 		(uuid "79fbd287-9ef3-5892-bc3b-f4f3bd8416bc")
 	)
-	(text "Classified in full in LRA12_HANDOFF.md. In short:\nORDER GATE   ASSR-601JV availability (fallback AQY221N2S specified,\n             strictly smaller, same keepout); exact fuse family and\n             curve; capacitor approval-sheet bias/aging/IR data.\nBRING-UP     A5 ground current below 100 uA load; hot leakage of QP,\n             QI, QH, QMON, QS, QREPORT and the opto; clock startup\n             and loaded ramps; opto ON/OFF endpoints; ASSR turn-on\n             against a 55k rather than the specified 20k test load;\n             assembled rail decay with the larger COUT; LM2678 loop\n             stability with the selected output capacitor.\nVEHICLE      sustained-overvoltage and jump-start exposure; load\n             dump; harness impedance and fuse clearing; long-duration\n             hot and cold operation.\nFIRMWARE     ISO_EN sequencing contract - assert and wait 20 ms before\n             trusting VSS edges, deassert and wait 5 ms before\n             releasing HOLD; GP5 now means hardware-qualified\n             ignition; the 1770/1800/1801 s policy is unchanged.\nNothing here is frozen, ordered or fabricated. A complete, routable\ndesign is not an approved board."
+	(text "Classified in full in LRA12_HANDOFF.md. In short:\nORDER GATE   ASSR-601JV availability (fallback AQY221N2S specified,\n             strictly smaller, same keepout);\n             capacitor approval-sheet bias/aging/IR data.\nBRING-UP     A5 ground current below 100 uA load; hot leakage of QP,\n             QI, QH, QMON, QS, QREPORT and the opto; clock startup\n             and loaded ramps; opto ON/OFF endpoints; ASSR turn-on\n             against a 55k rather than the specified 20k test load;\n             assembled rail decay with the larger COUT; LM2678 loop\n             stability with the selected output capacitor.\nVEHICLE      sustained-overvoltage and jump-start exposure; load\n             dump; harness impedance and fuse clearing; long-duration\n             hot and cold operation.\nFIRMWARE     ISO_EN sequencing contract - assert and wait 20 ms before\n             trusting VSS edges, deassert and wait 5 ms before\n             releasing HOLD; GP5 now means hardware-qualified\n             ignition; the 1770/1800/1801 s policy is unchanged.\nNothing here is frozen, ordered or fabricated. A complete, routable\ndesign is not an approved board."
 		(exclude_from_sim no)
 		(at 845.82 484.5 0)
 		(effects
@@ -11733,16 +11733,6 @@
 	)
 	(wire
 		(pts
-			(xy 588.01 48.26) (xy 590.55 48.26)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "7878b172-ab55-58d0-a17b-71156fe39480")
-	)
-	(wire
-		(pts
 			(xy 730.25 740.41) (xy 730.25 742.95)
 		)
 		(stroke
@@ -11760,16 +11750,6 @@
 			(type default)
 		)
 		(uuid "79fd6b55-8221-5a19-bca5-b87cd67f2ce7")
-	)
-	(wire
-		(pts
-			(xy 580.39 48.26) (xy 577.85 48.26)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "7a34211b-b0bc-50bc-b906-c6ddea9d28d5")
 	)
 	(wire
 		(pts
@@ -15331,15 +15311,6 @@
 		)
 		(uuid "6eafdb13-d7b4-5891-84cb-44ca22a6b747")
 	)
-	(label "BATT_IN"
-		(at 577.85 48.26 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "6ecc73b0-4c6f-54f3-a6ad-e24e6e831d3b")
-	)
 	(label "QUAL_N_REPORT"
 		(at 40.64 646.43 90)
 		(effects
@@ -16158,15 +16129,6 @@
 			)
 		)
 		(uuid "a5901fde-800b-5416-ad99-05b245576d6d")
-	)
-	(label "BATT_F"
-		(at 590.55 48.26 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "a64b789a-a68b-526d-8307-0a07a1a38729")
 	)
 	(label "RS485_B"
 		(at 87.63 303.53 0)
@@ -16996,7 +16958,7 @@
 		)
 		(uuid "f235b9e2-87f2-5961-bccf-f54588ff828c")
 	)
-	(label "BATT_F"
+	(label "BATT_IN"
 		(at 615.95 48.26 0)
 		(effects
 			(font
@@ -29851,91 +29813,6 @@
 			(project "accord-logger"
 				(path "/d6403372-a8d4-5433-aa98-182e137307f3"
 					(reference "TP5")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:Fuse")
-		(at 584.2 48.26 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "d8da4885-e657-53f3-8248-3f867383d8cd")
-		(property "Reference" "F1"
-			(at 580.39 45.72 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "1A"
-			(at 580.39 51.56 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Fuse:Fuseholder_Clip-5x20mm_Bel_FC-203-22_Lateral_P17.80x5.00mm_D1.17mm_Horizontal"
-			(at 584.2 48.26 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 584.2 48.26 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 584.2 48.26 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Status" "PART_SELECTION_OPEN"
-			(at 584.2 48.26 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Source" "DESIGN.md S3 / LAYOUT_CLOSURE S3"
-			(at 584.2 48.26 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "000cd338-7e28-5cd0-b1f1-3d1d5fd823ad")
-		)
-		(pin "2"
-			(uuid "5d5d3da2-2cca-5255-aba6-736673160002")
-		)
-		(instances
-			(project "accord-logger"
-				(path "/d6403372-a8d4-5433-aa98-182e137307f3"
-					(reference "F1")
 					(unit 1)
 				)
 			)

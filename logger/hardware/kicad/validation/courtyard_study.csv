@@ -1,7 +1,6 @@
 reference,value,footprint,width_mm,height_mm,area_mm2,population,measured_from
 U1,RaspberryPi_Pico_W,Module:RaspberryPi_Pico_W_SMD_HandSolder,23.080,53.850,1242.9,FIT,courtyard
 J1,Board connector 14-way,accord-logger:JAE_IL-AG5-14P-D3L2-A,27.500,27.550,757.6,FIT,courtyard
-F1,1A,Fuse:Fuseholder_Clip-5x20mm_Bel_FC-203-22_Lateral_P17.80x5.00mm_D1.17mm_Horizontal,22.440,7.700,172.8,FIT,courtyard
 U3,ASSR-601JV,accord-logger:ASSR-601Jx_SO-16-12Lead_11.634x10.363mm_P1.27mm,12.134,10.040,121.8,FIT,courtyard
 C14,1000uF/16V,Capacitor_THT:CP_Radial_D10.0mm_P5.00mm,10.500,10.500,110.2,FIT,courtyard
 U15,MAX3485,Package_DIP:DIP-8_W7.62mm,9.730,10.660,103.7,FIT,courtyard

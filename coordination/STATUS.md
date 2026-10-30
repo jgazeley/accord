@@ -44,6 +44,9 @@ bench test and vehicle test.
 
 ## Known risks carried forward (not layout blockers)
 
+- **No fuse on the board** (D-FUSE-10): the harness needs a 1 A inline fuse
+  at the feed end. It protects the wire and is what clears a sustained
+  overvoltage before the clamp fails.
 - **Sustained overvoltage above 17.1 V on P12** (24 V jump start,
   alternator overcharge) overheats the 1.5KE20A entry clamp. Deferred as a
   vehicle-test risk (D-OVERVOLT-04). Load dump is not covered.

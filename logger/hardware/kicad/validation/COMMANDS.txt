@@ -113,3 +113,11 @@ changed since, so it is current; a hand edit that adds, removes or changes
 a part must update BOM.csv too, or check_capture.py will report it.
 First hand-edited check: ERC 0, 738/738, no pin changed net against 01197dc,
 and every board footprint and pad net matches the schematic.
+
+Fuse removed, October 30 2026 (DECISIONS D-FUSE-10): F1 and its holder are
+gone from the schematic and the board; BATT_IN runs J1.6 -> DREV anode, and
+the harness carries a 1 A inline fuse. Board edited with the pcbnew API
+(F1 removed, DREV pad 2 moved to BATT_IN, no other footprint moved). ERC 0;
+738/738 capture checks (a BOM with F1 restored fails the new no-fuse check);
+closure 67/67; every board pad net matches the schematic; courtyard
+allowance 1.97x.

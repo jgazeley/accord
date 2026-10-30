@@ -115,7 +115,7 @@ ENVELOPE = [
      'TI LM2678 sections 4-7, 8-40 V operating, 45 V absolute'),
     ('CIN EEUFR1H101', 'VIN_SW', 50.0, 'rated WV', 'Panasonic FR series'),
     ('C0', 'P12', 100.0, 'rated WV', 'BOM, 100nF/100V 0805 X7R'),
-    ('DREV SB360', 'BATT_F / P12', 60.0, 'absolute VRRM', 'Vishay SB360'),
+    ('DREV SB360', 'BATT_IN / P12', 60.0, 'absolute VRRM', 'Vishay SB360'),
     ('C_AON GRM32ER71H475KA88L', 'P_AON', 50.0, 'rated WV',
      'Murata 50 V X7R'),
 ]
@@ -164,11 +164,11 @@ note('cold margin is only %.2f V (VBR min %.2f V at %.0f C against %.1f V), '
      % (vbr_min_cold - V_OPERATE, vbr_min_cold, COLD_C, V_OPERATE))
 
 # Sustained overvoltage: the case no clamp-only front end can meet.
-P_SUSTAINED_1A = CLAMP['vbr_min'] * 1.0        # 1 A branch fuse at VBR
+P_SUSTAINED_1A = CLAMP['vbr_min'] * 1.0        # 1 A harness inline fuse at VBR
 check('a sustained overvoltage would exceed the clamp power rating, so the '
       'fuse has to clear it', P_SUSTAINED_1A > CLAMP['pd'],
       'if this ever fails, the sustained case is no longer excluded')
-note('at the 1 A branch fuse rating the clamp would dissipate about %.0f W '
+note('at the 1 A harness inline fuse rating (D-FUSE-10; no fuse on the board) the clamp would dissipate about %.0f W '
      'against its %.1f W rating, and a cartridge fuse carrying its own '
      'rating does not clear quickly. ANY sustained P12 above 17.1 V, including '
      'alternator/regulator overcharge or 24 V jump start, is excluded. No clamp both '

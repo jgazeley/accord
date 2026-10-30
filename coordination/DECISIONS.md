@@ -6,6 +6,16 @@ changes. Newest first. Don't re-ask anything recorded here. Entries before
 October 29 evening were carried over from the retired tracker
 (`PROJECT_MILESTONES.md`), which has the fuller original text.
 
+## October 30, 2026
+
+**D-FUSE-10: no fuse on the board.** Owner: *"remove the fuse from the
+circuit and the board, I will use an inline fuse in the harness"*. F1 and
+its holder are removed; BATT_IN connects straight to the reverse-block
+diode DREV. The harness inline fuse now does both jobs F1 and the
+feed-source fuse shared: protecting the wire, and clearing a sustained
+overvoltage before the entry clamp fails (D-OVERVOLT-04), so it should
+stay at the 1 A rating the clamp analysis assumed and sit at the feed end.
+
 ## October 29, 2026
 
 **D-SMD-09: convert to surface mount for space.** Owner: *"are we able to

@@ -284,6 +284,11 @@ check('the opto LED cathode returns to PGND, not to the B16 conductor',
 check('no capacitor sits across the old opto output node',
       'C_IGN' not in by_src,
       'the node it filtered no longer exists after the X6 rewire')
+check('no fuse is fitted on the board (D-FUSE-10: harness inline fuse)',
+      not any(r['symbol'] == 'Device:Fuse' for r in bom))
+check('BATT_IN runs straight from J1 to the reverse-block diode',
+      sorted(n for n, net in pin_net.items() if net == 'BATT_IN')
+      == sorted([('J1', '6'), (R('DREV'), '2')]))
 check('the onboard ignition fuse is not fitted',
       'FIGN' not in by_src,
       'per-branch fuses belong at the tap end (D10)')
@@ -735,7 +740,7 @@ DECLARED = {
     'IGN_POS', 'IGN_LED_A', 'IGN_B', 'IGN_A', 'IGN_RC', 'RST_B', 'RST_C',
     'REP_G', 'QUAL_N_REPORT',
     # rails
-    'BATT_IN', 'BATT_F', 'P12', 'P_AON', 'A5', 'VCLK', 'GATE', 'SINK',
+    'BATT_IN', 'P12', 'P_AON', 'A5', 'VCLK', 'GATE', 'SINK',
     'VIN_SW', 'SW', 'BOOST', 'B5', 'VSYS', 'P3V3_SW', 'PGND',
     # HOLD and the independent cutoff
     'HOLD_RAW', 'HOLD_JH', 'HOLD_B', 'MON_B', 'HOLD_N', 'QH_C', 'ARM_G',

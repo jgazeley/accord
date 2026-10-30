@@ -200,6 +200,14 @@ EN stays open; TI Table 4-1 says it must remain below 6.5 V.
 
 ### 3.4 Fuse coordination, and the one exposure that is declared excluded
 
+> **October 30 (owner decision D-FUSE-10): F1 is removed from the board.**
+> The owner fits a 1 A inline fuse in the harness instead, so BATT_IN goes
+> straight from J1 to DREV. That one fuse now does both jobs below: it
+> protects the wire (it belongs at the feed end) and it is the element that
+> must clear a sustained overvoltage before the entry clamp fails. Keep it at
+> 1 A; a larger fuse lets the clamp dissipate longer. The text below is the
+> original LRA-12 record, which assumed an onboard F1.
+
 The clamp-only front end cannot do everything, and this is where it stops.
 
 - **Reverse battery** is covered by DREV, which also keeps the unidirectional
