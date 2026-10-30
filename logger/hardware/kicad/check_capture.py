@@ -152,6 +152,9 @@ PINMAP = {
     '22': 'SD_CS',          # GP17
     '24': 'SD_SCK',         # GP18
     '25': 'SD_MOSI',        # GP19
+    '26': 'RTC_SDA',        # GP20 I2C0 SDA, DS3231 (D-RTC-14)
+    '27': 'RTC_SCL',        # GP21 I2C0 SCL
+    '29': 'RTC_INT',        # GP22 DS3231 INT/SQW
     '30': 'RUN',
     '31': 'FUEL_ADC',       # GP26 ADC0
     '32': 'SUPPLY_ADC',     # GP27 ADC1
@@ -164,11 +167,10 @@ for pin, net in PINMAP.items():
     check(f'U1 pin {pin} -> {net}', pin_net.get(('U1', pin)) == net,
           f'got {pin_net.get(("U1", pin))!r}')
 
-# Pins that must stay unconnected. GP0/GP1 stay free; GP14/15 and GP20-22 are
-# unassigned; GP28 is the last ADC channel.
-FREE = {'1': 'GP0', '2': 'GP1', '19': 'GP14', '20': 'GP15', '26': 'GP20',
-        '27': 'GP21', '29': 'GP22', '34': 'GP28', '35': 'ADC_VREF',
-        '37': '3V3_EN', '40': 'VBUS'}
+# Pins that must stay unconnected. GP0/GP1 stay free; GP14/15 are
+# unassigned; GP28 is the last ADC channel. GP20-22 went to the RTC.
+FREE = {'1': 'GP0', '2': 'GP1', '19': 'GP14', '20': 'GP15',
+        '34': 'GP28', '35': 'ADC_VREF', '37': '3V3_EN', '40': 'VBUS'}
 for pin, label in FREE.items():
     check(f'U1 pin {pin} ({label}) unconnected', unconnected('U1', pin),
           f'on net {pin_net.get(("U1", pin))!r}')
@@ -514,6 +516,29 @@ check('the SD bulk value is selected, not a range',
       by_src['C_SD']['value'] == '47uF/16V',
       f'got {by_src["C_SD"]["value"]!r}')
 
+# ------------------------------------------- DS3231 RTC, D-RTC-14
+# SOIC-16 pinout from the DS3231 datasheet: 1 32KHZ, 2 VCC, 3 INT/SQW,
+# 4 RST, 5-12 N.C. "must be connected to ground", 13 GND, 14 VBAT, 15 SDA,
+# 16 SCL. Asserted by number, not through the library symbol's pin names.
+wires('RTC', 'URTC', {2: 'P3V3_SW', 3: 'RTC_INT', 13: 'PGND', 14: 'RTC_VBAT',
+                      15: 'RTC_SDA', 16: 'RTC_SCL',
+                      **{n: 'PGND' for n in range(5, 13)}})
+for _p in ('1', '4'):
+    check(f'RTC pin {_p} (32KHZ / RST) is left open', unconnected(R('URTC'), _p))
+check('the RTC is the DS3231SN on SOIC-16W',
+      by_src['URTC']['value'] == 'DS3231SN'
+      and by_src['URTC']['footprint'] == 'Package_SO:SOIC-16W_7.5x10.3mm_P1.27mm')
+wires('RTC bypass', 'C_RTC', {1: 'P3V3_SW', 2: 'PGND'})
+for _src, _net, _v in (('R_SDA', 'RTC_SDA', '4.7k'), ('R_SCL', 'RTC_SCL', '4.7k'),
+                       ('R_RTCINT', 'RTC_INT', '10k')):
+    # pull-ups on SWITCHED 3V3 only: nothing may feed the Pico while it is off
+    wires('RTC pull-up', _src, {1: 'P3V3_SW', 2: _net})
+    value(_src, _v)
+only('RTC_VBAT', [('BT_RTC', 1), ('URTC', 14)],
+     'the cell feeds VBAT and nothing else: no charging path, no load')
+check('the RTC cell is a BR2032, rated to +85 C',
+      by_src['BT_RTC']['value'] == 'BR2032')
+
 # R12-REV-4: onboard keyless RS-485 and default-open topology.
 wires('spare header', 'J3', {1:'B5',2:'PGND',3:'P3V3_SW',4:'SPARE_GP13'})
 wires('RS485 default listen', 'R_DE', {1:'BUS_DE',2:'PGND'})
@@ -698,6 +723,9 @@ POLARITY = {
             'check them. The 1.5KE20A is unidirectional: pin 1 is the banded '
             'cathode and goes to P12. DESIGN.md S3 records the inherited part '
             'in this position having been fitted backwards once already'),
+    'BT_RTC': ({'1': 'RTC_VBAT', '2': 'PGND'},
+               'Keystone 3034 holder: pad 1 is the clip on the cell rim (+), '
+               'pad 2 the centre pad under it (-)'),
     'TVS_B11': ({'1': 'B11_TAP', '2': 'PGND'},
                 'same symbol, same reason: pin 1 is the banded cathode and '
                 'goes to the harness tap'),
@@ -763,6 +791,7 @@ DECLARED = {
     'SPARE_GP11', 'SPARE_GP12', 'SPARE_GP13',
     'UART1_TX', 'UART1_RX', 'BUS_DE',
     'RS485_A', 'RS485_B', 'RS485_BIAS_HI', 'RS485_BIAS_LO', 'RS485_TERM',
+    'RTC_SDA', 'RTC_SCL', 'RTC_INT', 'RTC_VBAT',
 }
 for n in sorted(DECLARED):
     check(f'net {n} exists as its own net', n in nets,

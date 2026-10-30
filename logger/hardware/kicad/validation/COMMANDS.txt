@@ -148,3 +148,13 @@ it, refresh the reference:
 
   python3 tools/board_chunks.py full-netlist validation/netlist.net
   python3 check_capture.py --update-reference
+
+DS3231 RTC, October 30 2026 (DECISIONS D-RTC-14): added to the
+hand-edited schematic by script (new frame, U16 DS3231SN, BT1 BR2032 in a
+Keystone 3034 holder, C25, R50-R52, #FLG5 on RTC_VBAT; Pico GP20/21/22
+no-connect flags replaced by RTC_SDA/RTC_SCL/RTC_INT labels). Chunk `rtc`
+in tools/board_chunks.py, off the board. ERC 0 at --severity-all; 782/782
+capture checks (new RTC section asserts the datasheet pin numbers); the
+reference pin map was refreshed after confirming the only pins that moved
+were the 29 RTC pins and U1.26/27/29; closure 67/67; 153 BOM rows;
+courtyard allowance 1.72x.

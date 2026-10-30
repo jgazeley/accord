@@ -48,6 +48,7 @@ CHUNKS = {
               'U10 U11 U12 U13 U14',
     'rs485': 'C24 JP2 JP3 JP4 R47 R48 R49 U15',
     'spare_reset': 'J3 J4 R30',
+    'rtc': 'BT1 C25 R50 R51 R52 U16',
     'testpoints': ' '.join(f'TP{n}' for n in range(1, 26)),
 }
 CHUNKS = {k: v.split() for k, v in CHUNKS.items()}

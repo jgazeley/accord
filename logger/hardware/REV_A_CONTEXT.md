@@ -37,6 +37,7 @@ the ignition-qualified power hold and independent cutoff.
 | Vehicle inputs | Fitted dividers and clamps carried forward unchanged; B2 (VSS) through an **ASSR-601JV** solid-state relay enabled by GP7 + hardware power-good |
 | RS-485 | Keyless circuit: MAX3485 in a DIP-8 socket, GP8 TX / GP9 RX / GP10 DE+RE with 10 k pulldown; 390 Ω bias and 120 Ω termination each on a jumper, open by default |
 | Grounds | AGND and PGND join only inside the Pico module; don't add a board-level bond. B16 is a sense reference, never a return |
+| Real-time clock | DS3231SN (U16) on I2C0: GP20 SDA, GP21 SCL, GP22 INT/SQW; 4.7 k pull-ups to switched 3V3; BR2032 backup cell in a Keystone 3034 holder, no charging path (D-RTC-14) |
 | Other | SD module header (J5), spare GP13 + switched power (J3), RUN/GND reset (J4), HOLD link, test points |
 
 Envelope: 80 × 120 mm, no enclosure. The board file
@@ -44,7 +45,7 @@ Envelope: 80 × 120 mm, no enclosure. The board file
 corner radii) and four unplated M3 holes 4 mm in from each edge, made by
 `kicad/tools/gen_board_outline.py`; parts come in with "Update PCB from
 Schematic". Courtyard
-allowance 1.90× after the surface-mount conversion (D-SMD-09) (`kicad/validation/courtyard_study.csv`).
+allowance 1.72× with the through-hole power resistors (D-THT-13) and the RTC (D-RTC-14) (`kicad/validation/courtyard_study.csv`).
 
 ## Fitted logger baseline (breadboard, in the car today)
 
