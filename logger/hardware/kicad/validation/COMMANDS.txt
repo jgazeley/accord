@@ -167,3 +167,12 @@ only <steps>, full-netlist. Flags reset to the board as the owner left it
 (power, pico, sd, connector): 45 flipped off (the 39 timer-batch parts and
 the 6 RTC parts). DRC schematic parity 0 on a scratch copy; ERC 0;
 782/782 capture; closure 67/67.
+
+Through-hole from the inputs on, October 30 2026 (DECISIONS D-THT-15):
+37 surface-mount resistors (all but the placed RTC pull-ups R50-R52) moved
+to Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal, and the
+eight 1N5819HW (D101-D107, D109) back to 1N5819 on
+Diode_THT:D_DO-41_SOD81_P5.08mm_Vertical_AnodeUp, in the schematic and
+BOM.csv. check_capture.py asserts both. ERC 0; full-netlist capture
+782/782 (netlist changed only in footprint and value fields; no pin moved
+net); closure 67/67; courtyard allowance 1.61x.

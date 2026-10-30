@@ -45,7 +45,7 @@ Envelope: 80 × 120 mm, no enclosure. The board file
 corner radii) and four unplated M3 holes 4 mm in from each edge, made by
 `kicad/tools/gen_board_outline.py`; parts come in with "Update PCB from
 Schematic". Courtyard
-allowance 1.72× with the through-hole power resistors (D-THT-13) and the RTC (D-RTC-14) (`kicad/validation/courtyard_study.csv`).
+allowance 1.61× with through-hole resistors and 1N5819s from the vehicle inputs on (D-THT-13, D-THT-15) and the RTC (D-RTC-14) (`kicad/validation/courtyard_study.csv`).
 
 ## Fitted logger baseline (breadboard, in the car today)
 

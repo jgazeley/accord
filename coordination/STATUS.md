@@ -24,7 +24,7 @@ bench test and vehicle test.
   JAE IL-AG5-14P-D3L2-A board connector J1 (D-CONN-06), and mostly
   surface-mount parts (D-SMD-09: 114 SMD, 34 through-hole).
 - Verified on `main`: ERC 0 at all severities, 782/782 capture checks, 67
-  power-closure checks with no overruns, 153 BOM rows all footprinted, 1.72×
+  power-closure checks with no overruns, 153 BOM rows all footprinted, 1.61×
   courtyard allowance on 80 × 120 mm
   (`logger/hardware/kicad/validation/COMMANDS.txt`).
 - **DS3231 RTC on the board** (D-RTC-14, October 30): DS3231SN on I2C0

@@ -8,6 +8,20 @@ October 29 evening were carried over from the retired tracker
 
 ## October 30, 2026
 
+**D-THT-15: through-hole resistors and 1N5819 from the vehicle inputs
+on.** Owner, at the in_tach step: *"ok here I want to start using
+Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal and 1N5819 not
+1N5819HW, despite my earlier request to convert a bunch of things to surface
+mount"*. Applied to every surface-mount resistor not yet placed (R1-R29,
+R38-R46 less the through-hole ones already there: 37 parts) and every
+1N5819HW (D101-D107, D109: 8 parts), including the in_tach parts already on
+the board. The diodes go back to the pre-D-SMD-09 footprint,
+DO-41 vertical P5.08 (as D116). Kept: the placed RTC pull-ups R50-R52
+(0805), the D-THT-13 power resistors, R13/R32 (DIN0414, 0.5 W positions),
+R30/R47-R49 (DIN0207, keyless). R22 R_AON needs >= 0.15 W at 85 C: a
+0.25 W DIN0204 derates to about 0.2 W there, so it qualifies. Capacitors,
+transistors, D110 (1N4148W) and the ICs stay surface mount.
+
 **D-STAGE-11 revised: small ordered steps, not subsystem chunks.** After
 importing the 39-part timer batch the owner removed it from the board:
 *"I removed the timer and clock hardware for now. Too many pieces at once

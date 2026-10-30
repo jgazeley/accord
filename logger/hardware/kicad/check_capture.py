@@ -287,7 +287,7 @@ value('TVS_B11', '1.5KE20A-E3/54')
 wires('entry clamp', 'TVS_B11', {1: 'B11_TAP', 2: 'PGND'})
 
 # --------------------------- ignition cell, AS_BUILT 3.4 with the LRA-12 fix
-value('DI', '1N5819HW')
+value('DI', '1N5819')
 value('RLED', '2.2k')
 wires('opto cell', 'U2', {1: 'IGN_LED_A', 2: 'PGND', 3: 'IGN_A', 4: 'A5'})
 check('the opto LED cathode returns to PGND, not to the B16 conductor',
@@ -837,16 +837,16 @@ for _src, (_v, _e, _b, _c) in {'QI': ('2N3904', 'PGND', 'IGN_B', 'SINK'),
           and by_src[_src]['footprint'] == _PKG[_v]
           and (_q.get('E'), _q.get('B'), _q.get('C')) == (_e, _b, _c),
           f'roles {_q}')
-check('no through-hole resistor remains outside the kept set',
-      not any(r['footprint'].startswith('Resistor_THT')
-              and r['source_designator'] not in
-              {'R_DE', 'R485_A', 'R485_B', 'R485_TERM', 'RLED', 'RG',
-               # D-THT-13: owner's choice for the power block
-               'RGS', 'RI', 'RBI', 'RBH', 'RBIN', 'RB5'}
-              for r in bom))
-check('every 1N5819-class clamp is a SOD-123 1N5819HW',
-      all(r['footprint'] == 'Diode_SMD:D_SOD-123' for r in bom
-          if r['value'].startswith('1N5819')))
+# D-THT-15: from the vehicle inputs on, resistors are through-hole DIN0204.
+# Only the RTC pull-ups placed before that stay surface mount.
+check('no surface-mount resistor remains outside the RTC pull-ups',
+      not [r['reference'] for r in bom if r['footprint'].startswith('Resistor_SMD')
+           and r['source_designator'] not in {'R_SDA', 'R_SCL', 'R_RTCINT'}],
+      'D-THT-15 moved the rest to DIN0204')
+check('every 1N5819 is the through-hole part on DO-41 (D-THT-15)',
+      all(r['value'] == '1N5819'
+          and r['footprint'] == 'Diode_THT:D_DO-41_SOD81_P5.08mm_Vertical_AnodeUp'
+          for r in bom if r['value'].startswith('1N5819')))
 check('logic ICs are SOIC',
       all(by_src[s]['footprint'].startswith('Package_SO:SOIC')
           for s in ('UCLK', 'UCOUNT', 'ULATCH', 'UOR', 'USCH')))
