@@ -19762,7 +19762,7 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board no)
+		(on_board yes)
 		(dnp no)
 		(uuid "15675182-00c2-5bc9-9a61-60a20e829ab1")
 		(property "Reference" "TP24"
@@ -21295,7 +21295,7 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board no)
+		(on_board yes)
 		(dnp no)
 		(uuid "305190b7-c076-59c0-8433-9d51d9e4f26d")
 		(property "Reference" "J4"
@@ -24549,7 +24549,7 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board no)
+		(on_board yes)
 		(dnp no)
 		(uuid "66824dac-c625-5a32-82e5-d1549d5a056e")
 		(property "Reference" "J3"
@@ -24640,7 +24640,7 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board no)
+		(on_board yes)
 		(dnp no)
 		(uuid "66c86d72-5a3a-52be-a433-70d6ba9a958c")
 		(property "Reference" "TP25"
