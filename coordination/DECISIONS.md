@@ -8,6 +8,13 @@ October 29 evening were carried over from the retired tracker
 
 ## October 30, 2026
 
+**D-FP-12: LM2678 footprint matches keyless.** Owner: *"trying to change
+Package_TO_SOT_THT:TO-220-7_P2.54x3.7mm_StaggerEven_Lead3.8mm_Vertical to
+...StaggerOdd... I think thats the one used for hondaPico/accord-keyless"*.
+Confirmed: keyless U3 uses StaggerOdd. U6 switched in the schematic, BOM and
+board (position, rotation, nets and schematic link kept); check_capture
+now asserts UREG's footprint equals keyless U3's.
+
 **D-STAGE-11: build the board up by subsystem.** Owner: *"I think I want to
 remove everything except buck converter related components, and add chunks
 of components by subsystem as I go"*, then *"leave only U1, J5, J1, the

@@ -1,7 +1,7 @@
 (export (version "E")
   (design
     (source "/srv/agent_share/accord/logger/hardware/kicad/accord-logger.kicad_sch")
-    (date "2026-10-30T07:08:42-0700")
+    (date "2026-10-30T07:14:25-0700")
     (tool "Eeschema 9.0.2+dfsg-1")
     (sheet (number "1") (name "/") (tstamps "/")
       (title_block
@@ -2824,13 +2824,13 @@
       (tstamps "c83609fb-7bfc-5221-aa71-fa99c65e8edb"))
     (comp (ref "U6")
       (value "LM2678T-5.0")
-      (footprint "Package_TO_SOT_THT:TO-220-7_P2.54x3.7mm_StaggerEven_Lead3.8mm_Vertical")
+      (footprint "Package_TO_SOT_THT:TO-220-7_P2.54x3.7mm_StaggerOdd_Lead3.8mm_Vertical")
       (fields
         (field (name "Status") "MISSING_OR_VERIFY_SPARE")
         (field (name "Source") "DESIGN.md S3 / D-POWER-03")
         (field (name "MPN") "TI LM2678T-5.0/NOPB")
         (field (name "Source_designator") "UREG")
-        (field (name "Footprint") "Package_TO_SOT_THT:TO-220-7_P2.54x3.7mm_StaggerEven_Lead3.8mm_Vertical")
+        (field (name "Footprint") "Package_TO_SOT_THT:TO-220-7_P2.54x3.7mm_StaggerOdd_Lead3.8mm_Vertical")
         (field (name "Datasheet"))
         (field (name "Description")))
       (libsource (lib "Custom") (part "LM2678T-5.0") (description ""))

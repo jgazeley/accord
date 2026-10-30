@@ -753,7 +753,7 @@ part('RBIN', 'Device:R', '10k', 685.8, 109.22,
 part('UREG', 'Custom:LM2678T-5.0', 'LM2678T-5.0', 754.38, 139.7,
      nets={2: 'VIN_SW', 4: 'PGND', 1: 'SW', 3: 'BOOST', 6: 'B5'},
      nc=(7,),
-     fp='Package_TO_SOT_THT:TO-220-7_P2.54x3.7mm_StaggerEven_Lead3.8mm_Vertical',
+     fp='Package_TO_SOT_THT:TO-220-7_P2.54x3.7mm_StaggerOdd_Lead3.8mm_Vertical',
      mpn='TI LM2678T-5.0/NOPB', status='MISSING_OR_VERIFY_SPARE',
      source='DESIGN.md S3 / D-POWER-03',
      note='symbol copied from keyless/hardware/Custom.kicad_sym. The same '

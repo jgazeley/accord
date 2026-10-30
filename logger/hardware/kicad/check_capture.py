@@ -806,6 +806,15 @@ check('logic ICs are SOIC',
       all(by_src[s]['footprint'].startswith('Package_SO:SOIC')
           for s in ('UCLK', 'UCOUNT', 'ULATCH', 'UOR', 'USCH')))
 
+# The regulator copies keyless U3 in its footprint too: StaggerOdd is the
+# lead forming soldered and running in this car (owner, October 30).
+_k = open(os.path.join(HERE, '..', '..', '..', 'keyless', 'hardware',
+                       'hondaPico.kicad_sch'), encoding='utf-8').read()
+_kfp = re.findall(r'"Footprint" "(Package_TO_SOT_THT:TO-220-7[^"]*)"', _k)
+check('UREG uses the keyless LM2678 footprint',
+      len(set(_kfp)) == 1 and by_src['UREG']['footprint'] == _kfp[0],
+      f'logger {by_src["UREG"]["footprint"]!r}, keyless {_kfp}')
+
 print(f'{checks - len(fails)}/{checks} checks passed')
 for f in fails:
     print('  FAIL', f)
