@@ -8,7 +8,17 @@ October 29 evening were carried over from the retired tracker
 
 ## October 29, 2026
 
-**D-CONN-06 resolved: the 10-pin Molex.** Owner: *"/srv/agent_share/pcb/old_hondaPCB/footprints.pretty/CON_39301100.kicad_mod
+**D-CONN-06 revised: JAE IL-AG5-14P-D3L2-A instead of the 10-pin Molex.**
+Asked whether ten pins was "JUST enough", the owner said: *"in the hondaPico
+kicad they added IL-AG5-22P I believe. Can you add IL-AG5-14P-D3L2-A?"* The
+14-pin JAE (Honda's connector style, already on keyless as the 22P) becomes
+the single board connector J1, giving four spare contacts over the ten
+signals. Used as: 1 RS-485 A, 2 bus GND (PGND), 3 B2 VSS, 4 B1 tach, 5 B11, 6 BATT_IN / 7 RS-485 B, 8 spare, 9 C11 fuel, 10 AGND (B16), 11 spare, 12 spare, 13 C14 brake, 14 PGND. Pin numbering follows the keyless 22P
+convention and must be checked against the housing cavity numbers before
+crimping. The board end of the harness needs housing IL-AG5-14S-D3C1-A,
+IL-AG5-C1-5000 crimps and the CT150-1-AG5 hand tool.
+
+**D-CONN-06, first choice (superseded by the JAE 14P above): the 10-pin Molex.** Owner: *"/srv/agent_share/pcb/old_hondaPCB/footprints.pretty/CON_39301100.kicad_mod
 is the 10 pin molex connector I have"*. That is **Molex 39-30-1100**
 (Mini-Fit Jr 5569-10A2, 2×5, right-angle, pegs), the same family as keyless
 J1. It becomes the **single board connector**, replacing J1 (power), J2

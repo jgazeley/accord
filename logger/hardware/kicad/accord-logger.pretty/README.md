@@ -19,5 +19,14 @@ summary, and both measured by `../fp_area.py`:
   Pin 1 CLKOUT, 2 GND, 3 CLKOE, 4 VDD, with 4 and 3 on the upper row in top
   view.
 
+- `JAE_IL-AG5-14P-D3L2-A`: JAE IL-AG5 14-contact right-angle pin header,
+  the board connector J1. **Generated** by `../tools/gen_fp_ilag5.py 14`
+  from the JAE IL-AG5 catalogue's right-angle "PCB Hole Pattern (Ref.)"
+  (A 20.0, B 26.5, C1 12.5 mm; 2.5 mm pitch; rows 6.0 mm apart; outer row
+  6 contacts, near row 8; 1.1 mm holes; two 2.2 mm NPTH board guides).
+  Regenerate rather than edit. The generator also reproduces the keyless
+  22P footprint exactly, which `../check_capture.py` asserts. Pin numbering
+  follows the keyless convention; check it against the housing.
+
 Every other part in this design resolves in an installed KiCad library. See
 `../CAPTURE_NOTES.md` and `../../power/LAYOUT_CLOSURE.md`.

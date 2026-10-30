@@ -56,14 +56,19 @@ capture 711/711, closure 67/67 with zero allocation overruns (external bus
 exposure reported separately), 150/150 footprints, fitted courtyard 6759 mm2,
 1.42x allowance. UUID regression passes with 1459 unique UUIDs.
 Two consecutive generations are byte-identical; latest schematic SHA256:
-bbfcba624c1ab658f25690dfadf0b9ae56eebc7b105e4850ddfb581423e74dd6
+bb1851e24fe565d25b17bab8e89c2c8c71fb19ce5a4a023ed1cac2c34cf2dcd1
 The MAX3485 library mismatch was resolved by matching KiCad's inherited
 footprint behavior when the derived symbol's footprint property is empty.
 
 Single-connector consolidation on main, October 29 2026 (D-CONN-06): J1 is
-now the one Molex 39-30-1100 10-way board connector; the 2-way J1, 8-way J2
-and interim 4-way J485 are removed. 148 BOM rows, all footprinted. ERC 0 at
---severity-all; 721/721 capture checks; UUID regression passes with 1448
-unique UUIDs; closure 67 ok, no overruns; 1.48x courtyard allowance. Two
-consecutive generations are byte-identical; schematic SHA256:
-6eeb260b9ae9833c2536da4f88834f3000072241eaf16e9924db69ccb925806d
+the one JAE IL-AG5-14P-D3L2-A 14-way board connector; the 2-way J1, 8-way J2
+and interim 4-way J485 are removed. Its footprint is generated:
+
+  python3 tools/gen_fp_ilag5.py 14 accord-logger.pretty/JAE_IL-AG5-14P-D3L2-A.kicad_mod
+
+148 BOM rows, all footprinted. ERC 0 at --severity-all; 731/731 capture
+checks (including the generator reproducing the keyless 22P exactly);
+UUID regression passes with 1457 unique UUIDs; closure 67 ok, no overruns;
+1.43x courtyard allowance. Two consecutive generations are byte-identical;
+schematic SHA256:
+bb1851e24fe565d25b17bab8e89c2c8c71fb19ce5a4a023ed1cac2c34cf2dcd1

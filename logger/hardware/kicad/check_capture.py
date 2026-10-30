@@ -215,7 +215,7 @@ for key, sig in (('VSS', 'VSS_IN'), ('TACH', 'TACH_IN'), ('BRK', 'BRAKE_IN')):
 # -------------------------------------- X1 resolved: the B2 series isolation
 # The point of the part is that nothing bridges it, so these net-identity
 # assertions carry the whole isolation claim.
-only('B2_TAP', [('J1', 9), ('UISO', 15), ('UISO', 16)],
+only('B2_TAP', [('J1', 3), ('UISO', 15), ('UISO', 16)],
      'the B2 divider top must be reachable only through the relay')
 only('B2_ISO', [('UISO', 9), ('UISO', 10), ('R_VSS_T', 1)],
      'the relay output feeds the divider top and nothing else')
@@ -257,10 +257,10 @@ check('both enable gates are pulled down, so the relay is open by default',
 # directly, with no isolation device on it. B11 also feeds the ignition opto
 # through DI and carries the entry clamp.
 BYPASSED = {
-    'B1_TAP': [('J1', 3), ('R_TACH_T', 1)],
-    'C14_TAP': [('J1', 8), ('R_BRK_T', 1)],
-    'C11_TAP': [('J1', 4), ('R_FUEL_T', 1)],
-    'B11_TAP': [('J1', 2), ('R_SUP_T', 1), ('DI', 2), ('TVS_B11', 1)],
+    'B1_TAP': [('J1', 4), ('R_TACH_T', 1)],
+    'C14_TAP': [('J1', 13), ('R_BRK_T', 1)],
+    'C11_TAP': [('J1', 9), ('R_FUEL_T', 1)],
+    'B11_TAP': [('J1', 5), ('R_SUP_T', 1), ('DI', 2), ('TVS_B11', 1)],
 }
 for net, allowed in BYPASSED.items():
     only(net, allowed, 'this branch is a decided bypass: its tap feeds the '
@@ -279,7 +279,7 @@ value('RLED', '2.2k')
 wires('opto cell', 'U2', {1: 'IGN_LED_A', 2: 'PGND', 3: 'IGN_A', 4: 'A5'})
 check('the opto LED cathode returns to PGND, not to the B16 conductor',
       pin_net.get(('U2', '2')) == 'PGND'
-      and pin_net.get(('U2', '2')) != pin_net.get(('J1', '7')),
+      and pin_net.get(('U2', '2')) != pin_net.get(('J1', '10')),
       'R06-REV-2: B16 is a reference and must never carry the LED current')
 check('no capacitor sits across the old opto output node',
       'C_IGN' not in by_src,
@@ -549,43 +549,66 @@ for src in ('JP485_TERM','JP485_HI','JP485_LO'):
     check(src+' matches keyless JP1 footprint',by_src[src]['footprint']==
           'Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical')
 # ------------------------ J1, the single board connector (D-CONN-06)
-J1_PINS = {1: 'BATT_IN', 2: 'B11_TAP', 3: 'B1_TAP', 4: 'C11_TAP',
-           5: 'RS485_A', 6: 'PGND', 7: 'AGND', 8: 'C14_TAP', 9: 'B2_TAP',
-           10: 'RS485_B'}
+J1_PINS = {1: 'RS485_A', 2: 'PGND', 3: 'B2_TAP', 4: 'B1_TAP', 5: 'B11_TAP',
+           6: 'BATT_IN', 7: 'RS485_B', 9: 'C11_TAP', 10: 'AGND',
+           13: 'C14_TAP', 14: 'PGND'}
+J1_SPARE = (8, 11, 12)
 wires('board connector', 'J1', J1_PINS)
+for _p in J1_SPARE:
+    check(f'J1 pin {_p} is a spare, unconnected', unconnected('J1', str(_p)))
 check('J1 is the only off-board harness connector',
-      not any(r['footprint'].startswith('Connector_Molex:')
+      not any(r['footprint'].startswith(('Connector_Molex:', 'accord-logger:JAE'))
               for r in bom if r['reference'] != 'J1'),
       'power, taps and RS-485 all come in on J1')
-check('J1 is the owner\'s Molex 39-30-1100 on the 2x05 Mini-Fit Jr. footprint',
-      by_ref['J1']['footprint'] == 'Connector_Molex:'
-      'Molex_Mini-Fit_Jr_5569-10A2_2x05_P4.20mm_Horizontal'
-      and '39-30-1100' in by_ref['J1']['manufacturer_part_or_type'])
-# Physical adjacency, read from the installed footprint rather than assumed:
-# which contacts actually sit next to BATT_IN, and are A/B neighbours?
-_fp = os.path.join(os.environ.get('KICAD9_FOOTPRINT_DIR',
-                                  '/usr/share/kicad/footprints'),
-                   'Connector_Molex.pretty',
-                   'Molex_Mini-Fit_Jr_5569-10A2_2x05_P4.20mm_Horizontal.kicad_mod')
+check('J1 is the JAE IL-AG5-14P-D3L2-A on its generated footprint',
+      by_ref['J1']['footprint'] == 'accord-logger:JAE_IL-AG5-14P-D3L2-A'
+      and 'IL-AG5-14P-D3L2-A' in by_ref['J1']['manufacturer_part_or_type'])
+# The footprint is generated; prove the generator against the keyless 22P,
+# which the same reading of the JAE drawing produced, then read J1's real pad
+# positions from the committed file rather than assuming them.
+sys.path.insert(0, os.path.join(HERE, 'tools'))
+import gen_fp_ilag5
+_strip = lambda t: [l for l in t.splitlines() if 'descr' not in l and 'tags' not in l]
+_k22 = os.path.join(HERE, '..', '..', '..', 'keyless', 'hardware', 'hondaPico.pretty',
+                    'JAE_IL-AG5-22P-D3L2.kicad_mod')
+check('IL-AG5 generator reproduces the keyless 22P footprint exactly',
+      _strip(gen_fp_ilag5.footprint(22)) == _strip(open(_k22).read()))
+_fp = os.path.join(HERE, 'accord-logger.pretty', 'JAE_IL-AG5-14P-D3L2-A.kicad_mod')
+check('committed 14P footprint is the generator output',
+      open(_fp).read() == gen_fp_ilag5.footprint(14))
 _pads = {int(n): (float(x), float(y)) for n, x, y in re.findall(
     r'\(pad "(\d+)" thru_hole \w+\s*\(at ([-\d.]+) ([-\d.]+)', open(_fp).read())}
-check('J1 footprint has ten contacts', sorted(_pads) == list(range(1, 11)))
-def _near(a, b, r=6.0):
-    (ax, ay), (bx, by) = _pads[a], _pads[b]
+check('J1 footprint has fourteen contacts', sorted(_pads) == list(range(1, 15)))
+check('J1 footprint has two 2.2 mm board-guide holes 12.5 mm apart',
+      len(re.findall(r'np_thru_hole circle\s*\(at (3.75|16.25) -14.6\)', open(_fp).read())) == 2)
+# Neighbours at the mating face: same column order, rows 3.0 mm apart there
+# (6.0 mm on the PCB), so map PCB y to the mating-face row offset.
+def _face(n):
+    x, y = _pads[n]
+    return x, 0.0 if y == 0 else 3.0
+def _near(a, b, r=4.0):
+    (ax, ay), (bx, by) = _face(a), _face(b)
     return ((ax - bx) ** 2 + (ay - by) ** 2) ** 0.5 <= r
-_batt_nb = {J1_PINS[n] for n in _pads if n != 1 and _near(1, n)}
-check('BATT_IN\'s physical neighbours are only PGND and the clamped B11 input',
-      _batt_nb == {'PGND', 'B11_TAP'}, f'neighbours {sorted(_batt_nb)}')
-check('RS-485 A and B are adjacent contacts', _near(5, 10))
-check('fuel and VSS are not adjacent to BATT_IN', not _near(1, 4) and not _near(1, 9))
+_all = {**J1_PINS, **{p: 'spare' for p in J1_SPARE}}
+_batt = [p for p, n in J1_PINS.items() if n == 'BATT_IN'][0]
+_batt_nb = {_all[n] for n in _pads if n != _batt and _near(_batt, n)}
+check('BATT_IN\'s neighbours are only grounds and 12 V-level inputs',
+      _batt_nb <= {'PGND', 'B11_TAP', 'C14_TAP', 'B1_TAP'},
+      f'neighbours {sorted(_batt_nb)}')
+check('RS-485 A and B are adjacent contacts', _near(1, 7))
+check('RS-485 has its own ground contact beside the pair',
+      J1_PINS[2] == 'PGND' and _near(1, 2))
+check('fuel and VSS are not adjacent to BATT_IN',
+      not _near(_batt, 9) and not _near(_batt, 3))
+check('fuel sits beside its AGND reference', _near(9, 10))
 wires('reset header', 'J4', {1: 'RUN', 2: 'PGND'})
 check('J4 has no unconnected pins left over', ('J4', '3') not in pin_net,
       'capture question Q5: a service header with NC pins was the problem')
 
 # --------------------------------------- grounds: one ADC return, one bond
-agnd = pin_net.get(('J1', '7'))
+agnd = pin_net.get(('J1', '10'))
 single = {
-    'J1.7 cluster ground sense': ('J1', '7'),
+    'J1.10 cluster ground sense': ('J1', '10'),
     'U1.33 Pico AGND': ('U1', '33'),
     'fuel divider bottom': (R('R_FUEL_B'), '2'),
     'supply divider bottom': (R('R_SUP_B'), '2'),
@@ -597,7 +620,7 @@ single = {
 for label, node in single.items():
     check(f'single ADC return node carries the {label}',
           pin_net.get(node) == agnd,
-          f'on {pin_net.get(node)!r}, not the J1.7 node {agnd!r}')
+          f'on {pin_net.get(node)!r}, not the J1.10 node {agnd!r}')
 check('the single ADC return node is the one the Pico AGND pin names',
       agnd == 'AGND', f'got {agnd!r}')
 check('AGND and PGND are separate nets on the board',
@@ -744,8 +767,8 @@ check('D7: the Pico is fed from the onboard buck through DOR, not from VBUS',
 check('QP switches P12 into VIN_SW',
       pin_net.get((R('QP'), '3')) == 'P12'
       and pin_net.get((R('QP'), '2')) == 'VIN_SW')
-check('the selected connector is the in-service Mini-Fit Jr. family',
-      'Mini-Fit_Jr' in by_ref['J1']['footprint'])
+check('the selected connector is the JAE IL-AG5 family keyless already uses',
+      'JAE_IL-AG5' in by_ref['J1']['footprint'])
 
 print(f'{checks - len(fails)}/{checks} checks passed')
 for f in fails:

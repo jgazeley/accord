@@ -14,7 +14,7 @@
 		(comment 4 "Decisions and calculations: power/LAYOUT_CLOSURE.md; residual gates: LRA12_HANDOFF.md")
 	)
 	(lib_symbols
-		(symbol "Connector_Generic:Conn_01x10"
+		(symbol "Connector_Generic:Conn_01x14"
 			(pin_names
 				(offset 1.016)
 				(hide yes)
@@ -23,15 +23,15 @@
 			(in_bom yes)
 			(on_board yes)
 			(property "Reference" "J"
-				(at 0 12.7 0)
+				(at 0 17.78 0)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
 				)
 			)
-			(property "Value" "Conn_01x10"
-				(at 0 -15.24 0)
+			(property "Value" "Conn_01x14"
+				(at 0 -20.32 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -56,7 +56,7 @@
 					(hide yes)
 				)
 			)
-			(property "Description" "Generic connector, single row, 01x10, script generated (kicad-library-utils/schlib/autogen/connector/)"
+			(property "Description" "Generic connector, single row, 01x14, script generated (kicad-library-utils/schlib/autogen/connector/)"
 				(at 0 0 0)
 				(effects
 					(font
@@ -83,16 +83,38 @@
 					(hide yes)
 				)
 			)
-			(symbol "Conn_01x10_1_1"
+			(symbol "Conn_01x14_1_1"
 				(rectangle
-					(start -1.27 11.43)
-					(end 1.27 -13.97)
+					(start -1.27 16.51)
+					(end 1.27 -19.05)
 					(stroke
 						(width 0.254)
 						(type default)
 					)
 					(fill
 						(type background)
+					)
+				)
+				(rectangle
+					(start -1.27 15.367)
+					(end 0 15.113)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start -1.27 12.827)
+					(end 0 12.573)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
 					)
 				)
 				(rectangle
@@ -205,8 +227,30 @@
 						(type none)
 					)
 				)
+				(rectangle
+					(start -1.27 -15.113)
+					(end 0 -15.367)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start -1.27 -17.653)
+					(end 0 -17.907)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
 				(pin passive line
-					(at -5.08 10.16 0)
+					(at -5.08 15.24 0)
 					(length 3.81)
 					(name "Pin_1"
 						(effects
@@ -224,7 +268,7 @@
 					)
 				)
 				(pin passive line
-					(at -5.08 7.62 0)
+					(at -5.08 12.7 0)
 					(length 3.81)
 					(name "Pin_2"
 						(effects
@@ -242,7 +286,7 @@
 					)
 				)
 				(pin passive line
-					(at -5.08 5.08 0)
+					(at -5.08 10.16 0)
 					(length 3.81)
 					(name "Pin_3"
 						(effects
@@ -260,7 +304,7 @@
 					)
 				)
 				(pin passive line
-					(at -5.08 2.54 0)
+					(at -5.08 7.62 0)
 					(length 3.81)
 					(name "Pin_4"
 						(effects
@@ -278,7 +322,7 @@
 					)
 				)
 				(pin passive line
-					(at -5.08 0 0)
+					(at -5.08 5.08 0)
 					(length 3.81)
 					(name "Pin_5"
 						(effects
@@ -296,7 +340,7 @@
 					)
 				)
 				(pin passive line
-					(at -5.08 -2.54 0)
+					(at -5.08 2.54 0)
 					(length 3.81)
 					(name "Pin_6"
 						(effects
@@ -314,7 +358,7 @@
 					)
 				)
 				(pin passive line
-					(at -5.08 -5.08 0)
+					(at -5.08 0 0)
 					(length 3.81)
 					(name "Pin_7"
 						(effects
@@ -332,7 +376,7 @@
 					)
 				)
 				(pin passive line
-					(at -5.08 -7.62 0)
+					(at -5.08 -2.54 0)
 					(length 3.81)
 					(name "Pin_8"
 						(effects
@@ -350,7 +394,7 @@
 					)
 				)
 				(pin passive line
-					(at -5.08 -10.16 0)
+					(at -5.08 -5.08 0)
 					(length 3.81)
 					(name "Pin_9"
 						(effects
@@ -368,7 +412,7 @@
 					)
 				)
 				(pin passive line
-					(at -5.08 -12.7 0)
+					(at -5.08 -7.62 0)
 					(length 3.81)
 					(name "Pin_10"
 						(effects
@@ -378,6 +422,78 @@
 						)
 					)
 					(number "10"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 -10.16 0)
+					(length 3.81)
+					(name "Pin_11"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "11"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 -12.7 0)
+					(length 3.81)
+					(name "Pin_12"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "12"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 -15.24 0)
+					(length 3.81)
+					(name "Pin_13"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "13"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 -17.78 0)
+					(length 3.81)
+					(name "Pin_14"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "14"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -8884,7 +9000,7 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector_Generic:Conn_01x10")
+		(lib_id "Connector_Generic:Conn_01x14")
 		(at 40.64 48.26 180)
 		(unit 1)
 		(exclude_from_sim no)
@@ -8893,22 +9009,22 @@
 		(dnp no)
 		(uuid "a9252335-0ab7-557b-9977-052e096b0a5d")
 		(property "Reference" "J1"
-			(at 39.37 32.51 0)
+			(at 39.37 27.43 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Value" "Board connector 10-way"
-			(at 39.37 62.23 0)
+		(property "Value" "Board connector 14-way"
+			(at 39.37 67.31 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Footprint" "Connector_Molex:Molex_Mini-Fit_Jr_5569-10A2_2x05_P4.20mm_Horizontal"
+		(property "Footprint" "accord-logger:JAE_IL-AG5-14P-D3L2-A"
 			(at 40.64 48.26 0)
 			(effects
 				(font
@@ -8944,7 +9060,7 @@
 				(hide yes)
 			)
 		)
-		(property "Source" "DECISIONS D-CONN-06"
+		(property "Source" "DECISIONS D-CONN-06 / JAE IL-AG5 catalogue"
 			(at 40.64 48.26 0)
 			(effects
 				(font
@@ -8953,7 +9069,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "Molex 39-30-1100 (5569-10A2), 10 circuit right-angle header"
+		(property "MPN" "JAE IL-AG5-14P-D3L2-A, 14 contact right-angle pin header"
 			(at 40.64 48.26 0)
 			(effects
 				(font
@@ -8992,6 +9108,18 @@
 		(pin "10"
 			(uuid "b67543d5-98d8-531e-8ed8-8b2b1d7f9620")
 		)
+		(pin "11"
+			(uuid "939c6e06-449e-52aa-b05c-eebcd56e8368")
+		)
+		(pin "12"
+			(uuid "495e9a14-a113-5bab-b606-caaa65e1de21")
+		)
+		(pin "13"
+			(uuid "ce0c9b47-9158-5f01-8490-5db41149f3aa")
+		)
+		(pin "14"
+			(uuid "b0d5f255-77ec-57a3-9314-e8e46b9345fd")
+		)
 		(instances
 			(project "accord-logger"
 				(path "/d6403372-a8d4-5433-aa98-182e137307f3"
@@ -9000,6 +9128,46 @@
 				)
 			)
 		)
+	)
+	(wire
+		(pts
+			(xy 45.72 63.50)
+			(xy 48.26 63.50)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fa184201-1a90-5697-9c61-07a6efbb4b29")
+	)
+	(label "RS485_A"
+		(at 48.26 63.50 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "36524124-c479-5496-992d-a78687f1da1e")
+	)
+	(wire
+		(pts
+			(xy 45.72 60.96)
+			(xy 48.26 60.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d5c41ac7-2ec0-50db-94b0-a0ec4a281d85")
+	)
+	(label "PGND"
+		(at 48.26 60.96 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "771bae2f-1851-5fa9-a40a-33dacd3f78db")
 	)
 	(wire
 		(pts
@@ -9012,14 +9180,14 @@
 		)
 		(uuid "323d3f23-8c2f-52b4-98b5-c327f032e31c")
 	)
-	(label "BATT_IN"
+	(label "B2_TAP"
 		(at 48.26 58.42 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 		)
-		(uuid "cce00c4b-f129-560a-a384-049cb246f2b3")
+		(uuid "dc46c793-7590-55d7-9d22-9e5cc2b74ba4")
 	)
 	(wire
 		(pts
@@ -9032,14 +9200,14 @@
 		)
 		(uuid "28eb9545-2fa9-5c7b-8d2f-47fdfed51d6b")
 	)
-	(label "B11_TAP"
+	(label "B1_TAP"
 		(at 48.26 55.88 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 		)
-		(uuid "efc7adc1-c495-5aef-a5e2-3be685ba4aa5")
+		(uuid "022adf21-911c-57ba-a512-50f8a942f903")
 	)
 	(wire
 		(pts
@@ -9052,14 +9220,14 @@
 		)
 		(uuid "776285ea-0492-5b5b-b14c-30c4ac171b0f")
 	)
-	(label "B1_TAP"
+	(label "B11_TAP"
 		(at 48.26 53.34 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 		)
-		(uuid "d32fa6a2-c49b-5660-9bdd-87af54dd9c6d")
+		(uuid "f32ad85f-6c0e-5865-b1b6-e83161d4f4fb")
 	)
 	(wire
 		(pts
@@ -9072,14 +9240,14 @@
 		)
 		(uuid "5b76cfc0-af43-5b74-aaca-132829d93985")
 	)
-	(label "C11_TAP"
+	(label "BATT_IN"
 		(at 48.26 50.80 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 		)
-		(uuid "8457b864-333c-53e6-8f4a-2689e8d8b00c")
+		(uuid "02a156ab-f7ad-5457-870d-1455327b8c19")
 	)
 	(wire
 		(pts
@@ -9092,34 +9260,14 @@
 		)
 		(uuid "2f9bf57d-d42a-53cc-a101-7c0b997d3017")
 	)
-	(label "RS485_A"
+	(label "RS485_B"
 		(at 48.26 48.26 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 		)
-		(uuid "292575bc-6f4e-584a-9ced-6cc16540cd13")
-	)
-	(wire
-		(pts
-			(xy 45.72 45.72)
-			(xy 48.26 45.72)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "49c98fe8-dfa3-55fb-a5b4-0a2371477bd6")
-	)
-	(label "PGND"
-		(at 48.26 45.72 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "ebd44a2b-e2d7-5ec8-9f16-2e9856167633")
+		(uuid "2cb436b3-38f2-5d5b-92fb-b1d952dc10f9")
 	)
 	(wire
 		(pts
@@ -9132,14 +9280,14 @@
 		)
 		(uuid "1885dcb4-c365-5d33-ab9c-eac7cf170937")
 	)
-	(label "AGND"
+	(label "C11_TAP"
 		(at 48.26 43.18 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 		)
-		(uuid "27a3ee61-339a-5048-858a-46188cfbfeb7")
+		(uuid "0154333b-7e25-5bdc-b4d1-12376975241d")
 	)
 	(wire
 		(pts
@@ -9152,54 +9300,66 @@
 		)
 		(uuid "24b8ce5b-6d19-5a05-8b2a-256ab6bba798")
 	)
-	(label "C14_TAP"
+	(label "AGND"
 		(at 48.26 40.64 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 		)
-		(uuid "f170613a-0247-5082-8098-8e2a9c85f581")
+		(uuid "5c129a28-f9be-5af4-b369-41b7d6954e05")
 	)
 	(wire
 		(pts
-			(xy 45.72 38.10)
-			(xy 48.26 38.10)
+			(xy 45.72 33.02)
+			(xy 48.26 33.02)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "8600d7c1-4526-5a29-933a-015712514865")
+		(uuid "c36b650c-7f70-528e-bb12-c37fba0e368c")
 	)
-	(label "B2_TAP"
-		(at 48.26 38.10 0)
+	(label "C14_TAP"
+		(at 48.26 33.02 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 		)
-		(uuid "fd527743-31ad-560d-bdbe-895be0bfef68")
+		(uuid "53b70f28-bd93-5bb5-9d13-db151e64fd51")
 	)
 	(wire
 		(pts
-			(xy 45.72 35.56)
-			(xy 48.26 35.56)
+			(xy 45.72 30.48)
+			(xy 48.26 30.48)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "5d64ad3a-2be8-5ddd-b558-f6db8ba88080")
+		(uuid "b87f34e2-d52d-57af-adde-2b5d78a9bdb9")
 	)
-	(label "RS485_B"
-		(at 48.26 35.56 0)
+	(label "PGND"
+		(at 48.26 30.48 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 		)
-		(uuid "e3063d0b-7149-5667-b057-1d95f195e39f")
+		(uuid "2ed8459c-a4b9-57a8-93b5-c78a76161fb2")
+	)
+	(no_connect
+		(at 45.72 45.72)
+		(uuid "e9fe4b24-71b1-5ba6-bc94-ddcbf25cabd8")
+	)
+	(no_connect
+		(at 45.72 38.10)
+		(uuid "326087d9-bee4-5834-8735-7c120f4e8cc0")
+	)
+	(no_connect
+		(at 45.72 35.56)
+		(uuid "ad580bec-64a9-50a3-b3f8-6a23b8827734")
 	)
 	(symbol
 		(lib_id "Custom:ASSR-601JV")
@@ -32064,7 +32224,7 @@
 		)
 		(uuid "b8fe6c50-53c2-5363-8410-2d2667f30475")
 	)
-	(text "This is the LRA-06 capture with its eight electrical placeholders\nresolved. Every populated part now carries a checked footprint and\nno dashed NOT SELECTED body remains. The decisions, their\ncalculations and the residual gates are in power/LAYOUT_CLOSURE.md\nand LRA12_HANDOFF.md; read those before changing anything here.\nX1  B2 series isolation      -> ASSR-601JV + 2-FET enable\nX2-X5 other four branches    -> justified bypass, see below\nX6  qualified IGN / QREPORT  -> captured from CUTOFF_MARGIN_REVIEW S2\nX7  vehicle entry protection -> 1.5KE20A + second-stage A5 clamp\nX8  independent cutoff       -> captured from MAX_ON_CUTOFF\nJ1 board connector           -> Molex 39-30-1100, 10-way Mini-Fit Jr.\nQ2/R06-REV-2 opto LED return -> moved from B16 to PGND\nQ4 onboard FIGN              -> dropped; fuse belongs at the tap\nQ5 J4 service UART           -> dropped; J4 is the reset pair only\nQ6 where MAX_ON cuts HOLD    -> QS between SINK and the QH collector"
+	(text "This is the LRA-06 capture with its eight electrical placeholders\nresolved. Every populated part now carries a checked footprint and\nno dashed NOT SELECTED body remains. The decisions, their\ncalculations and the residual gates are in power/LAYOUT_CLOSURE.md\nand LRA12_HANDOFF.md; read those before changing anything here.\nX1  B2 series isolation      -> ASSR-601JV + 2-FET enable\nX2-X5 other four branches    -> justified bypass, see below\nX6  qualified IGN / QREPORT  -> captured from CUTOFF_MARGIN_REVIEW S2\nX7  vehicle entry protection -> 1.5KE20A + second-stage A5 clamp\nX8  independent cutoff       -> captured from MAX_ON_CUTOFF\nJ1 board connector           -> JAE IL-AG5-14P-D3L2-A, 14-way\nQ2/R06-REV-2 opto LED return -> moved from B16 to PGND\nQ4 onboard FIGN              -> dropped; fuse belongs at the tap\nQ5 J4 service UART           -> dropped; J4 is the reset pair only\nQ6 where MAX_ON cuts HOLD    -> QS between SINK and the QH collector"
 		(at 845.82 35.56 0)
 		(effects
 			(font
@@ -32072,7 +32232,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "8685adbc-0ab5-5a61-bea2-2e81cd07d1fd")
+		(uuid "cc1a8dda-f930-57b7-a5ff-deb8a67a48da")
 	)
 	(text "Voltage envelope - LRA-12R decision"
 		(at 845.82 77.66 0)
@@ -32106,7 +32266,7 @@
 		)
 		(uuid "3c6e4f9f-5029-5345-a44e-bc8702874668")
 	)
-	(text "Five fitted cells, carried forward with no value changed (AS_BUILT S2).\nB2 is the only branch energized with the key out - 4.669 V open\ncircuit, 4.140 V loaded, drawing 140.8 uA of which 109.2 uA was being\nback-fed into the unpowered 3V3 rail through a forward-biased clamp.\nIt gets the series switch, upstream of the divider top as required.\nB1, C14, C11 and B11 are all ignition-fed and measured or logged dead\nwith the key out, so they meet the parked criterion with no device and\nno device leakage. Reaching the board-off-and-energized criterion\nneeds the key on AND an upstream power fault, because ignition\npresent turns QI on and powers the board; in that fault state the\nfitted 7.5k-22k series resistance bounds each branch below 0.7 mA.\nFour more relays would cost 41 mA of awake LED current and four\n10.4 x 7.5 mm packages against a fault-only benefit. Full reachable-\nstate table in LAYOUT_CLOSURE S4.\nBecause no series element enters the fuel or supply top leg, the\ncard header calibration (log.adc.fuel div=7500/4700) still has every\nterm it needs and REV_A_INTERFACES S8.2 needs no change.\nDigital divider bottoms return to PGND. Both ADC divider bottoms,\ntheir filter and clamp returns, J1.7 (B16) and Pico AGND are ONE\nnode. AGND and PGND are already joined INSIDE the Pico module, so\nthat junction is the single point: layout must NOT add a second\nboard-level bond between them."
+	(text "Five fitted cells, carried forward with no value changed (AS_BUILT S2).\nB2 is the only branch energized with the key out - 4.669 V open\ncircuit, 4.140 V loaded, drawing 140.8 uA of which 109.2 uA was being\nback-fed into the unpowered 3V3 rail through a forward-biased clamp.\nIt gets the series switch, upstream of the divider top as required.\nB1, C14, C11 and B11 are all ignition-fed and measured or logged dead\nwith the key out, so they meet the parked criterion with no device and\nno device leakage. Reaching the board-off-and-energized criterion\nneeds the key on AND an upstream power fault, because ignition\npresent turns QI on and powers the board; in that fault state the\nfitted 7.5k-22k series resistance bounds each branch below 0.7 mA.\nFour more relays would cost 41 mA of awake LED current and four\n10.4 x 7.5 mm packages against a fault-only benefit. Full reachable-\nstate table in LAYOUT_CLOSURE S4.\nBecause no series element enters the fuel or supply top leg, the\ncard header calibration (log.adc.fuel div=7500/4700) still has every\nterm it needs and REV_A_INTERFACES S8.2 needs no change.\nDigital divider bottoms return to PGND. Both ADC divider bottoms,\ntheir filter and clamp returns, J1.10 (B16) and Pico AGND are ONE\nnode. AGND and PGND are already joined INSIDE the Pico module, so\nthat junction is the single point: layout must NOT add a second\nboard-level bond between them."
 		(at 845.82 117.22 0)
 		(effects
 			(font
@@ -32114,7 +32274,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "c8976eae-4876-55c2-9120-aba23db5c5a3")
+		(uuid "ae38147d-07f4-533e-bd1b-f86e6d9fb495")
 	)
 	(text "The opto LED return - R06-REV-2 decided"
 		(at 845.82 177.10 0)
