@@ -8,6 +8,13 @@ October 29 evening were carried over from the retired tracker
 
 ## October 29, 2026
 
+**D-LAYOUT-08: commit the owner's layout as it goes.** Owner: *"yes commit
+as I go"*. When the owner reports layout progress, commit
+`accord-logger.kicad_pcb` / `.kicad_pro` with the owner as author
+(`Jayson Gazeley <jayson@sjsu>`, the configured identity) and the agent as
+committer, then push. Never run `kicad-cli pcb drc` in the shared checkout
+(it rewrites the `.kicad_pro`); inspect read-only with `pcbnew.LoadBoard`.
+
 **D-CONN-06 revised: JAE IL-AG5-14P-D3L2-A instead of the 10-pin Molex.**
 Asked whether ten pins was "JUST enough", the owner said: *"in the hondaPico
 kicad they added IL-AG5-22P I believe. Can you add IL-AG5-14P-D3L2-A?"* The
