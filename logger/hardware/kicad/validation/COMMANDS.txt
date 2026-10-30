@@ -138,3 +138,13 @@ off: the checks would see a partial circuit. First staging: power, pico, sd
 and connector on (27 parts + 4 holes on the board), 120 parts excluded.
 ERC 0; full netlist identical to before (147 parts, no pin changed net);
 738/738 capture; closure 67/67; no placed footprint moved.
+
+Reference pin map, October 30 2026: check_capture.py now compares EVERY
+pin's net against validation/pinmap_reference.json (taken from the verified
+616eb14 netlist; named nets by name, unnamed ones by membership). The
+targeted checks missed a hand edit that left R36 pin 1 floating; this one
+fails on it. After an INTENDED connectivity change, and only after checking
+it, refresh the reference:
+
+  python3 tools/board_chunks.py full-netlist validation/netlist.net
+  python3 check_capture.py --update-reference

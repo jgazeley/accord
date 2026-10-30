@@ -33,7 +33,8 @@ import os
 import re
 import sys
 
-HERE = (sys.argv[1] if len(sys.argv) > 1
+_ARGS = [a for a in sys.argv[1:] if not a.startswith('--')]
+HERE = (_ARGS[0] if _ARGS
         else os.path.dirname(os.path.abspath(__file__)))
 NET = os.path.join(HERE, 'validation', 'netlist.net')
 BOM = os.path.join(HERE, 'BOM.csv')
@@ -829,6 +830,35 @@ _kfp = re.findall(r'"Footprint" "(Package_TO_SOT_THT:TO-220-7[^"]*)"', _k)
 check('UREG uses the keyless LM2678 footprint',
       len(set(_kfp)) == 1 and by_src['UREG']['footprint'] == _kfp[0],
       f'logger {by_src["UREG"]["footprint"]!r}, keyless {_kfp}')
+
+# ------------------------------------ every pin against the reference map
+# The checks above assert chosen connections; this one covers ALL of them.
+# validation/pinmap_reference.json records, for the last verified design,
+# which pins share a net (named nets by name, unnamed ones by membership).
+# Any change fails here until the reference is deliberately updated with
+#   python3 check_capture.py --update-reference
+import json
+_REF = os.path.join(HERE, 'validation', 'pinmap_reference.json')
+_groups = {}
+for _blk in text.split('(net (code')[1:]:
+    _n = re.search(r'\(name "([^"]*)"', _blk).group(1)
+    _pins = sorted(f'{r}.{p}' for r, p in
+                   re.findall(r'\(node \(ref "([^"]+)"\) \(pin "([^"]+)"\)', _blk))
+    if _n.startswith('unconnected-'):
+        _n = 'NC:' + _pins[0]
+    elif _n.startswith('Net-('):
+        _n = 'UNNAMED:' + _pins[0]
+    _groups[_n] = _pins
+if '--update-reference' in sys.argv:
+    json.dump(_groups, open(_REF, 'w'), indent=0, sort_keys=True)
+    print('reference pin map updated:', len(_groups), 'nets')
+_ref = json.load(open(_REF))
+_pin_of = lambda g: {p: n for n, ps in g.items() for p in ps}
+_now, _was = _pin_of(_groups), _pin_of(_ref)
+_moved = sorted(p for p in set(_now) | set(_was) if _now.get(p) != _was.get(p))
+check('every pin is on the same net as in the verified reference',
+      not _moved,
+      '; '.join(f'{p}: {_was.get(p)} -> {_now.get(p)}' for p in _moved[:12]))
 
 print(f'{checks - len(fails)}/{checks} checks passed')
 for f in fails:
