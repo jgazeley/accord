@@ -25,3 +25,24 @@ code: kicad-cli does not signal violations through the exit code unless
 
 LRA-12 result, October 29 2026: 0 violations at --severity-all over 141
 parts, 141 of 141 with a footprint, 652/652 capture checks.
+
+LRA-12R, October 29 2026 (Codex logger-electrical [01a18a47]):
+  python3 tools/gen_custom_sym.py Custom.kicad_sym
+  python3 tools/gen_logger_sch.py .
+  task_schematic_copy=$(mktemp /tmp/lra12r-sch.XXXXXX)
+  cp accord-logger.kicad_sch "$task_schematic_copy"
+  python3 tools/gen_logger_sch.py .
+  cmp "$task_schematic_copy" accord-logger.kicad_sch
+  sha256sum accord-logger.kicad_sch
+  python3 tools/check_uuid_stability.py
+Then rerun the ERC/netlist/SVG/capture/area commands above, followed by:
+  python3 ../power/check_layout_closure.py
+
+Actual results: byte-identical consecutive generation;
+SHA256 6dbdd785955f6332bae98439328e57ad8609839daf0031cc731f936b9dd0dd7a;
+1383 unique UUIDs; symbol/pin identity survives movement, value/reference
+changes and unrelated insertion. ERC JSON 0 violations, capture 652/652,
+141/141 footprints, 1.52x allowance, closure 63/63, zero allocation overruns
+using the manager-accepted redistribution. KiCad 9.0.2.
+The CSV files retain the generators' CRLF convention and the SVG is the raw
+KiCad export (including its trailing whitespace).

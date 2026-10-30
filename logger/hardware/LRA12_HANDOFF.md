@@ -407,3 +407,98 @@ set per command, with `Agent-Session: logger-electrical` and the full
 > and dated updates. Preserve predecessor bookmarks and original attribution when
 > transporting existing commits. If your ID is unavailable, say so rather than
 > inventing one. Include this requirement in any seeds or handoffs you create.
+
+## Revision LRA-12R — October 29, 2026
+
+Prepared by Codex `logger-electrical`, session
+`01a18a47-2dc2-7aa3-a0d2-a4978e2b1ebc`.
+Resume: `codex resume 01a18a47-2dc2-7aa3-a0d2-a4978e2b1ebc`.
+Identity verified from matching CODEX_SESSION_ID and CODEX_THREAD_ID.
+Branch: `task/LRA-12R-01a18a47`, based on the original return
+`ad4f9188a9cbef25b0c1717418076c5e9b92cda1`, in a separate worktree.
+The original return above and its authorship are preserved. This section
+supersedes its clamp rationale, A5 stage, exclusion wording and pending
+manager-allocation decision. The manager owns integration and tracker updates.
+
+**Decision:** retain 1.5KE20A and IPD50P04P4L-11 by choice, withdrawing the
+claim that a hot-specified 60 V QP could not be found. Verified Vishay
+SQD50P06-15L Rev. E: 60 V, ±20 V gate, AEC-Q101, TO-252, IDSS
+1/50/150 µA at 25/125/175 °C, VDS=−60 V and VGS=0.
+It fits the accepted hot QP allocation. The 1.5KE30A hot clamp screen is
+43.80948 V (0.097 %/K), not 43.5 V; LM2678 would return to its working
+keyless precedent, with 40 V operating / 45 V absolute and 1.19 V absolute
+margin. That precedent is accepted, not dismissed.
+
+The logger-specific reason for retaining the lower clamp is the new A5
+supply: the unchanged 330 Ω/BZX55C22 stage screens 1.46 W under 43.81 V.
+With 85 °C leads its rating is only 0.30 W. A resistor-only change cannot
+both protect that shunt and preserve the 6 V dropout floor. A higher-power
+or different A5 stage is possible; this return chooses the lower clamp's
+10.80 V LM2678 operating margin and a bounded A5 resistor correction.
+The ≥60 V BJT replacements and complete 30A redesign are not implemented
+or presented as verified. The option comparison is in LAYOUT_CLOSURE §3.1/3.4.
+
+**Changed part:** R_AON (R22) 330 Ω → **820 Ω/1%**, with procurement condition
+≥0.15 W allowable at 85 °C in its existing footprint. BZX55C22 remains,
+but its assessment now includes lead-temperature derating and junction
+heating: ≤0.263 W, thermal screen Tj≤163.75 °C with leads≤85 °C;
+voltage model ≤27.90 V. At P12=6 V, a 0.510 mA input-current screen leaves
+P_AON≥5.5776 V. Loaded input RC startup is 18.3 ms. These are conditional
+screens, not bench qualification or a guaranteed large-signal zener curve.
+The zener leakage test voltage is corrected from 18 V to **16 V**.
+
+**Exposure:** any sustained P12 above **17.1 V**, including an
+**alternator/regulator overcharge fault** as well as a 24 V jump start,
+is excluded. D-OVERVOLT-04 defers this as a named vehicle-acceptance risk.
+This revision does not imply all voltages through 17.1 V meet parked-current
+limits: the zener's published leakage screen ends at 16 V.
+
+**Ledger:** manager-accepted redistribution is recorded; system targets stay
+100/500 µA and the mixed-condition screens stay 74.98/452.65 µA. QP remains
+1/70 µA. The original “180 µA freed from 200” was an arithmetic error:
+200−70=130 µA. Electrical/assembled acceptance remains open.
+
+**UUIDs:** a fixed UUID5 namespace plus stable source designator and element
+role gives symbol and pin identity independent of drawing position, BOM
+order, value and numeric reannotation. Graphics use deterministic geometry
+keys. Root identity is fixed. This is a one-time replacement of the old
+random IDs; an already-created PCB linked to those IDs would require deliberate
+reassociation once. Future generated files retain identity. The generator
+still owns the schematic and does not write the PCB.
+
+Commands and evidence: `kicad/validation/COMMANDS.txt`; both generators,
+ERC with `--severity-all`, netlist and SVG export, `check_capture.py`,
+`fp_area.py`, `power/check_layout_closure.py`, and the added
+`tools/check_uuid_stability.py` were run.
+
+| Check | Result |
+|---|---|
+| Consecutive schematic generation | byte-identical; SHA256 `6dbdd785955f6332bae98439328e57ad8609839daf0031cc731f936b9dd0dd7a` |
+| UUID regression / uniqueness | passes; 1383 unique UUIDs |
+| ERC, KiCad 9.0.2, JSON count | 0 violations at severity-all |
+| Capture | 652/652 |
+| Footprints / courtyard allowance | 141/141, 1.52× on 80 × 120 mm |
+| Closure | 63/63, zero allocation overruns with accepted redistribution |
+
+All scope changes are under the packet's permitted paths. Generated CSV
+CRLF and SVG trailing whitespace are retained. No bench work, wiring,
+purchase, deployment, firmware or database change occurred.
+
+Still open: manager review of this explicit lower-clamp tradeoff; owner
+layout and schematic visual review; R_AON hot-rated procurement and zener
+lead-temperature condition; measured A5 clamp/startup/dropout; all original
+vehicle, leakage, waveform, fuse and firmware acceptance gates not superseded
+above. The ≤28 V zener result extrapolates small-signal impedance and must
+not be treated as a manufacturer's DC guarantee. No new vehicle exposure
+acceptance is claimed. Main and the original engineer's worktree are untouched.
+
+> **Required agent attribution:** Follow `logger/coordination/AGENT_ATTRIBUTION.md`
+> relative to this project root. Use your own tool, role and verified current
+> session ID for Git author and committer identity (`<Tool> <role> [<short-id>]`),
+> with per-command settings. End each new commit message with `Agent-Session: <role>`
+> and your full tool-specific session-ID trailer (`Codex-Session-ID`,
+> `Claude-Session-ID` or `Antigravity-Session-ID`). This includes documentation-only
+> commits. Identify yourself and your resume command in new coordination documents
+> and dated updates. Preserve predecessor bookmarks and original attribution when
+> transporting existing commits. If your ID is unavailable, say so rather than
+> inventing one. Include this requirement in any seeds or handoffs you create.

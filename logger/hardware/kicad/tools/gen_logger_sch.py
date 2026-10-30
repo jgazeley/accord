@@ -424,35 +424,30 @@ part('RIGN', 'Device:R', '10k', x, y,
 # temperature rather than only at 25 C: see LAYOUT_CLOSURE S3.
 g = Grid(320.0, 600.0, 575.0)
 x, y = g.next()
-part('R_AON', 'Device:R', '330R', x, y, nets={1: 'P12', 2: 'P_AON'},
-     fp=FP_R, status='SELECTED', source='LAYOUT_CLOSURE S3',
-     note='second-stage series element for the A5 regulator. At the 0.5 mA '
-          'worst A5 load the drop is 0.165 V, so a 6.0 V P12 still presents '
-          '5.835 V, above the 5.5 V floor the 500 mV/50 mA dropout maximum '
-          'implies for a 5 V output. Chosen large enough that DZ_AON stays '
-          'inside 0.5 W: at the 29.19 V hot clamp the zener takes 17.8 mA, '
-          '0.42 W. Own dissipation 0.105 W against a 0.25 W part')
+part('R_AON', 'Device:R', '820R', x, y, nets={1: 'P12', 2: 'P_AON'},
+     fp=FP_R, status='CONDITIONAL', source='LAYOUT_CLOSURE S3 (LRA-12R)',
+     note='1%; select a resistor rated >=0.15 W at 85 C. Worst input current '
+          '0.510 mA gives 0.4224 V drop at 828.2 ohm; P_AON >=5.5776 V '
+          'at P12=6 V. Zener power bounded by Vinput squared / (4 Rmin): '
+          '0.263 W at 29.20 V. Resistor dissipation <=0.124 W in clamp model.')
 x, y = g.next()
 part('DZ_AON', 'Device:D_Zener', 'BZX55C22', x, y, rot=270,
      nets={1: 'P_AON', 2: 'PGND'}, fp=FP_DO35_K,
      mpn='Vishay BZX55C22-TAP', status='SELECTED',
      source='LAYOUT_CLOSURE S3',
-     note='holds the A5 regulator input inside its envelope independently of '
-          'what the entry clamp lets through. VZ 20.8-23.3 V at 5 mA; with '
-          'the 0.12 %/K maximum coefficient the 85 C worst is 24.98 V, plus '
-          '0.41 V of dynamic drop at 12.5 mA through the 55 ohm maximum, so '
-          'P_AON <= 25.4 V: 2.6 V inside the contract 28 V and 4.6 V inside '
-          'TPS709 30 V. Minimum VZ at -40 C is 19.18 V, above the 17.1 V '
-          'sustained ceiling, so it never conducts in normal operation. '
-          'Leakage is a specified maximum with a hot point: 0.1 uA at 25 C '
-          'and 2 uA at 150 C, at VR = 18 V. Polarity: pin 1 is the cathode')
+     note='BZX55C22 20.8-23.3 V at 5 mA; 55 ohm small-signal impedance. '
+          'LRA-12R screen includes junction heating to 175 C: P_AON <=27.90 V. '
+          'DC/pulse clamping must be measured; dynamic impedance is not a '
+          'guaranteed large-signal slope. Lead temperature <=85 C required. '
+          'Leakage <0.1 uA at 25 C / <2 uA at 150 C is specified at 16 V, '
+          'not 18 V. Pin 1 cathode.')
 x, y = g.next()
 part('C_AON', 'Device:C', '4.7uF/50V', x, y, nets={1: 'P_AON', 2: 'PGND'},
      fp=FP_C_1210, mpn='Murata GRM32ER71H475KA88L', status='CONDITIONAL',
      source='COMPONENT_MARGIN_CLOSURE S1 / BOM_DELTA.csv',
      note='A5 input capacitance; effective C must stay >=1 uF across the '
           'P_AON range. X7R 1210 50 V; DC-bias and aging data still required '
-          'for procurement. With R_AON the input time constant is 1.55 ms, '
+          'for procurement. With R_AON the input time constant is 3.85 ms, '
           'inside the 100 ms A5 validity budget')
 x, y = g.next(dx=76.2)
 part('UA5', 'Custom:TPS70950-Q1_DBV', 'TPS70950QDBVRQ1', x, y,
@@ -655,16 +650,16 @@ part('TVS', 'Diode:1.5KExxA', '1.5KE20A-E3/54', 660.4, 68.58, rot=270,
      source='LAYOUT_CLOSURE S3; COMPONENT_MARGIN_CLOSURE S5',
      note='entry clamp, X7 resolved. REPLACES the inherited 1.5KE30A, and '
           'that is a deliberate deviation from the in-service keyless part: '
-          'the 41.4 V clamp is above the 40 V absolute ratings of everything '
-          'this board puts behind it - QI/QH VCEO, the LM2678 operating '
+          'the 41.4 V clamp exceeds the 40 V limits of '
+          'QI/QH VCEO, the LM2678 operating '
           'ceiling and the selected QP VDS - and keyless has neither those '
           'drivers nor a 30 V always-on LDO. 17.1 V standoff, 19.0-21.0 V VBR '
           'at 1 mA, 27.7 V clamp at 54.2 A for 10/1000 us, 1.0 uA maximum '
           'leakage at standoff, 0.090 %/K VBR coefficient: the 85 C clamp is '
           '29.19 V, which leaves 10.8 V to the 40 V parts but is above the '
           '28 V protected-rail target, which is why the A5 input has its own '
-          'second stage. SUSTAINED input must stay at or below 17.1 V; a '
-          '24 V jump start is a declared excluded exposure. POLARITY is '
+          'second stage. ANY sustained P12 above 17.1 V is excluded, including '
+          'alternator/regulator overcharge and 24 V jump start. POLARITY is '
           'now visible in the drawing, unlike Device:D_TVS which LRA-06 had '
           'to use: Diode:1.5KExxA is the unidirectional family and draws a '
           'cathode bar, with pin 1 the banded cathode to P12 and pin 2 the '
@@ -704,13 +699,12 @@ part('QP', 'Transistor_FET:Q_PMOS_GDS', 'IPD50P04P4L-11', 584.2, 109.22,
      nets={1: 'GATE', 2: 'VIN_SW', 3: 'P12'}, fp=FP_DPAK,
      mpn='Infineon IPD50P04P4L11ATMA2', status='PAIRED_SELECTED',
      source='COMPONENT_MARGIN_CLOSURE S2 / BOM_DELTA.csv',
-     note='the switch, selected rather than left at IRF4905 because this is '
-          'the part that forces the whole X7 chain: its zero-gate drain '
+     note='the switch retained by LRA-12R alongside the lower clamp. Its drain '
           'current has a HOT maximum, 70 uA at 125 C (at VDS = -32 V, so '
           'conservative against the 12-16 V actually applied), where the '
           'IRF4905 screen is 250 uA at 150 C and cannot fit the 200 uA '
-          'parked allocation at all. Its VDS is -40 V, which is what sets '
-          'the entry clamp below 40 V. RDS(on) <=17.2 mohm at -4.5 V/25 C. '
+          'parked allocation. A 60 V SQD50P06 alternative has a 50 uA hot maximum; '
+          'it is not populated. This selected QP requires a clamp below 40 V. RDS(on) <=17.2 mohm at -4.5 V/25 C. '
           'PG-TO252-3 DPAK: gate 1, drain 2 and tab, source 3 - the tab is '
           'drain, so the pad carries battery-side switched voltage and is a '
           'layout thermal and clearance item. Body diode is drain-to-source: '
@@ -1164,7 +1158,7 @@ assert len(taken) == len(set(taken)), 'duplicate reference'
 # ================================================================== build
 sh = schgen.Sheet(
     'Accord logger Rev A - complete electrical design for layout (LRA-12)',
-    'A-layout', paper='A0',
+    'A-layout-12R', paper='A0',
     comments=('Electrical design complete for owner placement and routing; '
               'not frozen, not ordered, not fabricated',
               'Claude logger-electrical, session '
@@ -1242,25 +1236,17 @@ NOTES = [
      'Q4 onboard FIGN              -> dropped; fuse belongs at the tap\n'
      'Q5 J4 service UART           -> dropped; J4 is the reset pair only\n'
      'Q6 where MAX_ON cuts HOLD    -> QS between SINK and the QH collector'),
-    ('The voltage envelope, which is one chain and not five choices',
-     'The selected QP is the only P-channel switch the record found with a\n'
-     'HOT zero-gate leakage maximum (70 uA at 125 C) that fits the 200 uA\n'
-     'parked allocation; the IRF4905 screen is 250 uA and cannot. That part\n'
-     'is rated -40 V VDS, so the entry clamp has to hold below 40 V, which\n'
-     'rules out the inherited 1.5KE30A at 41.4 V - the same 41.4 V that\n'
-     'already exceeded QI/QH VCEO and the LM2678 operating ceiling. The\n'
-     '1.5KE20A clamps at 27.7 V, 29.19 V at 85 C using its own 0.090 %/K\n'
-     'coefficient, leaving 10.8 V to every 40 V part.\n'
-     '29.19 V is still above the contract 28 V protected-rail target, so\n'
-     'the A5 regulator gets its own second stage: R_AON 330R and a BZX55C22\n'
-     'hold P_AON at or below 25.4 V at 85 C, 4.6 V inside the TPS709 30 V\n'
-     'recommended maximum. The <=28 V criterion is therefore measured at\n'
-     'TP_PAON, not at P12.\n'
-     'SUSTAINED P12 must stay at or below 17.1 V, the clamp standoff. No\n'
-     'single clamp can both stand off a 24 V jump start and limit to 28 V,\n'
-     'so that exposure is declared excluded rather than quietly assumed\n'
-     'survivable. See LAYOUT_CLOSURE S3 for the two alternatives and\n'
-     'what each would cost.'),
+    ('Voltage envelope - LRA-12R decision',
+     'Retain 1.5KE20A by choice, not because a 60 V low-leakage QP is absent.\n'
+     'SQD50P06-15L has 50 uA max IDSS at 125 C and -60 V. The inherited\n'
+     '1.5KE30A screens 43.81 V at 85 C: 1.19 V below LM2678 absolute,\n'
+     '3.81 V above operating. It also requires a redesigned A5 clamp.\n'
+     'Selected 1.5KE20A screens 29.20 V. R_AON is now 820R/1%; the\n'
+     'BZX55C22 thermal screen requires leads <=85 C. See S3 for bounds.\n'
+     'P_AON <=27.90 V is a model screen requiring bench verification.\n'
+     'ANY sustained P12 above 17.1 V is excluded, including alternator/\n'
+     'regulator overcharge and 24 V jump start (D-OVERVOLT-04).\n'
+     'The 100/500 uA parked targets remain unchanged.'),
     ('Vehicle inputs: one switch, four justified bypasses',
      'Five fitted cells, carried forward with no value changed (AS_BUILT S2).\n'
      'B2 is the only branch energized with the key out - 4.669 V open\n'

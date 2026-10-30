@@ -455,3 +455,17 @@ ratio, to the 1770/1800/1801 s policy, to the nominal 2048 s cutoff, to the
 (firmware review) remains unclaimed and unaccepted; L05 and L06 add the ISO_EN
 sequencing contract to what that review has to take up, and the hardware is
 safe before it exists because every default is open.
+
+
+### Revision LRA-12R — October 29, 2026
+
+Codex `logger-electrical`, session `01a18a47-2dc2-7aa3-a0d2-a4978e2b1ebc`.
+Resume: `codex resume 01a18a47-2dc2-7aa3-a0d2-a4978e2b1ebc`.
+Verified matching session/thread environment IDs. These attributed entries
+supersede the corresponding LRA-12 change-record rows, not the reviewed body.
+
+| Entry | Revised disposition |
+|---|---|
+| L04 | **Any sustained P12 above the selected 1.5KE20A's 17.1 V standoff is excluded**, explicitly including alternator/regulator overcharge faults and 24 V jump starts. Owner-deferred vehicle-acceptance risk D-OVERVOLT-04. SQD50P06-15L makes the 1.5KE30A alternative viable for QP; it was evaluated and not selected for the A5 and voltage-margin reasons in LAYOUT_CLOSURE §3.1. The old no-single-clamp argument does not rule out a two-stage solution. |
+| L07 | Manager accepted 65/355, 15/70, 12/50, 8/25 µA allocations, totals unchanged at 100/500. QP remains IPD50P04P4L-11 with 1/70 µA room/hot screens; system 74.98/452.65 µA. The original claim of 180 µA freed was arithmetic error: 200−70=130. Electrical acceptance remains open. BZX55C22 leakage is specified at **16 V**, not 18 V; no parked-current bound is claimed for 16–17.1 V. |
+| L03 follow-up | R_AON becomes 820 Ω/1%, required resistor rating ≥0.15 W at 85 °C. A5 thermal and voltage screens and their conditions are in LAYOUT_CLOSURE §3.3; bench validation remains required. |

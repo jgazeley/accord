@@ -11,8 +11,12 @@ SYMDIR = '/usr/share/kicad/symbols'
 STUB = 2.54   # pin-to-label stub length, mm
 
 
-def u():
-    return str(_uuid.uuid4())
+# Fixed project namespace; never change after PCB association.
+NAMESPACE = _uuid.uuid5(_uuid.NAMESPACE_URL, 'https://github.com/jgazeley/accord/logger')
+
+
+def u(*key):
+    return str(_uuid.uuid5(NAMESPACE, repr(key)))
 
 
 class Lib:
@@ -155,7 +159,7 @@ class Sheet:
     def __init__(self, title, rev, paper='A1', date='2026-10-29', comments=()):
         self.title, self.rev, self.paper, self.date = title, rev, paper, date
         self.comments = comments
-        self.uuid = u()
+        self.uuid = u("sheet", "accord-logger")
         self.items = []
         self.used = []        # lib_ids in placement order
         self.refs = {}        # ref -> (lib_id, x, y)
@@ -185,6 +189,9 @@ class Sheet:
     def symbol(self, ref, lib_id, value, x, y, nets=None, footprint='',
                fields=None, rot=0, in_bom=True, on_board=True,
                dnp=False, hide_value=False, nc=(), labelsize=1.27):
+        identity = (fields or {}).get('Source_designator', ref)
+        if ref in self.refs:
+            raise ValueError('duplicate reference: ' + ref)
         pins = self.lib.pins(lib_id)
         if lib_id not in self.used:
             self.used.append(lib_id)
@@ -195,7 +202,7 @@ class Sheet:
                  ['in_bom', 'yes' if in_bom else 'no'],
                  ['on_board', 'yes' if on_board else 'no'],
                  ['dnp', 'yes' if dnp else 'no'],
-                 ['uuid', sexp.q(u())],
+                 ['uuid', sexp.q(u('symbol', identity))],
                  _prop('Reference', ref, *self._fieldxy(lib_id, 'Reference',
                                                        x, y, rot),
                        hide=False),
@@ -208,7 +215,7 @@ class Sheet:
         for k, v in (fields or {}).items():
             node.append(_prop(k, v, x, y, True))
         for num in sorted(pins, key=lambda s: (len(s), s)):
-            node.append(['pin', sexp.q(num), ['uuid', sexp.q(u())]])
+            node.append(['pin', sexp.q(num), ['uuid', sexp.q(u('pin', identity, num))]])
         node.append(['instances',
                      ['project', sexp.q('accord-logger'),
                       ['path', sexp.q('/' + self.uuid),
@@ -227,7 +234,7 @@ class Sheet:
         for num in nc:
             px, py, _ = self.pin_at(ref, num, full=True)
             self.items.append(['no_connect', ['at', f'{px:.2f}', f'{py:.2f}'],
-                               ['uuid', sexp.q(u())]])
+                               ['uuid', sexp.q(u('nc', identity, str(num)))]])
         return node
 
     def pin_at(self, ref, num, full=False):
@@ -240,20 +247,20 @@ class Sheet:
         self.items.append(['label', sexp.q(name),
                            ['at', f'{x:.2f}', f'{y:.2f}', str(rot % 360)],
                            ['effects', ['font', ['size', str(size), str(size)]]],
-                           ['uuid', sexp.q(u())]])
+                           ['uuid', sexp.q(u('label', name, x, y, rot))]])
 
     def glabel(self, name, x, y, rot=0, shape='bidirectional'):
         self.items.append(['global_label', sexp.q(name), ['shape', shape],
                            ['at', f'{x:.2f}', f'{y:.2f}', str(rot)],
                            ['effects', ['font', ['size', '1.27', '1.27']]],
-                           ['uuid', sexp.q(u())]])
+                           ['uuid', sexp.q(u('glabel', name, x, y, rot))]])
 
     def text(self, s, x, y, size=1.27, bold=False):
         eff = ['effects', ['font', ['size', str(size), str(size)]] +
                ([['bold', 'yes']] if bold else []),
                ['justify', 'left', 'top']]
         self.items.append(['text', sexp.q(s), ['at', f'{x:.2f}', f'{y:.2f}', '0'],
-                           eff, ['uuid', sexp.q(u())]])
+                           eff, ['uuid', sexp.q(u('text', s, x, y))]])
 
     def rect(self, x1, y1, x2, y2, dash=True, width=0.2):
         self.items.append(['rectangle',
@@ -262,13 +269,13 @@ class Sheet:
                            ['stroke', ['width', str(width)],
                             ['type', 'dash' if dash else 'solid']],
                            ['fill', ['type', 'none']],
-                           ['uuid', sexp.q(u())]])
+                           ['uuid', sexp.q(u('rect', x1, y1, x2, y2))]])
 
     def wire(self, x1, y1, x2, y2):
         self.items.append(['wire', ['pts', ['xy', f'{x1:.2f}', f'{y1:.2f}'],
                                     ['xy', f'{x2:.2f}', f'{y2:.2f}']],
                            ['stroke', ['width', '0'], ['type', 'default']],
-                           ['uuid', sexp.q(u())]])
+                           ['uuid', sexp.q(u('wire', x1, y1, x2, y2))]])
 
     # ---- output ----------------------------------------------------
     def write(self, path):

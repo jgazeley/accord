@@ -10,6 +10,9 @@ to cross-check it against, so that is stated rather than implied.
 Branch `task/LRA-12-b690946d`, from public `main` at
 `5ffcb26958d2b7154b4d1417431fad22246cedd9`.
 Packet: [LRA-12](../../../coordination/handoffs/LRA-12_LAYOUT_ELECTRICAL_CLOSURE.md).
+**LRA-12R revisions below supersede the original clamp rationale and A5 stage;**
+original attribution above is preserved.
+
 Readiness review: [LAYOUT_READINESS_2026-10-29](../../../coordination/reviews/LAYOUT_READINESS_2026-10-29.md).
 
 **Disposition: the electrical design is complete and routable. Nothing here is
@@ -77,40 +80,49 @@ Two conditions genuinely changed, and they are where the engineering went:
 
 ## 3. X7 — the input voltage envelope
 
-### 3.1 It is one chain, not five independent choices
+### 3.1 LRA-12R decision: retain the lower clamp by choice
 
-This is the part of the task that looks like a menu and is not. Starting from
-the parked-current requirement and working outwards:
+Revision October 29, 2026 by Codex `logger-electrical`, session
+`01a18a47-2dc2-7aa3-a0d2-a4978e2b1ebc`.
+Resume: `codex resume 01a18a47-2dc2-7aa3-a0d2-a4978e2b1ebc`.
+Identity verified from matching CODEX_SESSION_ID and CODEX_THREAD_ID.
 
-1. The 100/500 µA parked target allocates **200 µA** to the switch. The
-   inherited IRF4905 screens **25 µA at 25 °C and 250 µA at 150 °C** at
-   V<sub>GS</sub> = 0 — a known component bound that cannot fit its own
-   allocation, which `COMPONENT_MARGIN_CLOSURE.md` §3 already recorded.
-2. The only P-channel candidate the record found with a **hot** zero-gate
-   drain-current maximum is **IPD50P04P4L-11**: 1 µA at 25 °C and **70 µA at
-   125 °C**, at V<sub>DS</sub> = −32 V. Nexperia PXP062-60QL and Diodes
-   DMP6023LE were screened and rejected for having 25 °C-only entries.
-3. That part is rated **−40 V V<sub>DS</sub>**. So the entry clamp has to hold
-   the board below 40 V with real margin.
-4. The inherited **1.5KE30A clamps at 41.4 V** at its 36.2 A pulse current.
-   That is above 40 V, and it was already above the 40 V V<sub>CEO</sub> of QI
-   and QH and above the LM2678's 40 V operating ceiling — `DESIGN.md` §4 says
-   so in as many words: *"These drivers cannot be carried into the proposed
-   41.4 V clamp envelope. Select higher-voltage drivers or a lower coordinated
-   clamp."*
-5. Of the two, the lower clamp is the smaller change. **1.5KE20A-E3/54** is
-   selected: 17.1 V standoff, 19.0–21.0 V V<sub>BR</sub> at 1.0 mA, **27.7 V
-   clamp at 54.2 A** for 10/1000 µs, 1.0 µA maximum leakage at standoff,
-   1500 W peak pulse, 6.5 W steady on an infinite heatsink at T<sub>L</sub> =
-   75 °C, V<sub>BR</sub> temperature coefficient **0.090 %/K**.
-   [Vishay 1.5KE table and notes](https://www.vishay.com/docs/88301/15ke.pdf).
-6. At 85 °C that clamp is `27.7 × (1 + 0.00090 × 60) = 29.20 V`. Every part
-   behind it then has **10.8 V of margin** to its 40 V rating.
+**The original claim that no suitable 60 V P-FET exists is withdrawn.**
+[Vishay SQD50P06-15L, document 69098 Rev. E](https://www.vishay.com/docs/69098/sqd50p06.pdf)
+specifies −60 V VDS, ±20 V VGS, AEC-Q101, TO-252, and IDSS maxima
+1 / 50 / 150 µA at 25 / 125 / 175 °C with VGS=0, VDS=−60 V.
+It fits the manager-accepted 70 µA hot QP allocation at the 125 °C screen.
+It is a real alternative, not a parked-budget blocker.
 
-So the clamp change is forced by the switch change, which is forced by the
-parked budget. It is a deliberate deviation from the in-service keyless part,
-and the reason is that keyless has neither a 40 V-rated DPAK switch nor a
-30 V always-on LDO.
+The inherited 1.5KE30A has 25.6 V standoff, 28.5–31.5 V breakdown,
+41.4 V clamp at 36.2 A and a **0.097 %/K** breakdown coefficient:
+`41.4 × (1 + 0.00097 × 60) = 43.80948 V` at 85 °C.
+This is a temperature screen using the breakdown coefficient, not a guaranteed
+hot clamp waveform. The LM2678 would return to its keyless in-service margin:
+40 V operating, 45 V absolute, hence **3.81 V above operating and only
+1.19 V below absolute**. Keyless's working precedent is accepted; this is not
+a claim that it failed. The SQD would have 16.19 V VDS margin.
+[TVS table](https://www.vishay.com/docs/88301/15ke.pdf).
+
+**Decision: retain 1.5KE20A and IPD50P04P4L-11.** The concrete logger-specific
+reason is the added A5 supply. With 43.81 V and the existing 330 Ω stage,
+the same screening calculation gives 1.46 W in BZX55C22 versus 0.5 W even
+at 25 °C leads. At 85 °C leads its thermal allowance is only 0.30 W.
+Even an ideal 28 V shunt needs at least 1476 Ω to stay within that allowance,
+whereas the 6 V input / 5.5 V regulator floor at 0.510 mA permits at most
+980 Ω actual series resistance. A resistor-only change cannot satisfy both.
+A higher-power zener or another A5 topology can solve this; it has not been
+ruled out. It would need its own leakage, thermal and startup validation,
+as well as ≥60 V driver replacements. This return chooses the lower clamp
+and retains 10.80 V LM2678 operating margin, accepting the narrower sustained
+ceiling already deferred under D-OVERVOLT-04. This is a tradeoff, not forced
+by QP availability. The conditional 30A adoption tasks are not claimed complete.
+
+The selected 1.5KE20A remains 17.1 V standoff and 27.7 V clamp at 54.2 A;
+its 0.090 %/K coefficient gives **29.1958 V** at 85 °C. Both TVS pulse-power
+ratings require temperature derating; neither the nominal 1500 W nor the
+room-temperature pulse current is a guaranteed 85 °C capability. Actual
+pulse and overshoot acceptance remains a vehicle/bench gate.
 
 ### 3.2 The envelope table
 
@@ -140,48 +152,51 @@ the lower clamp gives them 10.8 V of margin where the inherited clamp exceeded
 their absolute rating. Their hot off-state leakage under these actual base
 networks remains unspecified and stays in the ledger as an allocation.
 
-### 3.3 The A5 regulator gets its own second stage
-
-29.20 V clears every 40 V part but **not** the contract's ≤28 V protected-rail
-requirement, which exists solely because of TPS709's 30 V recommended input
-maximum. The gap between its 30 V recommended and 32 V absolute is explicitly
-not treated as usable headroom, so two parts close it:
+### 3.3 A5 second-stage correction, including junction heating
 
 ```text
-P12 -- R_AON 330R/0.25W/1% -- P_AON -- UA5 IN (pin 1)
+P12 -- R_AON 820R/1% -- P_AON -- UA5 IN
 P_AON -- DZ_AON BZX55C22 cathode; anode -- PGND
 P_AON -- C_AON 4.7uF/50V X7R -- PGND
 ```
 
-- **Worst P_AON = 25.70 V.** BZX55C22 is 20.8 / 22 / **23.3 V** at
-  I<sub>ZT</sub> = 5 mA; with its 0.12 %/K maximum coefficient the 85 °C worst
-  is 24.98 V, plus 0.72 V of dynamic drop at the 18.0 mA the 29.20 V clamp
-  pushes through 330 Ω, using the 55 Ω maximum dynamic resistance.
-  **2.30 V inside the 28 V contract and 4.30 V inside TPS709's 30 V.**
-- **Dissipation:** zener 0.420 W against its 0.5 W rating, series resistor
-  0.106 W against 0.25 W. Both are steady-state figures, so no pulse-power
-  curve is relied on.
-- **It never conducts in normal operation.** Cold V<sub>Z</sub> minimum is
-  19.18 V, above the 17.1 V sustained ceiling §3.4 sets.
-- **Leakage is specified with a hot point**, which is why this family was
-  chosen over a part with a 25 °C-only figure: I<sub>R</sub> < 0.1 µA at 25 °C
-  and < 2 µA at 150 °C, at V<sub>R</sub> = 18 V. The 150 °C figure is used as
-  a conservative screen for 85 °C.
-  [Vishay BZX55](https://www.vishay.com/docs/85604/bzx55.pdf).
-- **The series drop is 0.167 V** at the 0.5 mA worst awake A5 load. At a 6 V
-  P12 that leaves 5.833 V, still 0.333 V above the 5.5 V that TPS70950's
-  500 mV / 50 mA dropout maximum implies for a 5 V output — and dropout is not
-  specified below 50 mA at all. The 6–28 V P_AON design envelope therefore
-  survives as written at the regulator's actual requirement, with the floor
-  167 mV lower than at P12.
-- **Startup:** `330 Ω × 4.7 µF = 1.55 ms`, inside the 100 ms A5 validity
-  budget.
-- EN is left **open** to enable. Its absolute maximum is 7 V; it is never tied
-  to a rail. Pin 4 NC is left unconnected.
-  [TI TPS709-Q1, SLVSCE6D, Table 4-1 and §5](https://www.ti.com/lit/ds/symlink/tps709-q1.pdf).
+The former 330 Ω / 0.420 W calculation compared hot operation against a
+25 °C power rating. **R_AON changes to 820 Ω**. Select a resistor providing
+at least **0.15 W allowable dissipation at 85 °C** in the assigned footprint;
+a nominal 0.25 W label alone does not establish that.
 
-**Consequence for acceptance: the ≤28 V protected-rail criterion is measured
-at TP_PAON, not at P12.** P12's own envelope is the 40 V chain of §3.2.
+[Vishay BZX55, Rev. 2.0](https://www.vishay.com/docs/85604/bzx55.pdf)
+specifies 500 mW at leads 25 °C / 4 mm, 300 K/W thermal resistance under
+its stated lead condition, and 175 °C maximum junction. With leads held at
+85 °C, allowable power is **0.300 W**. For *any* shunt voltage,
+`Pz <= Vin²/(4 Rmin) = 29.1958²/(4 × 811.8) = 0.263 W`,
+so the thermal screen gives Tj ≤163.75 °C. **Layout and measurement must
+establish the lead-temperature condition**; this is not an unconditional
+ambient rating or a transient thermal characterization.
+
+For voltage screening use the full 175 °C junction ceiling:
+`23.3 × (1 + 0.0012 × 150) = 27.494 V` at 5 mA.
+Cold minimum is 19.1776 V; an intentionally pessimistic current bound is
+`(29.1958 − 19.1776)/811.8 = 12.34 mA`. Applying the tabulated 55 Ω
+small-signal impedance to the excess above 5 mA gives **27.90 V**, below
+28 V. This extrapolation is a **model screen**, not a manufacturer's
+large-signal DC guarantee; TP_PAON pulse/temperature verification remains
+required. Resistor dissipation in that model is ≤0.124 W.
+
+Leakage is **<0.1 µA at 25 °C / <2 µA at 150 °C at VR=16 V**, correcting
+the original 18 V transcription. The ledger screen is therefore applicable
+to the 12–16 V normal input range; it supplies no leakage guarantee over
+16–17.1 V. The latter is a declared voltage ceiling, not a parked-current
+qualification. Cold minimum zener voltage remains above 17.1 V.
+
+At 0.500 mA A5 load plus a 10 µA regulator-ground-current screen,
+Rmax=828.2 Ω drops **0.4224 V**: P_AON ≥5.5776 V at P12=6 V, leaving
+77.6 mV over the 5.5 V dropout screen. Nominal RC is 3.85 ms. Including
++1% R, +10% C and the full constant load, input charging to 5.5 V takes
+**18.3 ms**, inside 100 ms. LDO and logic startup, low-load dropout and
+load transients still need the original bring-up measurements.
+EN stays open; TI Table 4-1 says it must remain below 6.5 V.
+**The ≤28 V protected-rail criterion is measured at TP_PAON.**
 
 ### 3.4 Fuse coordination, and the one exposure that is declared excluded
 
@@ -190,27 +205,24 @@ The clamp-only front end cannot do everything, and this is where it stops.
 - **Reverse battery** is covered by DREV, which also keeps the unidirectional
   clamp out of forward conduction and is what makes P12 nonnegative at the A5
   regulator, as that regulator requires.
-- **Transient**, 10/1000 µs: 1500 W, 54.2 A, clamping to 27.7 V cold and
+- **Transient**, 10/1000 µs: 1500 W, 54.2 A, clamping to 27.7 V at 25 °C and
   29.20 V hot. Within the declared bench and charging envelope.
 - **Sustained overvoltage is not survivable, and is declared excluded.** At
   the 1 A branch fuse rating the clamp would dissipate about **19 W against
   its 6.5 W rating**, and a cartridge fuse carrying its own rating does not
   clear quickly. **The declared sustained ceiling at P12 is 17.1 V**, the
   clamp standoff — which covers 12–16 V bench operation and a 14.8 V charging
-  rail with 2.3 V to spare, and explicitly excludes a 24 V jump start with
-  the board connected.
+  rail with 2.3 V to spare, and excludes **any sustained P12 above 17.1 V**, including an
+  **alternator/regulator overcharge fault** and a 24 V jump start. This is
+  the owner-deferred vehicle-acceptance risk D-OVERVOLT-04.
 
-There is no clamp that both stands off 24 V and limits to 28 V: the
-V<sub>C</sub>/V<sub>WM</sub> ratio of this family is about 1.6, so a 24 V
-standoff implies a clamp near 41 V, which is the part we just rejected. The
-alternatives, with what each costs, for the reviewer rather than for silent
-adoption:
+The choices now include a verified 60 V switch:
 
-| Option | What it buys | What it costs |
+| Option | Benefit | Cost / disposition |
 |---|---|---|
-| **(a) Declare the exposure excluded** — selected | Nothing new to design; the whole 40 V chain keeps 10.8 V of margin | The owner must not jump start with the board connected, and that has to be written down rather than assumed |
-| (b) Series overvoltage cutoff: a P-FET with a comparator or a shunt-regulated gate clamp ahead of QP | Survives a sustained 24 V by disconnecting | New topology, new parts, new failure modes, and a second series switch in the main power path — well beyond "complete the existing design" |
-| (c) Raise the clamp to the inherited 1.5KE30A and replace the downstream parts | Keeps the in-service clamp | QI/QH/QMON/QRESET to 60 V+ BJTs, and a QP of ≥45 V with a hot I<sub>DSS</sub> maximum — which LRA-02's own screening did not find. The parked budget would reopen |
+| **(a) Retain 1.5KE20A — selected** | 10.80 V LM2678 operating margin; A5 correction fits the existing topology | Any sustained P12 >17.1 V excluded, including regulator overcharge; R_AON changes to 820 Ω |
+| (b) Series overvoltage cutoff | Disconnects during sustained overvoltage | Additional topology and validation; not selected |
+| (c) 1.5KE30A + SQD50P06-15L | Reuses working clamp and raises standoff to 25.6 V; 50 µA hot QP screen fits budget | LM2678 43.81 V hot screen, 1.19 V absolute margin; needs ≥60 V BJTs and redesigned A5 stage, not merely a larger resistor with the same hot-rated BZX55. Not selected |
 
 Required owner input to close this properly, unchanged from
 `INTERFACE_CONTRACT.md` §6: exact feed, source and harness impedance and
@@ -610,15 +622,15 @@ screen, not an assembled maximum, and not a prediction.
 **The whole-system targets close as component screens**, with 25 µA and 47 µA
 of headroom, and they are not relaxed.
 
-**The sub-allocations do not, and that needs a reviewer decision.** The A5 row
+**The former sub-allocations did not; the manager accepted redistribution.** The A5 row
 is allocated 50 / 250 µA and screens 59.98 / 346.85 — over by 10.0 and
-96.9 µA. The reason is not a defect: the QP change freed 180 µA of hot
+96.9 µA. The reason is not a defect: the QP change freed 130 µA of hot
 headroom from the 200 µA switch allocation, so the money is there, in the
 wrong row.
 
-**Proposed re-allocation, totals untouched:**
+**Manager-accepted re-allocation, totals untouched (LRA-12R):**
 
-| Allocation | Old room / hot | Proposed room / hot |
+| Allocation | Old room / hot | Accepted room / hot |
 |---|---:|---:|
 | A5 supply + complete timer/logic/filter leakage | 50 / 250 | **65 / 355** |
 | QP drain and gate leakage into the switched stage | 30 / 200 | **15 / 70** |
@@ -628,8 +640,10 @@ wrong row.
 
 `INTERFACE_CONTRACT.md` §7 already invites this kind of explicit
 reallocation — it made one itself, moving 10 µA from interfaces to A5 — and
-says reviewers may redistribute within the total. This needs manager and
-electrical acceptance; it is recorded as a proposal, not applied.
+says reviewers may redistribute within the total. Manager acceptance is recorded in the October 29 LRA-12 review. Electrical
+acceptance remains open. QP stays IPD50P04P4L-11, so its 1/70 µA screens
+and the 74.98/452.65 µA totals are unchanged. The SQD alternative would
+reduce the hot screen by 20 µA but is not populated.
 
 The two largest hot rows are the HC counters at 80 µA each and the clock
 reservoir at 66.25 µA. One bounded option exists for the last of those and is

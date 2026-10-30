@@ -10,7 +10,7 @@ each computed from manufacturer limits rather than restated from a table:
 
   1. Voltage envelope. Every part on an unregulated node, against the worst
      node voltage the selected entry clamp actually produces at temperature.
-     This is the chain that forced the clamp choice, so it is the group worth
+     This compares the selected and alternative clamps, so it is worth
      running first.
   2. The A5 second stage. Clamp voltage, dissipation, series drop and the
      regulator's own minimum input.
@@ -129,13 +129,29 @@ for part, node, rating, kind, src in ENVELOPE:
           % (part, node, rating, kind, margin), margin > 0,
           'the hot clamp voltage %.2f V exceeds this part (%s)'
           % (vc_hot, src))
-check('the inherited 1.5KE30A would NOT fit the same parts',
-      OLD_CLAMP['vc25'] > 40.0,
-      'if this ever passes, the clamp choice can be revisited')
-note('that is the finding in one line: the inherited %.1f V clamp is above '
-     'the 40 V absolute ratings of QI, QH and QP and above the LM2678 40 V '
-     'operating ceiling, which is why LRA-12 replaces it rather than '
-     'replacing those parts' % OLD_CLAMP['vc25'])
+# Re-evaluate the actual 60 V candidate; no absence-of-parts premise.
+vc30_hot = OLD_CLAMP['vc25'] * (1 + OLD_CLAMP['alpha'] * (HOT_C - REF_C))
+check('60 V SQD50P06 covers the alternative hot clamp', 60.0 > vc30_hot)
+check('SQD50P06 hot IDSS fits the accepted 70 uA allocation', 50.0 <= 70.0)
+check('alternative remains below LM2678 absolute but above operating',
+      40.0 < vc30_hot < 45.0)
+note('1.5KE30A hot screen %.4f V; LM2678 absolute margin %.4f V; '
+     'SQD50P06 IDSS maxima 1/50/150 uA at 25/125/175 C, VDS=-60 V. '
+     'The lower clamp is a choice for A5 and operating margin, not forced.'
+     % (vc30_hot, 45.0 - vc30_hot))
+# Existing 330 ohm stage cannot be carried across unchanged.
+alt_iz = (vc30_hot - 23.3) / (330 * 0.99)
+check('unchanged A5 zener exceeds even its 25 C power rating with 30A',
+      23.3 * alt_iz > 0.5)
+# Even an ideal shunt at 28 V needs R >1.47 kohm to dissipate <=0.3 W;
+# the 6 V floor with a 0.510 mA input permits R <=980 ohm (actual values).
+alt_r_min = (vc30_hot - 28) * 28 / ((175 - 85) / 300)
+dropout_r_max = (6 - 5.5) / 0.510e-3
+check('30A needs more than a resistor change to retain hot BZX55 and 6 V floor',
+      alt_r_min > dropout_r_max)
+note('alternative shunt Rmin %.0f ohm, dropout Rmax %.0f ohm; a higher-power '
+     'or different A5 stage is viable future work, not ruled out.'
+     % (alt_r_min, dropout_r_max))
 check('clamp standoff is above the top of the operating envelope',
       CLAMP['vwm'] > V_OPERATE,
       'at %.1f V the clamp would conduct in normal charging' % V_OPERATE)
@@ -154,8 +170,8 @@ check('a sustained overvoltage would exceed the clamp power rating, so the '
       'if this ever fails, the sustained case is no longer excluded')
 note('at the 1 A branch fuse rating the clamp would dissipate about %.0f W '
      'against its %.1f W rating, and a cartridge fuse carrying its own '
-     'rating does not clear quickly. A 24 V jump start is therefore a '
-     'DECLARED EXCLUDED exposure, not a survivable one: no single clamp both '
+     'rating does not clear quickly. ANY sustained P12 above 17.1 V, including '
+     'alternator/regulator overcharge or 24 V jump start, is excluded. No clamp both '
      'stands off 24 V and limits to 28 V. See LAYOUT_CLOSURE S3 for the two '
      'alternatives.' % (P_SUSTAINED_1A, CLAMP['pd']))
 check('the declared sustained ceiling is the clamp standoff',
@@ -165,16 +181,16 @@ check('the declared sustained ceiling is the clamp standoff',
 # 2. The A5 second stage
 # ===========================================================================
 # Vishay BZX55 table: BZX55C22 VZ 20.8 / 22 / 23.3 V at IZT1 = 5 mA,
-# IR < 0.1 uA at 25 C and < 2 uA at 150 C at VR = 18 V, ZZ < 55 ohm at 5 mA,
+# IR < 0.1 uA at 25 C and < 2 uA at 150 C at VR = 16 V, ZZ < 55 ohm at 5 mA,
 # TKVZ 0.04 to 0.12 %/K, Ptot 500 mW at l = 4 mm, TL = 25 C.
 # TI TPS709-Q1 SLVSCE6D: VIN 2.7-30 V recommended, 32 V absolute;
 # VDO <= 500 mV at 50 mA for the 50 option, not specified below 50 mA;
 # IGND <= 2.7 uA at no load and <= 10 uA at 100 uA load / 30 V.
 ZEN = dict(vz_min=20.8, vz_max=23.3, izt=5e-3, zz=55.0, tk_max=0.0012,
            ptot=0.5, ir25=0.1, ir150=2.0)
-R_AON = 330.0
+R_AON = 820.0
 R_AON_TOL = 0.01
-R_AON_PD = 0.25
+R_AON_PD = 0.15  # required available rating at 85 C, procurement condition
 A5_LOAD_MAX = 0.5e-3          # worst awake A5 current, see the ledger below
 TPS709_OP, TPS709_ABS = 30.0, 32.0
 CONTRACT_PAON = 28.0
@@ -182,14 +198,17 @@ VDO_SCREEN = 0.5              # 500 mV maximum, at 50 mA; conservative here
 A5_NOM = 5.0
 
 hdr('2. The always-on A5 supply boundary (X7 second stage)')
-vz_hot = ZEN['vz_max'] * (1 + ZEN['tk_max'] * (HOT_C - REF_C))
-iz = (vc_hot - ZEN['vz_max']) / (R_AON * (1 - R_AON_TOL))
+# Bound junction heating, not just ambient temperature.
+JUNCTION_C = 175.0
+vz_hot = ZEN['vz_max'] * (1 + ZEN['tk_max'] * (JUNCTION_C - REF_C))
+vz_cold_min = ZEN['vz_min'] * (1 + ZEN['tk_max'] * (COLD_C - REF_C))
+iz = (vc_hot - vz_cold_min) / (R_AON * (1 - R_AON_TOL))
 vz_dyn = ZEN['zz'] * max(0.0, iz - ZEN['izt'])
 paon_worst = vz_hot + vz_dyn
 note('worst P_AON = %.2f V: zener %.2f V max at 25 C, %.2f V at %.0f C from '
      'the 0.12 %%/K maximum coefficient, plus %.2f V of dynamic drop at '
      '%.1f mA through the %.0f ohm maximum'
-     % (paon_worst, ZEN['vz_max'], vz_hot, HOT_C, vz_dyn, iz * 1e3,
+     % (paon_worst, ZEN['vz_max'], vz_hot, JUNCTION_C, vz_dyn, iz * 1e3,
         ZEN['zz']))
 check('P_AON meets the contract <= %.0f V protected-rail criterion'
       % CONTRACT_PAON, paon_worst <= CONTRACT_PAON,
@@ -205,14 +224,17 @@ check('without the second stage the contract criterion would NOT be met',
       vc_hot > CONTRACT_PAON,
       'if the hot clamp ever falls below %.0f V the zener becomes optional'
       % CONTRACT_PAON)
-pz = ZEN['vz_max'] * iz
-check('zener dissipation %.3f W is inside its %.1f W rating'
-      % (pz, ZEN['ptot']), pz <= ZEN['ptot'],
-      'a larger series resistor or a 1.3 W part would be needed')
-pr = (vc_hot - ZEN['vz_max']) ** 2 / (R_AON * (1 - R_AON_TOL))
-check('series resistor dissipation %.3f W is inside its %.2f W rating'
+# For any zener voltage, Vz*(Vin-Vz)/R <= Vin^2/(4R), with zero load.
+pz = vc_hot ** 2 / (4 * R_AON * (1 - R_AON_TOL))
+pz_hot_rating = (JUNCTION_C - HOT_C) / 300.0
+check('zener power %.3f W fits %.3f W at 85 C leads'
+      % (pz, pz_hot_rating), pz <= pz_hot_rating)
+check('thermal screen keeps junction below 175 C', HOT_C + 300 * pz < JUNCTION_C)
+pr = (vc_hot - vz_cold_min) ** 2 / (R_AON * (1 - R_AON_TOL))
+check('series resistor dissipation %.3f W fits required %.2f W at 85 C'
       % (pr, R_AON_PD), pr <= R_AON_PD)
-drop = A5_LOAD_MAX * R_AON * (1 + R_AON_TOL)
+# Include regulator ground current rather than counting only its output load.
+drop = (A5_LOAD_MAX + 10e-6) * R_AON * (1 + R_AON_TOL)
 vin_min_needed = A5_NOM + VDO_SCREEN
 for p12_in in (6.0, 9.0, 12.0):
     check('at P12 = %.1f V the regulator still has %.3f V, above the %.2f V '
@@ -231,6 +253,11 @@ check('the zener never conducts in normal operation',
       'cold VZ min %.2f V against the %.1f V sustained ceiling'
       % (ZEN['vz_min'] * (1 + ZEN['tk_max'] * (COLD_C - REF_C)), V_SUSTAIN))
 tau_aon = R_AON * 4.7e-6
+# 1% R and +10% C; loaded RC charging from 0 to 5.5 V at P12=6 V.
+import math
+startup = -R_AON * 1.01 * 4.7e-6 * 1.10 * math.log(1 - 5.5 / (6 - drop))
+check('loaded A5 input reaches 5.5 V inside 100 ms', startup < 0.100)
+note('loaded input startup %.2f ms; regulator/logic startup still needs measurement' % (startup * 1e3))
 check('the second-stage time constant %.2f ms is inside the 100 ms A5 '
       'validity budget' % (tau_aon * 1e3), tau_aon * 1e3 < 100.0)
 
@@ -359,7 +386,7 @@ A5_ROWS = [
     ('other A5 caps, film CQUAL, bypasses', 1.0, 5.0,
      'allocation, not a specified limit'),
     ('DZ_AON BZX55C22', 0.1, 2.0,
-     'LRA-12 adds this: IR max at VR = 18 V, 25 C and 150 C. The 150 C '
+     'LRA-12 adds this: IR max at VR = 16 V, 25 C and 150 C. The 150 C '
      'figure is used as a conservative screen for 85 C'),
 ]
 a5_room = sum(r[1] for r in A5_ROWS)
@@ -406,28 +433,18 @@ check('the room screen fits the unchanged 100 uA target',
 check('the hot screen fits the unchanged 500 uA target',
       total_hot <= TARGET_HOT, 'screen %.1f uA' % total_hot)
 
-# The sub-allocations of INTERFACE_CONTRACT section 7 do not survive, even
-# though the totals do. Say so with the numbers rather than quietly summing.
-WHY = ('the contract allocation for this row predates the parts now '
-       'selected; see the proposed re-allocation in LAYOUT_CLOSURE S7, which '
-       'leaves the 100/500 uA totals untouched')
-for label, alloc, screen in (
-        ('A5 supply + timer/logic/filter, room', 50.0, a5_room),
-        ('A5 supply + timer/logic/filter, hot', 250.0, a5_hot)):
-    if screen > alloc:
-        over(label, alloc, screen, WHY)
-    else:
-        check('%s fits its allocation' % label, True)
-check('the switch allocation now has headroom to give',
-      70.0 < 200.0,
-      'the QP change has to free hot headroom for the re-allocation to work')
-note('those two failures are the honest result and are not a defect in the '
-     'circuit: the A5 domain overruns its own sub-allocation while the WHOLE '
-     'system fits, because the QP change freed %.0f uA hot from the 200 uA '
-     'switch allocation. LAYOUT_CLOSURE S7 proposes moving that headroom to '
-     'the A5 row, keeping the 100/500 uA totals untouched. Section 7 of the '
-     'interface contract already invites exactly this kind of explicit '
-     're-allocation, and it needs reviewer acceptance.' % (250.0 - 70.0))
+# Manager-accepted redistribution, without changing either system target.
+for label, room, hot, ar, ah in (
+    ('A5', a5_room, a5_hot, 65, 355),
+    ('QP', 1, 70, 15, 70),
+    ('gate and entry protection', 10+1, 19.8+10, 12, 50),
+    ('interfaces', 1+2, 1+5, 8, 25)):
+    check(label + ' room allocation', room <= ar)
+    check(label + ' hot allocation', hot <= ah)
+check('accepted allocations preserve totals',
+      65+15+12+8 == TARGET_ROOM and 355+70+50+25 == TARGET_HOT)
+note('Manager accepted redistribution; electrical acceptance remains open. '
+     'QP freed 200-70=130 uA of hot allocation. Leakage screen uses P12<=16 V.')
 note('the two largest hot rows are the HC counters at 80 uA each and the '
      'clock reservoir at 66 uA. A lower-CV CCLK or a re-proportioned RCLK/'
      'CCLK pair would cut the last of those, at the cost of re-opening the '

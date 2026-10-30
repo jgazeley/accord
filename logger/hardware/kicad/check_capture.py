@@ -327,7 +327,7 @@ check('IGN_RC rises for ON: the filter charges through RRC from IGN_A',
       'an empty capacitor must mean OFF (CUTOFF_MARGIN_REVIEW S2)')
 
 # ---------------------------------- X7 second stage and the A5 rail
-value('R_AON', '330R')
+value('R_AON', '820R')
 value('DZ_AON', 'BZX55C22')
 wires('A5 supply', 'R_AON', {1: 'P12', 2: 'P_AON'})
 wires('A5 supply', 'DZ_AON', {1: 'P_AON', 2: 'PGND'})
