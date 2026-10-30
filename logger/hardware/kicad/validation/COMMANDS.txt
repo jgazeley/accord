@@ -86,3 +86,14 @@ with --schematic-parity it lists only the 148 parts not yet imported.
 Caution: kicad-cli pcb drc REWRITES accord-logger.kicad_pro and drops its
 "erc" section. Run it on a copy of the project, or restore the .kicad_pro
 from git afterwards.
+
+Surface-mount conversion, October 29 2026 (DECISIONS D-SMD-09): one table in
+tools/gen_logger_sch.py ("surface-mount conversion") moves 43 resistors to
+0805/1206, 14 disc capacitors to 0805 X7R, 5 logic ICs to SOIC (M96), the
+four 2N3904 to MMBT3904 SOT-23 (nets remapped by role), nine small diodes to
+SOD-123 and 22 signal test points to 2 mm pads. 114 SMD / 34 through-hole.
+ERC 0 at --severity-all; 738/738 capture checks, including an E/B/C role
+check that was tamper-tested (swapping QI's emitter and base fails only that
+check); closure 67/67, no overruns; UUID regression passes; courtyard
+allowance 1.90x (was 1.43x). Generation deterministic; schematic SHA256:
+a7bd56f43ae5ee25473824d4724e82b0c287032dce94333ae0d8d3518cd13ce5

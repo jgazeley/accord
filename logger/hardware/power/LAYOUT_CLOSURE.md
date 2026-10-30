@@ -701,6 +701,16 @@ defeats the budget.
 
 ## 8. Fit on 80 × 120 mm
 
+> **Superseded October 29 (owner decision D-SMD-09).** The owner found the
+> fit too tight and asked for surface mount. Resistors (0805, or 1206 where
+> harness-facing, on 12 V nodes or carrying R_AON's power), disc capacitors
+> (0805 X7R at no lower voltage), the five logic ICs (SOIC), the four NPNs
+> (MMBT3904) and nine small diodes (SOD-123) are now SMD, and signal test
+> points are 2 mm pads. Kept through-hole: the RS-485 block, RLED/RG,
+> CQUAL, both zeners, DOR, electrolytics, the PC817 and the power parts.
+> **Allowance is now 1.90×.** The "axial parts take vertical mountings" and
+> through-hole-preference text below is the earlier LRA-12 record.
+
 Recomputed from the footprints actually assigned, by `../kicad/fp_area.py`,
 which measures each part's F.CrtYd courtyard bounding box and writes
 `validation/courtyard_study.csv`. The earlier 5,031 mm² figure was nominal

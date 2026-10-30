@@ -1158,6 +1158,79 @@ for ref, val, x, y, ns, source in (
          note='Fit header; ship WITHOUT shunt. Bias HI and LO are a pair; '
               'only link at the designated bias node. No bus TVS, as keyless.')
 
+# ============================== surface-mount conversion (DECISIONS D-SMD-09)
+# Applied after every part above is defined, so each part keeps its original
+# definition and source and this table is the one place the package changes.
+# Values, nets and roles are unchanged except where a package forces it
+# (the MMBT3904 pinout). Kept through-hole, deliberately: the RS-485 block
+# (owner: keyless footprints), RLED/RG (half-watt), CQUAL (film, timing),
+# both zeners (thermal and leakage analyses), DOR (power path), the
+# electrolytics, the PC817, power parts, connectors and the ground loops.
+FP_R0805 = 'Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder'
+FP_R1206 = 'Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder'
+FP_C0805 = 'Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder'
+FP_SOD123 = 'Diode_SMD:D_SOD-123'
+FP_SOIC14 = 'Package_SO:SOIC-14_3.9x8.7mm_P1.27mm'
+FP_SOIC16 = 'Package_SO:SOIC-16_3.9x9.9mm_P1.27mm'
+FP_TP_PAD = 'TestPoint:TestPoint_Pad_D2.0mm'
+SMD_KEEP_THT = {'R_DE', 'R485_A', 'R485_B', 'R485_TERM'}
+# 1206 for voltage/pulse margin: divider tops facing the harness, parts on
+# unregulated 12 V nodes, R_AON (>= 0.15 W at 85 C: a 1206 thick film is
+# about 0.21 W there), and the two timer-select links that get swapped.
+SMD_R1206 = {'R_VSS_T', 'R_TACH_T', 'R_BRK_T', 'R_FUEL_T', 'R_SUP_T',
+             'R_AON', 'RGS', 'RI', 'RBIN', 'R_EXPP', 'R_EXPT'}
+SMD_CAP_V = {'C0': '100nF/100V', 'CIB': '100nF/100V'}   # were 63 V discs
+SMD_LOGIC = {'CD74HC4060E': ('CD74HC4060M96', FP_SOIC16),
+             'CD74HC4020E': ('CD74HC4020M96', FP_SOIC16),
+             'CD4011BE': ('CD4011BM96', FP_SOIC14),
+             'CD4071BE': ('CD4071BM96', FP_SOIC14),
+             'CD4093BE': ('CD4093BM96', FP_SOIC14)}
+
+
+def _smd(p, fp, why, value=None, mpn=None, lib_id=None, nets=None):
+    p['fp'] = fp
+    if value:
+        p['value'] = value
+    if mpn is not None:
+        p['mpn'] = mpn
+    if lib_id:
+        p['lib_id'] = lib_id
+    if nets is not None:
+        p['nets'] = nets
+    p['note'] = (p['note'] + ' ' if p['note'] else '') + f'[D-SMD-09: {why}]'
+
+
+for p in P:
+    src, fp = p['ref'], p['fp']
+    if fp == FP_R and src not in SMD_KEEP_THT:
+        big = src in SMD_R1206
+        _smd(p, FP_R1206 if big else FP_R0805,
+             ('1206, 1% thick film' if big else '0805, 1% thick film')
+             + ', value unchanged', mpn='')
+    elif fp == FP_C_DISC:
+        v = SMD_CAP_V.get(src, p['value'])
+        _smd(p, FP_C0805, '0805 X7R, rated voltage not below the disc it '
+             'replaces', value=v, mpn='')
+    elif p['lib_id'] == 'Transistor_BJT:2N3904':
+        e, b, c = (p['nets'][k] for k in (1, 2, 3))   # 2N3904 TO-92: E B C
+        _smd(p, FP_SOT23_3, 'MMBT3904 SOT-23, the 2N3904 die; SOT-23 pins '
+             'are 1 B, 2 E, 3 C, so the nets are remapped by role',
+             value='MMBT3904', mpn='onsemi MMBT3904LT1G',
+             lib_id='Transistor_BJT:MMBT3904', nets={1: b, 2: e, 3: c})
+    elif p['lib_id'] == 'Diode:1N5819':
+        _smd(p, FP_SOD123, '1N5819HW, SOD-123 1 A 40 V Schottky; pad 1 is '
+             'the cathode as before', value='1N5819HW',
+             mpn='Diodes Inc 1N5819HW-7-F')
+    elif p['lib_id'] == 'Diode:1N4148':
+        _smd(p, FP_SOD123, '1N4148W, SOD-123', value='1N4148W',
+             mpn='Diodes Inc 1N4148W-7-F', lib_id='Diode:1N4148W')
+    elif p['value'] in SMD_LOGIC:
+        v, f = SMD_LOGIC[p['value']]
+        _smd(p, f, 'SOIC, same TI die and datasheet as the DIP, same pinout',
+             value=v, mpn='TI ' + v)
+    elif fp == FP_TP and 'GND' not in src:
+        _smd(p, FP_TP_PAD, '2 mm SMD probe pad; ground loops stay for clips')
+
 # U1/U2 and J1-J5 are fixed by the written sources, so start after them.
 counters = {'U': 2, 'J': 5}
 for p in P:

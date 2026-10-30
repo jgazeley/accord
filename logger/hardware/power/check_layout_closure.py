@@ -106,15 +106,15 @@ ENVELOPE = [
     # part, node, rating V, kind, source
     ('QP IPD50P04P4L-11', 'P12 / VIN_SW', 40.0, 'absolute VDS',
      'Infineon Rev. 1.1, -40 V VDS'),
-    ('QI 2N3904', 'SINK = P12 when off', 40.0, 'absolute VCEO',
-     'onsemi 2N3904'),
-    ('QH 2N3904', 'SINK = P12 when off', 40.0, 'absolute VCEO',
-     'onsemi 2N3904'),
+    ('QI MMBT3904', 'SINK = P12 when off', 40.0, 'absolute VCEO',
+     'onsemi MMBT3904LT1G'),
+    ('QH MMBT3904', 'SINK = P12 when off', 40.0, 'absolute VCEO',
+     'onsemi MMBT3904LT1G'),
     ('QS BSS138P', 'SINK', 60.0, 'absolute VDS', 'Nexperia BSS138P'),
     ('UREG LM2678', 'VIN_SW', 40.0, 'operating VIN',
      'TI LM2678 sections 4-7, 8-40 V operating, 45 V absolute'),
     ('CIN EEUFR1H101', 'VIN_SW', 50.0, 'rated WV', 'Panasonic FR series'),
-    ('C0', 'P12', 63.0, 'rated WV', 'BOM, 100nF/63V'),
+    ('C0', 'P12', 100.0, 'rated WV', 'BOM, 100nF/100V 0805 X7R'),
     ('DREV SB360', 'BATT_F / P12', 60.0, 'absolute VRRM', 'Vishay SB360'),
     ('C_AON GRM32ER71H475KA88L', 'P_AON', 50.0, 'rated WV',
      'Murata 50 V X7R'),
@@ -369,11 +369,12 @@ note('the leakage maximum is quoted at %.0f V while %.3f V is applied, a '
 # the stated condition - a mixed-condition screen, not an assembled maximum.
 hdr('4. Parked-current ledger, recomputed with the LRA-12 changes')
 A5_ROWS = [
-    ('UCLK CD74HC4060E', 8.0, 80.0, 'VCC 6 V, unloaded, inputs at rails'),
-    ('UCOUNT CD74HC4020E', 8.0, 80.0, 'same conditions'),
-    ('ULATCH CD4011BE', 0.25, 7.5, '5 V, rail inputs'),
-    ('UOR CD4071BE', 0.25, 7.5, '5 V, rail inputs'),
-    ('USCH CD4093BE', 1.0, 30.0, '5 V, rail inputs'),
+    # SOIC (M96) parts share the DIP parts' datasheets and these limits
+    ('UCLK CD74HC4060M96', 8.0, 80.0, 'VCC 6 V, unloaded, inputs at rails'),
+    ('UCOUNT CD74HC4020M96', 8.0, 80.0, 'same conditions'),
+    ('ULATCH CD4011BM96', 0.25, 7.5, '5 V, rail inputs'),
+    ('UOR CD4071BM96', 0.25, 7.5, '5 V, rail inputs'),
+    ('USCH CD4093BM96', 1.0, 30.0, '5 V, rail inputs'),
     ('UOE 74AHC1G17GV', 1.0, 10.0, '5.5 V, rail input, unloaded'),
     ('UGCLK SN74LVC1G97', 10.0, 10.0, '5.5 V, rail inputs, unloaded'),
     ('UXO OV-7604-C7 disabled', 0.55, 1.1, '5 V, 25 C / over TA'),
@@ -626,13 +627,16 @@ pins = {}
 for net, nodes in nets.items():
     for ref, pin in nodes:
         pins.setdefault(ref, {})[pin] = net
+# Pin numbers by role (emitter, base, collector) for each NPN package used.
+EBC = {'Transistor_BJT:2N3904': ('1', '2', '3'),
+       'Transistor_BJT:MMBT3904': ('2', '1', '3')}
 qi = [r for r, pm in pins.items()
-      if libid.get(r) == 'Transistor_BJT:2N3904' and pm.get('3') == 'SINK'
-      and pm.get('1') == 'PGND']
+      if libid.get(r) in EBC and pm.get(EBC[libid[r]][2]) == 'SINK'
+      and pm.get(EBC[libid[r]][0]) == 'PGND']
 check('exactly one transistor sinks the gate directly from raw ignition',
       len(qi) == 1, 'found %s' % qi)
 if qi:
-    base = pins[qi[0]].get('2')
+    base = pins[qi[0]].get(EBC[libid[qi[0]]][1])
     rib = [r for r, pm in pins.items()
            if libid.get(r, '').startswith('Device:R')
            and set(pm.values()) == {'IGN_POS', base}]

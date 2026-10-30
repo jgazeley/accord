@@ -8,6 +8,16 @@ October 29 evening were carried over from the retired tracker
 
 ## October 29, 2026
 
+**D-SMD-09: convert to surface mount for space.** Owner: *"are we able to
+look into surface mount components, resistor arrays, transistor arrays, or
+other combined chips that could save boards space. it looks too tight to
+me"*, then *"start with the conversion"*. Passives, logic ICs, small
+transistors, small diodes and signal test points move to SMD (SOIC, not
+TSSOP, for hand soldering). This supersedes the earlier through-hole
+preference recorded in LAYOUT_CLOSURE §8. The TPL5111-class timer
+replacing the cutoff oscillator and counters is **deferred**, to be
+considered after the conversion.
+
 **D-LAYOUT-08: commit the owner's layout as it goes.** Owner: *"yes commit
 as I go"*. When the owner reports layout progress, commit
 `accord-logger.kicad_pcb` / `.kicad_pro` with the owner as author

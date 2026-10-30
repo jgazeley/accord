@@ -2418,7 +2418,7 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "Diode:1N4148"
+		(symbol "Diode:1N4148W"
 			(pin_numbers
 				(hide yes)
 			)
@@ -2436,7 +2436,7 @@
 					)
 				)
 			)
-			(property "Value" "1N4148"
+			(property "Value" "1N4148W"
 				(at 0 -2.54 0)
 				(effects
 					(font
@@ -2444,7 +2444,16 @@
 					)
 				)
 			)
-			(property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal"
+			(property "Footprint" "Diode_SMD:D_SOD-123"
+				(at 0 -4.445 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "https://www.vishay.com/docs/85748/1n4148w.pdf"
 				(at 0 0 0)
 				(effects
 					(font
@@ -2453,16 +2462,7 @@
 					(hide yes)
 				)
 			)
-			(property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "100V 0.15A standard switching diode, DO-35"
+			(property "Description" "75V 0.15A Fast Switching Diode, SOD-123"
 				(at 0 0 0)
 				(effects
 					(font
@@ -2498,7 +2498,7 @@
 					(hide yes)
 				)
 			)
-			(property "ki_fp_filters" "D*DO?35*"
+			(property "ki_fp_filters" "D*SOD?123*"
 				(at 0 0 0)
 				(effects
 					(font
@@ -2507,7 +2507,7 @@
 					(hide yes)
 				)
 			)
-			(symbol "1N4148_0_1"
+			(symbol "1N4148W_0_1"
 				(polyline
 					(pts
 						(xy -1.27 1.27)
@@ -2550,7 +2550,7 @@
 					)
 				)
 			)
-			(symbol "1N4148_1_1"
+			(symbol "1N4148W_1_1"
 				(pin passive line
 					(at -3.81 0 0)
 					(length 2.54)
@@ -2922,7 +2922,7 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "Transistor_BJT:2N3904"
+		(symbol "Transistor_BJT:MMBT3904"
 			(pin_names
 				(offset 0)
 				(hide yes)
@@ -2939,7 +2939,7 @@
 					(justify left)
 				)
 			)
-			(property "Value" "2N3904"
+			(property "Value" "MMBT3904"
 				(at 5.08 0 0)
 				(effects
 					(font
@@ -2948,7 +2948,7 @@
 					(justify left)
 				)
 			)
-			(property "Footprint" "Package_TO_SOT_THT:TO-92_Inline"
+			(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
 				(at 5.08 -1.905 0)
 				(effects
 					(font
@@ -2959,7 +2959,7 @@
 					(hide yes)
 				)
 			)
-			(property "Datasheet" "https://www.onsemi.com/pub/Collateral/2N3903-D.PDF"
+			(property "Datasheet" "https://www.onsemi.com/pdf/datasheet/pzt3904-d.pdf"
 				(at 0 0 0)
 				(effects
 					(font
@@ -2969,7 +2969,7 @@
 					(hide yes)
 				)
 			)
-			(property "Description" "0.2A Ic, 40V Vce, Small Signal NPN Transistor, TO-92"
+			(property "Description" "0.2A Ic, 40V Vce, Small Signal NPN Transistor, SOT-23"
 				(at 0 0 0)
 				(effects
 					(font
@@ -2987,7 +2987,7 @@
 					(hide yes)
 				)
 			)
-			(symbol "2N3904_0_1"
+			(symbol "MMBT3904_0_1"
 				(polyline
 					(pts
 						(xy -2.54 0)
@@ -3026,7 +3026,7 @@
 					)
 				)
 			)
-			(symbol "2N3904_1_1"
+			(symbol "MMBT3904_1_1"
 				(polyline
 					(pts
 						(xy 0.635 0.635)
@@ -3078,7 +3078,7 @@
 							)
 						)
 					)
-					(number "2"
+					(number "1"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -3114,7 +3114,7 @@
 							)
 						)
 					)
-					(number "1"
+					(number "2"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -3123,7 +3123,7 @@
 					)
 				)
 			)
-			(property "ki_fp_filters" "TO?92*"
+			(property "ki_fp_filters" "SOT?23*"
 				(at 0 0 0)
 				(effects
 					(font
@@ -9639,7 +9639,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder"
 			(at 162.56 93.98 0)
 			(effects
 				(font
@@ -9773,7 +9773,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 203.20 93.98 0)
 			(effects
 				(font
@@ -9899,7 +9899,7 @@
 				)
 			)
 		)
-		(property "Value" "1N5819"
+		(property "Value" "1N5819HW"
 			(at 245.11 97.79 0)
 			(effects
 				(font
@@ -9907,7 +9907,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Diode_THT:D_DO-41_SOD81_P5.08mm_Vertical_AnodeUp"
+		(property "Footprint" "Diode_SMD:D_SOD-123"
 			(at 248.92 93.98 0)
 			(effects
 				(font
@@ -9952,7 +9952,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "Chanzon 1N5819"
+		(property "MPN" "Diodes Inc 1N5819HW-7-F"
 			(at 248.92 93.98 0)
 			(effects
 				(font
@@ -10050,7 +10050,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder"
 			(at 162.56 172.72 0)
 			(effects
 				(font
@@ -10184,7 +10184,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 203.20 172.72 0)
 			(effects
 				(font
@@ -10310,7 +10310,7 @@
 				)
 			)
 		)
-		(property "Value" "1N5819"
+		(property "Value" "1N5819HW"
 			(at 245.11 176.53 0)
 			(effects
 				(font
@@ -10318,7 +10318,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Diode_THT:D_DO-41_SOD81_P5.08mm_Vertical_AnodeUp"
+		(property "Footprint" "Diode_SMD:D_SOD-123"
 			(at 248.92 172.72 0)
 			(effects
 				(font
@@ -10363,7 +10363,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "Chanzon 1N5819"
+		(property "MPN" "Diodes Inc 1N5819HW-7-F"
 			(at 248.92 172.72 0)
 			(effects
 				(font
@@ -10461,7 +10461,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder"
 			(at 162.56 251.46 0)
 			(effects
 				(font
@@ -10595,7 +10595,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 203.20 251.46 0)
 			(effects
 				(font
@@ -10721,7 +10721,7 @@
 				)
 			)
 		)
-		(property "Value" "1N5819"
+		(property "Value" "1N5819HW"
 			(at 245.11 255.27 0)
 			(effects
 				(font
@@ -10729,7 +10729,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Diode_THT:D_DO-41_SOD81_P5.08mm_Vertical_AnodeUp"
+		(property "Footprint" "Diode_SMD:D_SOD-123"
 			(at 248.92 251.46 0)
 			(effects
 				(font
@@ -10774,7 +10774,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "Chanzon 1N5819"
+		(property "MPN" "Diodes Inc 1N5819HW-7-F"
 			(at 248.92 251.46 0)
 			(effects
 				(font
@@ -10872,7 +10872,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder"
 			(at 162.56 330.20 0)
 			(effects
 				(font
@@ -11006,7 +11006,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 203.20 330.20 0)
 			(effects
 				(font
@@ -11140,7 +11140,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 287.02 330.20 0)
 			(effects
 				(font
@@ -11274,7 +11274,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 312.42 330.20 0)
 			(effects
 				(font
@@ -11400,7 +11400,7 @@
 				)
 			)
 		)
-		(property "Value" "1N5819"
+		(property "Value" "1N5819HW"
 			(at 334.01 323.85 0)
 			(effects
 				(font
@@ -11408,7 +11408,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Diode_THT:D_DO-41_SOD81_P5.08mm_Vertical_AnodeUp"
+		(property "Footprint" "Diode_SMD:D_SOD-123"
 			(at 337.82 320.04 0)
 			(effects
 				(font
@@ -11453,7 +11453,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "Chanzon 1N5819"
+		(property "MPN" "Diodes Inc 1N5819HW-7-F"
 			(at 337.82 320.04 0)
 			(effects
 				(font
@@ -11543,7 +11543,7 @@
 				)
 			)
 		)
-		(property "Value" "1N5819"
+		(property "Value" "1N5819HW"
 			(at 334.01 344.17 0)
 			(effects
 				(font
@@ -11551,7 +11551,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Diode_THT:D_DO-41_SOD81_P5.08mm_Vertical_AnodeUp"
+		(property "Footprint" "Diode_SMD:D_SOD-123"
 			(at 337.82 340.36 0)
 			(effects
 				(font
@@ -11596,7 +11596,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "Chanzon 1N5819"
+		(property "MPN" "Diodes Inc 1N5819HW-7-F"
 			(at 337.82 340.36 0)
 			(effects
 				(font
@@ -11694,7 +11694,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder"
 			(at 162.56 408.94 0)
 			(effects
 				(font
@@ -11828,7 +11828,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 203.20 408.94 0)
 			(effects
 				(font
@@ -11962,7 +11962,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 287.02 408.94 0)
 			(effects
 				(font
@@ -12096,7 +12096,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 312.42 408.94 0)
 			(effects
 				(font
@@ -12222,7 +12222,7 @@
 				)
 			)
 		)
-		(property "Value" "1N5819"
+		(property "Value" "1N5819HW"
 			(at 334.01 402.59 0)
 			(effects
 				(font
@@ -12230,7 +12230,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Diode_THT:D_DO-41_SOD81_P5.08mm_Vertical_AnodeUp"
+		(property "Footprint" "Diode_SMD:D_SOD-123"
 			(at 337.82 398.78 0)
 			(effects
 				(font
@@ -12275,7 +12275,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "Chanzon 1N5819"
+		(property "MPN" "Diodes Inc 1N5819HW-7-F"
 			(at 337.82 398.78 0)
 			(effects
 				(font
@@ -12365,7 +12365,7 @@
 				)
 			)
 		)
-		(property "Value" "1N5819"
+		(property "Value" "1N5819HW"
 			(at 334.01 422.91 0)
 			(effects
 				(font
@@ -12373,7 +12373,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Diode_THT:D_DO-41_SOD81_P5.08mm_Vertical_AnodeUp"
+		(property "Footprint" "Diode_SMD:D_SOD-123"
 			(at 337.82 419.10 0)
 			(effects
 				(font
@@ -12418,7 +12418,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "Chanzon 1N5819"
+		(property "MPN" "Diodes Inc 1N5819HW-7-F"
 			(at 337.82 419.10 0)
 			(effects
 				(font
@@ -13363,7 +13363,7 @@
 				)
 			)
 		)
-		(property "Value" "1N5819"
+		(property "Value" "1N5819HW"
 			(at 57.15 494.03 0)
 			(effects
 				(font
@@ -13371,7 +13371,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Diode_THT:D_DO-41_SOD81_P5.08mm_Vertical_AnodeUp"
+		(property "Footprint" "Diode_SMD:D_SOD-123"
 			(at 60.96 490.22 0)
 			(effects
 				(font
@@ -13416,7 +13416,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "Chanzon 1N5819"
+		(property "MPN" "Diodes Inc 1N5819HW-7-F"
 			(at 60.96 490.22 0)
 			(effects
 				(font
@@ -13624,7 +13624,7 @@
 		(uuid "b75c74a9-0b93-55ff-8702-a03ed89470a9")
 	)
 	(symbol
-		(lib_id "Diode:1N4148")
+		(lib_id "Diode:1N4148W")
 		(at 139.70 500.38 270)
 		(unit 1)
 		(exclude_from_sim no)
@@ -13640,7 +13640,7 @@
 				)
 			)
 		)
-		(property "Value" "1N4148"
+		(property "Value" "1N4148W"
 			(at 142.24 502.16 0)
 			(effects
 				(font
@@ -13648,7 +13648,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Diode_THT:D_DO-35_SOD27_P2.54mm_Vertical_AnodeUp"
+		(property "Footprint" "Diode_SMD:D_SOD-123"
 			(at 139.70 500.38 0)
 			(effects
 				(font
@@ -13693,7 +13693,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "Vishay 1N4148-TAP"
+		(property "MPN" "Diodes Inc 1N4148W-7-F"
 			(at 139.70 500.38 0)
 			(effects
 				(font
@@ -13971,7 +13971,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 40.64 599.44 0)
 			(effects
 				(font
@@ -14105,7 +14105,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 85.09 599.44 0)
 			(effects
 				(font
@@ -14349,7 +14349,7 @@
 		(uuid "cb7ce560-9270-5c3e-b566-5f00bb9d8f46")
 	)
 	(symbol
-		(lib_id "Transistor_BJT:2N3904")
+		(lib_id "Transistor_BJT:MMBT3904")
 		(at 173.99 599.44 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -14365,7 +14365,7 @@
 				)
 			)
 		)
-		(property "Value" "2N3904"
+		(property "Value" "MMBT3904"
 			(at 168.91 607.06 0)
 			(effects
 				(font
@@ -14373,7 +14373,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_TO_SOT_THT:TO-92_Inline"
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
 			(at 173.99 599.44 0)
 			(effects
 				(font
@@ -14418,7 +14418,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "onsemi 2N3904"
+		(property "MPN" "onsemi MMBT3904LT1G"
 			(at 173.99 599.44 0)
 			(effects
 				(font
@@ -14456,26 +14456,6 @@
 	)
 	(wire
 		(pts
-			(xy 176.53 604.52)
-			(xy 176.53 607.06)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "aff6ab39-491a-5a52-b2a5-ab80a516b014")
-	)
-	(label "PGND"
-		(at 176.53 607.06 270)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "f3e4cdb8-693c-524b-9691-0b267780bcb7")
-	)
-	(wire
-		(pts
 			(xy 168.91 599.44)
 			(xy 166.37 599.44)
 		)
@@ -14493,6 +14473,26 @@
 			)
 		)
 		(uuid "38f3a088-ab19-5812-abf6-f2d3d348fb60")
+	)
+	(wire
+		(pts
+			(xy 176.53 604.52)
+			(xy 176.53 607.06)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "aff6ab39-491a-5a52-b2a5-ab80a516b014")
+	)
+	(label "PGND"
+		(at 176.53 607.06 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "f3e4cdb8-693c-524b-9691-0b267780bcb7")
 	)
 	(wire
 		(pts
@@ -14539,7 +14539,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 218.44 599.44 0)
 			(effects
 				(font
@@ -14673,7 +14673,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 40.64 619.76 0)
 			(effects
 				(font
@@ -14807,7 +14807,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 85.09 619.76 0)
 			(effects
 				(font
@@ -15107,7 +15107,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 173.99 619.76 0)
 			(effects
 				(font
@@ -15241,7 +15241,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 218.44 619.76 0)
 			(effects
 				(font
@@ -15375,7 +15375,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 40.64 640.08 0)
 			(effects
 				(font
@@ -15509,7 +15509,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder"
 			(at 320.04 599.44 0)
 			(effects
 				(font
@@ -16557,7 +16557,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 485.14 619.76 0)
 			(effects
 				(font
@@ -16691,7 +16691,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 599.44 599.44 0)
 			(effects
 				(font
@@ -17157,7 +17157,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 732.79 599.44 0)
 			(effects
 				(font
@@ -17291,7 +17291,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 777.24 599.44 0)
 			(effects
 				(font
@@ -17425,7 +17425,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 599.44 619.76 0)
 			(effects
 				(font
@@ -17559,7 +17559,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 643.89 619.76 0)
 			(effects
 				(font
@@ -17693,7 +17693,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 396.24 251.46 0)
 			(effects
 				(font
@@ -17961,7 +17961,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 482.60 238.76 0)
 			(effects
 				(font
@@ -19279,7 +19279,7 @@
 				)
 			)
 		)
-		(property "Value" "100nF/63V"
+		(property "Value" "100nF/100V"
 			(at 689.10 70.36 0)
 			(effects
 				(font
@@ -19287,7 +19287,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 685.80 68.58 0)
 			(effects
 				(font
@@ -19421,7 +19421,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder"
 			(at 546.10 109.22 0)
 			(effects
 				(font
@@ -19998,7 +19998,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder"
 			(at 571.50 203.20 0)
 			(effects
 				(font
@@ -20132,7 +20132,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 584.20 231.14 0)
 			(effects
 				(font
@@ -20242,7 +20242,7 @@
 		(uuid "864064b4-9af0-5223-80f6-ca724234858a")
 	)
 	(symbol
-		(lib_id "Transistor_BJT:2N3904")
+		(lib_id "Transistor_BJT:MMBT3904")
 		(at 609.60 203.20 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -20258,7 +20258,7 @@
 				)
 			)
 		)
-		(property "Value" "2N3904"
+		(property "Value" "MMBT3904"
 			(at 604.52 210.82 0)
 			(effects
 				(font
@@ -20266,7 +20266,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_TO_SOT_THT:TO-92_Inline"
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
 			(at 609.60 203.20 0)
 			(effects
 				(font
@@ -20311,7 +20311,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "onsemi 2N3904"
+		(property "MPN" "onsemi MMBT3904LT1G"
 			(at 609.60 203.20 0)
 			(effects
 				(font
@@ -20349,26 +20349,6 @@
 	)
 	(wire
 		(pts
-			(xy 612.14 208.28)
-			(xy 612.14 210.82)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "7dcbb5be-2519-53ea-a118-296673b261c3")
-	)
-	(label "PGND"
-		(at 612.14 210.82 270)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "e7206358-2be3-5903-b1a5-6e85a809a013")
-	)
-	(wire
-		(pts
 			(xy 604.52 203.20)
 			(xy 601.98 203.20)
 		)
@@ -20386,6 +20366,26 @@
 			)
 		)
 		(uuid "35ddf162-d9cc-568e-bed8-d854acff2628")
+	)
+	(wire
+		(pts
+			(xy 612.14 208.28)
+			(xy 612.14 210.82)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7dcbb5be-2519-53ea-a118-296673b261c3")
+	)
+	(label "PGND"
+		(at 612.14 210.82 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "e7206358-2be3-5903-b1a5-6e85a809a013")
 	)
 	(wire
 		(pts
@@ -20432,7 +20432,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 660.40 231.14 0)
 			(effects
 				(font
@@ -20542,7 +20542,7 @@
 		(uuid "fd412671-990b-5485-a3a6-d26f94cf1e33")
 	)
 	(symbol
-		(lib_id "Transistor_BJT:2N3904")
+		(lib_id "Transistor_BJT:MMBT3904")
 		(at 685.80 203.20 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -20558,7 +20558,7 @@
 				)
 			)
 		)
-		(property "Value" "2N3904"
+		(property "Value" "MMBT3904"
 			(at 680.72 210.82 0)
 			(effects
 				(font
@@ -20566,7 +20566,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_TO_SOT_THT:TO-92_Inline"
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
 			(at 685.80 203.20 0)
 			(effects
 				(font
@@ -20611,7 +20611,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "onsemi 2N3904"
+		(property "MPN" "onsemi MMBT3904LT1G"
 			(at 685.80 203.20 0)
 			(effects
 				(font
@@ -20649,26 +20649,6 @@
 	)
 	(wire
 		(pts
-			(xy 688.34 208.28)
-			(xy 688.34 210.82)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "bd46e87d-a500-5c92-a60d-9a74eb1b2fdb")
-	)
-	(label "PGND"
-		(at 688.34 210.82 270)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "82187e4f-064c-5787-b33e-98ebb3b56d06")
-	)
-	(wire
-		(pts
 			(xy 680.72 203.20)
 			(xy 678.18 203.20)
 		)
@@ -20686,6 +20666,26 @@
 			)
 		)
 		(uuid "6b5ef5c1-6d77-5121-882c-32f3e926b10d")
+	)
+	(wire
+		(pts
+			(xy 688.34 208.28)
+			(xy 688.34 210.82)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "bd46e87d-a500-5c92-a60d-9a74eb1b2fdb")
+	)
+	(label "PGND"
+		(at 688.34 210.82 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "82187e4f-064c-5787-b33e-98ebb3b56d06")
 	)
 	(wire
 		(pts
@@ -20867,7 +20867,7 @@
 				)
 			)
 		)
-		(property "Value" "100nF/63V"
+		(property "Value" "100nF/100V"
 			(at 663.70 111.00 0)
 			(effects
 				(font
@@ -20875,7 +20875,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 660.40 109.22 0)
 			(effects
 				(font
@@ -21009,7 +21009,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder"
 			(at 685.80 109.22 0)
 			(effects
 				(font
@@ -21365,7 +21365,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 797.56 127.00 0)
 			(effects
 				(font
@@ -21776,7 +21776,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 749.30 215.90 0)
 			(effects
 				(font
@@ -21910,7 +21910,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 774.70 215.90 0)
 			(effects
 				(font
@@ -22330,7 +22330,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 40.64 699.77 0)
 			(effects
 				(font
@@ -22607,7 +22607,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 129.54 699.77 0)
 			(effects
 				(font
@@ -23122,7 +23122,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 104.14 720.09 0)
 			(effects
 				(font
@@ -23491,7 +23491,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 104.14 750.57 0)
 			(effects
 				(font
@@ -23617,7 +23617,7 @@
 				)
 			)
 		)
-		(property "Value" "CD74HC4060E"
+		(property "Value" "CD74HC4060M96"
 			(at 313.69 715.01 0)
 			(effects
 				(font
@@ -23625,7 +23625,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_DIP:DIP-16_W7.62mm"
+		(property "Footprint" "Package_SO:SOIC-16_3.9x9.9mm_P1.27mm"
 			(at 330.20 699.77 0)
 			(effects
 				(font
@@ -23670,7 +23670,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "TI CD74HC4060E"
+		(property "MPN" "TI CD74HC4060M96"
 			(at 330.20 699.77 0)
 			(effects
 				(font
@@ -23906,7 +23906,7 @@
 				)
 			)
 		)
-		(property "Value" "CD74HC4020E"
+		(property "Value" "CD74HC4020M96"
 			(at 389.89 715.01 0)
 			(effects
 				(font
@@ -23914,7 +23914,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_DIP:DIP-16_W7.62mm"
+		(property "Footprint" "Package_SO:SOIC-16_3.9x9.9mm_P1.27mm"
 			(at 406.40 699.77 0)
 			(effects
 				(font
@@ -23959,7 +23959,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "TI CD74HC4020E"
+		(property "MPN" "TI CD74HC4020M96"
 			(at 406.40 699.77 0)
 			(effects
 				(font
@@ -24211,7 +24211,7 @@
 				)
 			)
 		)
-		(property "Value" "CD4011BE"
+		(property "Value" "CD4011BM96"
 			(at 466.09 713.74 0)
 			(effects
 				(font
@@ -24219,7 +24219,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_DIP:DIP-14_W7.62mm"
+		(property "Footprint" "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
 			(at 482.60 699.77 0)
 			(effects
 				(font
@@ -24264,7 +24264,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "TI CD4011BE"
+		(property "MPN" "TI CD4011BM96"
 			(at 482.60 699.77 0)
 			(effects
 				(font
@@ -24614,7 +24614,7 @@
 				)
 			)
 		)
-		(property "Value" "CD4071BE"
+		(property "Value" "CD4071BM96"
 			(at 542.29 713.74 0)
 			(effects
 				(font
@@ -24622,7 +24622,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_DIP:DIP-14_W7.62mm"
+		(property "Footprint" "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
 			(at 558.80 699.77 0)
 			(effects
 				(font
@@ -24667,7 +24667,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "TI CD4071BE"
+		(property "MPN" "TI CD4071BM96"
 			(at 558.80 699.77 0)
 			(effects
 				(font
@@ -25033,7 +25033,7 @@
 				)
 			)
 		)
-		(property "Value" "CD4093BE"
+		(property "Value" "CD4093BM96"
 			(at 618.49 713.74 0)
 			(effects
 				(font
@@ -25041,7 +25041,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_DIP:DIP-14_W7.62mm"
+		(property "Footprint" "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
 			(at 635.00 699.77 0)
 			(effects
 				(font
@@ -25086,7 +25086,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "TI CD4093BE"
+		(property "MPN" "TI CD4093BM96"
 			(at 635.00 699.77 0)
 			(effects
 				(font
@@ -25460,7 +25460,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 330.20 736.60 0)
 			(effects
 				(font
@@ -25594,7 +25594,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 374.65 736.60 0)
 			(effects
 				(font
@@ -25728,7 +25728,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 419.10 736.60 0)
 			(effects
 				(font
@@ -25862,7 +25862,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 463.55 736.60 0)
 			(effects
 				(font
@@ -25996,7 +25996,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
 			(at 508.00 736.60 0)
 			(effects
 				(font
@@ -26130,7 +26130,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder"
 			(at 552.45 736.60 0)
 			(effects
 				(font
@@ -26264,7 +26264,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder"
 			(at 596.90 736.60 0)
 			(effects
 				(font
@@ -26398,7 +26398,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 641.35 736.60 0)
 			(effects
 				(font
@@ -26698,7 +26698,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 730.25 736.60 0)
 			(effects
 				(font
@@ -26832,7 +26832,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 774.70 736.60 0)
 			(effects
 				(font
@@ -26942,7 +26942,7 @@
 		(uuid "c2894739-b601-547e-b049-1cd5da243ab7")
 	)
 	(symbol
-		(lib_id "Transistor_BJT:2N3904")
+		(lib_id "Transistor_BJT:MMBT3904")
 		(at 330.20 756.92 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -26958,7 +26958,7 @@
 				)
 			)
 		)
-		(property "Value" "2N3904"
+		(property "Value" "MMBT3904"
 			(at 325.12 764.54 0)
 			(effects
 				(font
@@ -26966,7 +26966,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_TO_SOT_THT:TO-92_Inline"
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
 			(at 330.20 756.92 0)
 			(effects
 				(font
@@ -27011,7 +27011,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "onsemi 2N3904"
+		(property "MPN" "onsemi MMBT3904LT1G"
 			(at 330.20 756.92 0)
 			(effects
 				(font
@@ -27049,26 +27049,6 @@
 	)
 	(wire
 		(pts
-			(xy 332.74 762.00)
-			(xy 332.74 764.54)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "b96d54a1-d761-53e4-bfa6-a4597f0fbc7a")
-	)
-	(label "PGND"
-		(at 332.74 764.54 270)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "01fa39c9-1520-54db-aade-b07f655d80d7")
-	)
-	(wire
-		(pts
 			(xy 325.12 756.92)
 			(xy 322.58 756.92)
 		)
@@ -27086,6 +27066,26 @@
 			)
 		)
 		(uuid "70fbe12d-dc76-51e1-95a4-0974846dc972")
+	)
+	(wire
+		(pts
+			(xy 332.74 762.00)
+			(xy 332.74 764.54)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b96d54a1-d761-53e4-bfa6-a4597f0fbc7a")
+	)
+	(label "PGND"
+		(at 332.74 764.54 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "01fa39c9-1520-54db-aade-b07f655d80d7")
 	)
 	(wire
 		(pts
@@ -27132,7 +27132,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 374.65 756.92 0)
 			(effects
 				(font
@@ -27266,7 +27266,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 419.10 756.92 0)
 			(effects
 				(font
@@ -27400,7 +27400,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 463.55 756.92 0)
 			(effects
 				(font
@@ -27535,7 +27535,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
 			(at 546.10 520.70 0)
 			(effects
 				(font
@@ -27647,7 +27647,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
 			(at 574.04 520.70 0)
 			(effects
 				(font
@@ -27759,7 +27759,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
 			(at 601.98 520.70 0)
 			(effects
 				(font
@@ -27871,7 +27871,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
 			(at 629.92 520.70 0)
 			(effects
 				(font
@@ -27983,7 +27983,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
 			(at 657.86 520.70 0)
 			(effects
 				(font
@@ -28095,7 +28095,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
 			(at 685.80 520.70 0)
 			(effects
 				(font
@@ -28207,7 +28207,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
 			(at 713.74 520.70 0)
 			(effects
 				(font
@@ -28319,7 +28319,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
 			(at 741.68 520.70 0)
 			(effects
 				(font
@@ -28431,7 +28431,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
 			(at 769.62 520.70 0)
 			(effects
 				(font
@@ -28543,7 +28543,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
 			(at 797.56 520.70 0)
 			(effects
 				(font
@@ -28655,7 +28655,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
 			(at 546.10 544.83 0)
 			(effects
 				(font
@@ -28767,7 +28767,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
 			(at 574.04 544.83 0)
 			(effects
 				(font
@@ -28879,7 +28879,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
 			(at 601.98 544.83 0)
 			(effects
 				(font
@@ -28991,7 +28991,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
 			(at 629.92 544.83 0)
 			(effects
 				(font
@@ -29103,7 +29103,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
 			(at 657.86 544.83 0)
 			(effects
 				(font
@@ -29215,7 +29215,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
 			(at 685.80 544.83 0)
 			(effects
 				(font
@@ -29327,7 +29327,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
 			(at 713.74 544.83 0)
 			(effects
 				(font
@@ -29439,7 +29439,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
 			(at 741.68 544.83 0)
 			(effects
 				(font
@@ -29551,7 +29551,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
 			(at 769.62 544.83 0)
 			(effects
 				(font
@@ -29663,7 +29663,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
 			(at 797.56 544.83 0)
 			(effects
 				(font
@@ -30111,7 +30111,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
 			(at 629.92 568.96 0)
 			(effects
 				(font
@@ -30223,7 +30223,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "TestPoint:TestPoint_Loop_D2.50mm_Drill1.0mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
 			(at 657.86 568.96 0)
 			(effects
 				(font

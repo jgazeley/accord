@@ -274,7 +274,7 @@ value('TVS_B11', '1.5KE20A-E3/54')
 wires('entry clamp', 'TVS_B11', {1: 'B11_TAP', 2: 'PGND'})
 
 # --------------------------- ignition cell, AS_BUILT 3.4 with the LRA-12 fix
-value('DI', '1N5819')
+value('DI', '1N5819HW')
 value('RLED', '2.2k')
 wires('opto cell', 'U2', {1: 'IGN_LED_A', 2: 'PGND', 3: 'IGN_A', 4: 'A5'})
 check('the opto LED cathode returns to PGND, not to the B16 conductor',
@@ -304,7 +304,7 @@ for src, want in (('RIGNA', '47k'), ('RRC', '220k'), ('CQUAL', '1uF'),
 wires('IGN filter', 'RIGNA', {1: 'IGN_A', 2: 'PGND'})
 wires('IGN filter', 'RRC', {1: 'IGN_A', 2: 'IGN_RC'})
 wires('IGN filter', 'CQUAL', {1: 'IGN_RC', 2: 'PGND'})
-wires('IGN reset', 'QRESET', {1: 'PGND', 2: 'RST_B', 3: 'RST_C'})
+wires('IGN reset', 'QRESET', {2: 'PGND', 1: 'RST_B', 3: 'RST_C'})
 wires('IGN reset', 'R_RSTB', {1: 'BAD', 2: 'RST_B'})
 wires('IGN reset', 'R_RSTPD', {1: 'RST_B', 2: 'PGND'})
 wires('IGN reset', 'R_RSTC', {1: 'RST_C', 2: 'IGN_RC'})
@@ -445,9 +445,9 @@ only('QH_C', [('QH', 3), ('QS', 2)],
 check('QI still sinks directly, so raw ignition overrides the cutoff',
       pin_net.get((R('QI'), '3')) == 'SINK')
 check('QH keeps its emitter grounded',
-      pin_net.get((R('QH'), '1')) == 'PGND',
+      pin_net.get((R('QH'), '2')) == 'PGND',
       'interrupting the emitter would couple fault voltage into HOLD')
-wires('HOLD sense', 'QMON', {1: 'PGND', 2: 'MON_B', 3: 'HOLD_N'})
+wires('HOLD sense', 'QMON', {2: 'PGND', 1: 'MON_B', 3: 'HOLD_N'})
 wires('HOLD sense', 'R_MONB', {1: 'HOLD_RAW', 2: 'MON_B'})
 wires('HOLD sense', 'R_MONPD', {1: 'MON_B', 2: 'PGND'})
 wires('HOLD sense', 'R_MONC', {1: 'HOLD_N', 2: 'A5'})
@@ -769,6 +769,37 @@ check('QP switches P12 into VIN_SW',
       and pin_net.get((R('QP'), '2')) == 'VIN_SW')
 check('the selected connector is the JAE IL-AG5 family keyless already uses',
       'JAE_IL-AG5' in by_ref['J1']['footprint'])
+
+# ------------------------------------------- D-SMD-09 package conversion
+# The SOT-23 pinout differs from the TO-92 one, so assert each NPN's
+# emitter/base/collector by the pin ROLE the netlist reports, not by number.
+_roles = {}
+for _blk in open(NET).read().split('(net (code')[1:]:
+    _n = re.search(r'\(name "([^"]*)"', _blk).group(1).lstrip('/')
+    for _r, _pin, _fn in re.findall(
+            r'\(node \(ref "([^"]+)"\) \(pin "([^"]+)"\) \(pinfunction "([^"]*)"\)', _blk):
+        _roles.setdefault(_r, {})[_fn] = _n
+for _src, (_e, _b, _c) in {'QI': ('PGND', 'IGN_B', 'SINK'),
+                           'QH': ('PGND', 'HOLD_B', 'QH_C'),
+                           'QRESET': ('PGND', 'RST_B', 'RST_C'),
+                           'QMON': ('PGND', 'MON_B', 'HOLD_N')}.items():
+    _q = _roles.get(R(_src), {})
+    check(f'{_src} is an MMBT3904 on SOT-23 with E/B/C on the right nets',
+          by_src[_src]['value'] == 'MMBT3904'
+          and by_src[_src]['footprint'] == 'Package_TO_SOT_SMD:SOT-23'
+          and (_q.get('E'), _q.get('B'), _q.get('C')) == (_e, _b, _c),
+          f'roles {_q}')
+check('no through-hole resistor remains outside the kept set',
+      not any(r['footprint'].startswith('Resistor_THT')
+              and r['source_designator'] not in
+              {'R_DE', 'R485_A', 'R485_B', 'R485_TERM', 'RLED', 'RG'}
+              for r in bom))
+check('every 1N5819-class clamp is a SOD-123 1N5819HW',
+      all(r['footprint'] == 'Diode_SMD:D_SOD-123' for r in bom
+          if r['value'].startswith('1N5819')))
+check('logic ICs are SOIC',
+      all(by_src[s]['footprint'].startswith('Package_SO:SOIC')
+          for s in ('UCLK', 'UCOUNT', 'ULATCH', 'UOR', 'USCH')))
 
 print(f'{checks - len(fails)}/{checks} checks passed')
 for f in fails:

@@ -19,10 +19,11 @@ bench test and vehicle test.
   `logger/hardware/kicad/tools/gen_logger_sch.py`. Make electrical changes
   there, not in the KiCad GUI, or the next run overwrites them. Generation
   is deterministic, so regenerating doesn't break schematic-to-PCB links.
-- Includes the keyless RS-485 circuit (D-RS485-05) and the single 14-way
-  JAE IL-AG5-14P-D3L2-A board connector J1 (D-CONN-06).
-- Verified on `main`: ERC 0 at all severities, 731/731 capture checks, 67
-  power-closure checks with no overruns, 148 BOM rows all footprinted, 1.43×
+- Includes the keyless RS-485 circuit (D-RS485-05), the single 14-way
+  JAE IL-AG5-14P-D3L2-A board connector J1 (D-CONN-06), and mostly
+  surface-mount parts (D-SMD-09: 114 SMD, 34 through-hole).
+- Verified on `main`: ERC 0 at all severities, 738/738 capture checks, 67
+  power-closure checks with no overruns, 148 BOM rows all footprinted, 1.90×
   courtyard allowance on 80 × 120 mm, byte-identical regeneration
   (`logger/hardware/kicad/validation/COMMANDS.txt`).
 - Engineering record: `logger/hardware/power/LAYOUT_CLOSURE.md`; risks,

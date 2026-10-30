@@ -44,7 +44,7 @@ Envelope: 80 × 120 mm, no enclosure. The board file
 corner radii) and four unplated M3 holes 4 mm in from each edge, made by
 `kicad/tools/gen_board_outline.py`; parts come in with "Update PCB from
 Schematic". Courtyard
-allowance 1.43× (`kicad/validation/courtyard_study.csv`).
+allowance 1.90× after the surface-mount conversion (D-SMD-09) (`kicad/validation/courtyard_study.csv`).
 
 ## Fitted logger baseline (breadboard, in the car today)
 
