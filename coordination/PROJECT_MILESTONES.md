@@ -147,6 +147,20 @@ for every row. Remote electrical work and local physical validation are distinct
 
 ## Decisions and gates
 
+- **D-CONN-06 — owner statement, October 29, 19:11 UTC, recorded late.** Given
+  to Claude `pcb-manager` `630dea87-5e4d-4bad-a1ff-d41b3a5f509b` and only
+  partly captured (D-POWER-03 consequence 5); recovered from that session's
+  transcript by Claude `pcb-manager` `42dd0e33-28b5-4936-847e-9c2e1d2488fa`.
+  The owner may move the logger to a **permanent 12 V battery feed like
+  keyless**, and **in that case wants a single connector**. Keyless uses a
+  16-pin Molex Mini-Fit Jr and an experimental JAE IL-AG5-22P-D3L2 (Honda's
+  connector style). **Owner has a 10-pin Molex-style right-angle connector in
+  stock**, similar to the keyless 16-pin. Digi-Key carries
+  **IL-AG5-14P-D3L2-A** (14 pins). Molex versus JAE was undecided: personal
+  preference and factory styling, no known technical difference. LRA-12's
+  separate J1 (2-way power) + J2 (8-way signals) was chosen without this
+  statement. Connector choice pending owner selection; see below.
+
 - **D-RS485-05 — owner decision, October 29:** Rev A carries the **keyless
   RS-485 circuit onboard, same circuit and footprints** (MAX3485 DIP-8 socketed,
   GP8 TX / GP9 RX / GP10 tied DE//RE with 10 k default-listen pulldown, bias
