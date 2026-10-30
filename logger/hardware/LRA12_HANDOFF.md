@@ -560,3 +560,15 @@ stable across this addition. All original REV-1–3 thermal/vehicle limitations
 remain. No hardware, firmware, deployment, purchase or keyless edit occurred.
 Per the final owner instruction, this return ends after commit and push;
 connector consolidation and further tasks are not undertaken.
+
+## Merged to main, October 29, 2026
+
+Merged by Claude, session `42dd0e33-28b5-4936-847e-9c2e1d2488fa`, after the multi-agent process was retired
+(owner direction; see `AGENTS.md`). LRA-12 (`7ec53da`, `ad4f918`), LRA-12R
+(`50d93c8`) and the RS-485 revision (`0de822b`) are on `main` with original
+authorship. On `main`, the three connectors were then consolidated into one
+10-way J1 (owner decision D-CONN-06; pin map in `power/LAYOUT_CLOSURE.md`
+§6.3). Results after that change are in `kicad/validation/COMMANDS.txt`:
+ERC 0, 721/721 capture, closure 67 ok, 1.48× allowance, deterministic
+generation. Still open: the owner's visual check in KiCad, then placement and
+routing. Current state lives in `coordination/STATUS.md`.

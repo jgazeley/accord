@@ -556,6 +556,20 @@ TP_GND_PICO on PGND, TP_GND_HARNESS on the bonded B16/AGND sense node.
 
 ### 6.3 Connectors
 
+> **Superseded October 29 (owner decision D-CONN-06, Claude, session `42dd0e33-28b5-4936-847e-9c2e1d2488fa`).**
+> The board now has **one** connector: **J1, Molex 39-30-1100** (Mini-Fit Jr.
+> 5569-10A2, 2×5, right-angle with pegs, footprint
+> `Molex_Mini-Fit_Jr_5569-10A2_2x05_P4.20mm_Horizontal`), the owner's
+> in-stock part. It replaces the 2-way J1, the 8-way J2 and the interim
+> RS-485 J485. Cavities: **1 BATT_IN, 2 B11, 3 B1, 4 C11, 5 RS-485 A,
+> 6 PGND, 7 AGND (B16), 8 C14, 9 B2, 10 RS-485 B.** BATT_IN's only physical
+> neighbours are PGND and the clamped B11 input (checked from the footprint
+> pads in `check_capture.py`); fuel and VSS are away from it; A/B are
+> adjacent. The cluster-end Mini-Fit Jr. taps are untouched; the board end of
+> the harness takes a 10-circuit 5557-series housing. `REV_A_INTERFACES`
+> §5.1's J1/J2 split is pinned by its manifest and is superseded here, not
+> edited. The text below is the original LRA-12 record.
+
 Both from the Molex Mini-Fit Jr. 4.20 mm family, which `D-POWER-03` records as
 in service in this car on the keyless body harness, so the mating housings and
 crimp tooling already exist.

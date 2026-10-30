@@ -11,39 +11,33 @@ bench test and vehicle test.
 
 ## Where it stands
 
-**Electrical design is nearly ready for owner layout. It is not on `main`
-yet.**
+**The electrical design is on `main` and ready for owner layout.**
 
-- The KiCad project is `logger/hardware/kicad/accord-logger.kicad_pro`.
-  `main` still carries the older LRA-06 capture. The current design is on
-  the `task/LRA-12-b690946d` branch, with corrections on
-  `task/LRA-12R-01a18a47` (`50d93c8`, plus RS-485 work being finished).
+- KiCad project: `logger/hardware/kicad/accord-logger.kicad_pro`. Summary of
+  what's on the board: `logger/hardware/REV_A_CONTEXT.md`.
 - The schematic and `BOM.csv` are **generated** by
   `logger/hardware/kicad/tools/gen_logger_sch.py`. Make electrical changes
   there, not in the KiCad GUI, or the next run overwrites them. Generation
   is deterministic, so regenerating doesn't break schematic-to-PCB links.
-- Last verified (`50d93c8`): ERC 0 at all severities, 652/652 capture
-  checks, 63/63 power-closure checks, 141 parts all with footprints, 1.52×
-  courtyard allowance on 80 × 120 mm.
-- Engineering record: `logger/hardware/power/LAYOUT_CLOSURE.md` (clamp,
-  A5 supply, isolation, grounding, fit) and `logger/hardware/LRA12_HANDOFF.md`
-  (risks, bring-up tests, firmware follow-up).
+- Includes the keyless RS-485 circuit (D-RS485-05) and the single 10-way
+  Molex 39-30-1100 board connector J1 (D-CONN-06).
+- Verified on `main`: ERC 0 at all severities, 721/721 capture checks, 67
+  power-closure checks with no overruns, 148 BOM rows all footprinted, 1.48×
+  courtyard allowance on 80 × 120 mm, byte-identical regeneration
+  (`logger/hardware/kicad/validation/COMMANDS.txt`).
+- Engineering record: `logger/hardware/power/LAYOUT_CLOSURE.md`; risks,
+  bring-up tests and firmware follow-up: `logger/hardware/LRA12_HANDOFF.md`.
 
 ## Next, in order
 
-1. **Finish RS-485** (D-RS485-05). Codex is completing the keyless MAX3485
-   circuit on `task/LRA-12R-01a18a47`, with an interim 4-pin bus connector.
-2. **Merge to `main`**: LRA-12, LRA-12R and RS-485 together, then rerun all
-   checks on `main`.
-3. **Single connector** (D-CONN-06): waiting for the owner to choose between
-   the in-stock 10-pin Molex-style connector (confirm its part number) and
-   JAE IL-AG5-14P-D3L2-A. Replace J1, J2 and the interim bus connector.
-   Then update `logger/hardware/README.md` and `REV_A_CONTEXT.md`.
-4. **Owner opens the schematic in KiCad once.** This host cannot render it,
-   so no one has looked at it.
-5. **Owner places and routes** the board.
-6. Pre-order review, then order (owner approval), then bring-up and
-   vehicle tests.
+1. **Owner opens the schematic in KiCad once.** This host can't render it, so
+   no one has looked at it.
+2. **Owner places and routes** the board: create the `.kicad_pcb` in the
+   same project and use "Update PCB from Schematic".
+3. Pre-order review of the routed board, then order (owner approval), then
+   bring-up, bench and vehicle tests (`LRA12_HANDOFF.md` §5).
+4. Firmware for the board: GP7 isolation enable and the shutdown order
+   (`LRA12_HANDOFF.md` §5.4), before running it autonomously.
 
 ## Known risks carried forward (not layout blockers)
 

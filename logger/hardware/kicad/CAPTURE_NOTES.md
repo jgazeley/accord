@@ -1,5 +1,10 @@
 # LRA-06 — Rev A schematic capture notes
 
+> **October 29 (Claude, session `42dd0e33-28b5-4936-847e-9c2e1d2488fa`):** on `main` the design now has 148 BOM
+> rows, the keyless RS-485 circuit, and one 10-way J1 board connector in place
+> of J1/J2. Current figures are in `validation/COMMANDS.txt`; counts below
+> are as of the LRA-12 return.
+
 > ## LRA-12 status — October 29, 2026: the eight placeholders are resolved
 >
 > Everything below is the **LRA-06 capture record** and is kept as written:

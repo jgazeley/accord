@@ -1,14 +1,12 @@
 reference,value,footprint,width_mm,height_mm,area_mm2,population,measured_from
 U1,RaspberryPi_Pico_W,Module:RaspberryPi_Pico_W_SMD_HandSolder,23.080,53.850,1242.9,FIT,courtyard
-J2,Cluster harness 8-way,Connector_Molex:Molex_Mini-Fit_Jr_5569-08A2_2x04_P4.20mm_Horizontal,19.000,22.250,422.8,FIT,courtyard
-J6,RS-485 interim A/B/GND,Connector_Molex:Molex_Mini-Fit_Jr_5569-04A2_2x02_P4.20mm_Horizontal,10.600,22.250,235.9,FIT,courtyard
+J1,Board connector 10-way,Connector_Molex:Molex_Mini-Fit_Jr_5569-10A2_2x05_P4.20mm_Horizontal,23.200,22.250,516.2,FIT,courtyard
 U10,CD74HC4060E,Package_DIP:DIP-16_W7.62mm,9.730,20.820,202.6,FIT,courtyard
 U11,CD74HC4020E,Package_DIP:DIP-16_W7.62mm,9.730,20.820,202.6,FIT,courtyard
 U12,CD4011BE,Package_DIP:DIP-14_W7.62mm,9.730,18.300,178.1,FIT,courtyard
 U13,CD4071BE,Package_DIP:DIP-14_W7.62mm,9.730,18.300,178.1,FIT,courtyard
 U14,CD4093BE,Package_DIP:DIP-14_W7.62mm,9.730,18.300,178.1,FIT,courtyard
 F1,1A,Fuse:Fuseholder_Clip-5x20mm_Bel_FC-203-22_Lateral_P17.80x5.00mm_D1.17mm_Horizontal,22.440,7.700,172.8,FIT,courtyard
-J1,Power 2-way,Connector_Molex:Molex_Mini-Fit_Jr_5569-02A2_2x01_P4.20mm_Horizontal,6.400,22.250,142.4,FIT,courtyard
 U3,ASSR-601JV,accord-logger:ASSR-601Jx_SO-16-12Lead_11.634x10.363mm_P1.27mm,12.134,10.040,121.8,FIT,courtyard
 C14,1000uF/16V,Capacitor_THT:CP_Radial_D10.0mm_P5.00mm,10.500,10.500,110.2,FIT,courtyard
 U15,MAX3485,Package_DIP:DIP-8_W7.62mm,9.730,10.660,103.7,FIT,courtyard

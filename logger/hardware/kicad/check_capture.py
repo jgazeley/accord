@@ -215,7 +215,7 @@ for key, sig in (('VSS', 'VSS_IN'), ('TACH', 'TACH_IN'), ('BRK', 'BRAKE_IN')):
 # -------------------------------------- X1 resolved: the B2 series isolation
 # The point of the part is that nothing bridges it, so these net-identity
 # assertions carry the whole isolation claim.
-only('B2_TAP', [('J2', 1), ('UISO', 15), ('UISO', 16)],
+only('B2_TAP', [('J1', 9), ('UISO', 15), ('UISO', 16)],
      'the B2 divider top must be reachable only through the relay')
 only('B2_ISO', [('UISO', 9), ('UISO', 10), ('R_VSS_T', 1)],
      'the relay output feeds the divider top and nothing else')
@@ -257,10 +257,10 @@ check('both enable gates are pulled down, so the relay is open by default',
 # directly, with no isolation device on it. B11 also feeds the ignition opto
 # through DI and carries the entry clamp.
 BYPASSED = {
-    'B1_TAP': [('J2', 2), ('R_TACH_T', 1)],
-    'C14_TAP': [('J2', 3), ('R_BRK_T', 1)],
-    'C11_TAP': [('J2', 4), ('R_FUEL_T', 1)],
-    'B11_TAP': [('J2', 5), ('R_SUP_T', 1), ('DI', 2), ('TVS_B11', 1)],
+    'B1_TAP': [('J1', 3), ('R_TACH_T', 1)],
+    'C14_TAP': [('J1', 8), ('R_BRK_T', 1)],
+    'C11_TAP': [('J1', 4), ('R_FUEL_T', 1)],
+    'B11_TAP': [('J1', 2), ('R_SUP_T', 1), ('DI', 2), ('TVS_B11', 1)],
 }
 for net, allowed in BYPASSED.items():
     only(net, allowed, 'this branch is a decided bypass: its tap feeds the '
@@ -279,7 +279,7 @@ value('RLED', '2.2k')
 wires('opto cell', 'U2', {1: 'IGN_LED_A', 2: 'PGND', 3: 'IGN_A', 4: 'A5'})
 check('the opto LED cathode returns to PGND, not to the B16 conductor',
       pin_net.get(('U2', '2')) == 'PGND'
-      and pin_net.get(('U2', '2')) != pin_net.get(('J2', '6')),
+      and pin_net.get(('U2', '2')) != pin_net.get(('J1', '7')),
       'R06-REV-2: B16 is a reference and must never carry the LED current')
 check('no capacitor sits across the old opto output node',
       'C_IGN' not in by_src,
@@ -548,16 +548,44 @@ for src in ('R_DE','R485_A','R485_B','R485_TERM'):
 for src in ('JP485_TERM','JP485_HI','JP485_LO'):
     check(src+' matches keyless JP1 footprint',by_src[src]['footprint']==
           'Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical')
-wires('RS485 connector','J485',{1:'RS485_A',2:'RS485_B',3:'PGND'})
-check('RS485 connector spare is NC', unconnected(R('J485'),'4'))
+# ------------------------ J1, the single board connector (D-CONN-06)
+J1_PINS = {1: 'BATT_IN', 2: 'B11_TAP', 3: 'B1_TAP', 4: 'C11_TAP',
+           5: 'RS485_A', 6: 'PGND', 7: 'AGND', 8: 'C14_TAP', 9: 'B2_TAP',
+           10: 'RS485_B'}
+wires('board connector', 'J1', J1_PINS)
+check('J1 is the only off-board harness connector',
+      not any(r['footprint'].startswith('Connector_Molex:')
+              for r in bom if r['reference'] != 'J1'),
+      'power, taps and RS-485 all come in on J1')
+check('J1 is the owner\'s Molex 39-30-1100 on the 2x05 Mini-Fit Jr. footprint',
+      by_ref['J1']['footprint'] == 'Connector_Molex:'
+      'Molex_Mini-Fit_Jr_5569-10A2_2x05_P4.20mm_Horizontal'
+      and '39-30-1100' in by_ref['J1']['manufacturer_part_or_type'])
+# Physical adjacency, read from the installed footprint rather than assumed:
+# which contacts actually sit next to BATT_IN, and are A/B neighbours?
+_fp = os.path.join(os.environ.get('KICAD9_FOOTPRINT_DIR',
+                                  '/usr/share/kicad/footprints'),
+                   'Connector_Molex.pretty',
+                   'Molex_Mini-Fit_Jr_5569-10A2_2x05_P4.20mm_Horizontal.kicad_mod')
+_pads = {int(n): (float(x), float(y)) for n, x, y in re.findall(
+    r'\(pad "(\d+)" thru_hole \w+\s*\(at ([-\d.]+) ([-\d.]+)', open(_fp).read())}
+check('J1 footprint has ten contacts', sorted(_pads) == list(range(1, 11)))
+def _near(a, b, r=6.0):
+    (ax, ay), (bx, by) = _pads[a], _pads[b]
+    return ((ax - bx) ** 2 + (ay - by) ** 2) ** 0.5 <= r
+_batt_nb = {J1_PINS[n] for n in _pads if n != 1 and _near(1, n)}
+check('BATT_IN\'s physical neighbours are only PGND and the clamped B11 input',
+      _batt_nb == {'PGND', 'B11_TAP'}, f'neighbours {sorted(_batt_nb)}')
+check('RS-485 A and B are adjacent contacts', _near(5, 10))
+check('fuel and VSS are not adjacent to BATT_IN', not _near(1, 4) and not _near(1, 9))
 wires('reset header', 'J4', {1: 'RUN', 2: 'PGND'})
 check('J4 has no unconnected pins left over', ('J4', '3') not in pin_net,
       'capture question Q5: a service header with NC pins was the problem')
 
 # --------------------------------------- grounds: one ADC return, one bond
-agnd = pin_net.get(('J2', '6'))
+agnd = pin_net.get(('J1', '7'))
 single = {
-    'J2.6 cluster ground sense': ('J2', '6'),
+    'J1.7 cluster ground sense': ('J1', '7'),
     'U1.33 Pico AGND': ('U1', '33'),
     'fuel divider bottom': (R('R_FUEL_B'), '2'),
     'supply divider bottom': (R('R_SUP_B'), '2'),
@@ -569,7 +597,7 @@ single = {
 for label, node in single.items():
     check(f'single ADC return node carries the {label}',
           pin_net.get(node) == agnd,
-          f'on {pin_net.get(node)!r}, not the J2.6 node {agnd!r}')
+          f'on {pin_net.get(node)!r}, not the J1.7 node {agnd!r}')
 check('the single ADC return node is the one the Pico AGND pin names',
       agnd == 'AGND', f'got {agnd!r}')
 check('AGND and PGND are separate nets on the board',
@@ -716,9 +744,8 @@ check('D7: the Pico is fed from the onboard buck through DOR, not from VBUS',
 check('QP switches P12 into VIN_SW',
       pin_net.get((R('QP'), '3')) == 'P12'
       and pin_net.get((R('QP'), '2')) == 'VIN_SW')
-check('the selected connectors are the in-service Mini-Fit Jr. family',
-      'Mini-Fit_Jr' in by_ref['J1']['footprint']
-      and 'Mini-Fit_Jr' in by_ref['J2']['footprint'])
+check('the selected connector is the in-service Mini-Fit Jr. family',
+      'Mini-Fit_Jr' in by_ref['J1']['footprint'])
 
 print(f'{checks - len(fails)}/{checks} checks passed')
 for f in fails:

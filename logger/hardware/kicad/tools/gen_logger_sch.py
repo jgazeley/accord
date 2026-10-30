@@ -71,10 +71,8 @@ FP_DPAK = 'Package_TO_SOT_SMD:TO-252-3_TabPin2'
 FP_ASSR = ('accord-logger:ASSR-601Jx_SO-16-12Lead_11.634x10.363mm_P1.27mm')
 FP_OSC = ('accord-logger:Oscillator_SMD_MicroCrystal_OV-7604-C7'
           '_SON-4_3.2x1.5mm')
-FP_MFJ2 = ('Connector_Molex:Molex_Mini-Fit_Jr_5569-02A2_2x01'
-           '_P4.20mm_Horizontal')
-FP_MFJ8 = ('Connector_Molex:Molex_Mini-Fit_Jr_5569-08A2_2x04'
-           '_P4.20mm_Horizontal')
+FP_MFJ10 = ('Connector_Molex:Molex_Mini-Fit_Jr_5569-10A2_2x05'
+            '_P4.20mm_Horizontal')
 
 P = []          # placed parts, in BOM order
 
@@ -130,25 +128,33 @@ class Grid:
 
 
 # ======================================================== vehicle input cells
-# J2 is the 8-way cluster harness connector of REV_A_INTERFACES S5.1: the six
-# recorded taps plus the two spare contacts that section asks for. LRA-12
-# selects the Molex Mini-Fit Jr. family, which is already in service on the
-# keyless board in this car (D-POWER-03 consequence 5).
-part('J2', 'Connector_Generic:Conn_01x08', 'Cluster harness 8-way',
-     40.64, 48.26, rot=180, fp=FP_MFJ8, nc=(7, 8),
-     nets={1: 'B2_TAP', 2: 'B1_TAP', 3: 'C14_TAP', 4: 'C11_TAP',
-           5: 'B11_TAP', 6: 'AGND'},
-     mpn='Molex 39-30-1080 (5569-08A2), 8 circuit right-angle header',
-     status='SELECTED', source='REV_A_INTERFACES S5.1 / LAYOUT_CLOSURE S6',
-     note='Molex Mini-Fit Jr. 4.20 mm, 8 circuits, right-angle with PCB peg. '
-          'Mates with a Mini-Fit Jr. 5557-series receptacle housing and 5556 '
-          'female crimp terminals (16-24 AWG); that housing/terminal family '
-          'is already in service on the keyless board in this vehicle, so '
-          'crimp tooling exists. Pin numbers are Molex cavity numbers. Pins '
-          '7-8 are the two spare contacts, unconnected. Pin 6 is the B16 '
-          'cluster ground sense, bonded to the single AGND return node at one '
-          'point (REV_A_INTERFACES S4, delta D5). Exact order code for '
-          'plating/packaging is procurement, not a design gate')
+# J1 is the single board connector (owner decision D-CONN-06): the owner's
+# in-stock Molex 39-30-1100, a 10-circuit Mini-Fit Jr., the family already
+# in service as the keyless body harness. Power, the six recorded taps and
+# the RS-485 pair all come in here. Cavity layout, pin 1 at one end:
+#   1 BATT_IN  2 B11  3 B1   4 C11  5 RS485_A
+#   6 PGND     7 AGND 8 C14  9 B2  10 RS485_B
+# Battery sits at one end beside its return; its only other neighbour is
+# B11, a 12 V-level input that already carries its own entry clamp. The
+# low-level fuel and VSS inputs are kept away from it, and A/B form a pair.
+part('J1', 'Connector_Generic:Conn_01x10', 'Board connector 10-way',
+     40.64, 48.26, rot=180, fp=FP_MFJ10,
+     nets={1: 'BATT_IN', 2: 'B11_TAP', 3: 'B1_TAP', 4: 'C11_TAP',
+           5: 'RS485_A', 6: 'PGND', 7: 'AGND', 8: 'C14_TAP', 9: 'B2_TAP',
+           10: 'RS485_B'},
+     mpn='Molex 39-30-1100 (5569-10A2), 10 circuit right-angle header',
+     status='SELECTED', source='DECISIONS D-CONN-06',
+     note='Molex Mini-Fit Jr. 4.20 mm, 10 circuits, right-angle with PCB '
+          'peg; the owner has this part in stock. Mates with a 5557-series '
+          'receptacle housing and 5556 crimp terminals (16-24 AWG), the '
+          'family already in service on the keyless board, so crimp tooling '
+          'exists. Pin numbers are Molex cavity numbers. 1 BATT_IN, protected '
+          '+12 V feed (fuse it at the source; F1 protects only the board). '
+          '6 PGND, also the RS-485 bus ground. 7 is the B16 cluster ground '
+          'sense, bonded to the single AGND return node at one point '
+          '(REV_A_INTERFACES S4, delta D5); never use it as a power or bus '
+          'return. 5/10 RS-485 A/B; run them as a twisted pair. All ten '
+          'circuits used, none spare')
 
 # AS_BUILT S2 rows 1-5a. Ratios, clamps and the fitted ADC protection are
 # carried forward with no value changed.
@@ -605,16 +611,6 @@ part('J4', 'Connector_Generic:Conn_01x02', 'Reset RUN-GND',
           'the contradiction; this has none')
 
 # ============================================== onboard power (DESIGN.md S3)
-part('J1', 'Connector_Generic:Conn_01x02', 'Power 2-way',
-     546.1, 48.26, rot=180, fp=FP_MFJ2, nets={1: 'BATT_IN', 2: 'PGND'},
-     mpn='Molex 39-30-1020 (5569-02A2), 2 circuit right-angle header',
-     status='SELECTED', source='REV_A_INTERFACES S5.1 / LAYOUT_CLOSURE S6',
-     note='protected +12 V from the auxiliary battery and its return. Molex '
-          'Mini-Fit Jr. 4.20 mm, 2 circuits, right-angle with PCB peg; same '
-          'family as J2 and as the keyless body harness already in service. '
-          '9 A per circuit against a 1 A branch, so the margin is in the '
-          'crimp rather than the contact. Mates with a 5557-series receptacle '
-          'housing and 5556 crimp terminals')
 part('F1', 'Device:Fuse', '1A', 584.2, 48.26, rot=90,
      nets={1: 'BATT_IN', 2: 'BATT_F'}, fp=FP_FUSE,
      status='PART_SELECTION_OPEN', source='DESIGN.md S3 / LAYOUT_CLOSURE S3',
@@ -1102,7 +1098,7 @@ part('#FLG4', 'power:PWR_FLAG', 'PWR_FLAG', 260.0, 745.0,
 # source-document names are kept in a Source_designator field and the BOM so a
 # reviewer can still diff against the written sources. Diodes are numbered from
 # 101 so that schematic designators can never be read as the delta IDs D1-D15.
-KEEP = {'U1', 'U2', 'J1', 'J2', 'J3', 'J4', 'J5'}
+KEEP = {'U1', 'U2', 'J1', 'J3', 'J4', 'J5'}
 PREFIX = [
     ('Custom:PLACEHOLDER_', 'X', 1),
     ('Connector:TestPoint', 'TP', 1),
@@ -1159,17 +1155,6 @@ for ref, val, x, y, ns, source in (
          status='FIT_HEADER_NO_SHUNT',source=source,
          note='Fit header; ship WITHOUT shunt. Bias HI and LO are a pair; '
               'only link at the designated bias node. No bus TVS, as keyless.')
-
-# Interim owner-approved connector; consolidation is a separate task.
-part('J485', 'Connector_Generic:Conn_01x04', 'RS-485 interim A/B/GND',
-     711.2, 444.5, rot=180,
-     fp='Connector_Molex:Molex_Mini-Fit_Jr_5569-04A2_2x02_P4.20mm_Horizontal',
-     mpn='Molex 39-30-1040 (5569-04A2)',
-     nets={1:'RS485_A',2:'RS485_B',3:'PGND'},nc=(4,),
-     status='SELECTED_INTERIM',source='Owner approval, R12-REV-4',
-     note='1 A, 2 B, 3 bus ground to PGND, 4 unused. Dedicated bus-ground '
-          'wire; do not use B16/AGND. Interim 4-position Mini-Fit Jr; owner '
-          'will consolidate connectors separately. No PCB placement assigned.')
 
 # U1/U2 and J1-J5 are fixed by the written sources, so start after them.
 counters = {'U': 2, 'J': 5}
@@ -1266,7 +1251,7 @@ NOTES = [
      'X6  qualified IGN / QREPORT  -> captured from CUTOFF_MARGIN_REVIEW S2\n'
      'X7  vehicle entry protection -> 1.5KE20A + second-stage A5 clamp\n'
      'X8  independent cutoff       -> captured from MAX_ON_CUTOFF\n'
-     'J1/J2 connectors             -> Molex Mini-Fit Jr., family in service\n'
+     'J1 board connector           -> Molex 39-30-1100, 10-way Mini-Fit Jr.\n'
      'Q2/R06-REV-2 opto LED return -> moved from B16 to PGND\n'
      'Q4 onboard FIGN              -> dropped; fuse belongs at the tap\n'
      'Q5 J4 service UART           -> dropped; J4 is the reset pair only\n'
@@ -1301,7 +1286,7 @@ NOTES = [
      'card header calibration (log.adc.fuel div=7500/4700) still has every\n'
      'term it needs and REV_A_INTERFACES S8.2 needs no change.\n'
      'Digital divider bottoms return to PGND. Both ADC divider bottoms,\n'
-     'their filter and clamp returns, J2.6 (B16) and Pico AGND are ONE\n'
+     'their filter and clamp returns, J1.7 (B16) and Pico AGND are ONE\n'
      'node. AGND and PGND are already joined INSIDE the Pico module, so\n'
      'that junction is the single point: layout must NOT add a second\n'
      'board-level bond between them.'),

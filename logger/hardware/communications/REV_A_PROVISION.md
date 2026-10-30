@@ -37,6 +37,9 @@ Logger-specific differences and population:
 - J3 is trimmed to four pins: 1 B5, 2 PGND, 3 switched 3V3, 4 spare GP13.
   UART1 TX/RX and GP10 have no parallel header connection. Externally powered
   logic or supplies must not be attached to J3 while the logger is off.
+- **Superseded October 29 (D-CONN-06):** the interim J6 below is removed.
+  A and B are now on the single board connector, **J1 pins 5 and 10**, with
+  the bus ground on **J1 pin 6 (PGND)**; still never B16/AGND (pin 7).
 - **Interim J6:** owner-approved 4-position Mini-Fit Jr 39-30-1040,
   `Molex_Mini-Fit_Jr_5569-04A2_2x02_P4.20mm_Horizontal`.
   Pin 1 A, 2 B, 3 bus ground to PGND, 4 NC. Route A/B as a pair with a
