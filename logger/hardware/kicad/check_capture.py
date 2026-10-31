@@ -322,6 +322,10 @@ for src, want in (('RIGNA', '47k'), ('RRC', '220k'), ('CQUAL', '1uF'),
 wires('IGN filter', 'RIGNA', {1: 'IGN_A', 2: 'PGND'})
 wires('IGN filter', 'RRC', {1: 'IGN_A', 2: 'IGN_RC'})
 wires('IGN filter', 'CQUAL', {1: 'IGN_RC', 2: 'PGND'})
+check('CQUAL is the WIMA MKS2 film on its 5.5 mm-wide footprint (D-CQUAL-20)',
+      by_src['CQUAL']['manufacturer_part_or_type'] == 'WIMA MKS2C041001F00JSSD'
+      and by_src['CQUAL']['footprint'] ==
+      'Capacitor_THT:C_Rect_L7.2mm_W5.5mm_P5.00mm_FKS2_FKP2_MKS2_MKP2')
 wires('IGN reset', 'QRESET', {2: 'PGND', 1: 'RST_B', 3: 'RST_C'})
 wires('IGN reset', 'R_RSTB', {1: 'BAD', 2: 'RST_B'})
 wires('IGN reset', 'R_RSTPD', {1: 'RST_B', 2: 'PGND'})

@@ -8,6 +8,12 @@ October 29 evening were carried over from the retired tracker
 
 ## October 31, 2026
 
+**D-CQUAL-20: C3 is the WIMA MKS2 on a 5.5 mm-wide footprint.** Told the
+chosen 1 uF 5 % 63 V film (WIMA MKS2C041001F00JSSD, 7.2 x 5 x 10 mm) does
+not fit the 2.5 mm-wide C_Rect footprint, the owner said: *"yes change
+C3's footprint"*. Footprint becomes C_Rect_L7.2mm_W5.5mm_P5.00mm; the
+owner re-places it (it meets R14/R15 pin 2 and TP12 where it sits).
+
 **D-ORDER-19: DigiKey order scope.** Owner: *"if no parts are likely to
 change id like to come up with a digikey order file containing the BOM"*.
 Answers: one board plus spares (cheap passives rounded up to DigiKey's

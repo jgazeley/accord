@@ -206,3 +206,10 @@ on Capacitor_THT:CP_Radial_Tantal_D6.0mm_P2.50mm (schematic Footprint and
 MPN, BOM.csv, one new check, a substitution note in
 power/COMPONENT_MARGIN_CLOSURE.md). ERC 0; full-netlist capture 780/780;
 no pin changed net; closure 67/67; courtyard allowance 1.64x.
+
+C3 footprint, October 31 2026 (DECISIONS D-CQUAL-20): CQUAL becomes the
+WIMA MKS2C041001F00JSSD (1 uF 5 % 63 V PET, 7.2 x 5 x 10 mm) on
+Capacitor_THT:C_Rect_L7.2mm_W5.5mm_P5.00mm_FKS2_FKP2_MKS2_MKP2 (was W2.5;
+no 1 uF >=50 V film at 5 mm pitch is that narrow). Schematic, BOM.csv and
+one new check. ERC 0; full-netlist capture 781/781; no pin changed net;
+closure 67/67; courtyard allowance 1.64x; order file unchanged.

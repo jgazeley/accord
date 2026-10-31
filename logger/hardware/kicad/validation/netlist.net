@@ -1,7 +1,7 @@
 (export (version "E")
   (design
     (source "/srv/agent_share/accord/logger/hardware/kicad/accord-logger.kicad_sch")
-    (date "2026-10-31T11:39:43-0700")
+    (date "2026-10-31T12:40:27-0700")
     (tool "Eeschema 9.0.2+dfsg-1")
     (sheet (number "1") (name "/") (tstamps "/")
       (title_block
@@ -80,12 +80,12 @@
       (tstamps "ba4744fe-31d2-524e-bb5d-f4b12cf00f55"))
     (comp (ref "C3")
       (value "1uF")
-      (footprint "Capacitor_THT:C_Rect_L7.2mm_W2.5mm_P5.00mm_FKS2_FKP2_MKS2_MKP2")
+      (footprint "Capacitor_THT:C_Rect_L7.2mm_W5.5mm_P5.00mm_FKS2_FKP2_MKS2_MKP2")
       (fields
         (field (name "Status") "PART_SELECTION_OPEN")
         (field (name "Source") "CUTOFF_MARGIN_REVIEW S2")
         (field (name "Source_designator") "CQUAL")
-        (field (name "Footprint") "Capacitor_THT:C_Rect_L7.2mm_W2.5mm_P5.00mm_FKS2_FKP2_MKS2_MKP2")
+        (field (name "Footprint") "Capacitor_THT:C_Rect_L7.2mm_W5.5mm_P5.00mm_FKS2_FKP2_MKS2_MKP2")
         (field (name "Datasheet"))
         (field (name "Description")))
       (libsource (lib "Device") (part "C") (description "Unpolarized capacitor"))

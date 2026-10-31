@@ -22,6 +22,7 @@ D113,1.5KE20A-E3/54,Diode_THT:D_DO-201AD_P5.08mm_Vertical_KathodeUp,9.780,5.700,
 D115,SB360-E3/54,Diode_THT:D_DO-201AD_P5.08mm_Vertical_AnodeUp,9.780,5.700,55.7,FIT,courtyard
 U2,PC817,Package_DIP:DIP-4_W7.62mm,9.730,5.590,54.4,FIT,courtyard
 J3,Spare GP11-13 / switched power,Connector_PinHeader_2.54mm:PinHeader_2x03_P2.54mm_Vertical,6.090,8.620,52.5,FIT,courtyard
+C3,1uF,Capacitor_THT:C_Rect_L7.2mm_W5.5mm_P5.00mm_FKS2_FKP2_MKS2_MKP2,7.700,6.000,46.2,FIT,courtyard
 C8,47uF/16V,Capacitor_THT:CP_Radial_D6.3mm_P2.50mm,6.800,6.800,46.2,FIT,courtyard
 R13,2.2k,Resistor_THT:R_Axial_DIN0414_L11.9mm_D4.5mm_P5.08mm_Vertical,9.030,5.000,45.2,FIT,courtyard
 R32,1k,Resistor_THT:R_Axial_DIN0414_L11.9mm_D4.5mm_P5.08mm_Vertical,9.030,5.000,45.2,FIT,courtyard
@@ -37,7 +38,6 @@ D106,1N5819,Diode_THT:D_DO-41_SOD81_P5.08mm_Vertical_AnodeUp,8.030,3.200,25.7,FI
 D107,1N5819,Diode_THT:D_DO-41_SOD81_P5.08mm_Vertical_AnodeUp,8.030,3.200,25.7,FIT,courtyard
 D109,1N5819,Diode_THT:D_DO-41_SOD81_P5.08mm_Vertical_AnodeUp,8.030,3.200,25.7,FIT,courtyard
 D116,1N4004-E3/54,Diode_THT:D_DO-41_SOD81_P5.08mm_Vertical_KathodeUp,8.030,3.200,25.7,FIT,courtyard
-C3,1uF,Capacitor_THT:C_Rect_L7.2mm_W2.5mm_P5.00mm_FKS2_FKP2_MKS2_MKP2,7.700,3.000,23.1,FIT,courtyard
 R30,10k,Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical,7.630,3.000,22.9,FIT,courtyard
 R47,390R,Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical,7.630,3.000,22.9,FIT,courtyard
 R48,390R,Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical,7.630,3.000,22.9,FIT,courtyard
