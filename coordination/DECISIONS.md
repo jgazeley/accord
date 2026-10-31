@@ -8,6 +8,10 @@ October 29 evening were carried over from the retired tracker
 
 ## October 31, 2026
 
+**D-CONN-23: J1 overhangs the board edge on purpose.** At the silkscreen
+review the owner said: *"J1 I want to hang off the board a little"*. Its
+silkscreen outline beyond the edge is accepted.
+
 **D-TP-22: TP11 and TP19 removed.** Owner, during the silkscreen pass:
 *"I removed TP11 and TP19, please update the silscreen list based on the
 revisions I just did"*. TP11 (QUAL_N_REPORT, GP5) and TP19 (HOLD_RAW,
