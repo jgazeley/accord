@@ -10706,7 +10706,7 @@
 		)
 		(uuid "7290d0b3-d225-4baa-bffe-8e6331ae636e")
 	)
-	(label "P3V3_SW"
+	(label "SPARE_GP13"
 		(at 396.24 480.06 180)
 		(effects
 			(font
@@ -10726,7 +10726,7 @@
 		)
 		(uuid "99b8e141-1ef7-4d70-bdd0-4177039d41cf")
 	)
-	(label "SPARE_GP13"
+	(label "P3V3_SW"
 		(at 414.02 480.06 0)
 		(effects
 			(font

@@ -1,7 +1,7 @@
 (export (version "E")
   (design
     (source "/srv/agent_share/accord/logger/hardware/kicad/accord-logger.kicad_sch")
-    (date "2026-10-31T07:47:50-0700")
+    (date "2026-10-31T07:55:00-0700")
     (tool "Eeschema 9.0.2+dfsg-1")
     (sheet (number "1") (name "/") (tstamps "/")
       (title_block
@@ -4084,7 +4084,7 @@
       (node (ref "D103") (pin "1") (pinfunction "K") (pintype "passive"))
       (node (ref "D104") (pin "1") (pinfunction "K") (pintype "passive"))
       (node (ref "D106") (pin "1") (pinfunction "K") (pintype "passive"))
-      (node (ref "J3") (pin "3") (pinfunction "Pin_3") (pintype "passive"))
+      (node (ref "J3") (pin "4") (pinfunction "Pin_4") (pintype "passive"))
       (node (ref "J5") (pin "1") (pinfunction "Pin_1") (pintype "passive"))
       (node (ref "JP3") (pin "1") (pinfunction "A") (pintype "passive"))
       (node (ref "R21") (pin "1") (pintype "passive"))
@@ -4298,7 +4298,7 @@
       (node (ref "J3") (pin "5") (pinfunction "Pin_5") (pintype "passive"))
       (node (ref "U1") (pin "16") (pinfunction "GPIO12") (pintype "bidirectional")))
     (net (code "77") (name "/SPARE_GP13") (class "Default")
-      (node (ref "J3") (pin "4") (pinfunction "Pin_4") (pintype "passive"))
+      (node (ref "J3") (pin "3") (pinfunction "Pin_3") (pintype "passive"))
       (node (ref "U1") (pin "17") (pinfunction "GPIO13") (pintype "bidirectional")))
     (net (code "78") (name "/SUPPLY_ADC") (class "Default")
       (node (ref "C2") (pin "1") (pintype "passive"))

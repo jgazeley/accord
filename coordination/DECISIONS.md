@@ -16,7 +16,10 @@ board; J3 (now 1x04: B5, PGND, P3V3_SW, SPARE_GP13) becomes a 6-pin header
 carrying SPARE_GP11 and SPARE_GP12 as well. Schematic, BOM, checks and
 the `headers` step follow. Offered 1x06 or 2x03 (a 1x06 reaches H4 and
 the antenna strip, or R21), the owner chose: *"2x03 please"*. Pins 1-4
-keep B5, PGND, P3V3_SW, SPARE_GP13; 5 SPARE_GP12, 6 SPARE_GP11.
+keep B5, PGND, P3V3_SW, SPARE_GP13; 5 SPARE_GP12, 6 SPARE_GP11. After
+routing it the owner had pins 3 and 4 the other way round: *"keep my
+routing, I swapped the GP13 and 3v3 pins for ease of routing"*. Final
+J3: 1 B5, 2 PGND, 3 SPARE_GP13, 4 P3V3_SW, 5 SPARE_GP12, 6 SPARE_GP11.
 
 ## October 30, 2026
 

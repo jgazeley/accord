@@ -31,7 +31,7 @@ bench test and vehicle test.
   (GP20 SDA, GP21 SCL, GP22 INT/SQW), pull-ups on switched 3V3, BR2032 in a
   Keystone 3034 holder, placed. The DS3231SN#, holder and cell need
   ordering; firmware needs an RTC driver.
-- **J3 is a 2x03** (D-HDR-16, October 31): B5, PGND, switched 3V3, GP13,
+- **J3 is a 2x03** (D-HDR-16, October 31): B5, PGND, GP13, switched 3V3,
   GP12, GP11. TP24/TP25 (GP11/GP12 pads) are gone.
 - Engineering record: `logger/hardware/power/LAYOUT_CLOSURE.md`; risks,
   bring-up tests and firmware follow-up: `logger/hardware/LRA12_HANDOFF.md`.

@@ -540,8 +540,9 @@ check('the RTC cell is a BR2032, rated to +85 C',
       by_src['BT_RTC']['value'] == 'BR2032')
 
 # R12-REV-4: onboard keyless RS-485 and default-open topology.
-# D-HDR-16: GP11/GP12 moved here from test pads; J3 is a 2x03
-wires('spare header', 'J3', {1:'B5',2:'PGND',3:'P3V3_SW',4:'SPARE_GP13',
+# D-HDR-16: GP11/GP12 moved here from test pads; J3 is a 2x03, pins 3/4
+# swapped by the owner for routing
+wires('spare header', 'J3', {1:'B5',2:'PGND',3:'SPARE_GP13',4:'P3V3_SW',
                              5:'SPARE_GP12',6:'SPARE_GP11'})
 check('the spare header is a 2x03',
       by_src['J3']['footprint'] ==

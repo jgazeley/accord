@@ -186,3 +186,7 @@ full-netlist capture 783/783 (new check: J3 is the 2x03); the reference
 pin map was refreshed after confirming the only pins that moved were
 J3.5, J3.6, TP24.1 and TP25.1; closure 67/67; 151 BOM rows; courtyard
 allowance 1.62x.
+Then the owner routed J3 with pins 3 and 4 the other way round and kept
+it: pin 3 SPARE_GP13, pin 4 P3V3_SW (labels swapped in the schematic).
+Reference refreshed after confirming only J3.3 and J3.4 moved; DRC
+parity 0.
