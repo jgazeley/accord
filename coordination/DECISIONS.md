@@ -6,6 +6,18 @@ changes. Newest first. Don't re-ask anything recorded here. Entries before
 October 29 evening were carried over from the retired tracker
 (`PROJECT_MILESTONES.md`), which has the fuller original text.
 
+## October 31, 2026
+
+**D-HDR-16: GP11 and GP12 move from test pads to J3.** Owner, after
+placing the qualifier steps: *"I removed GP12 and GP11 test points, would
+prefer to change J3 to a 6 pin header, either 1x06 or 2x03, and include
+them there instead"*. TP24 (SPARE_GP11) and TP25 (SPARE_GP12) are off the
+board; J3 (now 1x04: B5, PGND, P3V3_SW, SPARE_GP13) becomes a 6-pin header
+carrying SPARE_GP11 and SPARE_GP12 as well. Schematic, BOM, checks and
+the `headers` step follow. Offered 1x06 or 2x03 (a 1x06 reaches H4 and
+the antenna strip, or R21), the owner chose: *"2x03 please"*. Pins 1-4
+keep B5, PGND, P3V3_SW, SPARE_GP13; 5 SPARE_GP12, 6 SPARE_GP11.
+
 ## October 30, 2026
 
 **D-THT-15: through-hole resistors and 1N5819 from the vehicle inputs
