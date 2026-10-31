@@ -8,6 +8,13 @@ October 29 evening were carried over from the retired tracker
 
 ## October 31, 2026
 
+**D-DRC-24: the 11 remaining DRC items are accepted and excluded.** Asked
+which to ignore, the owner chose to exclude all of them: the Pico W
+footprint's two paste-only pads in its RF keepout, J1's silkscreen at the
+edge it overhangs (D-CONN-23), the U1/J5 library-metadata warnings, the
+U7 and U3 silkscreen ticks on their own pads, and the single-spoke thermal
+connections at U7 pin 2 and U13 pin 7 (connected).
+
 **D-CONN-23: J1 overhangs the board edge on purpose.** At the silkscreen
 review the owner said: *"J1 I want to hang off the board a little"*. Its
 silkscreen outline beyond the edge is accepted.
