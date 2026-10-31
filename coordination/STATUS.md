@@ -39,30 +39,25 @@ bench test and vehicle test.
 - Engineering record: `logger/hardware/power/LAYOUT_CLOSURE.md`; risks,
   bring-up tests and firmware follow-up: `logger/hardware/LRA12_HANDOFF.md`.
 
-- **Every part is placed and routed** (October 31; staged one step at a
-  time, D-STAGE-11). Board 120 × 83 mm (D-ENVELOPE-02). Refilled DRC:
-  schematic parity 0; errors left are the Pico footprint's two paste pads
-  in its RF keepout, Q5's middle lead (same drain as the tab), U1 pin 8 on
-  a small ground island (the module bonds its grounds) and single-spoke
-  thermals at R30, Q7, U7, U13 (all connected). Review loop: ERC, full
-  netlist (`board_chunks.py full-netlist`), capture, closure, and DRC with
-  parity on a scratch copy with the zone refilled (never `kicad-cli pcb
-  drc` in the shared checkout). Done: fab minimums set (0.2 mm track and
-  clearance, 0.13 annular, 0.5 via, 0.3 hole, 0.5 hole-to-hole and edge,
-  1.0/0.15 mm text); pour notched out of the Pico antenna area (x 101-116,
-  y 130-139). Pre-order check passed October 31 (ground stitched, C3 on its
-  film footprint, trial gerbers clean; J5 on the back is intentional,
-  D-SD-21; C15 leakage checked). Before ordering: the owner's silkscreen
-  pass (56 items, U7's label below the 1.0 mm minimum), then the final fab
-  package with separate plated/non-plated drill files, then order approval.
-  Nylon hardware at H4 (in the RF keep-clear strip).
+- **Rev A is ready to order** (October 31). Every part placed and routed;
+  board 120 × 83 mm (D-ENVELOPE-02). Silkscreen pass done; DRC 0 active
+  with 11 accepted exclusions (D-DRC-24); schematic parity 0; ERC 0;
+  capture 780/780; closure 67/67. Fab package:
+  `logger/hardware/kicad/fab/rev-a/` (gerber zip, separate PTH/NPTH
+  drill, README with the plot commands). Parts: `order/digikey_rev_a.csv`
+  (D-ORDER-19, regenerate with `tools/gen_digikey_order.py`). Review
+  loop: ERC, full netlist (`board_chunks.py full-netlist`), capture,
+  closure, and DRC with parity on a copy of the project (never
+  `kicad-cli pcb drc` in the shared checkout; it rewrites the
+  .kicad_pro). Assembly notes: nylon screw and washer at H4 (Pico RF
+  keep-clear strip); J5 on the back and J1 overhanging are intentional.
 
 ## Next, in order
 
 1. **Owner opens the schematic in KiCad once.** This host can't render it, so
    no one has looked at it.
 2. **Done:** the owner has placed and routed the whole board.
-3. Pre-order review of the routed board, then order (owner approval), then
+3. **Next:** owner approves and places the board and parts orders; then
    bring-up, bench and vehicle tests (`LRA12_HANDOFF.md` §5).
 4. Firmware for the board: GP7 isolation enable and the shutdown order
    (`LRA12_HANDOFF.md` §5.4), before running it autonomously. Also a DS3231
