@@ -8,6 +8,14 @@ October 29 evening were carried over from the retired tracker
 
 ## October 31, 2026
 
+**D-ORDER-19: DigiKey order scope.** Owner: *"if no parts are likely to
+change id like to come up with a digikey order file containing the BOM"*.
+Answers: one board plus spares (cheap passives rounded up to DigiKey's
+10-piece break, one spare of each cheap IC or transistor); order
+everything fresh, nothing taken from inventory; include the JAE mating
+housing and contacts, the 1 A inline fuse and holder, jumper shunts and a
+BR2032 cell.
+
 **D-ENVELOPE-02: board 120 x 83 mm.** Found at the final placement review:
 the owner made the board 3 mm taller at the top (80 -> 83 mm) and moved
 H1/H3 to y 60.96. Reported to the owner, who carried on without
