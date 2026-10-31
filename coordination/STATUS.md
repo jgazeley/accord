@@ -47,11 +47,14 @@ bench test and vehicle test.
   thermals at R30, Q7, U7, U13 (all connected). Review loop: ERC, full
   netlist (`board_chunks.py full-netlist`), capture, closure, and DRC with
   parity on a scratch copy with the zone refilled (never `kicad-cli pcb
-  drc` in the shared checkout). Before ordering: the Pico W antenna is at
-  the BOTTOM edge (x 101-116) with H4 and pour in the footprint's RF
-  keep-clear strip; fab minimums in Board Setup (track and clearance
-  minimums are 0); silkscreen pass (about 50 overlaps); confirm the
-  TAP336K016SCS hot-leakage limits (D-CCLK-18).
+  drc` in the shared checkout). Done: fab minimums set (0.2 mm track and
+  clearance, 0.13 annular, 0.5 via, 0.3 hole, 0.5 hole-to-hole and edge,
+  1.0/0.15 mm text); pour notched out of the Pico antenna area (x 101-116,
+  y 130-139). Before ordering: stitching vias for the front ground islands
+  at Pico pins 8, 23 and 28 and under C8; nylon hardware at H4 (in the RF
+  keep-clear strip); silkscreen pass (about 50 overlaps, U7's label below
+  the 1.0 mm minimum); confirm the TAP336K016SCS hot-leakage limits
+  (D-CCLK-18).
 
 ## Next, in order
 
