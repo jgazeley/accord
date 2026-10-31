@@ -24732,7 +24732,7 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board no)
+		(on_board yes)
 		(dnp no)
 		(uuid "673d1b5f-a8e3-589c-bce3-469ce2f5a8a9")
 		(property "Reference" "C7"
@@ -27509,7 +27509,7 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board no)
+		(on_board yes)
 		(dnp no)
 		(uuid "9eb5050b-882d-5371-ae76-540be5e574aa")
 		(property "Reference" "TP17"
@@ -30222,7 +30222,7 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board no)
+		(on_board yes)
 		(dnp no)
 		(uuid "c83609fb-7bfc-5221-aa71-fa99c65e8edb")
 		(property "Reference" "U5"
