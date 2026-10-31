@@ -8,6 +8,11 @@ October 29 evening were carried over from the retired tracker
 
 ## October 31, 2026
 
+**D-ENVELOPE-02: board 120 x 83 mm.** Found at the final placement review:
+the owner made the board 3 mm taller at the top (80 -> 83 mm) and moved
+H1/H3 to y 60.96. Reported to the owner, who carried on without
+objection; supersedes the 80 x 120 mm of D-ENVELOPE-01.
+
 **D-CCLK-18: C15 may go through-hole.** Asked how far C15 can sit from U7,
 then whether it could use a through-hole footprint, the owner said:
 *"confirm and if it works, swap it in and I'll update from schematic"*.

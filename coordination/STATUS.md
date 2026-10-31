@@ -39,29 +39,25 @@ bench test and vehicle test.
 - Engineering record: `logger/hardware/power/LAYOUT_CLOSURE.md`; risks,
   bring-up tests and firmware follow-up: `logger/hardware/LRA12_HANDOFF.md`.
 
-- **The board is staged in small ordered steps** (D-STAGE-11 revised,
-  October 30). Phases A-C (Pico peripherals, vehicle inputs, always-on 5 V
-  and ignition qualifier, steps 4-21) are placed, routed and committed one
-  step at a time after review. Next: phase D, the power hold and cutoff
-  timer, starting with `hold` (step 22); the upper right of the board is
-  kept for the timer chips. `python3 tools/board_chunks.py status` lists the
-  steps; `next` switches the next one on (in `logger/hardware/kicad`,
-  KiCad's schematic closed), then the owner runs "Update PCB from
-  Schematic". Review loop per step: ERC, full netlist, capture, closure,
-  and DRC with schematic parity on a scratch copy with the zone refilled.
-  Known DRC residue: Q5's middle lead (same drain as the tab) and the Pico
-  footprint's two paste pads in its RF keepout. Pre-order: the Pico W
-  antenna is at the BOTTOM edge (x 101-116); H4 and the ground pour sit in
-  the footprint's RF keep-clear strip; set fab minimums in Board Setup
-  (track and clearance minimums are 0); silkscreen pass.
+- **Every part is placed and routed** (October 31; staged one step at a
+  time, D-STAGE-11). Board 120 × 83 mm (D-ENVELOPE-02). Refilled DRC:
+  schematic parity 0; errors left are the Pico footprint's two paste pads
+  in its RF keepout, Q5's middle lead (same drain as the tab), U1 pin 8 on
+  a small ground island (the module bonds its grounds) and single-spoke
+  thermals at R30, Q7, U7, U13 (all connected). Review loop: ERC, full
+  netlist (`board_chunks.py full-netlist`), capture, closure, and DRC with
+  parity on a scratch copy with the zone refilled (never `kicad-cli pcb
+  drc` in the shared checkout). Before ordering: the Pico W antenna is at
+  the BOTTOM edge (x 101-116) with H4 and pour in the footprint's RF
+  keep-clear strip; fab minimums in Board Setup (track and clearance
+  minimums are 0); silkscreen pass (about 50 overlaps); confirm the
+  TAP336K016SCS hot-leakage limits (D-CCLK-18).
 
 ## Next, in order
 
 1. **Owner opens the schematic in KiCad once.** This host can't render it, so
    no one has looked at it.
-2. **Owner places and routes** the board. `accord-logger.kicad_pcb` already
-   has the 80 × 120 mm outline and four M3 corner holes; open it and use
-   "Update PCB from Schematic" to bring in the parts.
+2. **Done:** the owner has placed and routed the whole board.
 3. Pre-order review of the routed board, then order (owner approval), then
    bring-up, bench and vehicle tests (`LRA12_HANDOFF.md` §5).
 4. Firmware for the board: GP7 isolation enable and the shutdown order
