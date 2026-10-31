@@ -112,10 +112,8 @@ TP6,TestPoint,TestPoint:TestPoint_Pad_D2.0mm,3.000,3.000,9.0,FIT,courtyard
 TP7,TestPoint,TestPoint:TestPoint_Pad_D2.0mm,3.000,3.000,9.0,FIT,courtyard
 TP8,TestPoint,TestPoint:TestPoint_Pad_D2.0mm,3.000,3.000,9.0,FIT,courtyard
 TP9,TestPoint,TestPoint:TestPoint_Pad_D2.0mm,3.000,3.000,9.0,FIT,courtyard
-TP11,TestPoint,TestPoint:TestPoint_Pad_D2.0mm,3.000,3.000,9.0,FIT,courtyard
 TP12,TestPoint,TestPoint:TestPoint_Pad_D2.0mm,3.000,3.000,9.0,FIT,courtyard
 TP17,TestPoint,TestPoint:TestPoint_Pad_D2.0mm,3.000,3.000,9.0,FIT,courtyard
-TP19,TestPoint,TestPoint:TestPoint_Pad_D2.0mm,3.000,3.000,9.0,FIT,courtyard
 TP20,TestPoint,TestPoint:TestPoint_Pad_D2.0mm,3.000,3.000,9.0,FIT,courtyard
 C1,1uF,Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder,3.760,1.960,7.4,FIT,courtyard
 C2,1uF,Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder,3.760,1.960,7.4,FIT,courtyard

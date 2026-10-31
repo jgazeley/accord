@@ -213,3 +213,11 @@ Capacitor_THT:C_Rect_L7.2mm_W5.5mm_P5.00mm_FKS2_FKP2_MKS2_MKP2 (was W2.5;
 no 1 uF >=50 V film at 5 mm pitch is that narrow). Schematic, BOM.csv and
 one new check. ERC 0; full-netlist capture 781/781; no pin changed net;
 closure 67/67; courtyard allowance 1.64x; order file unchanged.
+
+TP11 and TP19 removed, October 31 2026 (DECISIONS D-TP-22): the owner took
+them off the board; TP_QUALN (QUAL_N_REPORT) and TP_HOLD (HOLD_RAW) and
+their label stubs removed from the schematic; BOM.csv, check_capture.py
+(the QUAL_N_REPORT allowed-pin list, one new check) and the steps follow.
+ERC 0; full-netlist capture 780/780; reference refreshed after confirming
+only TP11.1 and TP19.1 moved; closure 67/67; DRC schematic parity 0
+against the owner's board; order file unchanged.

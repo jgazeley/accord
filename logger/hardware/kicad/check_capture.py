@@ -334,8 +334,7 @@ wires('IGN report', 'QREPORT', {1: 'REP_G', 2: 'PGND', 3: 'QUAL_N_REPORT'})
 wires('IGN report', 'R_REPG', {1: 'IGN_Q', 2: 'REP_G'})
 wires('IGN report', 'R_REPPD', {1: 'REP_G', 2: 'PGND'})
 wires('IGN report', 'RIGN', {1: 'P3V3_SW', 2: 'QUAL_N_REPORT'})
-only('QUAL_N_REPORT', [('QREPORT', 3), ('RIGN', 2), ('TP_QUALN', 1),
-                       ('U1', 7)],
+only('QUAL_N_REPORT', [('QREPORT', 3), ('RIGN', 2), ('U1', 7)],
      'nothing else may load or feed the report node')
 check('the report node carries no capacitor, so its delay is not an unknown',
       not any(r['symbol'].startswith('Device:C')
@@ -865,6 +864,8 @@ check('the D-SMD-17 timer resistors are 0805',
 check('the D-SMD-17 test points are gone',
       not {'TP_VCLK', 'TP_IGNQ', 'TP_CLK32', 'TP_ARM', 'TP_EXPIRED', 'TP_HOLDN'}
       & {r['source_designator'] for r in bom})
+check('TP_QUALN and TP_HOLD are gone (D-TP-22)',
+      not {'TP_QUALN', 'TP_HOLD'} & {r['source_designator'] for r in bom})
 check('every 1N5819 is the through-hole part on DO-41 (D-THT-15)',
       all(r['value'] == '1N5819'
           and r['footprint'] == 'Diode_THT:D_DO-41_SOD81_P5.08mm_Vertical_AnodeUp'

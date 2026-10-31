@@ -103,11 +103,11 @@ STEPS = [
     ('C  always-on 5 V and ignition', 'qual_reset', 'Q1 R16 R17 R18',
      'QRESET discharges the ignition filter when BAD: Q1 and R16-R18, next '
      'to C3'),
-    ('C  always-on 5 V and ignition', 'qual_report', 'Q2 R19 R20 R21 TP11',
+    ('C  always-on 5 V and ignition', 'qual_report', 'Q2 R19 R20 R21',
      'QREPORT drives GP5 (pin 7) from IGN_Q: Q2 with R19/R20, R21 10k '
      'pull-up to 3V3 at the Pico pin'),
 
-    ('D  power hold and cutoff timer', 'hold', 'JP1 R28 R29 TP19',
+    ('D  power hold and cutoff timer', 'hold', 'JP1 R28 R29',
      'HOLD: GP6 (pin 9) -> JP1 maintenance link -> R29 1k -> Q7 base; R28 '
      '47k pull-down at the Pico pin'),
     ('D  power hold and cutoff timer', 'clk_osc', 'U7 R38 C15 C16',

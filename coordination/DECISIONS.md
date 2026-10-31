@@ -8,6 +8,11 @@ October 29 evening were carried over from the retired tracker
 
 ## October 31, 2026
 
+**D-TP-22: TP11 and TP19 removed.** Owner, during the silkscreen pass:
+*"I removed TP11 and TP19, please update the silscreen list based on the
+revisions I just did"*. TP11 (QUAL_N_REPORT, GP5) and TP19 (HOLD_RAW,
+GP6) leave the board; the schematic, BOM and checks follow.
+
 **D-SD-21: J5 on the back is intentional.** Asked at the pre-order check
 whether the SD header on the underside was meant (the module hangs below
 the board), the owner said: *"J5 on back was intentional"*. Also: *"silkscreen

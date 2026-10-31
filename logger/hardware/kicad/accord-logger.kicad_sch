@@ -12536,16 +12536,6 @@
 	)
 	(wire
 		(pts
-			(xy 546.1 544.83) (xy 546.1 547.37)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "5f236bbf-bbee-5102-bd06-069a00a3e64e")
-	)
-	(wire
-		(pts
 			(xy 599.44 615.95) (xy 599.44 613.41)
 		)
 		(stroke
@@ -13183,16 +13173,6 @@
 			(type default)
 		)
 		(uuid "812fcc2e-2db5-5398-a608-e0779f23f36d")
-	)
-	(wire
-		(pts
-			(xy 769.62 544.83) (xy 769.62 547.37)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8572ebd9-f374-5440-a9da-35c1c86e77ff")
 	)
 	(wire
 		(pts
@@ -15524,15 +15504,6 @@
 		)
 		(uuid "0a45b100-7eec-5457-bdc1-258d8d8c8e17")
 	)
-	(label "HOLD_RAW"
-		(at 769.62 547.37 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "0c673d64-90e9-59b1-a75a-2802c3dbf9a7")
-	)
 	(label "SD_MOSI"
 		(at 461.01 96.52 0)
 		(effects
@@ -15703,15 +15674,6 @@
 			)
 		)
 		(uuid "1eb4e4fe-dd66-575b-ac94-446d3a7fb7e4")
-	)
-	(label "QUAL_N_REPORT"
-		(at 546.1 547.37 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "1f1ef244-10b4-5bd1-8d36-4b9b1f1c5e2a")
 	)
 	(label "PGND"
 		(at 508 742.95 90)
@@ -23249,98 +23211,6 @@
 	)
 	(symbol
 		(lib_id "Connector:TestPoint")
-		(at 546.1 544.83 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "532d08b6-5f80-5eaf-a6d1-d44130770c0f")
-		(property "Reference" "TP11"
-			(at 548.13 543.05 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "TestPoint"
-			(at 548.13 546.61 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
-			(at 546.1 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 546.1 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 546.1 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Status" "VERIFY_OR_SOURCE"
-			(at 546.1 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Source" "REV_A_INTERFACES S5.3"
-			(at 546.1 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Source_designator" "TP_QUALN"
-			(at 546.1 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "8f884e12-b91c-59e3-8993-00a5a41cbad8")
-		)
-		(instances
-			(project "accord-logger"
-				(path "/d6403372-a8d4-5433-aa98-182e137307f3"
-					(reference "TP11")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
 		(at 574.04 568.96 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -28521,98 +28391,6 @@
 			(project "accord-logger"
 				(path "/d6403372-a8d4-5433-aa98-182e137307f3"
 					(reference "C6")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 769.62 544.83 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "b550bc34-38cb-51be-90c7-704db402c058")
-		(property "Reference" "TP19"
-			(at 771.65 543.05 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "TestPoint"
-			(at 771.65 546.61 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
-			(at 769.62 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 769.62 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 769.62 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Status" "VERIFY_OR_SOURCE"
-			(at 769.62 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Source" "REV_A_INTERFACES S5.3"
-			(at 769.62 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Source_designator" "TP_HOLD"
-			(at 769.62 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "7a414ca2-f465-5589-9075-bb4cd4da6365")
-		)
-		(instances
-			(project "accord-logger"
-				(path "/d6403372-a8d4-5433-aa98-182e137307f3"
-					(reference "TP19")
 					(unit 1)
 				)
 			)
