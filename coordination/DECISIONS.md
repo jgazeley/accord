@@ -8,6 +8,12 @@ October 29 evening were carried over from the retired tracker
 
 ## October 31, 2026
 
+**D-SMD-17: no more test points; the remaining resistors are surface
+mount.** Owner, during the cutoff-timer steps: *"at this point all
+unplaced test points need to go. All remaining resistors should be surface
+mount. please review before I carry on"*. Applies to the parts not yet
+placed on the board; placed parts keep their footprints (no backtracking).
+
 **D-HDR-16: GP11 and GP12 move from test pads to J3.** Owner, after
 placing the qualifier steps: *"I removed GP12 and GP11 test points, would
 prefer to change J3 to a 6 pin header, either 1x06 or 2x03, and include

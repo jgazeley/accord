@@ -190,3 +190,12 @@ Then the owner routed J3 with pins 3 and 4 the other way round and kept
 it: pin 3 SPARE_GP13, pin 4 P3V3_SW (labels swapped in the schematic).
 Reference refreshed after confirming only J3.3 and J3.4 moved; DRC
 parity 0.
+
+No more test points; remaining resistors 0805, October 31 2026 (DECISIONS
+D-SMD-17): TP10, TP13, TP14, TP15, TP16, TP18 and their label stubs
+removed by script; R39-R43, R45, R46 moved from DIN0204 to
+Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder; BOM.csv,
+check_capture.py (two new checks) and the steps follow. ERC 0;
+full-netlist capture 779/779; reference pin map refreshed after
+confirming the only pins that moved were the six test points; closure
+67/67; 145 BOM rows; courtyard allowance 1.64x.

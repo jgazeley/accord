@@ -844,11 +844,19 @@ for _src, (_v, _e, _b, _c) in {'QI': ('2N3904', 'PGND', 'IGN_B', 'SINK'),
           and (_q.get('E'), _q.get('B'), _q.get('C')) == (_e, _b, _c),
           f'roles {_q}')
 # D-THT-15: from the vehicle inputs on, resistors are through-hole DIN0204.
-# Only the RTC pull-ups placed before that stay surface mount.
-check('no surface-mount resistor remains outside the RTC pull-ups',
+# Only the RTC pull-ups placed before that stay surface mount, and the
+# cutoff-timer resistors not yet placed when D-SMD-17 moved them to 0805.
+_SMD17 = {'R_EXPP', 'R_EXPT', 'R_EXP', 'R_QSG', 'R_QSPD', 'R_MONPD', 'R_MONC'}
+check('no surface-mount resistor remains outside the RTC pull-ups and D-SMD-17',
       not [r['reference'] for r in bom if r['footprint'].startswith('Resistor_SMD')
-           and r['source_designator'] not in {'R_SDA', 'R_SCL', 'R_RTCINT'}],
+           and r['source_designator'] not in {'R_SDA', 'R_SCL', 'R_RTCINT'} | _SMD17],
       'D-THT-15 moved the rest to DIN0204')
+check('the D-SMD-17 timer resistors are 0805',
+      all(by_src[s]['footprint'] ==
+          'Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder' for s in _SMD17))
+check('the D-SMD-17 test points are gone',
+      not {'TP_VCLK', 'TP_IGNQ', 'TP_CLK32', 'TP_ARM', 'TP_EXPIRED', 'TP_HOLDN'}
+      & {r['source_designator'] for r in bom})
 check('every 1N5819 is the through-hole part on DO-41 (D-THT-15)',
       all(r['value'] == '1N5819'
           and r['footprint'] == 'Diode_THT:D_DO-41_SOD81_P5.08mm_Vertical_AnodeUp'

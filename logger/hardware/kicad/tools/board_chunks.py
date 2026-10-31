@@ -110,29 +110,29 @@ STEPS = [
     ('D  power hold and cutoff timer', 'hold', 'JP1 R28 R29 TP19',
      'HOLD: GP6 (pin 9) -> JP1 maintenance link -> R29 1k -> Q7 base; R28 '
      '47k pull-down at the Pico pin'),
-    ('D  power hold and cutoff timer', 'clk_osc', 'U7 R38 C15 C16 TP10',
+    ('D  power hold and cutoff timer', 'clk_osc', 'U7 R38 C15 C16',
      '32.768 kHz oscillator U7 on its own filtered rail: R38 1k from A5, '
      'C15 33 uF and C16 10 nF at U7'),
-    ('D  power hold and cutoff timer', 'clk_gate', 'U8 C17 U9 C18 TP14',
+    ('D  power hold and cutoff timer', 'clk_gate', 'U8 C17 U9 C18',
      'oscillator enable buffer U8 (C17) and clock gate U9 (C18), beside U7'),
-    ('D  power hold and cutoff timer', 'schmitt', 'U14 C23 TP13',
+    ('D  power hold and cutoff timer', 'schmitt', 'U14 C23',
      'CD4093 Schmitt gates: conditions the ignition filter and PGOOD into '
      'IGN_Q / BAD. C23 at its supply pins. Near C3 and U5'),
-    ('D  power hold and cutoff timer', 'latch', 'U12 C21 TP15',
+    ('D  power hold and cutoff timer', 'latch', 'U12 C21',
      'CD4011 ARM latch, C21 at its supply pins. Beside U14'),
     ('D  power hold and cutoff timer', 'or_tree', 'U13 C22',
      'CD4071 reset OR tree, C22 at its supply pins. Beside U12'),
     ('D  power hold and cutoff timer', 'divider', 'U10 C19',
      'CD74HC4060 divides the gated 32 kHz clock; C19 at its supply pins. '
      'Between U9 and U11'),
-    ('D  power hold and cutoff timer', 'counter', 'U11 C20 R39 R40 R41 TP16',
+    ('D  power hold and cutoff timer', 'counter', 'U11 C20 R39 R40 R41',
      'CD74HC4020 counter, C20 at its supply pins. R39 (0R, production '
      '2048 s) or R40 (0R, 64 s bench test, DNP) picks the tap; R41 pulls '
      'EXPIRED down'),
     ('D  power hold and cutoff timer', 'cutoff_switch', 'Q8 R42 R43',
      'QS series switch in the HOLD sink path (Q7 collector to SINK), with '
      'R42/R43 on its gate. Next to Q6/Q7'),
-    ('D  power hold and cutoff timer', 'hold_monitor', 'Q9 R44 R45 R46 TP18',
+    ('D  power hold and cutoff timer', 'hold_monitor', 'Q9 R44 R45 R46',
      'QMON senses HOLD_RAW into HOLD_N for the timer: Q9 with R44-R46'),
 ]
 CHUNKS = {name: refs.split() for _, name, refs, _ in STEPS}

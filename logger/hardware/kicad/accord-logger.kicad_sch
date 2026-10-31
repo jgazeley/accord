@@ -11126,16 +11126,6 @@
 	)
 	(wire
 		(pts
-			(xy 741.68 544.83) (xy 741.68 547.37)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "16b23fa1-ee0b-5edc-8ac1-4a6ad0ba3157")
-	)
-	(wire
-		(pts
 			(xy 318.77 73.66) (xy 308.61 73.66)
 		)
 		(stroke
@@ -12176,16 +12166,6 @@
 	)
 	(wire
 		(pts
-			(xy 797.56 520.7) (xy 797.56 523.24)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "5084879e-1622-563c-801b-387df00e055e")
-	)
-	(wire
-		(pts
 			(xy 182.88 487.68) (xy 180.34 487.68)
 		)
 		(stroke
@@ -12846,16 +12826,6 @@
 	)
 	(wire
 		(pts
-			(xy 657.86 544.83) (xy 657.86 547.37)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "6ec7f71d-8f76-555d-9f1d-5835ba4f07b6")
-	)
-	(wire
-		(pts
 			(xy 129.54 595.63) (xy 129.54 593.09)
 		)
 		(stroke
@@ -13433,16 +13403,6 @@
 			(type default)
 		)
 		(uuid "8ebfffaa-7ceb-5abf-ac8a-94e0139bd64b")
-	)
-	(wire
-		(pts
-			(xy 629.92 544.83) (xy 629.92 547.37)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8f2b32ad-29b8-52fa-ae11-c6c7cdcaac7d")
 	)
 	(wire
 		(pts
@@ -14376,16 +14336,6 @@
 	)
 	(wire
 		(pts
-			(xy 601.98 544.83) (xy 601.98 547.37)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ccc793f3-0f2d-5b54-8cf3-d5f20b0da625")
-	)
-	(wire
-		(pts
 			(xy 55.88 304.8) (xy 49.53 304.8)
 		)
 		(stroke
@@ -14833,16 +14783,6 @@
 			(type default)
 		)
 		(uuid "e1faea83-83ad-5362-8860-0e0646520778")
-	)
-	(wire
-		(pts
-			(xy 685.8 544.83) (xy 685.8 547.37)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "e2351bfc-711b-5e59-ad18-a208f4aa3af3")
 	)
 	(wire
 		(pts
@@ -15719,15 +15659,6 @@
 		)
 		(uuid "18d1ea20-194e-4afa-8bd0-2d59689bd901")
 	)
-	(label "CLK32"
-		(at 629.92 547.37 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "190065fe-efe2-5614-8035-3f1fb0decaee")
-	)
 	(label "P_AON"
 		(at 741.68 523.24 90)
 		(effects
@@ -16160,15 +16091,6 @@
 		)
 		(uuid "3a33ce40-3e6a-55d1-b5fa-3404927de8e2")
 	)
-	(label "ARM"
-		(at 657.86 547.37 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "3abb1b00-e78c-5a5b-9932-69353da0863c")
-	)
 	(label "A5"
 		(at 396.24 613.41 90)
 		(effects
@@ -16510,15 +16432,6 @@
 			)
 		)
 		(uuid "5f76fb98-72bc-5541-8aac-204a17c93c08")
-	)
-	(label "IGN_Q"
-		(at 601.98 547.37 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "609e81c7-f8f3-5c2d-8c00-eb634aa14908")
 	)
 	(label "PGND"
 		(at 104.14 726.44 90)
@@ -17537,15 +17450,6 @@
 		)
 		(uuid "b0c2c61a-41de-446e-9d09-2c8e332b0bf5")
 	)
-	(label "EXPIRED"
-		(at 685.8 547.37 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "b331970b-f0d2-5358-9dcc-bdc450d2e6ac")
-	)
 	(label "SUPPLY_DIV"
 		(at 114.3 166.37 90)
 		(effects
@@ -18032,15 +17936,6 @@
 		)
 		(uuid "e263d544-5867-5f2a-968e-fab0735d6d7d")
 	)
-	(label "HOLD_N"
-		(at 741.68 547.37 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "e383ea40-cab1-5da7-97dc-8c822b8a6015")
-	)
 	(label "A5"
 		(at 508 730.25 90)
 		(effects
@@ -18256,15 +18151,6 @@
 			)
 		)
 		(uuid "f53ab773-1619-5a79-a4df-df923d489357")
-	)
-	(label "VCLK"
-		(at 797.56 523.24 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "f55c6d90-cd0c-5a2b-b968-66ff3e8e7a40")
 	)
 	(label "A5"
 		(at 330.2 730.25 90)
@@ -18698,7 +18584,7 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board no)
+		(on_board yes)
 		(dnp no)
 		(uuid "0527653f-7ffa-5a8f-a298-f630584aec20")
 		(property "Reference" "U13"
@@ -18837,7 +18723,7 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board no)
+		(on_board yes)
 		(dnp no)
 		(uuid "053f13d9-06bc-5a9d-b13b-331b83474f4d")
 		(property "Reference" "U7"
@@ -19593,7 +19479,7 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board no)
+		(on_board yes)
 		(dnp no)
 		(uuid "10dfc9a0-4526-54c0-81c7-cb8395dd09f5")
 		(property "Reference" "U8"
@@ -21349,7 +21235,7 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board no)
+		(on_board yes)
 		(dnp no)
 		(uuid "328afa28-6928-5744-8376-f6ccaa4a9119")
 		(property "Reference" "R38"
@@ -21550,98 +21436,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 629.92 544.83 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board no)
-		(dnp no)
-		(uuid "349616ae-f4bf-5c77-a21b-ffb55f0519a5")
-		(property "Reference" "TP14"
-			(at 631.95 543.05 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "TestPoint"
-			(at 631.95 546.61 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
-			(at 629.92 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 629.92 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 629.92 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Status" "VERIFY_OR_SOURCE"
-			(at 629.92 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Source" "REV_A_INTERFACES S5.3"
-			(at 629.92 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Source_designator" "TP_CLK32"
-			(at 629.92 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "ab713232-4599-5f73-ba8a-4e9044191a5f")
-		)
-		(instances
-			(project "accord-logger"
-				(path "/d6403372-a8d4-5433-aa98-182e137307f3"
-					(reference "TP14")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:PWR_FLAG")
 		(at 260.35 745.49 0)
 		(unit 1)
@@ -21712,7 +21506,7 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board no)
+		(on_board yes)
 		(dnp no)
 		(uuid "3816f727-9e21-5d2c-9e05-83426c5280b8")
 		(property "Reference" "C19"
@@ -21806,7 +21600,7 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board no)
+		(on_board yes)
 		(dnp no)
 		(uuid "3a77fa12-70e6-5af5-8167-3736e27b7cbb")
 		(property "Reference" "U11"
@@ -22231,7 +22025,7 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board no)
+		(on_board yes)
 		(dnp no)
 		(uuid "40a798c3-3afd-592f-8fbd-5cb5a065deca")
 		(property "Reference" "Q9"
@@ -22640,7 +22434,7 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board no)
+		(on_board yes)
 		(dnp no)
 		(uuid "4735a64c-76e2-5ff3-baa3-e6595bc6e5f1")
 		(property "Reference" "R45"
@@ -22659,7 +22453,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 419.1 756.92 0)
 			(effects
 				(font
@@ -23226,7 +23020,7 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board no)
+		(on_board yes)
 		(dnp no)
 		(uuid "4fade748-3c02-5f53-aa57-80b087d8a489")
 		(property "Reference" "C22"
@@ -23320,7 +23114,7 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board no)
+		(on_board yes)
 		(dnp no)
 		(uuid "5109e94f-9d14-5694-a7b2-b606d7e84ebd")
 		(property "Reference" "U14"
@@ -23840,7 +23634,7 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board no)
+		(on_board yes)
 		(dnp no)
 		(uuid "597198cb-11ae-5b65-9585-356fe74af85c")
 		(property "Reference" "C17"
@@ -24142,7 +23936,7 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board no)
+		(on_board yes)
 		(dnp yes)
 		(uuid "60a9d01d-3c10-512d-a35d-971472ca34b9")
 		(property "Reference" "R40"
@@ -24161,7 +23955,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 596.9 736.6 0)
 			(effects
 				(font
@@ -24709,7 +24503,7 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board no)
+		(on_board yes)
 		(dnp no)
 		(uuid "675b7773-e535-5dc8-900f-9da4c0b7d1cd")
 		(property "Reference" "Q8"
@@ -24907,7 +24701,7 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board no)
+		(on_board yes)
 		(dnp no)
 		(uuid "70e71801-029d-596a-be10-20464e462161")
 		(property "Reference" "C21"
@@ -25207,7 +25001,7 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board no)
+		(on_board yes)
 		(dnp no)
 		(uuid "74c411d6-bf4d-557d-beb9-1735f3d35fd9")
 		(property "Reference" "R44"
@@ -25767,7 +25561,7 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board no)
+		(on_board yes)
 		(dnp no)
 		(uuid "7bea1c6b-8472-51b7-a95e-ad7cd7510a34")
 		(property "Reference" "U10"
@@ -26304,7 +26098,7 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board no)
+		(on_board yes)
 		(dnp no)
 		(uuid "87eeb55d-4238-5d98-a6fd-c6124ac78446")
 		(property "Reference" "C15"
@@ -26607,7 +26401,7 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board no)
+		(on_board yes)
 		(dnp no)
 		(uuid "8c3aedb7-3ef3-55c8-84de-5af780ccf407")
 		(property "Reference" "R46"
@@ -26626,7 +26420,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 463.55 756.92 0)
 			(effects
 				(font
@@ -26690,98 +26484,6 @@
 			(project "accord-logger"
 				(path "/d6403372-a8d4-5433-aa98-182e137307f3"
 					(reference "R46")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 685.8 544.83 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board no)
-		(dnp no)
-		(uuid "8d3ae4c7-16c1-5908-864b-08f32350b34a")
-		(property "Reference" "TP16"
-			(at 687.83 543.05 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "TestPoint"
-			(at 687.83 546.61 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
-			(at 685.8 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 685.8 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 685.8 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Status" "VERIFY_OR_SOURCE"
-			(at 685.8 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Source" "REV_A_INTERFACES S5.3"
-			(at 685.8 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Source_designator" "TP_EXPIRED"
-			(at 685.8 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "c9fd612d-86d0-58f7-a6b8-8009243810cc")
-		)
-		(instances
-			(project "accord-logger"
-				(path "/d6403372-a8d4-5433-aa98-182e137307f3"
-					(reference "TP16")
 					(unit 1)
 				)
 			)
@@ -27484,7 +27186,7 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board no)
+		(on_board yes)
 		(dnp no)
 		(uuid "9f471319-0dad-5540-a8e8-89bb71d378aa")
 		(property "Reference" "R39"
@@ -27503,7 +27205,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 552.45 736.6 0)
 			(effects
 				(font
@@ -27838,7 +27540,7 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board no)
+		(on_board yes)
 		(dnp no)
 		(uuid "a5d96e08-964b-53e6-ae4d-ef263e468bbe")
 		(property "Reference" "R42"
@@ -27857,7 +27559,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 730.25 736.6 0)
 			(effects
 				(font
@@ -27932,7 +27634,7 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board no)
+		(on_board yes)
 		(dnp no)
 		(uuid "a6f1c4e6-6c90-57a4-92d5-3a28407d8901")
 		(property "Reference" "C18"
@@ -28628,104 +28330,12 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 797.56 520.7 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board no)
-		(dnp no)
-		(uuid "b14cfeef-8520-5855-8ac4-03fb1254fafe")
-		(property "Reference" "TP10"
-			(at 799.59 518.92 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "TestPoint"
-			(at 799.59 522.48 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
-			(at 797.56 520.7 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 797.56 520.7 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 797.56 520.7 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Status" "VERIFY_OR_SOURCE"
-			(at 797.56 520.7 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Source" "REV_A_INTERFACES S5.3"
-			(at 797.56 520.7 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Source_designator" "TP_VCLK"
-			(at 797.56 520.7 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "aeceeb93-d43e-5202-ad7c-532f6d439895")
-		)
-		(instances
-			(project "accord-logger"
-				(path "/d6403372-a8d4-5433-aa98-182e137307f3"
-					(reference "TP10")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:C")
 		(at 374.65 736.6 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board no)
+		(on_board yes)
 		(dnp no)
 		(uuid "b1d50521-86f8-57df-805b-61e88bedd04a")
 		(property "Reference" "C20"
@@ -30685,7 +30295,7 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board no)
+		(on_board yes)
 		(dnp no)
 		(uuid "d25e6198-4e02-5de7-8601-c74134dddc4e")
 		(property "Reference" "U9"
@@ -30892,7 +30502,7 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board no)
+		(on_board yes)
 		(dnp no)
 		(uuid "d9daac9c-4c4f-5cca-9ec1-3fdbdec23ae4")
 		(property "Reference" "C23"
@@ -31080,7 +30690,7 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board no)
+		(on_board yes)
 		(dnp no)
 		(uuid "dcd18e55-ec39-55f2-9c8c-f5f627475fd0")
 		(property "Reference" "R43"
@@ -31099,7 +30709,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 774.7 736.6 0)
 			(effects
 				(font
@@ -31174,7 +30784,7 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board no)
+		(on_board yes)
 		(dnp no)
 		(uuid "df649787-11ee-5596-b6bf-df996f2ce08c")
 		(property "Reference" "C16"
@@ -31557,98 +31167,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 601.98 544.83 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board no)
-		(dnp no)
-		(uuid "e54d6b70-a0ba-58c3-8c95-85af8800c51b")
-		(property "Reference" "TP13"
-			(at 604.01 543.05 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "TestPoint"
-			(at 604.01 546.61 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
-			(at 601.98 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 601.98 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 601.98 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Status" "VERIFY_OR_SOURCE"
-			(at 601.98 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Source" "REV_A_INTERFACES S5.3"
-			(at 601.98 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Source_designator" "TP_IGNQ"
-			(at 601.98 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "38475df8-184a-5198-9ec9-90e7338226cc")
-		)
-		(instances
-			(project "accord-logger"
-				(path "/d6403372-a8d4-5433-aa98-182e137307f3"
-					(reference "TP13")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Diode:1N5819")
 		(at 212.09 73.66 180)
 		(unit 1)
@@ -31757,7 +31275,7 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board no)
+		(on_board yes)
 		(dnp no)
 		(uuid "e6be01f0-f225-501e-b545-d9173c4a40aa")
 		(property "Reference" "R41"
@@ -31776,7 +31294,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 641.35 736.6 0)
 			(effects
 				(font
@@ -31840,98 +31358,6 @@
 			(project "accord-logger"
 				(path "/d6403372-a8d4-5433-aa98-182e137307f3"
 					(reference "R41")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 657.86 544.83 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board no)
-		(dnp no)
-		(uuid "e75e39a3-ae1b-5064-a5d9-35bcb46f6ec9")
-		(property "Reference" "TP15"
-			(at 659.89 543.05 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "TestPoint"
-			(at 659.89 546.61 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
-			(at 657.86 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 657.86 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 657.86 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Status" "VERIFY_OR_SOURCE"
-			(at 657.86 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Source" "REV_A_INTERFACES S5.3"
-			(at 657.86 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Source_designator" "TP_ARM"
-			(at 657.86 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "8e8a3e09-edf1-5a66-84e0-60545aeddcd7")
-		)
-		(instances
-			(project "accord-logger"
-				(path "/d6403372-a8d4-5433-aa98-182e137307f3"
-					(reference "TP15")
 					(unit 1)
 				)
 			)
@@ -32118,98 +31544,6 @@
 			(project "accord-logger"
 				(path "/d6403372-a8d4-5433-aa98-182e137307f3"
 					(reference "R3")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 741.68 544.83 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board no)
-		(dnp no)
-		(uuid "e91ede35-1cd9-5e71-aafc-7459085b545d")
-		(property "Reference" "TP18"
-			(at 743.71 543.05 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "TestPoint"
-			(at 743.71 546.61 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
-			(at 741.68 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 741.68 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 741.68 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Status" "VERIFY_OR_SOURCE"
-			(at 741.68 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Source" "REV_A_INTERFACES S5.3"
-			(at 741.68 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Source_designator" "TP_HOLDN"
-			(at 741.68 544.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "1dd00683-d034-5f48-89bc-c2ac43871dfe")
-		)
-		(instances
-			(project "accord-logger"
-				(path "/d6403372-a8d4-5433-aa98-182e137307f3"
-					(reference "TP18")
 					(unit 1)
 				)
 			)
@@ -32695,7 +32029,7 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board no)
+		(on_board yes)
 		(dnp no)
 		(uuid "f86a7caf-f875-5d35-918d-a62f563c08f4")
 		(property "Reference" "U12"

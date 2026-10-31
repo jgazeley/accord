@@ -318,6 +318,11 @@ heartbeat LEDs. Follow it, extended for the power candidate's nodes:
 | TP_GND ×3 | Buck, Pico, harness | Return-path separation, as keyless does |
 | JH | Removable HOLD link | Maintenance; already in the power contract |
 
+**D-SMD-17 (October 31, 2026):** TP_VCLK, TP_ARM, TP_EXPIRED and TP_HOLDN,
+with TP_IGNQ and TP_CLK32, are not on the board. Probe those nets at part
+pads instead: VCLK at C16, ARM at R42 pin 1, EXPIRED at R41 pin 1, HOLD_N at
+R46 pin 1, IGN_Q at R19 pin 1, CLK32 at U9 pin 4.
+
 Current-sensitive nodes need a way to measure without the instrument supplying
 the current being measured; `COMPONENT_MARGIN_CLOSURE.md` §5 step 4 requires
 probes to be removed for the final leakage reading, which is a layout

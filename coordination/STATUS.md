@@ -23,8 +23,8 @@ bench test and vehicle test.
 - Includes the keyless RS-485 circuit (D-RS485-05), the single 14-way
   JAE IL-AG5-14P-D3L2-A board connector J1 (D-CONN-06), and mostly
   surface-mount parts (D-SMD-09: 114 SMD, 34 through-hole).
-- Verified on `main`: ERC 0 at all severities, 783/783 capture checks, 67
-  power-closure checks with no overruns, 151 BOM rows all footprinted, 1.62×
+- Verified on `main`: ERC 0 at all severities, 779/779 capture checks, 67
+  power-closure checks with no overruns, 145 BOM rows all footprinted, 1.64×
   courtyard allowance on 80 × 120 mm
   (`logger/hardware/kicad/validation/COMMANDS.txt`).
 - **DS3231 RTC on the board** (D-RTC-14, October 30): DS3231SN on I2C0
@@ -33,6 +33,9 @@ bench test and vehicle test.
   ordering; firmware needs an RTC driver.
 - **J3 is a 2x03** (D-HDR-16, October 31): B5, PGND, GP13, switched 3V3,
   GP12, GP11. TP24/TP25 (GP11/GP12 pads) are gone.
+- **No more test points; remaining resistors 0805** (D-SMD-17, October 31):
+  TP10, TP13-TP16, TP18 removed (probe at part pads, REV_A_INTERFACES
+  §5.3); R39-R43, R45, R46 on 0805.
 - Engineering record: `logger/hardware/power/LAYOUT_CLOSURE.md`; risks,
   bring-up tests and firmware follow-up: `logger/hardware/LRA12_HANDOFF.md`.
 
