@@ -372,6 +372,10 @@ value('RGS', '10k')
 value('DZ', 'BZX55C10')
 wires('clock', 'RCLK', {1: 'A5', 2: 'VCLK'})
 wires('clock', 'CCLK', {1: 'VCLK', 2: 'PGND'})
+check('CCLK is the dipped radial TAP336K016SCS (D-CCLK-18)',
+      by_src['CCLK']['manufacturer_part_or_type'] == 'KYOCERA AVX TAP336K016SCS'
+      and by_src['CCLK']['footprint'] ==
+      'Capacitor_THT:CP_Radial_Tantal_D6.0mm_P2.50mm')
 wires('clock', 'C_CLK', {1: 'VCLK', 2: 'PGND'})
 wires('clock', 'UXO', {4: 'VCLK', 3: 'CLKOE', 2: 'PGND', 1: 'XO_OUT'})
 wires('clock', 'UOE', {2: 'ARM', 3: 'PGND', 4: 'CLKOE', 5: 'VCLK'})

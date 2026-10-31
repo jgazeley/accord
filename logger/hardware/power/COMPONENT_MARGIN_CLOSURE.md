@@ -65,6 +65,21 @@ in [document 40192, 2025-11-05](https://www.vishay.com/docs/40192/typperfmoldchi
 headed “Typical Performance Characteristics”; KEMET's explicit qualification
 limits provide a clearer starting point. Neither grants unlimited service life.
 
+**Through-hole substitute, October 31 2026 (DECISIONS D-CCLK-18).** The
+layout uses KYOCERA AVX **TAP336K016SCS** in place of the T491D: 33 µF
+±10 %, 16 V, solid tantalum, resin-dipped radial, case F (6.0 mm diameter,
+10.0 mm tall on the S wire form, 2.5 mm pitch), −55 to +125 °C, ESR
+1.6 Ω at 100 kHz. The TAP datasheet (TDS-PTNO-0026 Rev 2, p.227) gives
+DCL **4.2 µA** max at 25 °C, below the T491D's 5.3 µA. Its hot-leakage,
+temperature and endurance limits are in the KYOCERA AVX dipped-tantalum
+technical section, not on the series sheet, and were not retrieved. With
+the same 10× hot and 1.25× endurance factors used above, the reserve is
+**5.25/52.5 µA** (room/hot), and the hot reserve plus UOE and UXO takes
+**63.6 µA** of the 100 µA envelope (was 77.35). The capacitance stack is
+unchanged if its temperature and endurance limits are ±10 %. Both must be
+confirmed from the technical section before ordering. The higher ESR is
+immaterial behind the 1 kΩ RCLK. Pad 1 (+) to VCLK, as before.
+
 ### A5 capacitors
 
 [Murata product data](https://www.murata.com/en-eu/api/pdfdownloadapi?cate=luCeramicCapacitorsSMD&partno=GRM32ER71H475KA88L),

@@ -8,6 +8,14 @@ October 29 evening were carried over from the retired tracker
 
 ## October 31, 2026
 
+**D-CCLK-18: C15 may go through-hole.** Asked how far C15 can sit from U7,
+then whether it could use a through-hole footprint, the owner said:
+*"confirm and if it works, swap it in and I'll update from schematic"*.
+Candidate: KYOCERA AVX TAP336K016SCS (33 uF +/-10 %, 16 V, dipped radial
+tantalum, 6 x 10 mm, 2.5 mm pitch), subject to its datasheet meeting the
+CCLK budget in COMPONENT_MARGIN_CLOSURE (22-60 uF effective; leakage
+within the 66.25 uA hot reserve).
+
 **D-SMD-17: no more test points; the remaining resistors are surface
 mount.** Owner, during the cutoff-timer steps: *"at this point all
 unplaced test points need to go. All remaining resistors should be surface

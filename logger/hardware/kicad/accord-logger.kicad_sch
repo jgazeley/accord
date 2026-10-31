@@ -26117,7 +26117,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_Tantalum_SMD:CP_EIA-7343-31_Kemet-D_HandSolder"
+		(property "Footprint" "Capacitor_THT:CP_Radial_Tantal_D6.0mm_P2.50mm"
 			(at 85.09 699.77 0)
 			(effects
 				(font
@@ -26162,7 +26162,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "KEMET T491D336K016AT"
+		(property "MPN" "KYOCERA AVX TAP336K016SCS"
 			(at 85.09 699.77 0)
 			(effects
 				(font

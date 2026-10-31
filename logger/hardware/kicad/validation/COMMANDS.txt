@@ -199,3 +199,10 @@ check_capture.py (two new checks) and the steps follow. ERC 0;
 full-netlist capture 779/779; reference pin map refreshed after
 confirming the only pins that moved were the six test points; closure
 67/67; 145 BOM rows; courtyard allowance 1.64x.
+
+C15 through-hole, October 31 2026 (DECISIONS D-CCLK-18): CCLK changed
+from KEMET T491D336K016AT on CP_EIA-7343-31 to KYOCERA AVX TAP336K016SCS
+on Capacitor_THT:CP_Radial_Tantal_D6.0mm_P2.50mm (schematic Footprint and
+MPN, BOM.csv, one new check, a substitution note in
+power/COMPONENT_MARGIN_CLOSURE.md). ERC 0; full-netlist capture 780/780;
+no pin changed net; closure 67/67; courtyard allowance 1.64x.
