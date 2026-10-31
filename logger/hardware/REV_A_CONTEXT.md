@@ -38,7 +38,7 @@ the ignition-qualified power hold and independent cutoff.
 | RS-485 | Keyless circuit: MAX3485 in a DIP-8 socket, GP8 TX / GP9 RX / GP10 DE+RE with 10 k pulldown; 390 Ω bias and 120 Ω termination each on a jumper, open by default |
 | Grounds | AGND and PGND join only inside the Pico module; don't add a board-level bond. B16 is a sense reference, never a return |
 | Real-time clock | DS3231SN (U16) on I2C0: GP20 SDA, GP21 SCL, GP22 INT/SQW; 4.7 k pull-ups to switched 3V3; BR2032 backup cell in a Keystone 3034 holder, no charging path (D-RTC-14) |
-| Other | SD module header (J5), spare GP13 + switched power (J3), RUN/GND reset (J4), HOLD link, test points |
+| Other | SD module header (J5), spare GP11-13 + switched power (J3, 2x03), RUN/GND reset (J4), HOLD link, test points |
 
 Envelope: 80 × 120 mm, no enclosure. The board file
 [accord-logger.kicad_pcb](kicad/accord-logger.kicad_pcb) has the outline (2 mm

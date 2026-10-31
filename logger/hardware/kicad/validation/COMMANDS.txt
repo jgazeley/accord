@@ -176,3 +176,13 @@ Diode_THT:D_DO-41_SOD81_P5.08mm_Vertical_AnodeUp, in the schematic and
 BOM.csv. check_capture.py asserts both. ERC 0; full-netlist capture
 782/782 (netlist changed only in footprint and value fields; no pin moved
 net); closure 67/67; courtyard allowance 1.61x.
+
+J3 as a 2x03, October 31 2026 (DECISIONS D-HDR-16): J3 changed by script
+from Conn_01x04 / PinHeader_1x04 to Conn_02x03_Odd_Even /
+PinHeader_2x03_P2.54mm_Vertical (pins 1-4 unchanged: B5, PGND, P3V3_SW,
+SPARE_GP13; 5 SPARE_GP12, 6 SPARE_GP11); TP24/TP25 and their label stubs
+removed; BOM.csv, check_capture.py and the `headers` step follow. ERC 0;
+full-netlist capture 783/783 (new check: J3 is the 2x03); the reference
+pin map was refreshed after confirming the only pins that moved were
+J3.5, J3.6, TP24.1 and TP25.1; closure 67/67; 151 BOM rows; courtyard
+allowance 1.62x.

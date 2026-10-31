@@ -21,11 +21,11 @@ D112,SB360-E3/54,Diode_THT:D_DO-201AD_P5.08mm_Vertical_AnodeUp,9.780,5.700,55.7,
 D113,1.5KE20A-E3/54,Diode_THT:D_DO-201AD_P5.08mm_Vertical_KathodeUp,9.780,5.700,55.7,FIT,courtyard
 D115,SB360-E3/54,Diode_THT:D_DO-201AD_P5.08mm_Vertical_AnodeUp,9.780,5.700,55.7,FIT,courtyard
 U2,PC817,Package_DIP:DIP-4_W7.62mm,9.730,5.590,54.4,FIT,courtyard
+J3,Spare GP11-13 / switched power,Connector_PinHeader_2.54mm:PinHeader_2x03_P2.54mm_Vertical,6.090,8.620,52.5,FIT,courtyard
 C8,47uF/16V,Capacitor_THT:CP_Radial_D6.3mm_P2.50mm,6.800,6.800,46.2,FIT,courtyard
 R13,2.2k,Resistor_THT:R_Axial_DIN0414_L11.9mm_D4.5mm_P5.08mm_Vertical,9.030,5.000,45.2,FIT,courtyard
 R32,1k,Resistor_THT:R_Axial_DIN0414_L11.9mm_D4.5mm_P5.08mm_Vertical,9.030,5.000,45.2,FIT,courtyard
 C15,33uF/16V,Capacitor_Tantalum_SMD:CP_EIA-7343-31_Kemet-D_HandSolder,9.160,4.800,44.0,FIT,courtyard
-J3,Spare GP13 / switched power,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical,3.540,11.160,39.5,FIT,courtyard
 Q6,2N3904,Package_TO_SOT_THT:TO-92_Inline,5.460,4.740,25.9,FIT,courtyard
 Q7,2N3904,Package_TO_SOT_THT:TO-92_Inline,5.460,4.740,25.9,FIT,courtyard
 D101,1N5819,Diode_THT:D_DO-41_SOD81_P5.08mm_Vertical_AnodeUp,8.030,3.200,25.7,FIT,courtyard
@@ -130,8 +130,6 @@ TP17,TestPoint,TestPoint:TestPoint_Pad_D2.0mm,3.000,3.000,9.0,FIT,courtyard
 TP18,TestPoint,TestPoint:TestPoint_Pad_D2.0mm,3.000,3.000,9.0,FIT,courtyard
 TP19,TestPoint,TestPoint:TestPoint_Pad_D2.0mm,3.000,3.000,9.0,FIT,courtyard
 TP20,TestPoint,TestPoint:TestPoint_Pad_D2.0mm,3.000,3.000,9.0,FIT,courtyard
-TP24,TestPoint,TestPoint:TestPoint_Pad_D2.0mm,3.000,3.000,9.0,FIT,courtyard
-TP25,TestPoint,TestPoint:TestPoint_Pad_D2.0mm,3.000,3.000,9.0,FIT,courtyard
 C1,1uF,Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder,3.760,1.960,7.4,FIT,courtyard
 C2,1uF,Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder,3.760,1.960,7.4,FIT,courtyard
 C7,100nF,Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder,3.760,1.960,7.4,FIT,courtyard

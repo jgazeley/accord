@@ -55,9 +55,9 @@ STEPS = [
     ('A  Pico peripherals', 'rs485_links', 'R47 R48 R49 JP2 JP3 JP4',
      '390R bias pair, 120R termination and their three jumpers, next to '
      'U15 pins 6/7 (A/B)'),
-    ('A  Pico peripherals', 'headers', 'J3 J4 TP24 TP25',
-     'J3 spare header (GP13 + switched power) by Pico pin 17; J4 RUN-GND '
-     'reset by pin 30; TP24/TP25 pads on GP11/GP12 (pins 15/16)'),
+    ('A  Pico peripherals', 'headers', 'J3 J4',
+     'J3 2x03 spare header (GP11-13 + switched power) by Pico pins 15-17; '
+     'J4 RUN-GND reset by pin 30'),
     ('A  Pico peripherals', 'power_tps', 'TP1 TP2 TP3 TP4 TP5 TP6 TP7 TP21 '
      'TP22 TP23',
      'test points on the placed power block: P12, GATE, VIN_SW, SW, B5, '

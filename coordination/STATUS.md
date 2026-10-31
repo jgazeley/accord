@@ -1,7 +1,7 @@
 # Status
 
 Rewritten, not appended to, whenever the state changes. Owner statements
-go in [DECISIONS.md](DECISIONS.md). Last updated October 29, 2026.
+go in [DECISIONS.md](DECISIONS.md). Last updated October 31, 2026.
 
 ## Goal now
 
@@ -23,28 +23,34 @@ bench test and vehicle test.
 - Includes the keyless RS-485 circuit (D-RS485-05), the single 14-way
   JAE IL-AG5-14P-D3L2-A board connector J1 (D-CONN-06), and mostly
   surface-mount parts (D-SMD-09: 114 SMD, 34 through-hole).
-- Verified on `main`: ERC 0 at all severities, 782/782 capture checks, 67
-  power-closure checks with no overruns, 153 BOM rows all footprinted, 1.61×
+- Verified on `main`: ERC 0 at all severities, 783/783 capture checks, 67
+  power-closure checks with no overruns, 151 BOM rows all footprinted, 1.62×
   courtyard allowance on 80 × 120 mm
   (`logger/hardware/kicad/validation/COMMANDS.txt`).
 - **DS3231 RTC on the board** (D-RTC-14, October 30): DS3231SN on I2C0
   (GP20 SDA, GP21 SCL, GP22 INT/SQW), pull-ups on switched 3V3, BR2032 in a
-  Keystone 3034 holder. Chunk `rtc`, still off the board. The DS3231SN#,
-  holder and cell need ordering; firmware needs an RTC driver.
+  Keystone 3034 holder, placed. The DS3231SN#, holder and cell need
+  ordering; firmware needs an RTC driver.
+- **J3 is a 2x03** (D-HDR-16, October 31): B5, PGND, switched 3V3, GP13,
+  GP12, GP11. TP24/TP25 (GP11/GP12 pads) are gone.
 - Engineering record: `logger/hardware/power/LAYOUT_CLOSURE.md`; risks,
   bring-up tests and firmware follow-up: `logger/hardware/LRA12_HANDOFF.md`.
 
 - **The board is staged in small ordered steps** (D-STAGE-11 revised,
-  October 30). On the board: power block (placement reviewed and accepted),
-  Pico, SD header, J1, four holes. Everything else is "Exclude from board".
-  `python3 tools/board_chunks.py status` lists the 28 remaining steps in
-  build order with the next one marked; `next` switches it on and prints
-  where it goes (in `logger/hardware/kicad`, KiCad's schematic closed), then
-  the owner reopens the schematic and runs "Update PCB from Schematic".
-  Next step: `rtc`. The timer batch was imported once and removed by the
-  owner as too much at once. Open: nylon hardware at H4 (next to the
-  antenna); a solid PGND return between C14, D115 and C10 when routing.
-  Checks must use the full netlist (`board_chunks.py full-netlist`).
+  October 30). Phases A-C (Pico peripherals, vehicle inputs, always-on 5 V
+  and ignition qualifier, steps 4-21) are placed, routed and committed one
+  step at a time after review. Next: phase D, the power hold and cutoff
+  timer, starting with `hold` (step 22); the upper right of the board is
+  kept for the timer chips. `python3 tools/board_chunks.py status` lists the
+  steps; `next` switches the next one on (in `logger/hardware/kicad`,
+  KiCad's schematic closed), then the owner runs "Update PCB from
+  Schematic". Review loop per step: ERC, full netlist, capture, closure,
+  and DRC with schematic parity on a scratch copy with the zone refilled.
+  Known DRC residue: Q5's middle lead (same drain as the tab) and the Pico
+  footprint's two paste pads in its RF keepout. Pre-order: the Pico W
+  antenna is at the BOTTOM edge (x 101-116); H4 and the ground pour sit in
+  the footprint's RF keep-clear strip; set fab minimums in Board Setup
+  (track and clearance minimums are 0); silkscreen pass.
 
 ## Next, in order
 

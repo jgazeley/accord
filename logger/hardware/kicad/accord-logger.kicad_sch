@@ -654,7 +654,7 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "Connector_Generic:Conn_01x04"
+		(symbol "Connector_Generic:Conn_02x03_Odd_Even"
 			(pin_names
 				(offset 1.016)
 				(hide yes)
@@ -663,15 +663,15 @@
 			(in_bom yes)
 			(on_board yes)
 			(property "Reference" "J"
-				(at 0 5.08 0)
+				(at 1.27 5.08 0)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
 				)
 			)
-			(property "Value" "Conn_01x04"
-				(at 0 -7.62 0)
+			(property "Value" "Conn_02x03_Odd_Even"
+				(at 1.27 -5.08 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -696,7 +696,7 @@
 					(hide yes)
 				)
 			)
-			(property "Description" "Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"
+			(property "Description" "Generic connector, double row, 02x03, odd/even pin numbering scheme (row 1 odd numbers, row 2 even numbers), script generated (kicad-library-utils/schlib/autogen/connector/)"
 				(at 0 0 0)
 				(effects
 					(font
@@ -714,7 +714,7 @@
 					(hide yes)
 				)
 			)
-			(property "ki_fp_filters" "Connector*:*_1x??_*"
+			(property "ki_fp_filters" "Connector*:*_2x??_*"
 				(at 0 0 0)
 				(effects
 					(font
@@ -723,10 +723,10 @@
 					(hide yes)
 				)
 			)
-			(symbol "Conn_01x04_1_1"
+			(symbol "Conn_02x03_Odd_Even_1_1"
 				(rectangle
 					(start -1.27 3.81)
-					(end 1.27 -6.35)
+					(end 3.81 -3.81)
 					(stroke
 						(width 0.254)
 						(type default)
@@ -769,8 +769,30 @@
 					)
 				)
 				(rectangle
-					(start -1.27 -4.953)
-					(end 0 -5.207)
+					(start 3.81 2.667)
+					(end 2.54 2.413)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start 3.81 0.127)
+					(end 2.54 -0.127)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start 3.81 -2.413)
+					(end 2.54 -2.667)
 					(stroke
 						(width 0.1524)
 						(type default)
@@ -800,24 +822,6 @@
 				(pin passive line
 					(at -5.08 0 0)
 					(length 3.81)
-					(name "Pin_2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at -5.08 -2.54 0)
-					(length 3.81)
 					(name "Pin_3"
 						(effects
 							(font
@@ -834,7 +838,43 @@
 					)
 				)
 				(pin passive line
-					(at -5.08 -5.08 0)
+					(at -5.08 -2.54 0)
+					(length 3.81)
+					(name "Pin_5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 7.62 2.54 180)
+					(length 3.81)
+					(name "Pin_2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 7.62 0 180)
 					(length 3.81)
 					(name "Pin_4"
 						(effects
@@ -844,6 +884,24 @@
 						)
 					)
 					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 7.62 -2.54 180)
+					(length 3.81)
+					(name "Pin_6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -10601,6 +10659,123 @@
 	)
 	(wire
 		(pts
+			(xy 396.24 477.52) (xy 398.78 477.52)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4a7274a6-3bca-4f99-9ae1-5bdc455913ed")
+	)
+	(label "B5"
+		(at 396.24 477.52 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "dc7c8b6b-763c-4cfa-bd74-958041225ac4")
+	)
+	(wire
+		(pts
+			(xy 411.48 477.52) (xy 414.02 477.52)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "df88dbe4-9aa5-40d9-bf0b-4e23203a203a")
+	)
+	(label "PGND"
+		(at 414.02 477.52 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "fcc1f0c6-3f6a-42e7-9848-c7f1c2ac91d0")
+	)
+	(wire
+		(pts
+			(xy 396.24 480.06) (xy 398.78 480.06)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7290d0b3-d225-4baa-bffe-8e6331ae636e")
+	)
+	(label "P3V3_SW"
+		(at 396.24 480.06 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "f7904ab4-ba21-4cae-bcd1-6f02e275a16c")
+	)
+	(wire
+		(pts
+			(xy 411.48 480.06) (xy 414.02 480.06)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "99b8e141-1ef7-4d70-bdd0-4177039d41cf")
+	)
+	(label "SPARE_GP13"
+		(at 414.02 480.06 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "ccb32afb-da77-4ade-8bb7-4982a88e20e2")
+	)
+	(wire
+		(pts
+			(xy 396.24 482.6) (xy 398.78 482.6)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "761853d3-1e2e-4511-9837-92b818513a24")
+	)
+	(label "SPARE_GP12"
+		(at 396.24 482.6 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "acdb2984-2720-46b8-bbda-702187f889df")
+	)
+	(wire
+		(pts
+			(xy 411.48 482.6) (xy 414.02 482.6)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6af8ca80-7976-4443-9cba-aa6493040b22")
+	)
+	(label "SPARE_GP11"
+		(at 414.02 482.6 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "3294124a-6a0a-49e3-93cc-afdb70b87b69")
+	)
+	(wire
+		(pts
 			(xy 697.23 63.5) (xy 708.66 63.5)
 		)
 		(stroke
@@ -10818,16 +10993,6 @@
 			(type default)
 		)
 		(uuid "0e83bd15-5d04-4c99-9260-3f214a3f3c45")
-	)
-	(wire
-		(pts
-			(xy 408.94 474.98) (xy 411.48 474.98)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "0ea8914c-0e19-5892-a5ff-19839d1734be")
 	)
 	(wire
 		(pts
@@ -11371,16 +11536,6 @@
 	)
 	(wire
 		(pts
-			(xy 408.94 477.52) (xy 411.48 477.52)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "29b381ec-e908-5f35-80f1-39e93625accb")
-	)
-	(wire
-		(pts
 			(xy 612.14 127) (xy 612.14 129.54)
 		)
 		(stroke
@@ -11418,16 +11573,6 @@
 			(type default)
 		)
 		(uuid "2ba20bee-cdf8-5e29-85d9-d14253dcea51")
-	)
-	(wire
-		(pts
-			(xy 657.86 568.96) (xy 657.86 571.5)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "2c68c36f-ba60-58a6-b997-d7e29f257909")
 	)
 	(wire
 		(pts
@@ -12591,16 +12736,6 @@
 	)
 	(wire
 		(pts
-			(xy 408.94 480.06) (xy 411.48 480.06)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "696d1ec8-b257-5866-b0ee-c3b6df8809df")
-	)
-	(wire
-		(pts
 			(xy 688.34 731.52) (xy 688.34 728.98)
 		)
 		(stroke
@@ -13601,16 +13736,6 @@
 	)
 	(wire
 		(pts
-			(xy 408.94 482.6) (xy 411.48 482.6)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a36e6a44-361e-54f6-8b97-76578dcb2a33")
-	)
-	(wire
-		(pts
 			(xy 91.44 341.63) (xy 91.44 340.36)
 		)
 		(stroke
@@ -14298,16 +14423,6 @@
 			(type default)
 		)
 		(uuid "ce88331f-bee1-5941-a099-049913c850b9")
-	)
-	(wire
-		(pts
-			(xy 629.92 568.96) (xy 629.92 571.5)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "cf3169cf-4813-5856-a7d4-10daaf620b1a")
 	)
 	(wire
 		(pts
@@ -15298,15 +15413,6 @@
 		)
 		(uuid "001a3fa0-5806-59ab-9f3f-f0e7f4fc58c9")
 	)
-	(label "B5"
-		(at 411.48 482.6 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "007fa35f-15d3-594b-ac87-5c1d1dd8b4b7")
-	)
 	(label "ISO_EN_G"
 		(at 732.79 605.79 90)
 		(effects
@@ -15387,15 +15493,6 @@
 			)
 		)
 		(uuid "0397de37-36c8-589c-862a-a7e2bfe388f9")
-	)
-	(label "SPARE_GP13"
-		(at 411.48 474.98 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "0442cee1-eb0d-5f44-b827-84160a21a2bb")
 	)
 	(label "A5"
 		(at 440.69 613.41 90)
@@ -17377,15 +17474,6 @@
 		)
 		(uuid "a8b4c88b-dbc0-4d27-858d-df939a2196cd")
 	)
-	(label "P3V3_SW"
-		(at 411.48 477.52 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "a9241a09-aba1-5ef2-b428-851d9a1ca4f9")
-	)
 	(label "MON_B"
 		(at 374.65 763.27 90)
 		(effects
@@ -17629,15 +17717,6 @@
 		)
 		(uuid "c1d7841d-1848-5060-b416-aa2d0605b556")
 	)
-	(label "SPARE_GP11"
-		(at 629.92 571.5 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "c253f55d-44d8-5487-a843-8371ea3f49a4")
-	)
 	(label "P12"
 		(at 320.04 593.09 90)
 		(effects
@@ -17727,15 +17806,6 @@
 			)
 		)
 		(uuid "c8f0f4da-c1b1-5d32-b866-5034fc370ef8")
-	)
-	(label "PGND"
-		(at 411.48 480.06 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "caaa73b7-98bc-531a-8d93-25cc3e6df4ee")
 	)
 	(label "PGND"
 		(at 129.54 605.79 90)
@@ -18231,15 +18301,6 @@
 			)
 		)
 		(uuid "f84b5fd4-ad3e-5a46-b137-8ad326f02427")
-	)
-	(label "SPARE_GP12"
-		(at 657.86 571.5 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "f88e1051-d970-5e83-9dfc-86373232ebc1")
 	)
 	(label "SPARE_GP11"
 		(at 401.32 114.3 0)
@@ -19751,98 +19812,6 @@
 			(project "accord-logger"
 				(path "/d6403372-a8d4-5433-aa98-182e137307f3"
 					(reference "U6")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 629.92 568.96 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "15675182-00c2-5bc9-9a61-60a20e829ab1")
-		(property "Reference" "TP24"
-			(at 631.95 567.18 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "TestPoint"
-			(at 631.95 570.74 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
-			(at 629.92 568.96 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 629.92 568.96 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 629.92 568.96 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Status" "VERIFY_OR_SOURCE"
-			(at 629.92 568.96 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Source" "REV_A_INTERFACES S5.3"
-			(at 629.92 568.96 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Source_designator" "TP_GP11"
-			(at 629.92 568.96 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "d020c00b-529a-566a-8374-69903c4c84a4")
-		)
-		(instances
-			(project "accord-logger"
-				(path "/d6403372-a8d4-5433-aa98-182e137307f3"
-					(reference "TP24")
 					(unit 1)
 				)
 			)
@@ -24544,8 +24513,8 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector_Generic:Conn_01x04")
-		(at 403.86 480.06 180)
+		(lib_id "Connector_Generic:Conn_02x03_Odd_Even")
+		(at 403.86 480.06 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -24553,22 +24522,22 @@
 		(dnp no)
 		(uuid "66824dac-c625-5a32-82e5-d1549d5a056e")
 		(property "Reference" "J3"
-			(at 402.59 471.93 0)
+			(at 405.13 474.98 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Value" "Spare GP13 / switched power"
-			(at 402.59 486.41 0)
+		(property "Value" "Spare GP11-13 / switched power"
+			(at 405.13 487.68 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical"
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_2x03_P2.54mm_Vertical"
 			(at 403.86 480.06 0)
 			(effects
 				(font
@@ -24625,102 +24594,16 @@
 		(pin "4"
 			(uuid "7fdee63e-8c79-57bf-8e3f-ec2c3f13486f")
 		)
+		(pin "5"
+			(uuid "c85086a8-c01d-4088-9f92-0eed8bd2cdfe")
+		)
+		(pin "6"
+			(uuid "f82afe99-207a-4add-8899-0c57600eea66")
+		)
 		(instances
 			(project "accord-logger"
 				(path "/d6403372-a8d4-5433-aa98-182e137307f3"
 					(reference "J3")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 657.86 568.96 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "66c86d72-5a3a-52be-a433-70d6ba9a958c")
-		(property "Reference" "TP25"
-			(at 659.89 567.18 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "TestPoint"
-			(at 659.89 570.74 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D2.0mm"
-			(at 657.86 568.96 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 657.86 568.96 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 657.86 568.96 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Status" "VERIFY_OR_SOURCE"
-			(at 657.86 568.96 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Source" "REV_A_INTERFACES S5.3"
-			(at 657.86 568.96 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Source_designator" "TP_GP12"
-			(at 657.86 568.96 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "66335425-1a5c-533e-b009-8b576747a02e")
-		)
-		(instances
-			(project "accord-logger"
-				(path "/d6403372-a8d4-5433-aa98-182e137307f3"
-					(reference "TP25")
 					(unit 1)
 				)
 			)
