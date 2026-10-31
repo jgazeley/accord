@@ -8,6 +8,11 @@ October 29 evening were carried over from the retired tracker
 
 ## October 31, 2026
 
+**D-SD-21: J5 on the back is intentional.** Asked at the pre-order check
+whether the SD header on the underside was meant (the module hangs below
+the board), the owner said: *"J5 on back was intentional"*. Also: *"silkscreen
+pass incoming before fab files and ordering"*.
+
 **D-CQUAL-20: C3 is the WIMA MKS2 on a 5.5 mm-wide footprint.** Told the
 chosen 1 uF 5 % 63 V film (WIMA MKS2C041001F00JSSD, 7.2 x 5 x 10 mm) does
 not fit the 2.5 mm-wide C_Rect footprint, the owner said: *"yes change

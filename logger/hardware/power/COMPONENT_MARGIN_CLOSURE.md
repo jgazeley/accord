@@ -80,6 +80,18 @@ unchanged if its temperature and endurance limits are ±10 %. Both must be
 confirmed from the technical section before ordering. The higher ESR is
 immaterial behind the 1 kΩ RCLK. Pad 1 (+) to VCLK, as before.
 
+*Checked October 31 2026 against the KYOCERA AVX "TAP/TEP Technical
+Summary and Application Guidelines" (pp.35, 38).* It gives **typical
+curves, not maximum limits**; the only guaranteed DCL is the 25 °C
+rating-table value. Read from the curves: DCL at +85 °C is about 8× the
+25 °C value (the reserve above uses 10×); capacitance is about −5 % at
+−55 °C and +5 % at +85 °C (inside the ±10 % stack); and at 32 % of rated
+voltage (5.11 V on a 16 V part) the typical DCL band is about 0.05–0.15×
+the rated-voltage value, a factor the reserve does not take. A realistic
+hot figure is therefore about 4.2 × 8 × 0.15 ≈ 5 µA against the 52.5 µA
+screening reserve. Accepted for ordering on that basis; the parked-current
+bench test (LRA12_HANDOFF §5) is the measured backstop.
+
 ### A5 capacitors
 
 [Murata product data](https://www.murata.com/en-eu/api/pdfdownloadapi?cate=luCeramicCapacitorsSMD&partno=GRM32ER71H475KA88L),

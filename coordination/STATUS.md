@@ -50,11 +50,12 @@ bench test and vehicle test.
   drc` in the shared checkout). Done: fab minimums set (0.2 mm track and
   clearance, 0.13 annular, 0.5 via, 0.3 hole, 0.5 hole-to-hole and edge,
   1.0/0.15 mm text); pour notched out of the Pico antenna area (x 101-116,
-  y 130-139). Before ordering: stitching vias for the front ground islands
-  at Pico pins 8, 23 and 28 and under C8; nylon hardware at H4 (in the RF
-  keep-clear strip); silkscreen pass (about 50 overlaps, U7's label below
-  the 1.0 mm minimum); confirm the TAP336K016SCS hot-leakage limits
-  (D-CCLK-18).
+  y 130-139). Pre-order check passed October 31 (ground stitched, C3 on its
+  film footprint, trial gerbers clean; J5 on the back is intentional,
+  D-SD-21; C15 leakage checked). Before ordering: the owner's silkscreen
+  pass (56 items, U7's label below the 1.0 mm minimum), then the final fab
+  package with separate plated/non-plated drill files, then order approval.
+  Nylon hardware at H4 (in the RF keep-clear strip).
 
 ## Next, in order
 
