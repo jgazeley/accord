@@ -34,7 +34,12 @@ VSS past U3, and the opto output straight to GP5 in place of the
 QUAL_N_REPORT stage. Then: *"yes pico and sd module are going on the board
 too"*, so the breadboard logger is being retired in favour of this board.
 The module's pin order, read by the owner: *"3V3 GND MISO CS SCK MOSI"*,
-which matches J5 pins 1-6, so a straight header fits.
+which matches J5 pins 1-6, so a straight header fits. **Corrected the same
+evening:** after MOSI would not reach the card, the owner re-read the module:
+*"The SD module is 1: 3v3 2: CS 3: MOSI 4: CLK 5: SCK 6: GND"*, then: *"the module is in order from 1-6: 3v3, CS, MOSI,
+CLK, MISO, GND"*. That does not match J5 (3V3, GND, MISO, CS, SCK, MOSI): on a
+straight header the module's GND lands on GP19 and its CS on ground. The
+module is to be wired to J5 pin-for-signal instead.
 Then: *"pleae backup athe attached picos firmware, and then flash the attached
 pico with the accord-logger firmware"*. The attached board was the carport
 Pico W (flash id E66480454F4CA92D), not the car's logger
