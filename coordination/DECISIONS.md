@@ -6,6 +6,31 @@ changes. Newest first. Don't re-ask anything recorded here. Entries before
 October 29 evening were carried over from the retired tracker
 (`PROJECT_MILESTONES.md`), which has the fuller original text.
 
+## November 9, 2026
+
+**D-BUILD-25: Rev A bare boards arrived; the as-built circuit is moving
+onto one.** Owner: *"they arrived, and I transferred certain components from
+the breadboad to the PCB"*, then: *"never ordered any parts. Transferred
+PC817, and the as-built circuit from the breadboard. D106, D107, D105, D104,
+R9, R12, U2, R13, R8, R7, D109, R10, R11, then I plan to carry over the
+1N5819s for the brake, VSS, and Tach circuits (plus the R3, R4, R5, R6, and
+whichever 2 I can use for the VSS circuit)"*. The DigiKey order (D-ORDER-19)
+was not placed. Power stays as today: *"I would power with the same USB
+cable I use now, and the external buck, and would power off manually"*
+(D-POWER-01 continues). Jumpers stand in for unfitted Rev A circuitry:
+VSS past U3, and the opto output straight to GP5 in place of the
+QUAL_N_REPORT stage. Then: *"yes pico and sd module are going on the board
+too"*, so the breadboard logger is being retired in favour of this board.
+The module's pin order, read by the owner: *"3V3 GND MISO CS SCK MOSI"*,
+which matches J5 pins 1-6, so a straight header fits.
+Then: *"pleae backup athe attached picos firmware, and then flash the attached
+pico with the accord-logger firmware"*. The attached board was the carport
+Pico W (flash id E66480454F4CA92D), not the car's logger
+(E6614C311B3A3231). Its flash was backed up (private, outside the repo) and
+it now runs the deployed 0.8.1-dev logger build. It has a different Wi-Fi
+MAC from the car's Pico, so it will not get the 192.168.60.89 reservation
+the upload rules match.
+
 ## October 31, 2026
 
 **D-DRC-24: the 11 remaining DRC items are accepted and excluded.** Asked
