@@ -8,6 +8,18 @@ October 29 evening were carried over from the retired tracker
 
 ## November 9, 2026
 
+**D-FW-26: the Rev A board's Pico runs a tailored car build.** Owner: *"this
+Pico, that USED to be the carport pico, NEEDS to work with the existing server
+and firmware I had from the car, so make it happen ... adjust the firmware to
+work with this exact pico if needed"*, then, of the three options (fix the
+Wi-Fi start-up in the existing firmware, port to the plain SDK, or move the
+car's Pico): *"#1 I guess"*. On this Pico W (E66480454F4CA92D) the
+arduino-pico core never starts the CYW43, and the first Wi-Fi call freezes the
+chip. The build `0.8.1-dev+w43init` is the exact 0.8.1-dev car source plus a
+start-up in `networkSetup()`; it joined MG_Wifi at 192.168.60.89 with SNTP.
+The VM intake now authorizes both chip IDs. Private build record:
+`/srv/agent_share/pcb/build-newpico-20261109/README.md`.
+
 **D-BUILD-25: Rev A bare boards arrived; the as-built circuit is moving
 onto one.** Owner: *"they arrived, and I transferred certain components from
 the breadboad to the PCB"*, then: *"never ordered any parts. Transferred
