@@ -55,6 +55,13 @@ it now runs the deployed 0.8.1-dev logger build. It has a different Wi-Fi
 MAC from the car's Pico, so it will not get the 192.168.60.89 reservation
 the upload rules match.
 
+**D-BUILD-27: Rev A board installed in the car; first drive.** Owner, late
+November 9: *"i moved the board to the car, and did another test drive.
+Feeling pretty pessimistic it actually worked. Never once saw the onboard led
+come on or anything."* In this firmware the LED lights only while it counts
+VSS pulses on GP2, and an upload window opens only after GP5 reports ignition
+on and then off. Nothing reached the receiver after the 22:09 bench upload.
+
 ## October 31, 2026
 
 **D-DRC-24: the 11 remaining DRC items are accepted and excluded.** Asked
