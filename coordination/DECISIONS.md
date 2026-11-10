@@ -86,7 +86,15 @@ reconciled and everything is up to date"*: the rest of the old Pico's
 `U_c81d3a06...` (card copy, SHA-256 verified, server prefix byte-identical) was
 sent through the receiver from byte 5,853,006 and completed. Trips 81-84
 (Nov 8-9, 11.212 mi) loaded; 84 trips. The logged chain from anchor 7 plus the
-0.5 manual mile gives [231469.141, 231469.417), matching the dash.
+0.5 manual mile gives [231469.141, 231469.417), matching the dash. Owner, about 08:28: *"latest trip
+calibration: after 2.9 on trip meter -> 231473 odo; trip meter reset, then at
+0.7 miles, shortly rolled over to 0.8 on trip meter the odo was 231474, and
+final reading is 231475 on dash with 2.6 on trip meter, accord database is
+showing 231476"*. Trips 85/86 match both trip meters; the rollover solves the
+car at 231475.85-231475.95 (honda/OWNER_READINGS.md). The DB's 231476 comes from
+anchor 8's +0.5 midpoint default. Owner: *"yes apply it"*. Applied:
+solved anchor 9 (231475, [231475.854, 231475.954)) and odo_correct to 231475;
+the page shows 231475.
 
 ## October 31, 2026
 
