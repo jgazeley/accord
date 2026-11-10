@@ -94,7 +94,13 @@ showing 231476"*. Trips 85/86 match both trip meters; the rollover solves the
 car at 231475.85-231475.95 (honda/OWNER_READINGS.md). The DB's 231476 comes from
 anchor 8's +0.5 midpoint default. Owner: *"yes apply it"*. Applied:
 solved anchor 9 (231475, [231475.854, 231475.954)) and odo_correct to 231475;
-the page shows 231475.
+the page shows 231475. Owner: *"did rebuilding database remove manual fuel
+entry, i thought there was amother 7th entry"*. It was never entered: the
+October 26 fill (8.414 gal, Trip B 179.7, about 231301) sat in
+pcb/coordination/reviews/EVENING_TRIPS_2026-10-26.md, deferred to a fuel update
+that never ran. Owner: *"i just added the receipt to
+/srv/agent_share/honda/receipts/"* (Chevron, 2026-10-26 19:47:12, 8.414 gal at
+$6.359, $53.50). Added as fuel_entry 7 with purchase 117; 21.36 mpg.
 
 ## October 31, 2026
 
