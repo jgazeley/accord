@@ -19,6 +19,13 @@ chip. The build `0.8.1-dev+w43init` is the exact 0.8.1-dev car source plus a
 start-up in `networkSetup()`; it joined MG_Wifi at 192.168.60.89 with SNTP.
 The VM intake now authorizes both chip IDs. Private build record:
 `/srv/agent_share/pcb/build-newpico-20261109/README.md`.
+Working at 22:09 (build `0.8.1-dev+w43init.mosi7.sck6.nocorew43`): SD ok,
+SNTP, Wi-Fi, upload completed at the receiver. Final SD wiring: CS GP17 and MISO
+GP16 via J5, **MOSI on GP7 (Pico pin 10) and SCK on GP6 (Pico pin 9) by wire**;
+GP19 is damaged and nothing uses J5 pin 6. The core's own CYW43 start is linked
+out (`-Wl,--wrap=init_cyw43_wifi`); its Pico/Pico W guess hung this Pico before
+USB at some power-ups. **Rev B:** J5 to the module's real order (3V3, CS, MOSI,
+CLK, MISO, GND), MOSI/SCK on GP7/GP6 or fixed.
 
 **D-BUILD-25: Rev A bare boards arrived; the as-built circuit is moving
 onto one.** Owner: *"they arrived, and I transferred certain components from
