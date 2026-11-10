@@ -61,6 +61,13 @@ Feeling pretty pessimistic it actually worked. Never once saw the onboard led
 come on or anything."* In this firmware the LED lights only while it counts
 VSS pulses on GP2, and an upload window opens only after GP5 reports ignition
 on and then off. Nothing reached the receiver after the 22:09 bench upload.
+The card held no file from the car. Back on the bench (November 10, 00:14 to
+00:36) the Pico booted cold and ran normally whenever powered, logged to the
+card and uploaded two files, but dropped off repeatedly while the owner
+flicked parts: *"no consistency except the actual usb plug"*. Pico VBUS
+(pin 40) is unconnected on Rev A, so the micro-USB socket is the Pico's only
+power input. The board's designed bypass is D116 (1N5819 fits) from J3 pin 1
+(5 V) to VSYS, with J3 pin 2 ground.
 
 ## October 31, 2026
 
