@@ -79,7 +79,14 @@ and the trip 26 precedent: manual trip 80 (0.5 mi, 0 pulses, window bounds
 The anchor also absorbs the November 8-9 old-Pico drives (11.213 mi) that never
 reached the database. The morning drive is trip 79 (0.925 mi, 3,796 pulses),
 the Rev A board's first logged and uploaded car trip; VSS, tach, IGN, brake and
-fuel all read. The database odometer is 231470.
+fuel all read. The database odometer is 231470. Then: *"so should you add the missing trips
+and have the odo calculate itself from the data + manual entries"* (kept the
+dash reading as the baseline, explained), and *"ok pleass make sure trips are
+reconciled and everything is up to date"*: the rest of the old Pico's
+`U_c81d3a06...` (card copy, SHA-256 verified, server prefix byte-identical) was
+sent through the receiver from byte 5,853,006 and completed. Trips 81-84
+(Nov 8-9, 11.212 mi) loaded; 84 trips. The logged chain from anchor 7 plus the
+0.5 manual mile gives [231469.141, 231469.417), matching the dash.
 
 ## October 31, 2026
 
