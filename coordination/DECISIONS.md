@@ -69,6 +69,18 @@ flicked parts: *"no consistency except the actual usb plug"*. Pico VBUS
 power input. The board's designed bypass is D116 (1N5819 fits) from J3 pin 1
 (5 V) to VSYS, with J3 pin 2 ground.
 
+**D-DB-28: last night's unlogged drive entered by hand; the board logged this
+morning.** Owner, November 10: *"there is a procedure to manually add miles
+not caught by the logger, which now needs to be done since the test drive last
+night didnt catch the 0.5 miles and 231469 odometer. that manual trip was
+followed by a short test drive this morning."* Done per honda/OWNER_READINGS.md
+and the trip 26 precedent: manual trip 80 (0.5 mi, 0 pulses, window bounds
+22:22-23:57 PST November 9) and dash anchor 8 (231469 at 23:57, default +0.5).
+The anchor also absorbs the November 8-9 old-Pico drives (11.213 mi) that never
+reached the database. The morning drive is trip 79 (0.925 mi, 3,796 pulses),
+the Rev A board's first logged and uploaded car trip; VSS, tach, IGN, brake and
+fuel all read. The database odometer is 231470.
+
 ## October 31, 2026
 
 **D-DRC-24: the 11 remaining DRC items are accepted and excluded.** Asked
