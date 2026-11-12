@@ -6,6 +6,29 @@ changes. Newest first. Don't re-ask anything recorded here. Entries before
 October 29 evening were carried over from the retired tracker
 (`PROJECT_MILESTONES.md`), which has the fuller original text.
 
+## November 11, 2026
+
+**D-DB-29: the outbound leg of the Nov 11 drive lost its first part when the
+SD card was knocked out.** Owner: *"the last drive, the SD card was knocked
+out in the middle of a trip ... accord_record.html says 231493, but actual is
+231,498. I seem to remember a 10.0 mile trip meter before the first stop, and
+then I reset it and got 13.0 trip meter for the return trip. The SD was
+knocked out towards the end of the ~10.0 mile trip. I see 4.138 mi and 13.066
+mi trips, my guess is the 4.138 mi trip was cut short"*. The card shows the
+board ran one boot the whole time and its pulse counter never reset. The
+first 487 s are in `BOOT_566.CSV` (U_e340f1e0…, clock none), which ends while
+moving. The card was missing from ms ~490 s to 860 s, then
+`BOOT_860499.CSV` (U_67dec0d5…, card name `20261111_204219.CSV`) kept rows
+from 497 s on. Trip 87 was built from that second file alone (zero-based,
+16985 pulses, 4.138 mi). The full leg from key-on (ms 4004, ~12:28:03) is
+**40909 pulses = 9.967 mi**, which fits the owner's 10.0. Then anchor 9
+(231475.904) + 9.967 + 13.066 (trip 88) = **231498.94**, which matches the dash.
+Owner, asked whether to apply the fix: *"yes please"*. Trip 87 now starts at 12:28:03,
+40909 pulses, 9.967 mi (audit row `trip-stitch`; backup
+`accord_maintenance.before_stitch_trip87_20261111_…`). Running tripload by hand
+(empty spool) moved the odometer 231493 → **231498** from the pulse chain, with no override.
+No anchor was added.
+
 ## November 9, 2026
 
 **D-FW-26: the Rev A board's Pico runs a tailored car build.** Owner: *"this
