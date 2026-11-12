@@ -28,9 +28,12 @@ arrived, and the owner has transferred the working circuit onto one.**
   `logger/hardware/kicad/mechanical/case-bottom/` contains STL, editable
   OpenSCAD source and a preview. Walls are 4 mm as requested; starting
   defaults are 1 mm PCB clearance per side, 4 mm floor and 12 mm internal
-  depth (130 × 93 × 16 mm overall). Plain tray, with mounting supports and
-  connector openings still to fit to the physical assembly. Mesh geometry
-  checks pass; physical fit has not been tested.
+  depth (130 × 93 × 16 mm overall). **Four stepped locating studs added**
+  (D-CASE-32): Ø6 mm shoulders support the PCB 6.35 mm above the inside
+  floor; Ø3 mm pins enter its Ø3.2 mm holes, extending 3 mm above the
+  shoulders with tapered tips. Exported-STL slice checks confirm the actual
+  hole positions, support/pin diameters and one joined solid. Connector
+  openings and physical assembly fit remain to be checked.
 
 Design and fabrication record:
 
@@ -75,8 +78,8 @@ Design and fabrication record:
 
 ## Next, in order
 
-1. Review the simple case bottom; establish physical assembly clearances
-   before adding mounting supports and connector openings or finalizing height.
+1. Review the case bottom with locating studs; check printed pin fit and
+   underside assembly clearance, then establish connector openings and final height.
 2. Continue validating the partially populated board in the car; November 11
    SD-card dislodgement and trip recovery are recorded in D-DB-29.
 3. For future autonomous operation, finish parts procurement, assembly and

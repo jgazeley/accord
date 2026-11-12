@@ -8,6 +8,17 @@ October 29 evening were carried over from the retired tracker
 
 ## November 11, 2026
 
+**D-CASE-32: add locating studs on the four PCB mounting-hole centers.**
+Owner: *"can you create mount points that line up with the pcb mounting
+holes, that start wider, raise the board about 1/4 inch from the bottom of
+the case, and then narrow to the hole inner diameter so the pcb fits over
+the 'studs'"*. Interpret the quarter inch as 6.35 mm above the inside floor.
+Use wider support shoulders and smaller locating pins through the Ø3.2 mm
+PCB holes; pin fit clearance is an editable modelling allowance. Implemented
+with Ø6 mm shoulders, Ø3.0 mm pins (0.2 mm diametral clearance), and 3 mm
+pin height including a 0.5 mm lead-in taper to Ø2.4 mm. These diameters and
+pin height are agent defaults, not owner measurements.
+
 **D-CASE-31: make a simple case bottom from the extracted outline.** Owner:
 *"can you create a simple case bottom from the footprint, with 4mm thick
 walls, rounded corners, a little bit of room along the outside perimeter of
