@@ -8,6 +8,11 @@ October 29 evening were carried over from the retired tracker
 
 ## November 11, 2026
 
+**D-CASE-33: reduce the case walls to 2 mm.** Owner: *"I think maybe 2 mm
+instead of 4 mm for wall thickness, my mistake"*. Supersedes the 4 mm wall
+requirement in D-CASE-31. Keep the 4 mm floor, 1 mm PCB perimeter clearance
+and stepped mounting studs; the revised outside envelope is 126 × 89 × 16 mm.
+
 **D-CASE-32: add locating studs on the four PCB mounting-hole centers.**
 Owner: *"can you create mount points that line up with the pcb mounting
 holes, that start wider, raise the board about 1/4 inch from the bottom of

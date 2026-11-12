@@ -35,7 +35,7 @@ def dot(a, b):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--wall', type=float, default=4)
+    parser.add_argument('--wall', type=float, default=2)
     parser.add_argument('--clearance', type=float, default=1, help='PCB edge gap per side')
     parser.add_argument('--floor', type=float, default=4)
     parser.add_argument('--depth', type=float, default=12, help='Interior depth above floor')

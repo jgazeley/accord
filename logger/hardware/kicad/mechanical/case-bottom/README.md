@@ -2,33 +2,34 @@
 
 An open tray with four stepped locating studs, based on the 120 × 83 mm,
 R2 PCB outline and its actual mounting-hole centers.
-The owner requested 4 mm walls, rounded corners and some clearance around
-the PCB (DECISIONS D-CASE-31). The starting clearance, floor thickness and
+The owner requested rounded corners and some clearance around the PCB,
+revising the walls from 4 mm to 2 mm (DECISIONS D-CASE-31 and D-CASE-33).
+The starting clearance, floor thickness and
 depth below are adjustable modelling choices. The owner subsequently
 requested wider supports raising the PCB about a quarter inch, narrowing
 to pins that fit through its mounting holes (D-CASE-32).
 
 | Dimension | Value |
 |---|---:|
-| Wall thickness | 4 mm |
+| Wall thickness | 2 mm |
 | Clearance from PCB edge to inside wall, each side | 1 mm |
 | Inside width × length | 122 × 85 mm |
 | Floor thickness | 4 mm |
 | Internal depth above floor | 12 mm |
-| Outside width × length × height | 130 × 93 × 16 mm |
+| Outside width × length × height | 126 × 89 × 16 mm |
 | Inside corner radius | 3 mm |
-| Outside corner radius | 7 mm |
+| Outside corner radius | 5 mm |
 | PCB underside height above inside floor | 6.35 mm (¼ inch) |
 | Support shoulder diameter | 6 mm |
 | Locating pin diameter / PCB hole diameter | 3.0 / 3.2 mm |
 | Pin height above shoulder | 3 mm |
 | Lead-in tip | Last 0.5 mm tapers to Ø2.4 mm |
 
-The concentric corner offsets preserve the 1 mm PCB gap and 4 mm wall
+The concentric corner offsets preserve the 1 mm PCB gap and 2 mm wall
 thickness around the curves. These are rounded corners in plan; the floor
 and rim edges are square. The interior floor is Z=4 and the rim is Z=16.
-XY uses the same datum as the PCB reference, so the case spans X=-5..125
-and Y=-5..88 mm.
+XY uses the same datum as the PCB reference, so the case spans X=-3..123
+and Y=-3..86 mm.
 
 ## PCB supports
 
@@ -94,7 +95,7 @@ edges, Euler characteristic 2, nondegenerate faces, positive volume, bounding
 dimensions and agreement with the analytic tray-plus-supports volume. It also
 requires a single connected solid after joining the studs. The default mesh
 has 6,176 triangles and a volume within 0.002% of the analytic solid.
-Its 32 segments per quarter-circle approximate the R7 exterior within 0.003 mm.
+Its 32 segments per quarter-circle approximate the R5 exterior within 0.002 mm.
 Independent slices of the exported STL at Z=7, 10.34, 10.36, 11.95 and
 13.1 mm verified four support/pin cross-sections on the exact PCB hole
 centers, with the expected diameters (6, 6, 3, 3 and 2.7 mm respectively).
