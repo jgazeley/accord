@@ -1,0 +1,42 @@
+{
+  "units": "mm",
+  "source_pcb_sha256": "fc143d05c322f599be71ee66d3b3b2756f2231a9396d4530d72a0850c9f43190",
+  "pcb": [
+    120.0,
+    83.0
+  ],
+  "clearance_per_side": 1,
+  "wall": 4,
+  "floor": 4,
+  "internal_depth": 12,
+  "outside": [
+    130.0,
+    93.0,
+    16
+  ],
+  "inside": [
+    122.0,
+    85.0,
+    12
+  ],
+  "inner_corner_radius": 3.0,
+  "outer_corner_radius": 7.0,
+  "triangles": 1056,
+  "bounds": [
+    [
+      -5.0,
+      125.0
+    ],
+    [
+      -5.0,
+      88.0
+    ],
+    [
+      0.0,
+      16.0
+    ]
+  ],
+  "mesh_volume_mm3": 68418.863637,
+  "analytic_volume_mm3": 68419.716634,
+  "validation": "Closed oriented manifold, Euler characteristic 2, positive volume; bounds and volume checked"
+}

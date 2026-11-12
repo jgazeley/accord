@@ -8,6 +8,15 @@ October 29 evening were carried over from the retired tracker
 
 ## November 11, 2026
 
+**D-CASE-31: make a simple case bottom from the extracted outline.** Owner:
+*"can you create a simple case bottom from the footprint, with 4mm thick
+walls, rounded corners, a little bit of room along the outside perimeter of
+the PCB edge."* Agent starting dimensions: 1 mm PCB clearance per side,
+4 mm floor, and 12 mm internal wall height, all editable. A plain open tray
+is the first model; mounting supports and connector openings await the
+physical assembly dimensions. The owner specified the 4 mm wall thickness;
+the other dimensions are modelling defaults, not measured fit requirements.
+
 **D-CASE-30: extract the logger PCB geometry for a case model.** Owner:
 *"please see /srv/agent_share/accord/logger/hardware/kicad project PCB, see
 if you can extract the board footprint to use as the base for making a 3D

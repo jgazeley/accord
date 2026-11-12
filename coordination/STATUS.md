@@ -7,7 +7,7 @@ go in [DECISIONS.md](DECISIONS.md). Last updated November 11, 2026.
 
 A **Rev A logger PCB**, 120 × 83 mm, is replacing the breadboard logger.
 The partially populated board has logged car trips; autonomous power remains
-future work. The owner is now considering a 3D case.
+future work. A first simple case bottom has been modelled for the owner.
 
 ## Where it stands
 
@@ -24,6 +24,13 @@ arrived, and the owner has transferred the working circuit onto one.**
   mounting holes match the Rev A fabrication files: 120 × 83 mm, R2 corners,
   four Ø3.2 holes; H2 is 0.635 mm below H4. Fitted component heights and
   connector/SD access still need physical measurements for a complete case.
+- **Simple case bottom modelled** (November 11, D-CASE-31):
+  `logger/hardware/kicad/mechanical/case-bottom/` contains STL, editable
+  OpenSCAD source and a preview. Walls are 4 mm as requested; starting
+  defaults are 1 mm PCB clearance per side, 4 mm floor and 12 mm internal
+  depth (130 × 93 × 16 mm overall). Plain tray, with mounting supports and
+  connector openings still to fit to the physical assembly. Mesh geometry
+  checks pass; physical fit has not been tested.
 
 Design and fabrication record:
 
@@ -68,8 +75,8 @@ Design and fabrication record:
 
 ## Next, in order
 
-1. Use the extracted PCB geometry as the case-model base; establish physical
-   assembly clearances before setting case height and connector openings.
+1. Review the simple case bottom; establish physical assembly clearances
+   before adding mounting supports and connector openings or finalizing height.
 2. Continue validating the partially populated board in the car; November 11
    SD-card dislodgement and trip recovery are recorded in D-DB-29.
 3. For future autonomous operation, finish parts procurement, assembly and
