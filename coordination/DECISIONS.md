@@ -6,6 +6,25 @@ changes. Newest first. Don't re-ask anything recorded here. Entries before
 October 29 evening were carried over from the retired tracker
 (`PROJECT_MILESTONES.md`), which has the fuller original text.
 
+## November 12, 2026
+
+**D-DB-30: the first leg of the Nov 12 morning drive was not recorded.**
+Owner: *"another trip was missed. before the ~2.6 mi trip there shouldve been
+a 3.0 mi trip with odometer 231502. i attached the sd card just in case but i
+suspect the pico glitched out and didnt record the first leg. google maps
+timeline shows 7:18-7:25 for the first leg, 7:44-7:51 for the second based on
+phone gps location"*. The card agrees: the Nov 11 boot's file
+(`20261111_204219.CSV`) ends abruptly at 13:22 PST during its Wi-Fi window,
+and the next file (`20261112_153046.CSV`, opened as `BOOT_561`) is a fresh
+power-up at 07:30:46 PST with counters at 0, after the first leg. Nothing
+covers 07:18–07:25. The board was unpowered, or at least not running, for the
+first leg, which fits the known USB-plug power fault (D-BUILD-27). The second
+leg is trip 89 (07:42:19–07:52:50, 2.612 mi).
+Entered with the manual-trip procedure: **trip 90**, manual, 3.0 mi, 07:18–07:25
+(times from the owner's timeline), 0 pulses. **Anchor 10** = 231502 @ 07:25,
+solved to [231502.000, 231502.088) because the pulse chain from anchor 9 plus
+[3.0, 3.1) only overlaps the dash there. The odometer is now 231504 (231504.66).
+
 ## November 11, 2026
 
 **D-CASE-35: chamfer the case bottom edge.** Owner: *"please add a chamfer
