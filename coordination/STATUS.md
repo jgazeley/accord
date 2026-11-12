@@ -1,17 +1,31 @@
 # Status
 
 Rewritten, not appended to, whenever the state changes. Owner statements
-go in [DECISIONS.md](DECISIONS.md). Last updated October 31, 2026.
+go in [DECISIONS.md](DECISIONS.md). Last updated November 11, 2026.
 
 ## Goal now
 
-A **Rev A logger PCB** to replace the breadboard wiring: autonomous power
-with the car, the keyless RS-485 circuit, 80 × 120 mm. Then order, assemble,
-bench test and vehicle test.
+A **Rev A logger PCB**, 120 × 83 mm, is replacing the breadboard logger.
+The partially populated board has logged car trips; autonomous power remains
+future work. The owner is now considering a 3D case.
 
 ## Where it stands
 
-**The electrical design is on `main` and ready for owner layout.**
+**The electrical design and completed layout are on `main`. Bare boards have
+arrived, and the owner has transferred the working circuit onto one.**
+
+- Physical build and firmware: DECISIONS D-BUILD-25 through D-DB-28. The
+  DigiKey parts order was not placed; USB/external-buck power and manual
+  shutdown continue. The Rev A Pico runs the tailored Wi-Fi/SD build with
+  MOSI on GP7 and SCK on GP6 by wire. Do not infer fitted parts from the BOM.
+- **Case reference extracted** (November 11, D-CASE-30):
+  `logger/hardware/kicad/mechanical/` contains a bare-board STEP, exact
+  outline/mounting-hole DXF, annotated SVG and coordinates JSON. Outline and
+  mounting holes match the Rev A fabrication files: 120 × 83 mm, R2 corners,
+  four Ø3.2 holes; H2 is 0.635 mm below H4. Fitted component heights and
+  connector/SD access still need physical measurements for a complete case.
+
+Design and fabrication record:
 
 - KiCad project: `logger/hardware/kicad/accord-logger.kicad_pro`. Summary of
   what's on the board: `logger/hardware/REV_A_CONTEXT.md`.
@@ -39,7 +53,7 @@ bench test and vehicle test.
 - Engineering record: `logger/hardware/power/LAYOUT_CLOSURE.md`; risks,
   bring-up tests and firmware follow-up: `logger/hardware/LRA12_HANDOFF.md`.
 
-- **Rev A is ready to order** (October 31). Every part placed and routed;
+- **Rev A fabrication release** (October 31). Every part placed and routed;
   board 120 × 83 mm (D-ENVELOPE-02). Silkscreen pass done; DRC 0 active
   with 11 accepted exclusions (D-DRC-24); schematic parity 0; ERC 0;
   capture 780/780; closure 67/67. Fab package:
@@ -54,14 +68,15 @@ bench test and vehicle test.
 
 ## Next, in order
 
-1. **Owner opens the schematic in KiCad once.** This host can't render it, so
-   no one has looked at it.
-2. **Done:** the owner has placed and routed the whole board.
-3. **Next:** owner approves and places the board and parts orders; then
-   bring-up, bench and vehicle tests (`LRA12_HANDOFF.md` §5).
-4. Firmware for the board: GP7 isolation enable and the shutdown order
-   (`LRA12_HANDOFF.md` §5.4), before running it autonomously. Also a DS3231
-   driver on I2C0 (GP20/GP21) to set and read board time.
+1. Use the extracted PCB geometry as the case-model base; establish physical
+   assembly clearances before setting case height and connector openings.
+2. Continue validating the partially populated board in the car; November 11
+   SD-card dislodgement and trip recovery are recorded in D-DB-29.
+3. For future autonomous operation, finish parts procurement, assembly and
+   bring-up (`LRA12_HANDOFF.md` §5), with owner authorization at each stage.
+4. Reconcile the current GP7/GP6 SD wiring with the designed GP7 isolation
+   enable before implementing autonomous shutdown (`LRA12_HANDOFF.md` §5.4).
+   The DS3231 driver and on-board power-mode work remain outstanding.
 
 ## Known risks carried forward (not layout blockers)
 
@@ -99,5 +114,5 @@ keyless proximity tuning, production-host cutover.
 | M3 automatic upload without the Pi | Delivered on the VM |
 | M4a road trial without the Pi, manual power | Demonstrated |
 | M4 unattended, Pi retired | Open; needs M2 on a real board |
-| M5 design ready to order | In progress (this page) |
-| M6 assembled board accepted | Future |
+| M5 design ready to order | Fabrication released; bare boards received |
+| M6 assembled board accepted | Partial assembly logging trips; full Rev A acceptance open |

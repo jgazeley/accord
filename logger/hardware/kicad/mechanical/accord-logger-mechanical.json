@@ -1,0 +1,166 @@
+{
+  "source": "accord-logger.kicad_pcb",
+  "source_sha256": "fc143d05c322f599be71ee66d3b3b2756f2231a9396d4530d72a0850c9f43190",
+  "license": "CERN-OHL-P-2.0",
+  "units": "mm",
+  "coordinates": "Top view; origin lower-left; +X right, +Y up",
+  "kicad_origin_mm": [
+    88.59,
+    139.7
+  ],
+  "width": 120.0,
+  "height": 83.0,
+  "thickness": 1.6,
+  "edges": [
+    {
+      "start": [
+        0.0,
+        2.0
+      ],
+      "end": [
+        2.0,
+        0.0
+      ],
+      "type": "arc",
+      "center": [
+        2.0,
+        2.0
+      ],
+      "radius": 2.0,
+      "start_angle_deg": 180.0,
+      "end_angle_deg": 270.0
+    },
+    {
+      "start": [
+        2.0,
+        83.0
+      ],
+      "end": [
+        0.0,
+        81.0
+      ],
+      "type": "arc",
+      "center": [
+        2.0,
+        81.0
+      ],
+      "radius": 2.0,
+      "start_angle_deg": 90.0,
+      "end_angle_deg": 180.0
+    },
+    {
+      "start": [
+        120.0,
+        81.0
+      ],
+      "end": [
+        118.0,
+        83.0
+      ],
+      "type": "arc",
+      "center": [
+        118.0,
+        81.0
+      ],
+      "radius": 2.0,
+      "start_angle_deg": 0.0,
+      "end_angle_deg": 90.0
+    },
+    {
+      "start": [
+        120.0,
+        81.0
+      ],
+      "end": [
+        120.0,
+        2.0
+      ],
+      "type": "line"
+    },
+    {
+      "start": [
+        0.0,
+        2.0
+      ],
+      "end": [
+        0.0,
+        81.0
+      ],
+      "type": "line"
+    },
+    {
+      "start": [
+        118.0,
+        0.0
+      ],
+      "end": [
+        120.0,
+        2.0
+      ],
+      "type": "arc",
+      "center": [
+        118.0,
+        2.0
+      ],
+      "radius": 2.0,
+      "start_angle_deg": 270.0,
+      "end_angle_deg": 0.0
+    },
+    {
+      "start": [
+        118.0,
+        0.0
+      ],
+      "end": [
+        2.0,
+        0.0
+      ],
+      "type": "line"
+    },
+    {
+      "start": [
+        2.0,
+        83.0
+      ],
+      "end": [
+        118.0,
+        83.0
+      ],
+      "type": "line"
+    }
+  ],
+  "mounting_holes": [
+    {
+      "reference": "H1",
+      "center": [
+        115.88,
+        78.74
+      ],
+      "diameter": 3.2
+    },
+    {
+      "reference": "H2",
+      "center": [
+        115.88,
+        4.445
+      ],
+      "diameter": 3.2
+    },
+    {
+      "reference": "H3",
+      "center": [
+        4.12,
+        78.74
+      ],
+      "diameter": 3.2
+    },
+    {
+      "reference": "H4",
+      "center": [
+        4.12,
+        5.08
+      ],
+      "diameter": 3.2
+    }
+  ]
+}

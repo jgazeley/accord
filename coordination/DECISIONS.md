@@ -8,6 +8,12 @@ October 29 evening were carried over from the retired tracker
 
 ## November 11, 2026
 
+**D-CASE-30: extract the logger PCB geometry for a case model.** Owner:
+*"please see /srv/agent_share/accord/logger/hardware/kicad project PCB, see
+if you can extract the board footprint to use as the base for making a 3D
+case model"*. Use the current PCB outline and actual mounting-hole geometry
+as the mechanical reference; this request is for extraction, not fabrication.
+
 **D-DB-29: the outbound leg of the Nov 11 drive lost its first part when the
 SD card was knocked out.** Owner: *"the last drive, the SD card was knocked
 out in the middle of a trip ... accord_record.html says 231493, but actual is

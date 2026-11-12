@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="150mm" height="112mm" viewBox="-15 -15 150 112">
+<!-- Accord by Jayson Gazeley; CERN-OHL-P-2.0; units mm -->
+<rect x="-15" y="-15" width="150" height="112" fill="white"/>
+<g transform="translate(0 83.0) scale(1 -1)" fill="none" stroke="#263238" stroke-width="0.25">
+<path d="M 0.0 2.0 A 2.0 2.0 0 0 1 2.0 0.0"/>
+<path d="M 2.0 83.0 A 2.0 2.0 0 0 1 0.0 81.0"/>
+<path d="M 120.0 81.0 A 2.0 2.0 0 0 1 118.0 83.0"/>
+<path d="M 120.0 81.0 L 120.0 2.0"/>
+<path d="M 0.0 2.0 L 0.0 81.0"/>
+<path d="M 118.0 0.0 A 2.0 2.0 0 0 1 120.0 2.0"/>
+<path d="M 118.0 0.0 L 2.0 0.0"/>
+<path d="M 2.0 83.0 L 118.0 83.0"/>
+<circle cx="115.88" cy="78.74" r="1.6" stroke="#1565c0"/>
+<circle cx="115.88" cy="4.445" r="1.6" stroke="#1565c0"/>
+<circle cx="4.12" cy="78.74" r="1.6" stroke="#1565c0"/>
+<circle cx="4.12" cy="5.08" r="1.6" stroke="#1565c0"/>
+</g>
+<g font-family="sans-serif" font-size="3" fill="#263238">
+<text x="0" y="-8">Accord logger: 120 × 83 mm — top view</text>
+<text x="0" y="-3">R2 corners · 1.6 mm nominal PCB · four Ø3.2 holes</text>
+<text x="0" y="90.0">Origin (0, 0): lower left; X right, Y up. All coordinates in mm.</text>
+<text x="111.88" y="5.260000000000005" text-anchor="end">H1 (115.88, 78.74)</text>
+<text x="111.88" y="79.555" text-anchor="end">H2 (115.88, 4.445)</text>
+<text x="8.120000000000001" y="5.260000000000005" text-anchor="start">H3 (4.12, 78.74)</text>
+<text x="8.120000000000001" y="78.92" text-anchor="start">H4 (4.12, 5.08)</text>
+</g>
+</svg>
