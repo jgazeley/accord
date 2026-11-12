@@ -9,6 +9,10 @@ Based on Accord by Jayson Gazeley — https://github.com/jgazeley/accord.
 Generated hardware representations use CERN-OHL-P-2.0; see [LICENSE](../LICENSE)
 and [NOTICE](../NOTICE). This README and the export script use Apache-2.0.
 
+The current case is the [snap-on enclosure](case-enclosure/README.md), with a
+matching bottom and raised lid. The [earlier open tray](case-bottom/README.md)
+is retained as the input blank and design history.
+
 ## Files and import
 
 - **`accord-logger-board.step`**: bare PCB solid, including component and

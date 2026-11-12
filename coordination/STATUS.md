@@ -7,7 +7,7 @@ go in [DECISIONS.md](DECISIONS.md). Last updated November 12, 2026.
 
 A **Rev A logger PCB**, 120 × 83 mm, is replacing the breadboard logger.
 The partially populated board has logged car trips; autonomous power remains
-future work. A first simple case bottom has been modelled for the owner.
+future work. A prototype snap-on enclosure has been modelled for the owner.
 
 ## Where it stands
 
@@ -47,6 +47,19 @@ arrived, and the owner has transferred the working circuit onto one.**
   reaches Z=24.775 mm. `cutout-layout.svg` and the case README show dimensions
   and source assumptions. Drawing references are the owner's local
   `docs/IL-AG5_Series.pdf` and `docs/SD-slot.jpg`.
+
+- **Snap-on lid and matching bottom added** (November 12, D-CASE-37):
+  `logger/hardware/kicad/mechanical/case-enclosure/` is the current printable
+  pair; use its revised bottom with four latch windows. The raised lid has
+  2 mm walls/roof, a 3 mm alignment skirt with 0.3 mm radial clearance, and
+  four external cantilever clips with 0.4 mm nominal engagement. Owner plans
+  **PLA+**; these are first-print allowances. Body is 126 × 89 × 29 mm,
+  92 mm across the clips. The lid completes the JAE aperture to 28 × 16.5 mm
+  at Z=8.275..24.775. SD access, studs and bottom chamfer are preserved.
+  STL connectivity, closed-assembly clearance, access openings and geometric
+  latch/release checks pass. Top STL is roof-down for printing; separate
+  assembly orientation, editable SCAD and previews are included. Physical
+  clip durability, printer fit and populated-board clearance remain untested.
 
 Design and fabrication record:
 
@@ -93,7 +106,8 @@ Design and fabrication record:
 
 1. Check the case's printed stud fit and connector access against the physical
    assembly, especially the provisional SD socket height, mouth position and
-   finger access. Account for the JAE body above the rim when designing a lid.
+   finger access. Trial-fit the new snap pair empty first, then check populated
+   board clearance and JAE harness-latch access; do not force the PLA+ clips.
 2. Continue validating the partially populated board in the car; November 11
    SD-card dislodgement and trip recovery are recorded in D-DB-29.
 3. For future autonomous operation, finish parts procurement, assembly and

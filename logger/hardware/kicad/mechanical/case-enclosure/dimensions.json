@@ -1,0 +1,115 @@
+{
+  "units": "mm",
+  "material_intent": "PLA+; first-print prototype",
+  "source_pcb_sha256": "fc143d05c322f599be71ee66d3b3b2756f2231a9396d4530d72a0850c9f43190",
+  "source_bottom_sha256": "8f9dd85714076ee62491c47c271cae9483f0a665a8ef5813457e7dccd060cd9c",
+  "assembly_body_size": [
+    126,
+    89,
+    29
+  ],
+  "assembly_with_clips_size": [
+    126,
+    92,
+    29
+  ],
+  "seam_z": 16,
+  "roof_thickness": 2,
+  "roof_underside_z": 27,
+  "wall": 2,
+  "pcb_top_z": 8.775,
+  "lip": {
+    "insertion": 3,
+    "radial_clearance": 0.3,
+    "thickness": 1,
+    "lowest_z": 13,
+    "interrupted_at_JAE": true
+  },
+  "snap": {
+    "count": 4,
+    "centers_x": [
+      18,
+      102
+    ],
+    "walls": [
+      "front",
+      "back"
+    ],
+    "beam_width": 8,
+    "beam_thickness": 1.2,
+    "outside_gap": 0.3,
+    "root_radius": 0.6,
+    "root_z": 25,
+    "hook_retention_z": 14.6,
+    "hook_tip_z": 12.8,
+    "radial_engagement": 0.4,
+    "receiver_width": 9,
+    "receiver_z": [
+      12.6,
+      14.8
+    ],
+    "vertical_play": 0.2
+  },
+  "jae_opening": {
+    "width": 28,
+    "height": 16.5,
+    "center_y": 40,
+    "z": [
+      8.275,
+      24.775
+    ]
+  },
+  "bottom": {
+    "triangles": 6556,
+    "connected_solids": 1,
+    "euler_characteristic": -8,
+    "volume_mm3": 54149.91271640457,
+    "bounds": [
+      -3.0,
+      -3.0,
+      0.0,
+      123.0,
+      86.0,
+      16.0
+    ],
+    "sha256": "a540e6498a3b28a5dba7681d4f24b4806df2218cfde2e21c1e9f5e3807ed111e"
+  },
+  "lid_assembled": {
+    "triangles": 3134,
+    "connected_solids": 1,
+    "euler_characteristic": 2,
+    "volume_mm3": 33148.84196277307,
+    "bounds": [
+      -3.0,
+      -4.5,
+      12.800000190734863,
+      123.0,
+      87.5,
+      29.0
+    ],
+    "sha256": "cf61d23ab2667b85efcba481baad920c718bab52ed79201cae06e9795e674efc"
+  },
+  "lid_print": {
+    "triangles": 3134,
+    "connected_solids": 1,
+    "euler_characteristic": 2,
+    "volume_mm3": 33148.84200335356,
+    "bounds": [
+      -3.0,
+      -4.5,
+      0.0,
+      123.0,
+      87.5,
+      16.200000762939453
+    ],
+    "sha256": "5fb71b82b3e944e79d25d642911749eaabe6931224bf426512dd4f76aee05af8"
+  },
+  "validation": {
+    "exported_meshes_closed_oriented_connected": true,
+    "closed_assembly_overlap_mm3": 2.7813016293576217e-14,
+    "SD_and_JAE_apertures_clear": true,
+    "original_geometry_below_z_12_5_preserved": true,
+    "latch_retention_and_release_checked": true,
+    "physical_fit_and_fatigue_tested": false
+  }
+}

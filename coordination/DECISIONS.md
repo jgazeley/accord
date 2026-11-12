@@ -8,6 +8,17 @@ October 29 evening were carried over from the retired tracker
 
 ## November 12, 2026
 
+**D-CASE-37: add a snap-on top that completes the JAE opening.** Owner:
+*"can you make a top for the case now? and a mating mechanism of some kind
+so the top of the case snaps to the bottom, and completes the top half of
+the IL-AG5 cutout"*. Build a matching lid and mating features on the bottom;
+derive lid height and the upper JAE opening from the current PCB and connector
+clearance. Snap-fit allowances are first-print design defaults, not measured
+printer/material performance.
+Asked for the intended printing material, owner answered: *"PLA +"*.
+Use compliant, replaceable-by-reprinting lid clips with conservative initial
+engagement; final fit and durability need a print in the owner's PLA+.
+
 **D-CASE-36: add SD-card and JAE connector access openings.** Owner:
 *"now I'm looking to make 2 cutouts, one for an sd card slot and one for
 the IL-AG5-14P-D3L2-A connector"*. Use `docs/IL-AG5_Series.pdf` for the

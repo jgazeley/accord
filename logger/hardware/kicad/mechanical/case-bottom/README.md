@@ -1,5 +1,8 @@
 # Simple logger case bottom
 
+For the snap-on lid, use the **[matching pair in case-enclosure](../case-enclosure/README.md)**.
+This earlier tray is retained as its input blank; it does not have latch windows.
+
 An open tray with four stepped locating studs, based on the 120 × 83 mm,
 R2 PCB outline and its actual mounting-hole centers.
 The owner requested rounded corners and some clearance around the PCB,
