@@ -8,6 +8,19 @@ October 29 evening were carried over from the retired tracker
 
 ## November 12, 2026
 
+**D-CASE-36: add SD-card and JAE connector access openings.** Owner:
+*"now I'm looking to make 2 cutouts, one for an sd card slot and one for
+the IL-AG5-14P-D3L2-A connector"*. Use `docs/IL-AG5_Series.pdf` for the
+connector width/height and `docs/SD-slot.jpg` for a ballpark SD opening,
+*"centered on the j5 header pins"*. Owner requests the opening heights
+account for the studs and PCB thickness, above the board for both openings.
+Inspect the PCB placements and these references before modelling; reconcile
+the recorded back-side J5 footprint with the actual reader arrangement.
+Asked whether the SD reader is directly above, raised on a header, or below
+the main PCB, owner chose: *"Directly above PCB — provisional fit"*. This
+authorizes a provisional above-board SD cutout using the supplied drawing's
+2.75 mm socket height, despite the PCB's back-side header footprint.
+
 **D-DB-30: the first leg of the Nov 12 morning drive was not recorded.**
 Owner: *"another trip was missed. before the ~2.6 mi trip there shouldve been
 a 3.0 mi trip with odometer 231502. i attached the sd card just in case but i

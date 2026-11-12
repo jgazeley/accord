@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="680" viewBox="0 0 1000 680">
+<!-- Accord by Jayson Gazeley; CERN-OHL-P-2.0 -->
+<rect width="1000" height="680" fill="white"/>
+<g font-family="sans-serif" fill="#24394b">
+<text x="35" y="30" font-size="23">Logger case — SD access and JAE connector opening</text>
+<text x="35" y="60" font-size="16">PCB top Z = floor 4 + supports 3.175 + PCB 1.6 = 8.775 mm. All dimensions in mm.</text>
+<text x="35" y="95" font-size="18">J5 — front (-Y), window; center X=41.2675</text>
+<rect x="80" y="159" width="756.0" height="96" fill="#d8e5ee" stroke="#344f63"/>
+<rect x="256.205" y="182.85" width="178.8" height="22.5" fill="white" stroke="#1565c0" stroke-width="2"/>
+<rect x="259.205" y="185.85" width="172.8" height="16.5" fill="none" stroke="#aa6200" stroke-width="1.5" stroke-dasharray="5 3"/>
+<path d="M 80 231 H 836.0" stroke="#55838d" stroke-dasharray="4 4"/>
+<text x="844" y="235" font-size="12">Inside floor: 4</text>
+<path d="M 80 202.35 H 836.0" stroke="#55838d" stroke-dasharray="4 4"/>
+<text x="844" y="206.35" font-size="12">PCB top: 8.775</text>
+<text x="35" y="285" font-size="16">Opening width 29.8; X=26.3675..56.1675; actual Z=8.275..12.025 (3.75 high).</text>
+<text x="35" y="310" font-size="14">Provisional SD envelope: socket seated directly above PCB; header row projected to nearest wall.</text>
+<text x="35" y="395" font-size="18">J1 — right (+X), top-open notch; center Y=40</text>
+<rect x="80" y="459" width="534.0" height="96" fill="#d8e5ee" stroke="#344f63"/>
+<rect x="254.0" y="459" width="168.0" height="46.349999999999994" fill="white" stroke="#1565c0" stroke-width="2"/>
+<rect x="257.0" y="409.35" width="162.0" height="93.0" fill="none" stroke="#aa6200" stroke-width="1.5" stroke-dasharray="5 3"/>
+<path d="M 80 531 H 614.0" stroke="#55838d" stroke-dasharray="4 4"/>
+<text x="622" y="535" font-size="12">Inside floor: 4</text>
+<path d="M 80 502.35 H 614.0" stroke="#55838d" stroke-dasharray="4 4"/>
+<text x="622" y="506.35" font-size="12">PCB top: 8.775</text>
+<text x="35" y="585" font-size="16">Opening width 28; Y=26..54; actual Z=8.275..16 (7.725 high).</text>
+<text x="35" y="610" font-size="14">Full connector clearance reaches Z=24.775, above the Z=16 rim.</text>
+<text x="35" y="650" font-size="14">Blue: cut opening. Orange dashed: socket/body envelope (JAE maximum tolerance). Not a measured assembly fit.</text>
+</g>
+</svg>

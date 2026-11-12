@@ -44,13 +44,21 @@ def main():
     parser.add_argument('--support-diameter', type=float, default=6)
     parser.add_argument('--pin-clearance', type=float, default=0.2, help='DIAMETRAL clearance in PCB holes')
     parser.add_argument('--pin-height', type=float, default=3, help='Total pin height above shoulder')
+    parser.add_argument('--opening-clearance', type=float, default=0.5, help='Opening allowance on each side of body envelope')
+    parser.add_argument('--sd-body-width', type=float, default=28.8, help='Provisional SD socket width from SD-slot.jpg')
+    parser.add_argument('--sd-body-height', type=float, default=2.75, help='Provisional SD socket height above its seating plane')
+    parser.add_argument('--sd-base-offset', type=float, default=0, help='SD socket seating plane above main PCB top')
+    parser.add_argument('--jae-base-offset', type=float, default=0, help='J1 seating plane above main PCB top')
     parser.add_argument('--preview', action='store_true', help='Render PNG using Pillow and NumPy')
     parser.add_argument('--output-dir', type=Path, default=ROOT / 'mechanical/case-bottom')
     args = parser.parse_args()
     if not all(math.isfinite(v) and v > 0 for v in
                (args.wall, args.clearance, args.floor, args.depth, args.bottom_chamfer,
-                args.support_height, args.support_diameter, args.pin_clearance, args.pin_height)):
+                args.support_height, args.support_diameter, args.pin_clearance, args.pin_height,
+                args.opening_clearance, args.sd_body_width, args.sd_body_height)):
         parser.error('All dimensions must be finite and positive')
+    if not all(math.isfinite(v) and v >= 0 for v in (args.sd_base_offset, args.jae_base_offset)):
+        parser.error('Socket offsets above the PCB must be finite and nonnegative')
     data = json.loads((ROOT / 'mechanical/accord-logger-mechanical.json').read_text())
     if hashlib.sha256((ROOT / data['source']).read_bytes()).hexdigest() != data['source_sha256']:
         raise ValueError('PCB changed: rerun export_case_reference.py first')
@@ -72,6 +80,50 @@ def main():
     support_height, support_radius = args.support_height, args.support_diameter/2
     pin_height, tip_height, tip_diameter_reduction = args.pin_height, 0.5, 0.6
     seat_z = f+support_height
+    pcb_top_z = seat_z+data['thickness']
+    interfaces = data['interfaces']
+    jae, sd = interfaces['J1'], interfaces['J5']
+    jae_lo, jae_hi = jae['fab_bounds']
+    # J1 faces the +X edge; J5's pin row is parallel to the -Y wall.
+    if (jae['footprint'] != 'JAE_IL-AG5-14P-D3L2-A' or jae['layer'] != 'F.Cu'
+            or not math.isclose(jae_hi[1]-jae_lo[1], 26.5)
+            or not math.isclose(jae_hi[0]-jae_lo[0], 18.2)
+            or jae_hi[0] < w):
+        parser.error('J1 placement changed: review opening wall and alignment')
+    sd_x, sd_y = sd['pin_span_center']
+    if (any(abs(p['center'][1]-sd_y) > 1e-5 for p in sd['numbered_pad_centers'])
+            or sd_y >= min(sd_x, w-sd_x, h-sd_y)):
+        parser.error('J5 placement changed: review projected SD access wall')
+    jae_center_y = (jae_lo[1]+jae_hi[1])/2
+    margin = args.opening_clearance
+    # JAE catalogue page 10: body B=26.5 +/-0.5, height=15 +/-0.5 mm.
+    jae_width, jae_height, jae_tolerance = 26.5, 15, 0.5
+    cutouts = []
+    for ref, center, body_w, body_h, tolerance, offset, wall_name in (
+            ('J5', sd_x, args.sd_body_width, args.sd_body_height, 0, args.sd_base_offset, 'front (-Y)'),
+            ('J1', jae_center_y, jae_width, jae_height, jae_tolerance, args.jae_base_offset, 'right (+X)')):
+        opening_width = body_w+tolerance+2*margin
+        z0 = pcb_top_z+offset-margin
+        z1 = pcb_top_z+offset+body_h+tolerance+margin
+        limit = w if ref == 'J5' else h
+        if center-opening_width/2 <= r or center+opening_width/2 >= limit-r:
+            parser.error(f'{ref} opening reaches a rounded case corner')
+        if not f < z0 < height:
+            parser.error(f'{ref} opening must start above the floor and below the rim')
+        if ref == 'J5':
+            origin = [center-opening_width/2, -c-t-0.1, z0]
+            size = [opening_width, t+0.2, z1-z0]
+        else:
+            origin = [w+c-0.1, center-opening_width/2, z0]
+            size = [t+0.2, opening_width, z1-z0]
+        cutouts.append(dict(reference=ref, wall=wall_name, center_along_wall=center,
+                            width=opening_width, nominal_body_size=[body_w, body_h],
+                            positive_body_tolerance=tolerance, clearance_each_side=margin,
+                            base_offset_above_pcb=offset, requested_z_range=[z0, z1],
+                            actual_z_range=[z0, min(z1, height)],
+                            kind='window' if z1 < height else 'top-open notch',
+                            cutter_origin=origin, cutter_size=size,
+                            removed_volume_mm3=opening_width*t*(min(z1, height)-z0)))
     if pin_height <= max(tip_height, data['thickness']):
         parser.error('Pins must extend through the PCB and exceed the 0.5 mm tip height')
     if support_height+pin_height > depth:
@@ -125,6 +177,9 @@ def main():
                              shoulder_z=seat_z, base_diameter=2*support_radius,
                              pin_diameter=round(2*pin_radius, 6),
                              tip_diameter=round(2*tip_radius, 6)))
+    for cutout in cutouts:
+        cutter = manifold3d.Manifold.cube(cutout['cutter_size']).translate(cutout['cutter_origin'])
+        solid = solid-cutter
     assert solid.status() == manifold3d.Error.NoError
     assert len(solid.decompose()) == 1, 'Studs must be joined to the floor'
     mesh = solid.to_mesh()
@@ -135,7 +190,9 @@ def main():
     vertices = [struct.unpack('<3f', struct.pack('<3f', *p)) for p in vertices]
     directed = Counter((face[i], face[(i+1) % 3]) for face in faces for i in range(3))
     assert all(count == 1 and directed[b, a] == 1 for (a, b), count in directed.items())
-    assert len(vertices) - len(directed)//2 + len(faces) == 2
+    # A closed window through a wall adds a handle; a top-open notch does not.
+    expected_euler = 2-2*sum(c['kind'] == 'window' for c in cutouts)
+    assert len(vertices) - len(directed)//2 + len(faces) == expected_euler
     normals = []
     volume = 0
     for face in faces:
@@ -158,6 +215,7 @@ def main():
         exact_volume += math.pi*(support_radius**2*support_height
                                  + pr**2*(pin_height-tip_height)
                                  + tip_height*(pr**2+pr*tr+tr**2)/3)
+    exact_volume -= sum(c['removed_volume_mm3'] for c in cutouts)
     assert volume > 0 and abs(volume/exact_volume - 1) < 0.0001
     bounds = [[min(v[k] for v in vertices), max(v[k] for v in vertices)] for k in range(3)]
     expected = [[-c-t, w+c+t], [-c-t, h+c+t], [0, height]]
@@ -190,6 +248,19 @@ pin_height = {pin_height:g};  // includes the tapered tip
 tip_height = {tip_height:g};
 tip_diameter_reduction = {tip_diameter_reduction:g};
 pcb_thickness = {data['thickness']:g};
+pcb_top_z = floor_thickness+support_height+pcb_thickness;
+opening_clearance = {margin:g};
+sd_center_x = {sd_x:g};  // midpoint of J5 pins projected to front (-Y) wall
+sd_body_width = {args.sd_body_width:g};
+sd_body_height = {args.sd_body_height:g};
+sd_base_offset = {args.sd_base_offset:g};  // PROVISIONAL: directly above PCB per owner
+jae_center_y = {jae_center_y:g};  // J1 F.Fab body midpoint, right (+X) wall
+jae_body_width = {jae_width:g};
+jae_body_height = {jae_height:g};
+jae_positive_tolerance = {jae_tolerance:g};
+jae_base_offset = {args.jae_base_offset:g};
+sd_opening_width = sd_body_width+2*opening_clearance;
+jae_opening_width = jae_body_width+jae_positive_tolerance+2*opening_clearance;
 // x, y, PCB hole diameter; H1, H2, H3, H4 (asymmetric lower holes).
 mounts = {json.dumps([h['center']+[h['diameter']] for h in holes])};
 $fn = 128;
@@ -198,6 +269,10 @@ assert(clearance > 0 && wall > 0 && floor_thickness > 0 && internal_depth > 0);
 assert(bottom_chamfer > 0 && bottom_chamfer <= wall && bottom_chamfer < floor_thickness);
 assert(support_height > 0 && support_height+pin_height <= internal_depth);
 assert(pin_clearance > 0 && pin_height > max(pcb_thickness, tip_height));
+assert(opening_clearance > 0 && sd_base_offset >= 0 && jae_base_offset >= 0);
+assert(sd_body_width > 0 && sd_body_height > 0);
+assert(pcb_top_z+sd_base_offset-opening_clearance > floor_thickness);
+assert(pcb_top_z+jae_base_offset-opening_clearance > floor_thickness);
 
 module profile(gap) {{
     hull()
@@ -206,7 +281,7 @@ module profile(gap) {{
                 translate([x,y]) circle(r=pcb_radius+gap);
 }}
 
-union() {{
+module case_body() {{ union() {{
     difference() {{
         union() {{
             hull()
@@ -236,27 +311,92 @@ union() {{
                 cylinder(h=tip_height, d1=pin_diameter, d2=pin_diameter-tip_diameter_reduction);
         }}
     }}
+}} }}
+
+difference() {{
+    case_body();
+    translate([sd_center_x-sd_opening_width/2, -clearance-wall-0.1,
+               pcb_top_z+sd_base_offset-opening_clearance])
+        cube([sd_opening_width, wall+0.2, sd_body_height+2*opening_clearance]);
+    // Extends above the current rim: the JAE opening is a top-open notch.
+    translate([pcb_width+clearance-0.1, jae_center_y-jae_opening_width/2,
+               pcb_top_z+jae_base_offset-opening_clearance])
+        cube([wall+0.2, jae_opening_width,
+              jae_body_height+jae_positive_tolerance+2*opening_clearance]);
 }}
 '''
     (out / 'accord-logger-case-bottom.scad').write_text(scad)
     report = dict(units='mm', source_pcb_sha256=data['source_sha256'],
-                  pcb=[w, h], clearance_per_side=c, wall=t, floor=f, internal_depth=depth,
+                  pcb=[w, h], pcb_thickness=data['thickness'], clearance_per_side=c, wall=t, floor=f, internal_depth=depth,
                   outside=[w+2*(c+t), h+2*(c+t), height], inside=[w+2*c, h+2*c, depth],
                   inner_corner_radius=r+c, outer_corner_radius=r+c+t,
                   bottom_chamfer=bevel, bottom_contact_size=[w+2*(c+t-bevel), h+2*(c+t-bevel)],
                   bottom_corner_radius=r+c+t-bevel,
                   support_height_above_floor=support_height, supports=supports,
                   pin_height=pin_height, pin_diametral_clearance=args.pin_clearance,
-                  tip_height=tip_height, pcb_top_z=seat_z+data['thickness'],
+                  tip_height=tip_height, pcb_top_z=pcb_top_z, cutouts=cutouts,
                   pin_top_z=seat_z+pin_height, connected_solids=len(solid.decompose()),
                   triangles=len(faces), bounds=bounds, mesh_volume_mm3=round(volume, 6),
                   analytic_volume_mm3=round(exact_volume, 6),
-                  validation='Closed oriented manifold, Euler characteristic 2, positive volume; bounds and volume checked')
+                  euler_characteristic=expected_euler,
+                  validation='Closed oriented manifold, expected opening topology, positive volume; bounds and volume checked')
     (out / 'dimensions.json').write_text(json.dumps(report, indent=2)+'\n')
+    cutout_drawing(out, report)
     if args.preview:
         preview(out, vertices, faces, normals, report)
         preview(out, vertices, faces, normals, report, underside=True)
     print(json.dumps(report, indent=2))
+
+
+def cutout_drawing(out, report):
+    """Two wall elevations with the PCB height datum and full body envelopes."""
+    from html import escape
+    items = ['<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="680" viewBox="0 0 1000 680">',
+             '<!-- Accord by Jayson Gazeley; CERN-OHL-P-2.0 -->',
+             '<rect width="1000" height="680" fill="white"/>',
+             '<g font-family="sans-serif" fill="#24394b">']
+
+    def label(x, y, text, size=16):
+        items.append(f'<text x="{x:g}" y="{y:g}" font-size="{size}">{escape(text)}</text>')
+
+    label(35, 30, 'Logger case — SD access and JAE connector opening', 23)
+    label(35, 60, f'PCB top Z = floor {report["floor"]:g} + supports {report["support_height_above_floor"]:g}'
+          f' + PCB {report["pcb_thickness"]:g} = {report["pcb_top_z"]:g} mm. All dimensions in mm.')
+    for index, cut in enumerate(report['cutouts']):
+        base = 255+300*index
+        scale, left = 6, 80
+        span = report['pcb'][0 if cut['reference'] == 'J5' else 1]
+        gap = report['clearance_per_side']+report['wall']
+        xmap = lambda x: left+(x+gap)*scale
+        ymap = lambda z: base-z*scale
+        rim = report['outside'][2]
+        center, width = cut['center_along_wall'], cut['width']
+        z0, z1 = cut['actual_z_range']
+        axis = 'X' if cut['reference'] == 'J5' else 'Y'
+        label(35, base-160, f'{cut["reference"]} — {cut["wall"]}, {cut["kind"]}; center {axis}={center:g}', 18)
+        items.append(f'<rect x="{left}" y="{ymap(rim)}" width="{(span+2*gap)*scale}" '
+                     f'height="{rim*scale}" fill="#d8e5ee" stroke="#344f63"/>')
+        items.append(f'<rect x="{xmap(center-width/2)}" y="{ymap(z1)}" width="{width*scale}" '
+                     f'height="{(z1-z0)*scale}" fill="white" stroke="#1565c0" stroke-width="2"/>')
+        body_w, body_h = cut['nominal_body_size']
+        tolerance = cut['positive_body_tolerance']
+        bottom = report['pcb_top_z']+cut['base_offset_above_pcb']
+        items.append(f'<rect x="{xmap(center-(body_w+tolerance)/2)}" y="{ymap(bottom+body_h+tolerance)}" '
+                     f'width="{(body_w+tolerance)*scale}" height="{(body_h+tolerance)*scale}" '
+                     'fill="none" stroke="#aa6200" stroke-width="1.5" stroke-dasharray="5 3"/>')
+        for z, title in ((report['floor'], 'Inside floor'), (report['pcb_top_z'], 'PCB top')):
+            items.append(f'<path d="M {left} {ymap(z)} H {xmap(span+gap)}" '
+                         'stroke="#55838d" stroke-dasharray="4 4"/>')
+            label(xmap(span+gap)+8, ymap(z)+4, f'{title}: {z:g}', 12)
+        label(35, base+30, f'Opening width {width:g}; {axis}={center-width/2:g}..{center+width/2:g}; '
+              f'actual Z={z0:g}..{z1:g} ({z1-z0:g} high).')
+        note = ('Provisional SD envelope: socket seated directly above PCB; header row projected to nearest wall.'
+                if cut['reference'] == 'J5' else
+                f'Full connector clearance reaches Z={cut["requested_z_range"][1]:g}, above the Z={rim:g} rim.')
+        label(35, base+55, note, 14)
+    label(35, 650, 'Blue: cut opening. Orange dashed: socket/body envelope (JAE maximum tolerance). Not a measured assembly fit.', 14)
+    items.extend(['</g>', '</svg>'])
+    (out / 'cutout-layout.svg').write_text('\n'.join(items)+'\n')
 
 
 def preview(out, vertices, faces, normals, report, underside=False):

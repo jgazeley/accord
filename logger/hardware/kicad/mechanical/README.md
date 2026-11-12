@@ -20,7 +20,9 @@ and [NOTICE](../NOTICE). This README and the export script use Apache-2.0.
 - **`accord-logger-reference.svg`**: annotated top view for checking orientation
   and hole coordinates; use the DXF for modelling.
 - **`accord-logger-mechanical.json`**: dimensions, exact outline primitives,
-  hole positions and source hash for scripted CAD.
+  hole positions, J1/J5 pad and fabrication-outline coordinates, and source
+  hash for scripted CAD. `interfaces.J5.pin_span_center` is the midpoint of
+  the six numbered pins; it is not the measured SD socket mouth location.
 
 All exports use the same XY frame: viewed from the component/front side,
 origin at the lower-left corner of the bounding rectangle, X right, Y up.
@@ -58,7 +60,10 @@ the hole diameter. Existing assembly notes call for a nylon screw and washer
 at H4 in the Pico antenna keep-clear strip.
 
 J1 intentionally overhangs the right edge. J5 is on the back; the SD module
-and its wiring require space below the PCB. The current assembly uses
+was originally recorded as below the PCB. For the provisional case opening
+the owner explicitly chose a socket directly above the main PCB on November
+12 (D-CASE-36); the physical socket arrangement still needs checking.
+The current assembly uses
 transferred components and modified SD wiring (DECISIONS D-BUILD-25 and
 D-FW-26), so the CAD footprints are not a measured assembly envelope.
 Measure fitted component heights above/below the board and the actual SD,
@@ -73,6 +78,9 @@ From the repository root:
 ```sh
 /usr/bin/python3 logger/hardware/kicad/tools/export_case_reference.py
 ```
+
+Use `--json-only` to refresh the geometry/interface coordinates without
+regenerating STEP or drawings.
 
 Requires KiCad's `pcbnew` Python module and `kicad-cli`. The script reads the
 source board without saving it, writes only these generated exports, and

@@ -1,7 +1,7 @@
 # Status
 
 Rewritten, not appended to, whenever the state changes. Owner statements
-go in [DECISIONS.md](DECISIONS.md). Last updated November 11, 2026.
+go in [DECISIONS.md](DECISIONS.md). Last updated November 12, 2026.
 
 ## Goal now
 
@@ -30,12 +30,23 @@ arrived, and the owner has transferred the working circuit onto one.**
   defaults are 1 mm PCB clearance per side, 4 mm floor and 12 mm internal
   depth (126 × 89 × 16 mm overall). **Four stepped locating studs added**
   (D-CASE-32, height halved in D-CASE-34): Ø6 mm shoulders support the PCB
-  3.175 mm above the inside floor; Ø3 mm pins enter its Ø3.2 mm holes, extending 3 mm above the
+  3.175 mm above the inside floor; Ø3 mm pins enter its Ø3.2 mm holes,
+  extending 3 mm above the
   shoulders with tapered tips. Exported-STL slice checks confirm the actual
-  hole positions, support/pin diameters and one joined solid. Connector
-  openings and physical assembly fit remain to be checked.
+  hole positions, support/pin diameters and one joined solid. Physical
+  assembly fit remains to be checked.
   The exterior bottom perimeter has a 1 mm × 1 mm, 45° chamfer (D-CASE-35);
   underside preview and STL section checks confirm the bevel.
+- **Access openings added** (November 12, D-CASE-36): a 29.8 × 3.75 mm SD
+  window in the front (-Y) wall, centered on J5's pin span at X=41.2675 mm;
+  a 28 mm-wide JAE top-open notch in the right (+X) wall, centered on J1's
+  body at Y=40 mm. PCB top Z=4+3.175+1.6=8.775 mm; both openings start at
+  Z=8.275 mm with 0.5 mm fit allowance. SD height is provisional: owner
+  explicitly chose a socket directly above the main PCB despite J5's
+  back-side footprint. The JAE body exceeds the 16 mm rim; full clearance
+  reaches Z=24.775 mm. `cutout-layout.svg` and the case README show dimensions
+  and source assumptions. Drawing references are the owner's local
+  `docs/IL-AG5_Series.pdf` and `docs/SD-slot.jpg`.
 
 Design and fabrication record:
 
@@ -80,8 +91,9 @@ Design and fabrication record:
 
 ## Next, in order
 
-1. Review the case bottom with locating studs; check printed pin fit and
-   underside assembly clearance, then establish connector openings and final height.
+1. Check the case's printed stud fit and connector access against the physical
+   assembly, especially the provisional SD socket height, mouth position and
+   finger access. Account for the JAE body above the rim when designing a lid.
 2. Continue validating the partially populated board in the car; November 11
    SD-card dislodgement and trip recovery are recorded in D-DB-29.
 3. For future autonomous operation, finish parts procurement, assembly and

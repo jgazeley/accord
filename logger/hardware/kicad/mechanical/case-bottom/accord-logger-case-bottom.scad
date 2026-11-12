@@ -17,6 +17,19 @@ pin_height = 3;  // includes the tapered tip
 tip_height = 0.5;
 tip_diameter_reduction = 0.6;
 pcb_thickness = 1.6;
+pcb_top_z = floor_thickness+support_height+pcb_thickness;
+opening_clearance = 0.5;
+sd_center_x = 41.2675;  // midpoint of J5 pins projected to front (-Y) wall
+sd_body_width = 28.8;
+sd_body_height = 2.75;
+sd_base_offset = 0;  // PROVISIONAL: directly above PCB per owner
+jae_center_y = 40;  // J1 F.Fab body midpoint, right (+X) wall
+jae_body_width = 26.5;
+jae_body_height = 15;
+jae_positive_tolerance = 0.5;
+jae_base_offset = 0;
+sd_opening_width = sd_body_width+2*opening_clearance;
+jae_opening_width = jae_body_width+jae_positive_tolerance+2*opening_clearance;
 // x, y, PCB hole diameter; H1, H2, H3, H4 (asymmetric lower holes).
 mounts = [[115.88, 78.74, 3.2], [115.88, 4.445, 3.2], [4.12, 78.74, 3.2], [4.12, 5.08, 3.2]];
 $fn = 128;
@@ -25,6 +38,10 @@ assert(clearance > 0 && wall > 0 && floor_thickness > 0 && internal_depth > 0);
 assert(bottom_chamfer > 0 && bottom_chamfer <= wall && bottom_chamfer < floor_thickness);
 assert(support_height > 0 && support_height+pin_height <= internal_depth);
 assert(pin_clearance > 0 && pin_height > max(pcb_thickness, tip_height));
+assert(opening_clearance > 0 && sd_base_offset >= 0 && jae_base_offset >= 0);
+assert(sd_body_width > 0 && sd_body_height > 0);
+assert(pcb_top_z+sd_base_offset-opening_clearance > floor_thickness);
+assert(pcb_top_z+jae_base_offset-opening_clearance > floor_thickness);
 
 module profile(gap) {
     hull()
@@ -33,7 +50,7 @@ module profile(gap) {
                 translate([x,y]) circle(r=pcb_radius+gap);
 }
 
-union() {
+module case_body() { union() {
     difference() {
         union() {
             hull()
@@ -63,4 +80,16 @@ union() {
                 cylinder(h=tip_height, d1=pin_diameter, d2=pin_diameter-tip_diameter_reduction);
         }
     }
+} }
+
+difference() {
+    case_body();
+    translate([sd_center_x-sd_opening_width/2, -clearance-wall-0.1,
+               pcb_top_z+sd_base_offset-opening_clearance])
+        cube([sd_opening_width, wall+0.2, sd_body_height+2*opening_clearance]);
+    // Extends above the current rim: the JAE opening is a top-open notch.
+    translate([pcb_width+clearance-0.1, jae_center_y-jae_opening_width/2,
+               pcb_top_z+jae_base_offset-opening_clearance])
+        cube([wall+0.2, jae_opening_width,
+              jae_body_height+jae_positive_tolerance+2*opening_clearance]);
 }

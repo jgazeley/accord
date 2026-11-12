@@ -6,6 +6,7 @@
 Run with /usr/bin/python3 (KiCad's pcbnew module), from any directory.
 The DXF contains exact lines/arcs and mounting holes only; STEP is bare PCB.
 """
+import argparse
 import hashlib
 import json
 import math
@@ -21,6 +22,9 @@ OUT = ROOT / 'mechanical'
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--json-only', action='store_true', help='Refresh coordinates without re-exporting drawings/STEP')
+    args = parser.parse_args()
     source_hash = hashlib.sha256(SOURCE.read_bytes()).hexdigest()
     board = pcbnew.LoadBoard(str(SOURCE))
     edges = [d for d in board.GetDrawings() if d.GetLayer() == pcbnew.Edge_Cuts]
@@ -78,14 +82,40 @@ def main():
     if len(holes) != 4:
         raise ValueError('Expected four mounting holes')
 
+    interfaces = {}
+    for fp in board.GetFootprints():
+        if fp.GetReference() not in ('J1', 'J5'):
+            continue
+        pads = sorted((p for p in fp.Pads() if p.GetNumber()), key=lambda p: int(p.GetNumber()))
+        positions = [xy(p.GetPosition()) for p in pads]
+        pin_center = [round((min(p[i] for p in positions)+max(p[i] for p in positions))/2, 6)
+                      for i in range(2)]
+        fab_points = [xy(p) for g in fp.GraphicalItems()
+                      if g.GetClass() == 'PCB_SHAPE' and g.GetLayer() in (pcbnew.F_Fab, pcbnew.B_Fab)
+                      for p in (g.GetStart(), g.GetEnd())]
+        interfaces[fp.GetReference()] = dict(
+            footprint=str(fp.GetFPID().GetLibItemName()), layer=fp.GetLayerName(),
+            position=xy(fp.GetPosition()), rotation_deg=fp.GetOrientationDegrees(),
+            numbered_pad_centers=[dict(number=p.GetNumber(), center=xy(p.GetPosition())) for p in pads],
+            pin_span_center=pin_center,
+            fab_bounds=[[min(p[i] for p in fab_points) for i in range(2)],
+                        [max(p[i] for p in fab_points) for i in range(2)]])
+    if set(interfaces) != {'J1', 'J5'}:
+        raise ValueError('Expected J1 and J5 interface footprints')
+
     OUT.mkdir(exist_ok=True)
     data = dict(source=SOURCE.name, source_sha256=source_hash,
                 license='CERN-OHL-P-2.0', units='mm',
                 coordinates='Top view; origin lower-left; +X right, +Y up',
                 kicad_origin_mm=[x0, y1], width=width, height=height,
                 thickness=pcbnew.ToMM(board.GetDesignSettings().GetBoardThickness()),
-                edges=geometry, mounting_holes=holes)
+                edges=geometry, mounting_holes=holes, interfaces=interfaces)
     (OUT / 'accord-logger-mechanical.json').write_text(json.dumps(data, indent=2) + '\n')
+    if args.json_only:
+        if hashlib.sha256(SOURCE.read_bytes()).hexdigest() != source_hash:
+            raise RuntimeError('Source PCB changed during export; rerun on a stable file')
+        print('Updated PCB geometry and J1/J5 interface coordinates')
+        return
 
     dxf = []
 

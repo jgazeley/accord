@@ -5,6 +5,7 @@
     120.0,
     83.0
   ],
+  "pcb_thickness": 1.6,
   "clearance_per_side": 1,
   "wall": 2,
   "floor": 4,
@@ -78,9 +79,77 @@
   "pin_diametral_clearance": 0.2,
   "tip_height": 0.5,
   "pcb_top_z": 8.775,
+  "cutouts": [
+    {
+      "reference": "J5",
+      "wall": "front (-Y)",
+      "center_along_wall": 41.2675,
+      "width": 29.8,
+      "nominal_body_size": [
+        28.8,
+        2.75
+      ],
+      "positive_body_tolerance": 0,
+      "clearance_each_side": 0.5,
+      "base_offset_above_pcb": 0,
+      "requested_z_range": [
+        8.275,
+        12.025
+      ],
+      "actual_z_range": [
+        8.275,
+        12.025
+      ],
+      "kind": "window",
+      "cutter_origin": [
+        26.3675,
+        -3.1,
+        8.275
+      ],
+      "cutter_size": [
+        29.8,
+        2.2,
+        3.75
+      ],
+      "removed_volume_mm3": 223.5
+    },
+    {
+      "reference": "J1",
+      "wall": "right (+X)",
+      "center_along_wall": 40.0,
+      "width": 28.0,
+      "nominal_body_size": [
+        26.5,
+        15
+      ],
+      "positive_body_tolerance": 0.5,
+      "clearance_each_side": 0.5,
+      "base_offset_above_pcb": 0,
+      "requested_z_range": [
+        8.275,
+        24.775
+      ],
+      "actual_z_range": [
+        8.275,
+        16
+      ],
+      "kind": "top-open notch",
+      "cutter_origin": [
+        120.9,
+        26.0,
+        8.275
+      ],
+      "cutter_size": [
+        2.2,
+        28.0,
+        16.5
+      ],
+      "removed_volume_mm3": 432.59999999999997
+    }
+  ],
   "pin_top_z": 10.175,
   "connected_solids": 1,
-  "triangles": 6440,
+  "triangles": 6476,
   "bounds": [
     [
       -3.0,
@@ -95,7 +164,8 @@
       16.0
     ]
   ],
-  "mesh_volume_mm3": 54964.412718,
-  "analytic_volume_mm3": 54964.952393,
-  "validation": "Closed oriented manifold, Euler characteristic 2, positive volume; bounds and volume checked"
+  "mesh_volume_mm3": 54308.312703,
+  "analytic_volume_mm3": 54308.852393,
+  "euler_characteristic": 0,
+  "validation": "Closed oriented manifold, expected opening topology, positive volume; bounds and volume checked"
 }
