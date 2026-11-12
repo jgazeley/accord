@@ -8,6 +8,12 @@ October 29 evening were carried over from the retired tracker
 
 ## November 11, 2026
 
+**D-CASE-34: halve the thicker sections of the mounting studs.** Owner:
+*"please lower the studs so the thicker lower section is about half the
+current height"*. Reduce the support shoulder height above the inside floor
+from 6.35 mm to 3.175 mm. Keep the 3 mm-long narrow pins and their tapered
+tips, support diameters and case dimensions.
+
 **D-CASE-33: reduce the case walls to 2 mm.** Owner: *"I think maybe 2 mm
 instead of 4 mm for wall thickness, my mistake"*. Supersedes the 4 mm wall
 requirement in D-CASE-31. Keep the 4 mm floor, 1 mm PCB perimeter clearance

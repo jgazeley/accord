@@ -21,7 +21,7 @@
   ],
   "inner_corner_radius": 3.0,
   "outer_corner_radius": 5.0,
-  "support_height_above_floor": 6.35,
+  "support_height_above_floor": 3.175,
   "supports": [
     {
       "reference": "H1",
@@ -29,7 +29,7 @@
         115.88,
         78.74
       ],
-      "shoulder_z": 10.35,
+      "shoulder_z": 7.175,
       "base_diameter": 6.0,
       "pin_diameter": 3.0,
       "tip_diameter": 2.4
@@ -40,7 +40,7 @@
         115.88,
         4.445
       ],
-      "shoulder_z": 10.35,
+      "shoulder_z": 7.175,
       "base_diameter": 6.0,
       "pin_diameter": 3.0,
       "tip_diameter": 2.4
@@ -51,7 +51,7 @@
         4.12,
         78.74
       ],
-      "shoulder_z": 10.35,
+      "shoulder_z": 7.175,
       "base_diameter": 6.0,
       "pin_diameter": 3.0,
       "tip_diameter": 2.4
@@ -62,7 +62,7 @@
         4.12,
         5.08
       ],
-      "shoulder_z": 10.35,
+      "shoulder_z": 7.175,
       "base_diameter": 6.0,
       "pin_diameter": 3.0,
       "tip_diameter": 2.4
@@ -71,8 +71,8 @@
   "pin_height": 3,
   "pin_diametral_clearance": 0.2,
   "tip_height": 0.5,
-  "pcb_top_z": 11.95,
-  "pin_top_z": 13.35,
+  "pcb_top_z": 8.775,
+  "pin_top_z": 10.175,
   "connected_solids": 1,
   "triangles": 6176,
   "bounds": [
@@ -89,7 +89,7 @@
       16.0
     ]
   ],
-  "mesh_volume_mm3": 55533.007445,
-  "analytic_volume_mm3": 55533.697199,
+  "mesh_volume_mm3": 55174.067596,
+  "analytic_volume_mm3": 55174.613159,
   "validation": "Closed oriented manifold, Euler characteristic 2, positive volume; bounds and volume checked"
 }

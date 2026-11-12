@@ -39,7 +39,7 @@ def main():
     parser.add_argument('--clearance', type=float, default=1, help='PCB edge gap per side')
     parser.add_argument('--floor', type=float, default=4)
     parser.add_argument('--depth', type=float, default=12, help='Interior depth above floor')
-    parser.add_argument('--support-height', type=float, default=6.35, help='PCB underside above inside floor')
+    parser.add_argument('--support-height', type=float, default=3.175, help='PCB underside above inside floor')
     parser.add_argument('--support-diameter', type=float, default=6)
     parser.add_argument('--pin-clearance', type=float, default=0.2, help='DIAMETRAL clearance in PCB holes')
     parser.add_argument('--pin-height', type=float, default=3, help='Total pin height above shoulder')

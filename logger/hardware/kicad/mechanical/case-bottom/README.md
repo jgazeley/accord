@@ -7,7 +7,8 @@ revising the walls from 4 mm to 2 mm (DECISIONS D-CASE-31 and D-CASE-33).
 The starting clearance, floor thickness and
 depth below are adjustable modelling choices. The owner subsequently
 requested wider supports raising the PCB about a quarter inch, narrowing
-to pins that fit through its mounting holes (D-CASE-32).
+to pins that fit through its mounting holes (D-CASE-32), then halved the
+thicker support section to 3.175 mm (D-CASE-34).
 
 | Dimension | Value |
 |---|---:|
@@ -19,7 +20,7 @@ to pins that fit through its mounting holes (D-CASE-32).
 | Outside width × length × height | 126 × 89 × 16 mm |
 | Inside corner radius | 3 mm |
 | Outside corner radius | 5 mm |
-| PCB underside height above inside floor | 6.35 mm (¼ inch) |
+| PCB underside height above inside floor | 3.175 mm (⅛ inch) |
 | Support shoulder diameter | 6 mm |
 | Locating pin diameter / PCB hole diameter | 3.0 / 3.2 mm |
 | Pin height above shoulder | 3 mm |
@@ -33,9 +34,9 @@ and Y=-3..86 mm.
 
 ## PCB supports
 
-The PCB rests on the four Ø6 mm shoulders at **Z=10.35 mm**, 6.35 mm above
+The PCB rests on the four Ø6 mm shoulders at **Z=7.175 mm**, 3.175 mm above
 the inside floor. The narrower pins enter the board holes. A nominal 1.6 mm
-PCB has its upper surface at Z=11.95 mm; pin tips reach Z=13.35 mm, leaving
+PCB has its upper surface at Z=8.775 mm; pin tips reach Z=10.175 mm, leaving
 1.4 mm above the PCB. Pins have **0.2 mm diametral clearance** (0.1 mm per
 side); this is a starting slip-fit allowance and may need adjustment for the
 printer. The short tapered tips help align all four holes when lowering the
@@ -68,7 +69,7 @@ radius. This checks the PCB drawing, not solder or other fitted hardware.
 The walls remain continuous; fixing holes, a lid interface and connector
 openings have not been added. The fitted SD module sits below the board and
 J1 overhangs its right edge. Check that the assembly clears the floor at the
-requested 6.35 mm support height and add connector openings before treating
+requested 3.175 mm support height and add connector openings before treating
 this as an assembly-fit case. Cavity dimensions describe PCB clearance.
 
 ## Regenerate
@@ -96,8 +97,8 @@ dimensions and agreement with the analytic tray-plus-supports volume. It also
 requires a single connected solid after joining the studs. The default mesh
 has 6,176 triangles and a volume within 0.002% of the analytic solid.
 Its 32 segments per quarter-circle approximate the R5 exterior within 0.002 mm.
-Independent slices of the exported STL at Z=7, 10.34, 10.36, 11.95 and
-13.1 mm verified four support/pin cross-sections on the exact PCB hole
+Independent slices of the exported STL at Z=5, 7.165, 7.185, 8.775 and
+9.925 mm verified four support/pin cross-sections on the exact PCB hole
 centers, with the expected diameters (6, 6, 3, 3 and 2.7 mm respectively).
 No physical fit or print test has been performed.
 

@@ -29,7 +29,8 @@ arrived, and the owner has transferred the working circuit onto one.**
   OpenSCAD source and a preview. Walls are 2 mm (revised in D-CASE-33); starting
   defaults are 1 mm PCB clearance per side, 4 mm floor and 12 mm internal
   depth (126 × 89 × 16 mm overall). **Four stepped locating studs added**
-  (D-CASE-32): Ø6 mm shoulders support the PCB 6.35 mm above the inside
+  (D-CASE-32, height halved in D-CASE-34): Ø6 mm shoulders support the PCB
+  3.175 mm above the inside
   floor; Ø3 mm pins enter its Ø3.2 mm holes, extending 3 mm above the
   shoulders with tapered tips. Exported-STL slice checks confirm the actual
   hole positions, support/pin diameters and one joined solid. Connector
