@@ -8,6 +8,11 @@ October 29 evening were carried over from the retired tracker
 
 ## November 11, 2026
 
+**D-CASE-35: chamfer the case bottom edge.** Owner: *"please add a chamfer
+to the bottom edge"*. Interpret this as the exterior bottom perimeter;
+use an editable 1 mm × 1 mm, 45° chamfer. Preserve the upper wall envelope,
+inside floor and mounting studs.
+
 **D-CASE-34: halve the thicker sections of the mounting studs.** Owner:
 *"please lower the studs so the thicker lower section is about half the
 current height"*. Reduce the support shoulder height above the inside floor

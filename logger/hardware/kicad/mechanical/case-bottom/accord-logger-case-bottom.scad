@@ -9,6 +9,7 @@ clearance = 1;  // gap on EACH side of the PCB
 wall = 2;
 floor_thickness = 4;
 internal_depth = 12;
+bottom_chamfer = 1;  // 45-degree exterior bottom edge, horizontal and vertical
 support_height = 3.175;  // PCB underside above the INSIDE floor
 support_diameter = 6;
 pin_clearance = 0.2;  // DIAMETRAL clearance in each PCB hole
@@ -21,6 +22,7 @@ mounts = [[115.88, 78.74, 3.2], [115.88, 4.445, 3.2], [4.12, 78.74, 3.2], [4.12,
 $fn = 128;
 
 assert(clearance > 0 && wall > 0 && floor_thickness > 0 && internal_depth > 0);
+assert(bottom_chamfer > 0 && bottom_chamfer <= wall && bottom_chamfer < floor_thickness);
 assert(support_height > 0 && support_height+pin_height <= internal_depth);
 assert(pin_clearance > 0 && pin_height > max(pcb_thickness, tip_height));
 
@@ -33,8 +35,18 @@ module profile(gap) {
 
 union() {
     difference() {
-        linear_extrude(height=floor_thickness+internal_depth)
-            profile(clearance+wall);
+        union() {
+            hull()
+                for (x = [pcb_radius, pcb_width-pcb_radius])
+                    for (y = [pcb_radius, pcb_height-pcb_radius])
+                        translate([x,y,0])
+                            cylinder(h=bottom_chamfer,
+                                r1=pcb_radius+clearance+wall-bottom_chamfer,
+                                r2=pcb_radius+clearance+wall);
+            translate([0,0,bottom_chamfer])
+                linear_extrude(height=floor_thickness+internal_depth-bottom_chamfer)
+                    profile(clearance+wall);
+        }
         translate([0,0,floor_thickness])
             linear_extrude(height=internal_depth+0.1)
                 profile(clearance);

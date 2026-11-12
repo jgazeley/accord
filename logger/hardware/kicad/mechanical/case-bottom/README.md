@@ -9,6 +9,8 @@ depth below are adjustable modelling choices. The owner subsequently
 requested wider supports raising the PCB about a quarter inch, narrowing
 to pins that fit through its mounting holes (D-CASE-32), then halved the
 thicker support section to 3.175 mm (D-CASE-34).
+The exterior bottom edge is chamfered per D-CASE-35; the starting chamfer
+size is 1 mm horizontally and vertically (45°).
 
 | Dimension | Value |
 |---|---:|
@@ -20,6 +22,8 @@ thicker support section to 3.175 mm (D-CASE-34).
 | Outside width × length × height | 126 × 89 × 16 mm |
 | Inside corner radius | 3 mm |
 | Outside corner radius | 5 mm |
+| Exterior bottom chamfer | 1 × 1 mm at 45° |
+| Flat underside contact footprint | 124 × 87 mm, R4 corners |
 | PCB underside height above inside floor | 3.175 mm (⅛ inch) |
 | Support shoulder diameter | 6 mm |
 | Locating pin diameter / PCB hole diameter | 3.0 / 3.2 mm |
@@ -27,8 +31,10 @@ thicker support section to 3.175 mm (D-CASE-34).
 | Lead-in tip | Last 0.5 mm tapers to Ø2.4 mm |
 
 The concentric corner offsets preserve the 1 mm PCB gap and 2 mm wall
-thickness around the curves. These are rounded corners in plan; the floor
-and rim edges are square. The interior floor is Z=4 and the rim is Z=16.
+thickness around the curves. The exterior bottom bevel runs from the inset
+underside at Z=0 to the full exterior profile at Z=1, including the rounded
+corners. The interior floor and top rim edges are square. The interior floor
+is Z=4 and the rim is Z=16; the floor remains 4 mm thick inside the cavity.
 XY uses the same datum as the PCB reference, so the case spans X=-3..123
 and Y=-3..86 mm.
 
@@ -64,6 +70,7 @@ radius. This checks the PCB drawing, not solder or other fitted hardware.
   then render/export in OpenSCAD. OpenSCAD is not installed on the generation
   host; the supplied STL was built directly from the same profile parameters.
 - **`preview.png`**: illustration of the supplied STL geometry.
+- **`underside-preview.png`**: view from below showing the bottom chamfer.
 - **`dimensions.json`**: source PCB hash, dimensions and mesh check results.
 
 The walls remain continuous; fixing holes, a lid interface and connector
@@ -85,9 +92,10 @@ Pillow is additionally needed for `--preview`. Install the Python packages
 in your preferred virtual environment with
 `python3 -m pip install manifold3d==3.5.4 numpy pillow`.
 The generator checks the current PCB hash against the extracted reference.
-Options `--wall`, `--clearance`, `--floor`, `--depth`, `--support-height`,
+Options `--wall`, `--clearance`, `--floor`, `--depth`, `--bottom-chamfer`, `--support-height`,
 `--support-diameter`, `--pin-clearance`, `--pin-height` and `--output-dir`
-produce variants. Pin clearance is **diametral**, subtracted from each PCB
+produce variants. The positive chamfer size must not exceed wall thickness
+and must be less than floor thickness. Pin clearance is **diametral**, subtracted from each PCB
 hole diameter. Generated files in the output directory are
 overwritten; keep custom OpenSCAD edits separately if rerunning the generator.
 
@@ -95,11 +103,14 @@ The generator checks float32 STL coordinates for paired, oppositely directed
 edges, Euler characteristic 2, nondegenerate faces, positive volume, bounding
 dimensions and agreement with the analytic tray-plus-supports volume. It also
 requires a single connected solid after joining the studs. The default mesh
-has 6,176 triangles and a volume within 0.002% of the analytic solid.
+has 6,440 triangles and a volume within 0.002% of the analytic solid.
 Its 32 segments per quarter-circle approximate the R5 exterior within 0.002 mm.
 Independent slices of the exported STL at Z=5, 7.165, 7.185, 8.775 and
 9.925 mm verified four support/pin cross-sections on the exact PCB hole
 centers, with the expected diameters (6, 6, 3, 3 and 2.7 mm respectively).
+Bottom-section checks at Z=0, 0.25, 0.5, 0.75 and 1 mm confirm the exterior
+grows from 124 × 87 to 126 × 89 mm linearly through the chamfer; at Z=2
+the full exterior size is retained.
 No physical fit or print test has been performed.
 
 Based on Accord by Jayson Gazeley — https://github.com/jgazeley/accord.

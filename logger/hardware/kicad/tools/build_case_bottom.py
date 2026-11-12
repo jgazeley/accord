@@ -39,6 +39,7 @@ def main():
     parser.add_argument('--clearance', type=float, default=1, help='PCB edge gap per side')
     parser.add_argument('--floor', type=float, default=4)
     parser.add_argument('--depth', type=float, default=12, help='Interior depth above floor')
+    parser.add_argument('--bottom-chamfer', type=float, default=1, help='Exterior bottom bevel: equal XY and Z setback')
     parser.add_argument('--support-height', type=float, default=3.175, help='PCB underside above inside floor')
     parser.add_argument('--support-diameter', type=float, default=6)
     parser.add_argument('--pin-clearance', type=float, default=0.2, help='DIAMETRAL clearance in PCB holes')
@@ -47,7 +48,7 @@ def main():
     parser.add_argument('--output-dir', type=Path, default=ROOT / 'mechanical/case-bottom')
     args = parser.parse_args()
     if not all(math.isfinite(v) and v > 0 for v in
-               (args.wall, args.clearance, args.floor, args.depth,
+               (args.wall, args.clearance, args.floor, args.depth, args.bottom_chamfer,
                 args.support_height, args.support_diameter, args.pin_clearance, args.pin_height)):
         parser.error('All dimensions must be finite and positive')
     data = json.loads((ROOT / 'mechanical/accord-logger-mechanical.json').read_text())
@@ -64,6 +65,9 @@ def main():
         raise ValueError('Unexpected PCB corner centers')
     c, t, f, depth = args.clearance, args.wall, args.floor, args.depth
     height = f + depth
+    bevel = args.bottom_chamfer
+    if bevel > t or bevel >= f:
+        parser.error('Bottom chamfer must not exceed wall thickness and must be below floor thickness')
     holes = data['mounting_holes']
     support_height, support_radius = args.support_height, args.support_diameter/2
     pin_height, tip_height, tip_diameter_reduction = args.pin_height, 0.5, 0.6
@@ -88,7 +92,7 @@ def main():
                 for (cx, cy), start in zip(centers, (-90, 0, 90, 180))
                 for j in range(segments+1)]
 
-    rings = [ring(r+c+t, 0), ring(r+c+t, height),
+    rings = [ring(r+c+t-bevel, 0), ring(r+c+t, bevel), ring(r+c+t, height),
              ring(r+c, height), ring(r+c, f)]
     n = len(rings[0])
     vertices = [p for ring_points in rings for p in ring_points]
@@ -96,11 +100,11 @@ def main():
     faces = []
     for i in range(n):
         j = (i+1) % n
-        # Outer wall, rim, inner wall, bottom, then cavity floor.
-        faces.extend([(i, j, n+j), (i, n+j, n+i),
-                      (n+i, n+j, 2*n+j), (n+i, 2*n+j, 2*n+i),
-                      (3*n+i, 2*n+j, 3*n+j), (3*n+i, 2*n+i, 2*n+j),
-                      (4*n, j, i), (4*n+1, 3*n+i, 3*n+j)])
+        # Bevel, outer wall, rim and inner wall, then bottom and cavity floor.
+        for band in range(4):
+            a, b = band*n, (band+1)*n
+            faces.extend([(a+i, a+j, b+j), (a+i, b+j, b+i)])
+        faces.extend([(5*n, j, i), (5*n+1, 4*n+i, 4*n+j)])
 
     solid = manifold3d.Manifold(manifold3d.Mesh(
         np.array(vertices, dtype=np.float32), np.array(faces, dtype=np.uint32)))
@@ -146,7 +150,9 @@ def main():
         radius = r+gap
         return (w+2*gap)*(h+2*gap) - (4-math.pi)*radius**2
 
-    exact_volume = area(c+t)*height - area(c)*depth
+    # Cross-sectional area is quadratic in offset: Simpson's rule is exact.
+    bevel_volume = bevel*(area(c+t-bevel)+4*area(c+t-bevel/2)+area(c+t))/6
+    exact_volume = area(c+t)*(height-bevel)+bevel_volume-area(c)*depth
     for support in supports:
         pr, tr = support['pin_diameter']/2, support['tip_diameter']/2
         exact_volume += math.pi*(support_radius**2*support_height
@@ -176,6 +182,7 @@ clearance = {c:g};  // gap on EACH side of the PCB
 wall = {t:g};
 floor_thickness = {f:g};
 internal_depth = {depth:g};
+bottom_chamfer = {bevel:g};  // 45-degree exterior bottom edge, horizontal and vertical
 support_height = {support_height:g};  // PCB underside above the INSIDE floor
 support_diameter = {2*support_radius:g};
 pin_clearance = {args.pin_clearance:g};  // DIAMETRAL clearance in each PCB hole
@@ -188,6 +195,7 @@ mounts = {json.dumps([h['center']+[h['diameter']] for h in holes])};
 $fn = 128;
 
 assert(clearance > 0 && wall > 0 && floor_thickness > 0 && internal_depth > 0);
+assert(bottom_chamfer > 0 && bottom_chamfer <= wall && bottom_chamfer < floor_thickness);
 assert(support_height > 0 && support_height+pin_height <= internal_depth);
 assert(pin_clearance > 0 && pin_height > max(pcb_thickness, tip_height));
 
@@ -200,8 +208,18 @@ module profile(gap) {{
 
 union() {{
     difference() {{
-        linear_extrude(height=floor_thickness+internal_depth)
-            profile(clearance+wall);
+        union() {{
+            hull()
+                for (x = [pcb_radius, pcb_width-pcb_radius])
+                    for (y = [pcb_radius, pcb_height-pcb_radius])
+                        translate([x,y,0])
+                            cylinder(h=bottom_chamfer,
+                                r1=pcb_radius+clearance+wall-bottom_chamfer,
+                                r2=pcb_radius+clearance+wall);
+            translate([0,0,bottom_chamfer])
+                linear_extrude(height=floor_thickness+internal_depth-bottom_chamfer)
+                    profile(clearance+wall);
+        }}
         translate([0,0,floor_thickness])
             linear_extrude(height=internal_depth+0.1)
                 profile(clearance);
@@ -225,6 +243,8 @@ union() {{
                   pcb=[w, h], clearance_per_side=c, wall=t, floor=f, internal_depth=depth,
                   outside=[w+2*(c+t), h+2*(c+t), height], inside=[w+2*c, h+2*c, depth],
                   inner_corner_radius=r+c, outer_corner_radius=r+c+t,
+                  bottom_chamfer=bevel, bottom_contact_size=[w+2*(c+t-bevel), h+2*(c+t-bevel)],
+                  bottom_corner_radius=r+c+t-bevel,
                   support_height_above_floor=support_height, supports=supports,
                   pin_height=pin_height, pin_diametral_clearance=args.pin_clearance,
                   tip_height=tip_height, pcb_top_z=seat_z+data['thickness'],
@@ -235,19 +255,21 @@ union() {{
     (out / 'dimensions.json').write_text(json.dumps(report, indent=2)+'\n')
     if args.preview:
         preview(out, vertices, faces, normals, report)
+        preview(out, vertices, faces, normals, report, underside=True)
     print(json.dumps(report, indent=2))
 
 
-def preview(out, vertices, faces, normals, report):
+def preview(out, vertices, faces, normals, report, underside=False):
     from PIL import Image, ImageDraw, ImageFont
     import numpy as np
     scale = 2
     image = Image.new('RGB', (1100*scale, 820*scale), '#f4f6fa')
-    eye = (0.78, -0.78, 0.9)
+    sign = -1 if underside else 1
+    eye = (0.78, -0.78, 0.9*sign)
 
     def project(p):
         x, y, z = p
-        return ((x+y)*0.7071, (-x+y)*0.45+z*0.78)
+        return ((x+y)*0.7071, (-x+y)*0.45*sign+z*0.78)
 
     points = [project(p) for p in vertices]
     x0, x1 = min(p[0] for p in points), max(p[0] for p in points)
@@ -261,7 +283,7 @@ def preview(out, vertices, faces, normals, report):
         normal = normals[i]
         if dot(normal, eye) <= 0:
             continue
-        brightness = 0.6+0.4*max(0, dot(normal, (0.2, -0.4, 0.894)))
+        brightness = 0.6+0.4*max(0, dot(normal, (0.2, -0.4, 0.894*sign)))
         if all(abs(vertices[v][2]-report['floor']) < 1e-6 for v in face):
             brightness *= 0.86  # Shade the recessed floor for clarity.
         color = tuple(int(c*brightness) for c in (100, 155, 197))
@@ -288,15 +310,19 @@ def preview(out, vertices, faces, normals, report):
     font_path = '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'
     title = ImageFont.truetype(font_path, 28*scale)
     font = ImageFont.truetype(font_path, 20*scale)
-    draw.text((55*scale, 40*scale), 'Accord logger — simple case bottom', font=title, fill='#24394b')
+    label = 'Accord logger — underside' if underside else 'Accord logger — simple case bottom'
+    draw.text((55*scale, 40*scale), label, font=title, fill='#24394b')
     w, h, z = report['outside']
     lines = [f'{w:g} × {h:g} × {z:g} mm outside',
              f'{report["wall"]:g} mm walls / {report["floor"]:g} mm floor / {report["internal_depth"]:g} mm internal depth',
-             f'{report["clearance_per_side"]:g} mm PCB clearance per side · rounded corners',
+             f'{report["clearance_per_side"]:g} mm PCB clearance · {report["bottom_chamfer"]:g} mm bottom chamfer',
              f'Four stepped studs · PCB raised {report["support_height_above_floor"]:g} mm above floor']
+    if underside:
+        lines[-1] = f'Exterior bottom edge: {report["bottom_chamfer"]:g} × {report["bottom_chamfer"]:g} mm bevel at 45°'
     for i, line in enumerate(lines):
         draw.text((55*scale, (650+32*i)*scale), line, font=font, fill='#24394b')
-    image.resize((1100, 820), Image.Resampling.LANCZOS).save(out / 'preview.png')
+    name = 'underside-preview.png' if underside else 'preview.png'
+    image.resize((1100, 820), Image.Resampling.LANCZOS).save(out / name)
 
 
 if __name__ == '__main__':

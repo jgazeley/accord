@@ -21,6 +21,12 @@
   ],
   "inner_corner_radius": 3.0,
   "outer_corner_radius": 5.0,
+  "bottom_chamfer": 1,
+  "bottom_contact_size": [
+    124.0,
+    87.0
+  ],
+  "bottom_corner_radius": 4.0,
   "support_height_above_floor": 3.175,
   "supports": [
     {
@@ -74,7 +80,7 @@
   "pcb_top_z": 8.775,
   "pin_top_z": 10.175,
   "connected_solids": 1,
-  "triangles": 6176,
+  "triangles": 6440,
   "bounds": [
     [
       -3.0,
@@ -89,7 +95,7 @@
       16.0
     ]
   ],
-  "mesh_volume_mm3": 55174.067596,
-  "analytic_volume_mm3": 55174.613159,
+  "mesh_volume_mm3": 54964.412718,
+  "analytic_volume_mm3": 54964.952393,
   "validation": "Closed oriented manifold, Euler characteristic 2, positive volume; bounds and volume checked"
 }
