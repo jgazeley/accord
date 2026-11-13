@@ -28,7 +28,8 @@ failing too points at the Pico's ADC supply/reference, not the fuel or supply
 circuits. No fuel data today.
 Database: trip 91 is now stitched (09:26:42–09:35:56, 2.613 mi). The first trip
 is **manual trip 92** (2.6 mi, ending at the observed IGN-off 09:24:04; the
-09:13:30 start is an estimate). **Anchor 11** = 231507 @ 09:24:04, solved
+09:14:33 start is approximate: the owner said *"when i sent the message asking about the onboard led is
+a good approximate trip start time"*, and that message arrived at 09:14:33). **Anchor 11** = 231507 @ 09:24:04, solved
 [231507.212, 231507.400). Odometer 231509 (231509.92), which matches the dash.
 
 ## November 12, 2026
