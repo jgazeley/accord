@@ -6,6 +6,31 @@ changes. Newest first. Don't re-ask anything recorded here. Entries before
 October 29 evening were carried over from the retired tracker
 (`PROJECT_MILESTONES.md`), which has the fuller original text.
 
+## November 13, 2026
+
+**D-DB-31: Nov 13 drives: first leg mostly unlogged, second truncated; analog
+pegged.** Owner: *"sd card is attached. 2 trips today, first was 2.6 mi odo
+231507, second was 2.6 mi odo 231509. first trip didnt log properly
+again."* Card and server agree:
+- `BOOT_560` is a 16 s boot (ign on, 0 pulses) at an unknown time, then a reset.
+- The next boot starts ~09:21:29 PST while moving, near the end of the first
+  trip: `BOOT_561`, then `BOOT_53630`, then `20261113_173218.CSV`. All three
+  share one counter, and the SD write failed twice in between. The logged tail
+  is 1544 pulses to IGN-off at 09:24:04. Its first row is a power-up glitch
+  (145 Hz, 5520 rpm).
+- The second trip runs from IGN-on 09:26:42 to 09:35:56: 10725 pulses =
+  **2.613 mi**. Trip 91 was built from the last file only (1.004 mi).
+
+**New fault:** every analog reading today is pegged. Fuel and supply read
+4095 and the RP2040's internal temperature reads 0, from `BOOT_560` on. On
+Nov 12 they were normal (fuel ~1000, supply ~2600). The internal channel
+failing too points at the Pico's ADC supply/reference, not the fuel or supply
+circuits. No fuel data today.
+Database: trip 91 is now stitched (09:26:42–09:35:56, 2.613 mi). The first trip
+is **manual trip 92** (2.6 mi, ending at the observed IGN-off 09:24:04; the
+09:13:30 start is an estimate). **Anchor 11** = 231507 @ 09:24:04, solved
+[231507.212, 231507.400). Odometer 231509 (231509.92), which matches the dash.
+
 ## November 12, 2026
 
 **D-CASE-37: add a snap-on top that completes the JAE opening.** Owner:
