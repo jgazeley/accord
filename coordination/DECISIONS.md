@@ -59,6 +59,17 @@ Owner, of Pico pins 31 (GP26) and 32 (GP27) to GND, powered, harness
 unplugged: *"both read about 0V"*. The inputs are near 0 V while the ADC reads
 4095, so the input circuits (D104/D106 clamps, dividers) are cleared. The
 fault is inside the RP2040's ADC.
+Owner: *"yes flash the test firmware"*. Flashed `adcdiag.uf2` (SHA-256
+509e0f60…4c7b) with pico-flash (`OK: new firmware running`). **Every ADC
+channel read 4095/4095/4095 (min/median/max) on every pass**: GP26, GP27,
+GP28 pulled down, pulled up and floating, VSYS/3 (ADC3) and the temperature
+sensor. ADC CS = 0x4703, with ERR and ERR_STICKY set (conversion error).
+GP28 also read digital 0 with its internal pull-up on, with nothing
+connected; unexplained. **Conclusion: the RP2040's ADC on this Pico W is
+dead.** Speed, tach, ignition, brake, SD and Wi-Fi are unaffected. The car
+build was restored with pico-flash (451685db…, `OK: new firmware running`):
+Wi-Fi up, SD ok. Fuel/supply need either an external ADC or a new Pico
+module; that choice is the owner's.
 
 ## November 12, 2026
 
