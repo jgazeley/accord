@@ -70,6 +70,12 @@ dead.** Speed, tach, ignition, brake, SD and Wi-Fi are unaffected. The car
 build was restored with pico-flash (451685db…, `OK: new firmware running`):
 Wi-Fi up, SD ok. Fuel/supply need either an external ADC or a new Pico
 module; that choice is the owner's.
+Owner: *"should these tainted data files be noted as havong innacurate fuel
+data"*. Yes. The trip JSON `analog` blocks present the pegged values as live
+(`rows_live` = all, `bad_rows 0`). Raw files and JSONs are left unchanged as
+evidence. The register is `pcb/fuel/ANALOG_INVALID.json` (rule: all analog
+columns from this unit after 2026-11-12 08:02 PST, open-ended until fixed;
+files and trips 91/93/94/95 listed), plus an entry in `pcb/fuel/READINGS.md`.
 
 ## November 12, 2026
 
