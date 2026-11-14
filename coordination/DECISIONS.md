@@ -76,6 +76,9 @@ data"*. Yes. The trip JSON `analog` blocks present the pegged values as live
 evidence. The register is `pcb/fuel/ANALOG_INVALID.json` (rule: all analog
 columns from this unit after 2026-11-12 08:02 PST, open-ended until fixed;
 files and trips 91/93/94/95 listed), plus an entry in `pcb/fuel/READINGS.md`.
+Owner: *"yes add it to the trip notes too"*. The notes on trips 91, 93, 94
+and 95 now start with "ANALOG DATA INVALID ..." (backup and audit row
+`analog-invalid`). The loader does not tag later trips by itself.
 
 ## November 12, 2026
 
