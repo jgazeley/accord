@@ -40,6 +40,11 @@ apart, but apparently something else is wrong"*. The data since then:
   at least 14:18, through the 24.6 mi trip 94.
 - **ADC still pegged in every row** (fuel/supply 4095, die 0). Suggested
   check: Pico pin 35 (ADC_VREF) to GND, powered, expect ~3.3 V.
+Owner: *"i attached the logger in case theres anything you can test"*. On
+the bench, USB power only, 2026-11-13 ~20:03 PST, serial read passively (no
+flash, no reset): fuel median 4095 (burst minimum 597–1536), supply 4095,
+die 0. A fuel input that should sit near 0 V reads full scale, so the fault
+is on the board/Pico, not the car.
 
 ## November 12, 2026
 
