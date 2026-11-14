@@ -31,6 +31,15 @@ is **manual trip 92** (2.6 mi, ending at the observed IGN-off 09:24:04; the
 09:14:33 start is approximate: the owner said *"when i sent the message asking about the onboard led is
 a good approximate trip start time"*, and that message arrived at 09:14:33). **Anchor 11** = 231507 @ 09:24:04, solved
 [231507.212, 231507.400). Odometer 231509 (231509.92), which matches the dash.
+Later, on the analog fault: *"it just looked like one of the sd wires was
+possibly shorted with another one, so i made sure the wires were all spaced
+apart, but apparently something else is wrong"*. The data since then:
+- Boots at ~10:45 and ~10:47, both with the key off, which fits the board
+  being handled then.
+- **No SD write failures since 10:45.** The 11:34 boot ran without a reset to
+  at least 14:18, through the 24.6 mi trip 94.
+- **ADC still pegged in every row** (fuel/supply 4095, die 0). Suggested
+  check: Pico pin 35 (ADC_VREF) to GND, powered, expect ~3.3 V.
 
 ## November 12, 2026
 
