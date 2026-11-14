@@ -45,6 +45,20 @@ the bench, USB power only, 2026-11-13 ~20:03 PST, serial read passively (no
 flash, no reset): fuel median 4095 (burst minimum 597–1536), supply 4095,
 die 0. A fuel input that should sit near 0 V reads full scale, so the fault
 is on the board/Pico, not the car.
+Owner, after the meter checks I asked for (3V3, ADC_VREF, AGND–GND): *"ok
+all meter checks passed, 0.3 ohms for agnd to pin 38"*. So the ADC reference
+reaches the Pico. Built (not flashed) a plain-SDK ADC diagnostic, no CYW43,
+in scratchpad `adcdiag/`. It prints, once a second:
+- digital levels of GP26/27, and GP28 with pull-down and pull-up;
+- min/median/max over 201 samples of GP26, GP27, GP28 (pulled down, pulled up
+  and floating), VSYS/3 on ADC3, and the temperature sensor.
+
+Restore build: `build-newpico-20261109/out/picow-logger.ino.uf2`,
+SHA-256 451685db…7a59.
+Owner, of Pico pins 31 (GP26) and 32 (GP27) to GND, powered, harness
+unplugged: *"both read about 0V"*. The inputs are near 0 V while the ADC reads
+4095, so the input circuits (D104/D106 clamps, dividers) are cleared. The
+fault is inside the RP2040's ADC.
 
 ## November 12, 2026
 
