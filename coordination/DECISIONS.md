@@ -33,6 +33,12 @@ confirmed every other group as none on hand (*"Yes, none of those"*). Result:
 `/srv/agent_share/inventory/logger_new_board_digikey_order_20261115.csv` (same
 columns), with `logger_new_board_on_hand_20261115.md` beside it. The public
 `digikey_rev_a.csv` is unchanged.
+Then: *"push it, and then help create a combined order from the
+/srv/agent_share/puzzlebox/puzzlebox-2026 project as well, which has its own
+BOM and yes/no column"*. Pushed (`cbb0acb..d992468`). The combined order is
+private: `/srv/agent_share/inventory/combined_order_digikey_20261115.csv`
+(81 lines) and `combined_order_amazon_20261115.md`. Details are in puzzlebox
+DECISIONS D-ORDER-1115.
 
 ## November 13, 2026
 
