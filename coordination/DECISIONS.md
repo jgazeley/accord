@@ -6,6 +6,34 @@ changes. Newest first. Don't re-ask anything recorded here. Entries before
 October 29 evening were carried over from the retired tracker
 (`PROJECT_MILESTONES.md`), which has the fuller original text.
 
+## November 15, 2026
+
+**D-BOM-32: mark the order list against parts already on hand.** Owner:
+*"help me update the BOM to account for items I already have. I can confirm
+what I have and don't have for you, the spreadsheet is too dense to want to
+look at"*. Target: `logger/hardware/kicad/order/digikey_rev_a.csv` (73 lines).
+I ask the owner in grouped batches. A part counts as on hand if the owner has
+it.
+Owner: *"This will be for a brand new board. Some of the resistors I have don't
+nicely fit the footprint, the \"digikey bag\" ones are the small body type I
+need. I have 20K, 100K, 100, 10K, 383, and 1K, all 1% 1/8 W axial and with
+part number RNF18FTD\*"*. So parts fitted on Rev A do not count. The usable
+small-body resistors are those six values. In the BOM they cover the 1k line
+(R9 R12 R19 R24 R26 R29 R37 R38), the 10k lines (R21 R31 R36, plus R30 in its
+vertical DIN0207 footprint) and the 100k line (R17 R20 R25 R27 R34 R35). Every
+other through-hole resistor value is still to buy. The BOM asks for 0.25 W; at
+these positions 1/8 W is ample (signal/gate/pull resistors, tens of mW at most).
+D-INVENTORY-01 keeps inventory private, so the on-hand marking and the reduced
+order stay out of the public repo.
+Answers: the 0805 50 V ceramic kit, 1N5819 and the headers (1×40 and the J3
+2×3) are on hand. Jumper shunts stay on the order: *"I could use a small order
+of jumper shunts even though I have a few around here somewhere"*. The owner
+confirmed every other group as none on hand (*"Yes, none of those"*). Result:
+10 lines on hand, **63 to order**, in private
+`/srv/agent_share/inventory/logger_new_board_digikey_order_20261115.csv` (same
+columns), with `logger_new_board_on_hand_20261115.md` beside it. The public
+`digikey_rev_a.csv` is unchanged.
+
 ## November 13, 2026
 
 **D-DB-31: Nov 13 drives: first leg mostly unlogged, second truncated; analog
