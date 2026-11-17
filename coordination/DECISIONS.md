@@ -33,6 +33,19 @@ power fault and the ADC fault may share one intermittent connection.
 `pcb/fuel/ANALOG_INVALID.json` records the recovery and leaves
 `invalid_until` open. Trips 97 and 98 are not tagged.
 
+**D-BUILD-34: live with the current board; build a fresh Rev A.** Owner:
+*"I'm gonna live with it for now, I made the digikey order for more parts and
+will build a fresh board since the JLCPCB order came with 5. I tried heating
+up and adding solder to the pads but something clearly seems off. I "tinned"
+all the pads on the PCB before placing the Pico and soldering, wondering if
+next time I should just place it and tack the corners and not tin the pads in
+case somehow the pads with solder were rounded and not letting the pico sit
+pefectly flush"*.
+U1 uses `Module:RaspberryPi_Pico_W_SMD_HandSolder` (castellated edges). For
+the new board: leave the pads untinned, hold the Pico flat, tack two
+opposite corners, check that it sits flush, then flux and solder each
+castellation.
+
 ## November 15, 2026
 
 **D-BOM-32: mark the order list against parts already on hand.** Owner:
