@@ -6,6 +6,33 @@ changes. Newest first. Don't re-ask anything recorded here. Entries before
 October 29 evening were carried over from the retired tracker
 (`PROJECT_MILESTONES.md`), which has the fuller original text.
 
+## November 17, 2026
+
+**D-DB-33: Nov 16 round trip, Pico powered on only when tapped mid-drive.**
+Owner: *"once again the pico didnt power on until I tapped it when I was
+already in the middle of a trip. Actual odometer reads: 231544 and round trip
+was 5.4 accord to trip meter"*.
+The card holds nothing the server lacked. The Pico booted while moving at
+~09:49:50 PST. Trip 97 (1.290 mi) is the tail of the outbound leg, then a
+343 s stop, then trip 98 (2.629 mi) back. The board had been unpowered since
+about 08:23 PST on Nov 15.
+Database:
+- **Manual trip 99**, 1.52 mi, 09:45:04 (estimated) to 09:49:50. The gap is
+  the 5.4 trip meter less the 3.918 mi logged. Capped by the dash, it lies in
+  [1.482, 1.561); 1.52 is the midpoint.
+- **Anchor 12** = 231544 @ 2026-11-16T10:16:03, solved
+  [231544.921, 231545.000). Odometer 231544.
+- Trip 96 (Nov 14, analog pegged) is tagged analog-invalid like 91 and 93–95.
+
+**Analog readings came back.** From this boot on, supply reads 13.4–13.8 V
+running and the die reads 20.6–27.1 °C, both plausible. Fuel reads 25–29
+counts (near 0 V), which fits an unplugged fuel wire. The last pegged row is
+Nov 15, 08:22 PST. So the "dead ADC" of D-DB-31 has recovered at least for
+now. It recovered on the same boot that needed a tap to power on, so the
+power fault and the ADC fault may share one intermittent connection.
+`pcb/fuel/ANALOG_INVALID.json` records the recovery and leaves
+`invalid_until` open. Trips 97 and 98 are not tagged.
+
 ## November 15, 2026
 
 **D-BOM-32: mark the order list against parts already on hand.** Owner:
