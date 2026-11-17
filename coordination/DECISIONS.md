@@ -39,6 +39,24 @@ BOM and yes/no column"*. Pushed (`cbb0acb..d992468`). The combined order is
 private: `/srv/agent_share/inventory/combined_order_digikey_20261115.csv`
 (81 lines) and `combined_order_amazon_20261115.md`. Details are in puzzlebox
 DECISIONS D-ORDER-1115.
+Nov 17, owner, with a printout of the last pages of the Digi-Key cart
+(`/srv/agent_share/inventory/DigiKey - Shopping Cart.pdf`): *"quite a few
+items not added for various reasons"*. Digi-Key added 29 lines and rejected 52
+(29 + 52 = 81). The reasons were: the MPN matched several packagings; the
+part was tape-and-reel only at that quantity; RNF14FTC390R/120R are not valid
+part numbers; PC817XNNSZ1B is discontinued; ASSR-601JV-000E is below the
+minimum order. The printout shows wrong part numbers on many of the
+"ambiguous" rows, so I matched rejected rows to order lines by position.
+Fix: `/srv/agent_share/inventory/digikey_cart_fix_20261117.csv`, 46 lines
+with Digi-Key cut-tape part numbers. Lines whose failure is only inferred are
+marked "skip if already in cart". Dropped in favour of stock on hand:
+- PC817 from the IC kit.
+- R13 2.2k and R32 1k from the 1/2 W kits. Both are vertical DIN0414
+  footprints.
+- R47/R48 390R from the 1/4 W kit. Vertical DIN0207 footprints.
+
+R49 120R is now RNMF14FTC120R. The ASSR-601JV minimum quantity and one
+unidentified failed puzzlebox line are still open.
 
 ## November 13, 2026
 
