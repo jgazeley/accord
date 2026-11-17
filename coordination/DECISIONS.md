@@ -57,6 +57,15 @@ marked "skip if already in cart". Dropped in favour of stock on hand:
 
 R49 120R is now RNMF14FTC120R. The ASSR-601JV minimum quantity and one
 unidentified failed puzzlebox line are still open.
+Owner substitutions, Nov 17, both for backorders:
+- *"subbing MC14071BDR2GOSCT-ND MC14071BDR2G for 296-25953-1-ND CD4071BM96"*
+  (U13). The onsemi MC14071B is the same quad 2-input OR with the standard
+  4071 pinout in SOIC-14 (3.9 mm), so it fits the footprint and the circuit.
+- *"substituting P12924-ND EEU-FM1E101 for P14413-ND EEU-FR1E101"*
+  (puzzlebox power-board C1). Both are 100 µF 25 V, 6.3 × 11.2 mm,
+  2.5 mm pitch, which matches the `CP_Radial_D6.3mm_P2.50mm` footprint.
+
+Both order files are updated.
 
 ## November 13, 2026
 
