@@ -6,6 +6,28 @@ changes. Newest first. Don't re-ask anything recorded here. Entries before
 October 29 evening were carried over from the retired tracker
 (`PROJECT_MILESTONES.md`), which has the fuller original text.
 
+## November 19, 2026
+
+**D-FUEL-35: fill 8 recorded from a pump photo.** Owner: *"didnt get a
+receipt, only a photo with a timestamp, dollar amount and gallons.
+PXL_20261119_184811788.jpg: please move to wherever the other source receipts
+are. $71.89, 12.270 gallons, trip B (miles since last fuel): 272.6, odometer @
+231574 when I fueled up and reset trip B. Fuel gauge was
+F||||||||||||||H||||||||x||||||E (between two notches)"*.
+- The photo moved from the repo checkout to the private
+  `honda/receipts/`, so it is not committed here.
+- Database: purchase 118 and fuel_entry 8 (12.270 gal, 272.6 mi, 22.22 mpg,
+  $5.859/gal, 10:48:11 from the photo EXIF). Anchor 13 = 231574, solved
+  [231574.080, 231574.159).
+- The logger read the fill: fuel/supply 0.5125 before, 0.0908 after.
+  Calibration is in `pcb/fuel/READINGS.md`.
+
+Earlier the same day, uploads stopped after a server restart. Hacienda's
+rules were in place and the router's rule was present; uploads resumed after
+a key cycle. The backlog exceeded the firmware's 15-minute upload window
+(`MAX_WINDOW_MS`), so the rest was appended from the card copy through the
+local receiver, after a prefix check against the server copy.
+
 ## November 17, 2026
 
 **D-DB-33: Nov 16 round trip, Pico powered on only when tapped mid-drive.**
