@@ -6,6 +6,32 @@ changes. Newest first. Don't re-ask anything recorded here. Entries before
 October 29 evening were carried over from the retired tracker
 (`PROJECT_MILESTONES.md`), which has the fuller original text.
 
+## November 20, 2026
+
+**D-DB-36: today's drive was in a clockless boot file and was not loaded.**
+Owner: *"sd is attached, another batch of trips hasnt shown up and its been
+awhile since I got back"*.
+- The board went off at 17:25 PST on Nov 19 (the last row of
+  `20261119_201139.CSV`) and booted at key-on at 11:53:31 today.
+- Wi-Fi is off while driving, so it had no time until the first key-off at
+  home. The whole drive is in `BOOT_8389d620503653e3.CSV` (clock=none), which
+  the pipeline cannot place. Only the last 52 s loaded, as trip 107.
+- The same boot's next file (`/BOOT_2056053.CSV`, renamed
+  `20261120_202747.CSV` after SNTP) gives the clock: ms 0 = 11:53:30.947 PST.
+  Trip 107's own start checks it.
+
+Database:
+- Trips 108 (11:53:35–12:06:55, 11372 pulses, 2.771 mi) and 109
+  (12:14:33–12:22:14, 9158 pulses, 2.231 mi) are loaded by hand.
+- Trip 107 is stitched to 12:25:47 (2694 pulses, 0.656 mi).
+- Odometer 231580 (estimate 231580.85).
+- Script: `/srv/agent_share/pcb/sdtools/fixes/fix_1120.py`.
+
+The same gap hit Nov 13. Any boot that starts away from Wi-Fi with no clock
+loses its trips until someone loads them by hand. Two fixes are possible:
+- In the pipeline, take the clock from a later file of the same boot.
+- On the new board, fit the DS3231 RTC (U16).
+
 ## November 19, 2026
 
 **D-FUEL-35: fill 8 recorded from a pump photo.** Owner: *"didnt get a
