@@ -32,6 +32,32 @@ loses its trips until someone loads them by hand. Two fixes are possible:
 - In the pipeline, take the clock from a later file of the same boot.
 - On the new board, fit the DS3231 RTC (U16).
 
+**D-DB-37: server-side fix for clockless boot files.** Owner: *"yes push it and
+do the server side fix"*.
+- `logger/server` (bridge, cardconv, tripd) is pinned by `SOURCE_MANIFEST.json`
+  and is unchanged.
+- The fix is in the private VM intake (`pcb/benchlink/vm-intake/`):
+  `clockless.py` plus a hook in `intake.py` `import_once`.
+- A sealed file held for "no absolute time anchor" borrows the clock of the one
+  clean file that continues the same boot. That file's `opened_ms` must follow
+  within 120 s and its ms, vss and tach must continue. Conversion runs cardconv
+  `--anchor`, then tripd unchanged, with the bridge's deterministic ids.
+- Same interval and overlap guards as the canonical path. Anything doubtful is
+  held, not loaded.
+- Tested:
+  - A dry run against every held file reproduces trip 108 exactly and trip
+    109 within a second and a pulse.
+  - With today's trips removed from a database copy, intake loads 4 new trips.
+  - With them present, the packets are held as overlaps.
+  - The first live pass was clean.
+- Files already reconciled by hand are listed in `policy.json`
+  `clockless_reviewed`.
+- Known limit: a trip that crosses the file seam loads as two trips. The
+  pulses counted while the SD reopened (227 today, about 0.06 mi) are in
+  neither; the packet warns, and the next dash anchor absorbs it.
+- A boot that never gets a clock at all stays unresolvable until the RTC is
+  fitted.
+
 ## November 19, 2026
 
 **D-FUEL-35: fill 8 recorded from a pump photo.** Owner: *"didnt get a
