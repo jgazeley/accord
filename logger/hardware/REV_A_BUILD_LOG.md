@@ -58,7 +58,7 @@ fitted C11, C12 and C13; C9 is still off. No readings yet.
 
 | Step | Fit | Do | Expect | Result |
 |---|---|---|---|---|
-| 1 | J1, D112, C9 (back) | 12 V, limit 0.1 A | TP1 about 11.5-11.9 V; no current to speak of | Nov 25, M12 battery via fuse: 12.0 V after the fuse, TP1 11.92 V. Pass |
+| 1 | J1, D112, C9 (back) | 12 V, limit 0.1 A | TP1 about 11.5-11.9 V; no current to speak of | Nov 25, M12 battery via fuse, no series resistor (all Nov 25 readings): 12.0 V after the fuse, TP1 11.92 V. Pass |
 | 2 | Q5, D114, R31 10k, R32 1k 1/2 W, R36 10k | 12 V, no link | TP2 (gate) = TP1; TP3 about 0 V | Nov 25, pin 5 open: TP2 11.91 V, TP3 0, TP5 0. Pass |
 | 2b | wire link across Q6's two OUTER holes (pads 1 and 3, Q6 empty) | 12 V | TP2 about 1-2.5 V (est.); TP3 within 0.1 V of TP1; link off, TP3 falls to 0 | |
 | 3 | U6, C10, C11 (back), C12 (back), D115, L1, C13 (back), C14, R37 1k | unpowered: ohms TP5 to TP21 | about 1k or somewhat lower, never near 0 | |

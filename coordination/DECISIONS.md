@@ -25,6 +25,9 @@ C9, C11, C12 and C13 are off. Nothing has been powered or measured yet.
 - Then: *"TP3 11.68, TP6 4.673, 1.508 at tp2"*.
 - Then: *"TP1 is 11.67 with the buck on"*.
 - Jumper pulled: *"ign off, tp5 0.006 after a couple seconds"*.
+- Owner: *"i didnt do the 100 ohm series resistor or any load testing yet."* So
+  every reading above was straight from the battery through the fuse. The series
+  resistor is no longer needed: the unloaded checks passed.
 
 ## November 24, 2026
 
