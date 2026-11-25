@@ -19452,7 +19452,7 @@
 				)
 			)
 		)
-		(property "Value" "74AHC1G17GV"
+		(property "Value" "74AHC1G17GW"
 			(at 27.94 732.79 0)
 			(effects
 				(font
@@ -19505,7 +19505,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "Nexperia 74AHC1G17GV"
+		(property "MPN" "Nexperia 74AHC1G17GW"
 			(at 40.64 720.09 0)
 			(effects
 				(font

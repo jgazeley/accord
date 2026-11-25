@@ -25,7 +25,16 @@ cell holder (the coin cell itself is here)"*.
   Digi-Key lists RNMF14FTC33K0CT-ND.
 - U8: the BOM's 74AHC1G17GV is SOT753 (0.95 mm pitch); the PCB footprint is
   SOT-353 (0.65 mm). 74AHC1G17GW (order 74AHC1G17GWH) matches the footprint.
-  BOM and schematic not changed; waiting for the owner.
+  Offered as a fix, along with a push. Owner: *"yes and keep track of any
+  supplemental order. I can strike the test loop things from the list. I
+  skipped the fuse holder from Digikey, will source elsewhere"*.
+- Done: U8 is now 74AHC1G17GW in the schematic, BOM, netlist and order file
+  (780/780 capture checks, 0 ERC violations). The PCB's two U8 text fields
+  still say GV until the next update from schematic; footprint and copper are
+  unaffected. The power design records and the retired schematic generator
+  still say GV (not edited).
+- TP21-TP23 loops are struck from the supplemental order only; the pads stay.
+- Supplemental order, private: `/srv/agent_share/inventory/supplemental_order.md`.
 
 ## November 20, 2026
 

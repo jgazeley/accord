@@ -77,7 +77,7 @@ BY_REF = {
     'U5': ('Texas Instruments', 'TPS3839K50DBZR', 'p1'),
     'U6': ('Texas Instruments', 'LM2678T-5.0/NOPB', 'x'),
     'U7': ('Micro Crystal', 'OV-7604-C7-32.768KHZ-20PPM-TA-QC', 'p1'),
-    'U8': ('Nexperia', '74AHC1G17GV,125', 'p1'),
+    'U8': ('Nexperia', '74AHC1G17GWH', 'p1'),
     'U9': ('Texas Instruments', 'SN74LVC1G97DBVR', 'p1'),
     'U10': ('Texas Instruments', 'CD74HC4060M96', 'p1'),
     'U11': ('Texas Instruments', 'CD74HC4020M96', 'p1'),
