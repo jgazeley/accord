@@ -23,6 +23,7 @@ C9, C11, C12 and C13 are off. Nothing has been powered or measured yet.
 - Pin 5 open: *"TP2 11.91, TP3 0, TP5 0"*.
 - J1 pins 5 and 6 jumpered (ignition on): *"4.974 at tp5"*. The buck runs.
 - Then: *"TP3 11.68, TP6 4.673, 1.508 at tp2"*.
+- Then: *"TP1 is 11.67 with the buck on"*.
 
 ## November 24, 2026
 
