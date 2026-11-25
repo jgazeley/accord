@@ -62,11 +62,11 @@ fitted C11, C12 and C13; C9 is still off. No readings yet.
 | 2 | Q5, D114, R31 10k, R32 1k 1/2 W, R36 10k | 12 V, no link | TP2 (gate) = TP1; TP3 about 0 V | Nov 25, pin 5 open: TP2 11.91 V, TP3 0, TP5 0. Pass |
 | 2b | wire link across Q6's two OUTER holes (pads 1 and 3, Q6 empty) | 12 V | TP2 about 1-2.5 V (est.); TP3 within 0.1 V of TP1; link off, TP3 falls to 0 | |
 | 3 | U6, C10, C11 (back), C12 (back), D115, L1, C13 (back), C14, R37 1k | unpowered: ohms TP5 to TP21 | about 1k or somewhat lower, never near 0 | |
-| 3b | link fitted | 12 V, limit 0.25 A, raise toward 1 A only if it trips at startup | TP5 4.90-5.10 V (limits 4.75-5.25 V); tens of mA input (est.) | Nov 25, J1 pin 5 jumpered to pin 6: TP5 4.974 V. Pass |
+| 3b | link fitted | 12 V, limit 0.25 A, raise toward 1 A only if it trips at startup | TP5 4.90-5.10 V (limits 4.75-5.25 V); tens of mA input (est.) | Nov 25, J1 pin 5 jumpered to pin 6: TP5 4.974 V, TP3 11.68 V, TP2 1.508 V. Pass; TP1 not re-read with the buck on |
 | 4 | - | load TP5 with 100 ohm 1/2 W: one (50 mA), four in parallel (200 mA), ten (500 mA) | TP5 stays 4.75-5.25 V; ripple 100 mVpp or less; U6, L1, D115 not too hot to touch | |
 | 5 | D113, band in pad 1 | unpowered: TP1 to TP21, then repeat 3b | diode drop one way only; input current unchanged | |
 | 6 | remove link; Q6, R33 2.2k, R34 100k, D109 | 12 V on J1 pin 6; then also on J1 pin 5 | off with pin 5 open, on with 12 V on pin 5, off again when removed | |
-| 7 | D116 | 12 V, on | TP6 about 0.3-0.8 V below TP5, meter load only (est.) | |
+| 7 | D116 | 12 V, on | TP6 about 0.3-0.8 V below TP5, meter load only (est.) | Nov 25: TP6 4.673 V, 0.30 V below TP5. Pass |
 
 Stop at any step that misses. After step 7: Pico, then the baseline inputs with
 jumpers 1-3, then one logic layer at a time. Remove jumpers 2 and 3 before A5.
