@@ -14,6 +14,7 @@ there is enough to test the 5V rail"*. The table is the stage 1 parts list, so
 C9, C11, C12 and C13 are off. Nothing has been powered or measured yet.
 - The Q6 wire-link steps no longer apply: Q6, R33, R34 and D109 are on, so 12 V
   on J1 pin 5 turns the buck on.
+- Then: *"ok C11, 12 and 13 are soldered"*. C9 is still off.
 
 ## November 24, 2026
 

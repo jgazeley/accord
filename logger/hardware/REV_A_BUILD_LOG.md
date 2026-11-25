@@ -53,7 +53,8 @@ Source: current-limited, fused, or both. Do not use a bare battery or the car.
 **Progress, November 25 (owner):** everything for stage 1 is soldered except C9,
 C11, C12 and C13, so the parts were not added step by step. Skip the Q6 wire
 link; use 12 V on J1 pin 5 wherever a step says "link". Check D113 (step 5)
-unpowered first. Do not turn the buck on without C12. No readings yet.
+unpowered first. Do not turn the buck on without C12. Later the same day the owner
+fitted C11, C12 and C13; C9 is still off. No readings yet.
 
 | Step | Fit | Do | Expect | Result |
 |---|---|---|---|---|
