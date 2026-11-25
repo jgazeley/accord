@@ -28,6 +28,8 @@ C9, C11, C12 and C13 are off. Nothing has been powered or measured yet.
 - Owner: *"i didnt do the 100 ohm series resistor or any load testing yet."* So
   every reading above was straight from the battery through the fuse. The series
   resistor is no longer needed: the unloaded checks passed.
+- Owner: *"i might just solder the pico and skip the in depth test."* The load
+  steps are optional now. Not done: load regulation, ripple, heat under load.
 
 ## November 24, 2026
 
