@@ -6,6 +6,27 @@ changes. Newest first. Don't re-ask anything recorded here. Entries before
 October 29 evening were carried over from the retired tracker
 (`PROJECT_MILESTONES.md`), which has the fuller original text.
 
+## November 24, 2026
+
+**D-BOM-38: parts missing from the Digi-Key order.** Owner: *"So far, I dont
+see a few things on the order for the puzzlebox and accord logger from the
+combined order I intended"*. Then, after the invoice check: *"ok, confirmed
+the two things I noticed so far missing were the 33k resistors and the coin
+cell holder (the coin cell itself is here)"*.
+- Confirmed missing by the owner: 33k (R2, shared with the puzzlebox power
+  board) and the Keystone 3034 holder (BT1).
+- Also not on the invoice, not yet confirmed by the owner: U3
+  ASSR-601JV, C3 WIMA 1 uF, U8, TP21-TP23 loops, the inline ATO fuse holder
+  and the 1 A fuses. The two fuse lines were in the cart on November 17.
+- Cause of two: the D-BOM-32 fix list matched rejected rows to order lines by
+  position and got two wrong. 5001 was taken for MAX3485 and 3034 for DS3231
+  (both already in the cart). The unidentified puzzlebox line is most likely
+  ULN2803AN. The 33k number on that list (S33KCACT-ND) is probably not valid;
+  Digi-Key lists RNMF14FTC33K0CT-ND.
+- U8: the BOM's 74AHC1G17GV is SOT753 (0.95 mm pitch); the PCB footprint is
+  SOT-353 (0.65 mm). 74AHC1G17GW (order 74AHC1G17GWH) matches the footprint.
+  BOM and schematic not changed; waiting for the owner.
+
 ## November 20, 2026
 
 **D-DB-36: today's drive was in a clockless boot file and was not loaded.**
