@@ -65,7 +65,7 @@ fitted C11, C12 and C13; C9 is still off. No readings yet.
 | 3b | link fitted | 12 V, limit 0.25 A, raise toward 1 A only if it trips at startup | TP5 4.90-5.10 V (limits 4.75-5.25 V); tens of mA input (est.) | Nov 25, J1 pin 5 jumpered to pin 6: TP5 4.974 V, TP3 11.68 V, TP2 1.508 V. TP1 11.67 V with the buck on, so Q5 drops about 0. Pass |
 | 4 | - | load TP5 with 100 ohm 1/2 W: one (50 mA), four in parallel (200 mA), ten (500 mA) | TP5 stays 4.75-5.25 V; ripple 100 mVpp or less; U6, L1, D115 not too hot to touch | |
 | 5 | D113, band in pad 1 | unpowered: TP1 to TP21, then repeat 3b | diode drop one way only; input current unchanged | |
-| 6 | remove link; Q6, R33 2.2k, R34 100k, D109 | 12 V on J1 pin 6; then also on J1 pin 5 | off with pin 5 open, on with 12 V on pin 5, off again when removed | |
+| 6 | remove link; Q6, R33 2.2k, R34 100k, D109 | 12 V on J1 pin 6; then also on J1 pin 5 | off with pin 5 open, on with 12 V on pin 5, off again when removed | Nov 25: off with pin 5 open; on (TP5 4.974 V) with pin 5 jumpered to pin 6; jumper pulled, TP5 0.006 V after a couple of seconds. Pass |
 | 7 | D116 | 12 V, on | TP6 about 0.3-0.8 V below TP5, meter load only (est.) | Nov 25: TP6 4.673 V, 0.30 V below TP5. Pass |
 
 Stop at any step that misses. After step 7: Pico, then the baseline inputs with
