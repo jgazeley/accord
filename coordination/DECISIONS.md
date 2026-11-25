@@ -18,6 +18,8 @@ C9, C11, C12 and C13 are off. Nothing has been powered or measured yet.
 - 12 V source: *"ill use an m12 milwaukee battery with a fuse"*. That's 3 Li-ion cells,
   about 12.0-12.6 V charged, with no current limit. Advised a 100 ohm series
   resistor until the unloaded 5 V check passes.
+- First reading: *"battery reads 12.0 at fuse blade (after fuse filament), TP1 is
+  11.92"*.
 
 ## November 24, 2026
 
