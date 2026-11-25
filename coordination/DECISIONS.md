@@ -36,6 +36,19 @@ cell holder (the coin cell itself is here)"*.
 - TP21-TP23 loops are struck from the supplemental order only; the pads stay.
 - Supplemental order, private: `/srv/agent_share/inventory/supplemental_order.md`.
 
+**D-BUILD-39: staged build of the new Rev A board, power first.** Owner: *"my
+goal is to take what did come in, construct a new board (5 from JLCPCB = 1 in
+car, 1 new board to construct, 3 extras). The current board has only a minimal
+setup, with jumpers to bypass much of the logic circuits. I dont know if there
+is a record of the as-built of the current prototpye with the jumpers, but that
+is the baseline I want the new build to meet, and now with the digikey order, I
+want to carefully add different layers and test them along the way. THe most
+immediate thing I want to test is a test lead with 12V and GND source to the
+intended 12V constant from the Accord, the 5V buck converter and 5V rail."*
+Board 1's as-built (parts and jumpers) was scattered over D-BUILD-25, D-BUILD-27,
+D-FW-26 and the November 9 session. It is consolidated, with board 2's stage 1
+(12 V to 5 V) steps, in `logger/hardware/REV_A_BUILD_LOG.md`.
+
 ## November 20, 2026
 
 **D-DB-36: today's drive was in a clockless boot file and was not loaded.**
