@@ -20,6 +20,7 @@ C9, C11, C12 and C13 are off. Nothing has been powered or measured yet.
   resistor until the unloaded 5 V check passes.
 - First reading: *"battery reads 12.0 at fuse blade (after fuse filament), TP1 is
   11.92"*.
+- Pin 5 open: *"TP2 11.91, TP3 0, TP5 0"*.
 
 ## November 24, 2026
 
