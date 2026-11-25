@@ -50,6 +50,11 @@ Leave out for all of stage 1: **U1 (Pico), R22 (keeps the A5 supply off), D113
 until step 5, Q6 until step 6, D116 until step 7.**
 Source: current-limited, fused, or both. Do not use a bare battery or the car.
 
+**Progress, November 25 (owner):** everything for stage 1 is soldered except C9,
+C11, C12 and C13, so the parts were not added step by step. Skip the Q6 wire
+link; use 12 V on J1 pin 5 wherever a step says "link". Check D113 (step 5)
+unpowered first. Do not turn the buck on without C12. No readings yet.
+
 | Step | Fit | Do | Expect | Result |
 |---|---|---|---|---|
 | 1 | J1, D112, C9 (back) | 12 V, limit 0.1 A | TP1 about 11.5-11.9 V; no current to speak of | |
