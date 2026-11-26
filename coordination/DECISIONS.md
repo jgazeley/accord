@@ -77,6 +77,9 @@ C9, C11, C12 and C13 are off. Nothing has been powered or measured yet.
   Pico wrote `20261126_025629.CSV`, with header chip E6642815E3477A23, fw `…board2`,
   `clock=sntp`, and 31 s of rows. Today's drive is in `20261125_194132.CSV` and
   `20261125_200411.CSV`.
+- Power in the car. Owner: *"im going to just unplug J1 after awhile"*. So the
+  buck has to stay on with pin 5 low: link Q6 collector to emitter (pads 3 and 1).
+  Pin 5 is then only the ignition sense, and key-off opens the upload window.
 
 **Set aside for a quiet time: the Nov 25 drive.** Owner: *"today I spaced out
 and unplugged the Pico after stopping. I noted the time that I started the car
