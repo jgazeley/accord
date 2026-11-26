@@ -225,6 +225,9 @@ holds"*. DS3231 VBAT range is 2.3-5.5 V.
   osf=0 and drift 0.
 - Owner: *"ok replugged after a bit"*. The new source held: osf=0, sets=0,
   drift_s=+0 at 08:37:34Z (booted about 08:36:49Z). Overnight is next.
+- Owner: *"replugged to spot check before true overnight"*. Off from about
+  08:38Z to 10:28Z, about 1 h 50 min. It read osf=0, sets=0, drift_s=+0, 19.25 C.
+  **~2 h hold: pass.**
 
 
 ## November 24, 2026
