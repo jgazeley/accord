@@ -171,6 +171,21 @@ solder U16 and make sure the connections are sound"*.
 - U16 VCC (pin 2) is P3V3_SW, which is Pico pin 36 3V3(OUT), the same rail as
   J5.1. It needs no separate regulator. BT1 (BR2032 in a Keystone 3034) is
   still missing, so VBAT must be grounded until it is fitted.
+- Owner: *"bridge the + and - of the cell battery footprint? PGND to
+  RTC_VBAT?"* Yes, BT1 pad 1 to pad 2. Remove the bridge before fitting the
+  cell. Owner: *"what if I dont care about losing the time do I still need that
+  jumper. I just want to see if the chip responds to the Pico, and maybe you can
+  set it or speak to it over i2c in general"*. Not strictly needed with VCC
+  present, but the datasheet requires it, and it removes one cause of a no-answer.
+- Owner: *"ok write it, ill solder U16 first, then the jumper + additional Rs and
+  Cs"*. An RTC test build for board 2 does a scan, a read and a set, sets the chip
+  from SNTP, and puts the result in the header. Flashing still needs a go-ahead.
+- Built, not flashed: `pcb/build-board2-rtc-20261125/` (private, version
+  `...board2.rtc1`, UF2 SHA-256 959fbcc5...). The RTC result goes in `# RTC`
+  status notes, which land on the card, rather than in the `log.*` header: core 0
+  writes the header and Wire belongs to core 1. Serial `c` runs the wiring check,
+  bus scan and INT 1 Hz test; `x` sets the chip from the trusted clock. It never
+  sets the Pico's clock from the RTC.
 
 
 ## November 24, 2026
