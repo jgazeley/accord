@@ -122,6 +122,22 @@ has reached the receiver, and nothing from 192.168.60.74 at all. The forwarding
 still admits only .89. The test ride is on the SD card only. The earlier Nov 25
 drive did stream live from board 1's Pico (E66480454F4CA92D) until 13:27 PST.
 
+Owner: *"ok sd card attached first"*. The ride is `20261126_061003.CSV`
+(copied read-only to `pcb/sdtools/cards/20261125_board2_roadtest/`).
+- Key on 22:18:20 PST, engine 22:18:49, key off 22:19:47. Key on again
+  22:21:11, engine 22:21:15, moving 22:21:23 to 22:33:28, key off 22:33:30.
+  Logged on battery power until J1 was unplugged at 22:42:13.
+- VSS: 6.30 mi, so the dash should read about trip 16.5 / 231634. Top speed
+  70.2 mph at 22:29:03. Max 3810 rpm. 7 brake presses.
+- Brake: the column reads 0 while the speed is falling (mean -3.2 Hz per 2 s vs
+  +0.3), the same as board 1. So 0 is pedal down, despite the
+  "line-grounded" label.
+- Supply: 11.92 V at key-on, 13.61 V running. Board 1's Nov 25 drive read a
+  saturated 4095 for supply and fuel, so board 2 is the first with real analog.
+- Fuel: 1.07 V at key-on, 1.32 V running (counts 539 to 737, p10 to p90). No
+  calibration curve, so no gallons yet.
+- No upload: Wi-Fi joined at .74, then parked with no-progress.
+
 
 ## November 24, 2026
 
