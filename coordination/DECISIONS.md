@@ -236,6 +236,8 @@ holds"*. DS3231 VBAT range is 2.3-5.5 V.
 - Owner: *"check again please"*. Off at some point after 16:04Z, replugged
   about 19:31Z. At 19:32:09Z it read osf=0, sets=0, drift_s=+0, 21.25 C. Pass.
   Owner: *"push it"*.
+- Owner: *"replugged"*. Off at some point after 19:32Z, replugged about
+  23:05Z. At 23:06:27Z it read osf=0, sets=0, drift_s=+0, 20.25 C. Pass.
 
 
 ## November 24, 2026
