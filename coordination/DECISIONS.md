@@ -232,6 +232,7 @@ holds"*. DS3231 VBAT range is 2.3-5.5 V.
   16:02Z, about 5.5 h. At 16:03:42Z it read osf=0, sets=0, drift_s=+0 against
   SNTP, 18.50 C. **Overnight hold: pass.** U16, its wiring and the VBAT path are
   verified; the temporary VBAT source comes off before BT1 is fitted.
+- Owner: *"ok push it"*. Go-ahead to push the RTC hold decisions.
 
 
 ## November 24, 2026
