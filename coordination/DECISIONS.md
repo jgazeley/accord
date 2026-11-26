@@ -196,6 +196,7 @@ solder U16 and make sure the connections are sound"*.
   - The chip was set from SNTP at 07:47:00Z. A re-check gave OSF clear and
     drift 0 s.
   - The time is lost at every power-off until BT1 is fitted.
+- Owner: *"ok push it"*. Go-ahead to push main.
 
 
 ## November 24, 2026
