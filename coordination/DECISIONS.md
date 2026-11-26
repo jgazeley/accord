@@ -80,6 +80,12 @@ C9, C11, C12 and C13 are off. Nothing has been powered or measured yet.
 - Power in the car. Owner: *"im going to just unplug J1 after awhile"*. So the
   buck has to stay on with pin 5 low: link Q6 collector to emitter (pads 3 and 1).
   Pin 5 is then only the ignition sense, and key-off opens the upload window.
+- Harness grounds. Owner: *"I have the GND from the gauge cluster going there"*
+  (cluster B16 to J1 pin 10, AGND), then: *"ok so I can use a ring terminal and
+  bolt to chassis? (checked with DMM to make sure its a good ground)"*. J1 pin 14
+  (PGND) goes by its own wire to a chassis bolt, so the buck's return current
+  does not flow through the Pico's AGND. Pin 6 BATT_IN is still to be found
+  (measure key-out), with a 1 A fuse at the tap.
 
 **Set aside for a quiet time: the Nov 25 drive.** Owner: *"today I spaced out
 and unplugged the Pico after stopping. I noted the time that I started the car
