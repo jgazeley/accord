@@ -30,6 +30,18 @@ C9, C11, C12 and C13 are off. Nothing has been powered or measured yet.
   resistor is no longer needed: the unloaded checks passed.
 - Owner: *"i might just solder the pico and skip the in depth test."* The load
   steps are optional now. Not done: load regulation, ripple, heat under load.
+- Stage 2, the board 1 baseline. Owner: *"before i do that, id like a list for
+  R3-R9, D104,D105,D101,D102, D103, R13, R7, R8, R1, R2, C18, C2, D106, D107, C1,
+  R10, R11. and note that this is a new board so the sd card connections should
+  be the original design and not the version i needed to move some wires due to
+  a damaged pico pin or two. im basically adding all the parts to get the basic
+  circuit working, but with the battery 12V. i can manually disconnect and later
+  add the logic chips for the automatic shutoff"*.
+  - SD goes to J5 as designed: GP16 MISO, GP17 CS, GP18 SCK, GP19 MOSI. These are
+    the defaults in `logger_sd.cpp`. Not GP6/GP7.
+  - Also needed but not on the owner's list: R12 (the supply ADC series
+    resistor), U2 PC817, and jumpers 1-3.
+  - R2 (33k) is not in the Digi-Key order. Use the 1/4 W 33k from the CmpE 110 kit.
 
 ## November 24, 2026
 
