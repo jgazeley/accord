@@ -42,6 +42,13 @@ C9, C11, C12 and C13 are off. Nothing has been powered or measured yet.
   - Also needed but not on the owner's list: R12 (the supply ADC series
     resistor), U2 PC817, and jumpers 1-3.
   - R2 (33k) is not in the Digi-Key order. Use the 1/4 W 33k from the CmpE 110 kit.
+- Firmware for board 2. Owner: *"what about just for me to attach for you to
+  flash the pico"*, *"pico is plugged in"*, and *"side note pico should be brand
+  new so whatever data on it is either sketchy or worth double checking out of
+  curiosity"*. The Pico held Raspberry Pi's factory production test. Built
+  `0.8.1-dev+w43init.nocorew43.board2` (board 1's build with SD SCK/MOSI on
+  GP18/GP19); not flashed yet. Private record:
+  `/srv/agent_share/pcb/build-board2-20261125/README.md`.
 
 ## November 24, 2026
 
