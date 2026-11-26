@@ -138,6 +138,17 @@ Owner: *"ok sd card attached first"*. The ride is `20261126_061003.CSV`
   calibration curve, so no gallons yet.
 - No upload: Wi-Fi joined at .74, then parked with no-progress.
 
+**Board 2 uploads work.** The owner moved the router's .89 reservation to the
+new Pico (*"hold on forgot to assign specific static IP, now check"*). Owner:
+*"card is back in, pico replugged in accord"*. From 23:03 PST the receiver took
+E6642815E3477A23's files from 192.168.60.89. The cron intake loaded both of
+tonight's trips: 22:18:20 (0.01 mi, the start and stop at home) and 22:20:58
+(6.30 mi, 70.0 mph max, 3810 rpm max). The DB now holds 118 trips. The derived
+odometer went 231,628 to 231,634, which matches the dash reading before the
+ride. The intake still reports ok=false only because of three empty board-1
+files (`U_222611cc...`, `U_62fd1e9a...`, `U_ca40b4cd...`, "no data rows"), which
+the receiver retries continuously.
+
 
 ## November 24, 2026
 
