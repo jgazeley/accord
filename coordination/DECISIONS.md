@@ -161,6 +161,17 @@ from earlier"*. It is already in the DB, complete:
   13. They don't narrow it, so no anchor was added and the DB was not written.
   Details in `honda/OWNER_READINGS.md`.
 
+**U16 (DS3231) next on board 2.** Owner: *"I added reference/i2c from an old
+project, I think it was chatGPT and/or Gemini at the time, would you prefer to
+write i2c code for ds3231 on your own or is the reference any use to add ds3231
+function to the board. I still need the 3v3 chip to power it, but I want to
+solder U16 and make sure the connections are sound"*.
+- `logger/reference/i2c/` is untracked, pico-sdk C. Its provenance is
+  AI-generated, so it is not committed to the public repo.
+- U16 VCC (pin 2) is P3V3_SW, which is Pico pin 36 3V3(OUT), the same rail as
+  J5.1. It needs no separate regulator. BT1 (BR2032 in a Keystone 3034) is
+  still missing, so VBAT must be grounded until it is fitted.
+
 
 ## November 24, 2026
 
