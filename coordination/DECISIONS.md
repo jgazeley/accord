@@ -188,6 +188,14 @@ solder U16 and make sure the connections are sound"*.
   sets the Pico's clock from the RTC.
 - Owner: *"ok its all soldered including vbat jumper to pgnd"*. U16, R50,
   R51, R52, C25 and the BT1 VBAT-to-PGND bridge are fitted on board 2.
+- Owner: *"yes flash it"*. Go-ahead to flash the RTC build onto E6642815E3477A23.
+  Flashed (`OK: new firmware running`). U16 works:
+  - Wiring check ok; the scan finds only 0x68.
+  - The first read was at power-on defaults (2000-01-01, OSF set, 23.5 C).
+  - The INT 1 Hz test passed (5 transitions).
+  - The chip was set from SNTP at 07:47:00Z. A re-check gave OSF clear and
+    drift 0 s.
+  - The time is lost at every power-off until BT1 is fitted.
 
 
 ## November 24, 2026
