@@ -49,6 +49,12 @@ C9, C11, C12 and C13 are off. Nothing has been powered or measured yet.
   `0.8.1-dev+w43init.nocorew43.board2` (board 1's build with SD SCK/MOSI on
   GP18/GP19); not flashed yet. Private record:
   `/srv/agent_share/pcb/build-board2-20261125/README.md`.
+- Owner: *"go ahead and flash new pico with accord firmware, but make sure its
+  set for the original pinout without the damaged pins"*. Flashed with
+  pico-flash (`OK: new firmware running`). The build has SD on GP16 MISO, GP17 CS,
+  GP18 SCK and GP19 MOSI. Chip E6642815E3477A23. Wi-Fi is up at 192.168.60.74,
+  SNTP is synced, and SD shows no-card. It is not yet in the VM intake's unit
+  list.
 
 ## November 24, 2026
 
