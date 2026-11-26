@@ -215,6 +215,16 @@ holds"*. DS3231 VBAT range is 2.3-5.5 V.
 - Owner: *"ok replugged after 5 minutes"*. After the reboot (SNTP at 08:09:38Z)
   the RTC read osf=0, sets=0, drift_s=+0. **5 min hold: pass.** Overnight is
   next.
+- Owner: *"check it, this stupid battery turns off all the damn time if not
+  sufficiently loaded"*. After about 3 min off it still read osf=0, sets=0,
+  drift 0, INT pass. A power bank won't stay on at the DS3231's µA load. Owner:
+  *"ok swapped to a more stable 3v3 source, check again and set if needed and
+  then ill unplug once for a short period, then overnight"*.
+- New source, first boot (*"pico is plugged back in"*): the time was lost during
+  the swap. `# RTC set to=2026-11-26T08:31:54Z from=sntp osf_cleared=1`, then
+  osf=0 and drift 0.
+- Owner: *"ok replugged after a bit"*. The new source held: osf=0, sets=0,
+  drift_s=+0 at 08:37:34Z (booted about 08:36:49Z). Overnight is next.
 
 
 ## November 24, 2026
