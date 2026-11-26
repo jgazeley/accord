@@ -186,6 +186,8 @@ solder U16 and make sure the connections are sound"*.
   writes the header and Wire belongs to core 1. Serial `c` runs the wiring check,
   bus scan and INT 1 Hz test; `x` sets the chip from the trusted clock. It never
   sets the Pico's clock from the RTC.
+- Owner: *"ok its all soldered including vbat jumper to pgnd"*. U16, R50,
+  R51, R52, C25 and the BT1 VBAT-to-PGND bridge are fitted on board 2.
 
 
 ## November 24, 2026
