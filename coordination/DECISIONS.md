@@ -228,6 +228,10 @@ holds"*. DS3231 VBAT range is 2.3-5.5 V.
 - Owner: *"replugged to spot check before true overnight"*. Off from about
   08:38Z to 10:28Z, about 1 h 50 min. It read osf=0, sets=0, drift_s=+0, 19.25 C.
   **~2 h hold: pass.**
+- Owner: *"ok please check the rtc"* (overnight). Off from about 10:30Z to
+  16:02Z, about 5.5 h. At 16:03:42Z it read osf=0, sets=0, drift_s=+0 against
+  SNTP, 18.50 C. **Overnight hold: pass.** U16, its wiring and the VBAT path are
+  verified; the temporary VBAT source comes off before BT1 is fitted.
 
 
 ## November 24, 2026
