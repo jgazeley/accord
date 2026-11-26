@@ -55,6 +55,30 @@ C9, C11, C12 and C13 are off. Nothing has been powered or measured yet.
   GP18 SCK and GP19 MOSI. Chip E6642815E3477A23. Wi-Fi is up at 192.168.60.74,
   SNTP is synced, and SD shows no-card. It is not yet in the VM intake's unit
   list.
+- Owner: *"yes add it, and i want to add tge sd card and see if it can read
+  it."* Then: *"Add the new pico to the database. In fact it can replace the old
+  one unless something goes wrong and we need to revert back for some reason."*
+  Added E6642815E3477A23 to the VM intake's `units`
+  (`policy.json.bak-pre-unit3-20261125`). The older units stay listed so a revert
+  needs no change.
+- Owner's plan: *"Once it seems like everything that you can think of to test
+  what the current configuration which is the Pico SD card, the inputs and stuff
+  that I mentioned earlier for the prototype and Buck converter. And then before
+  placing back in the car, I know I have to put the jumpers in a few spots. At
+  that point I can test it in the car or solder u16 and associated circuitry so
+  that you can test if the Pico can talk to the IC. I'm aware that the battery is
+  not attached yet, so the time will not survive power loss."*
+
+**Set aside for a quiet time: the Nov 25 drive.** Owner: *"today I spaced out
+and unplugged the Pico after stopping. I noted the time that I started the car
+which would have been only maybe a minute or so after turning the ignition on
+... I'm hoping that it caught the time when I arrived back home for you to piece
+together the trip. I also took a picture of the mileage and odometer at the stop
+where I unplug the pico. Please don't worry about that right now ... next time
+... when it is quiet. Freshen the odometer and fix that trip."* The owner has the
+start time and a photo of the odometer at the stop. Not yet checked whether
+any of the drive reached the receiver.
+
 
 ## November 24, 2026
 
