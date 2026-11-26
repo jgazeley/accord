@@ -68,6 +68,15 @@ C9, C11, C12 and C13 are off. Nothing has been powered or measured yet.
   that point I can test it in the car or solder u16 and associated circuitry so
   that you can test if the Pico can talk to the IC. I'm aware that the battery is
   not attached yet, so the time will not survive power loss."*
+- SD card on board 2. Owner: *"i mean the old card not "new card", the existing
+  card with exisitng trip data. i hust attached the 16 gb card witb existing trip
+  data that was briefly attached to the new pico. please just prepare it for tge
+  new pico. the sd module is already wired"*. Copied every file read-only to
+  `/srv/agent_share/pcb/sdtools/cards/20261125_16gb_before_board2/` (with
+  SHA-256 list). **The SD card works on board 2:** during the brief insert the new
+  Pico wrote `20261126_025629.CSV`, with header chip E6642815E3477A23, fw `…board2`,
+  `clock=sntp`, and 31 s of rows. Today's drive is in `20261125_194132.CSV` and
+  `20261125_200411.CSV`.
 
 **Set aside for a quiet time: the Nov 25 drive.** Owner: *"today I spaced out
 and unplugged the Pico after stopping. I noted the time that I started the car
