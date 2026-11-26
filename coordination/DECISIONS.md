@@ -86,6 +86,15 @@ C9, C11, C12 and C13 are off. Nothing has been powered or measured yet.
   (PGND) goes by its own wire to a chassis bolt, so the buck's return current
   does not flow through the Pico's AGND. Pin 6 BATT_IN is still to be found
   (measure key-out), with a 1 A fuse at the tap.
+- Owner: *"do we know if there is a constant 12V+ on the A B or C connector for
+  the gauge cluster to tap for J1"*. From the 1998-2002 Accord service manual
+  (`/srv/agent_share/obdii/`, gauges circuit diagram '00-02, p. 22-64/65): **gauge
+  assembly B21, WHT/YEL**, comes from the passenger's under-dash fuse No. 13
+  (7.5 A). The PCM terminal table gives that fuse's WHT/YEL as "Back-up power
+  supply, Always battery voltage". The same fuse also feeds PCM memory, the heater
+  panel, the security indicator and the multiplex unit, so the 1 A inline fuse at
+  the tap matters. Not yet measured in the car: B21 to B16 with the key out should
+  read battery voltage.
 
 **Set aside for a quiet time: the Nov 25 drive.** Owner: *"today I spaced out
 and unplugged the Pico after stopping. I noted the time that I started the car
