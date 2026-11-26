@@ -201,6 +201,21 @@ solder U16 and make sure the connections are sound"*.
   `docs/IL-AG5_Series.pdf`, `docs/SD-slot.jpg` and `logger/reference/` stay
   untracked.
 
+**U16 backup test with a temporary cell.** Owner: *"I cut the pgnd to rtc_vbat
+jumper in the middle, stripped some insulation, then i attached a battery with
+3v3 output to the jumpers to power the rtc for testing. I'd like to try a quick
+disconnect/reconnect, a ~5 minute period, then overnight to see if the time
+holds"*. DS3231 VBAT range is 2.3-5.5 V.
+- Owner: *"pico is plugged in, too lazy to get meter so hopefully the battery
+  did me good. it has 5v and 3v3 rails"*. The boot re-set the chip (sets=1). The
+  time had been lost before the cell went on. Then osf=0 and drift 0.
+- Owner: *"ok replugged after 10 seconds"*. The Pico rebooted (fresh SNTP), and
+  the RTC read osf=0, sets=0, drift_s=+0. **10 s hold: pass**, so the cell is
+  connected and the polarity works.
+- Owner: *"ok replugged after 5 minutes"*. After the reboot (SNTP at 08:09:38Z)
+  the RTC read osf=0, sets=0, drift_s=+0. **5 min hold: pass.** Overnight is
+  next.
+
 
 ## November 24, 2026
 
