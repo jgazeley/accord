@@ -106,6 +106,22 @@ where I unplug the pico. Please don't worry about that right now ... next time
 start time and a photo of the odometer at the stop. Not yet checked whether
 any of the drive reached the receiver.
 
+**Board 2 first road test.** Owner: *"ok I went for a test ride, noted the
+odometer before and after, note from earlier: 12:36:03 pm I started the car, did
+the ignition ~:30 - 1 minute earlier. PLease report once/if the Pico uploads over
+the wifi, the fuel state, the brake state, the trip overview, the top speed seen,
+etc. Only indication I have anything worked was the green light on the pico came
+on when moving around. The car was at Trip 10.0 mi, 231617 when I noted the dash
+after unplugging, it was 10.2 mi when odometer was 231628 before I left, new trip
+I will leave to you to read if it uploaded, and current odometer"*. The 12:36:03
+start and the 10.0 mi / 231617 reading belong to the earlier Nov 25 drive; the
+10.2 mi / 231628 reading is the dash before this test ride.
+
+Receiver check at 22:40 PST: no request from the new Pico (E6642815E3477A23)
+has reached the receiver, and nothing from 192.168.60.74 at all. The forwarding
+still admits only .89. The test ride is on the SD card only. The earlier Nov 25
+drive did stream live from board 1's Pico (E66480454F4CA92D) until 13:27 PST.
+
 
 ## November 24, 2026
 
