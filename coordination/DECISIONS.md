@@ -149,6 +149,18 @@ ride. The intake still reports ok=false only because of three empty board-1
 files (`U_222611cc...`, `U_62fd1e9a...`, `U_ca40b4cd...`, "no data rows"), which
 the receiver retries continuously.
 
+**The earlier Nov 25 drive checks out; nothing to fix.** Owner: *"fix the trip
+from earlier"*. It is already in the DB, complete:
+- DB trip 114 is the outbound leg, 10.07 mi. The ignition went off at 12:03:32
+  just before the unplug.
+- DB trips 115 and 116 are the drive home, 10.24 mi together, split by a 55 s
+  key-off.
+- The second file had no clock until home Wi-Fi at 13:13 and was back-dated. Its
+  logged engine start, 12:36:02, matches the owner's 12:36:03.
+- Both dash readings, 231617 and 231628, sit inside the pulse chain from anchor
+  13. They don't narrow it, so no anchor was added and the DB was not written.
+  Details in `honda/OWNER_READINGS.md`.
+
 
 ## November 24, 2026
 
