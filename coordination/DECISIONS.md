@@ -197,6 +197,9 @@ solder U16 and make sure the connections are sound"*.
     drift 0 s.
   - The time is lost at every power-off until BT1 is fitted.
 - Owner: *"ok push it"*. Go-ahead to push main.
+  Pushed `5541219..a0e8862`. Owner: *"leave the docs files out for now"*.
+  `docs/IL-AG5_Series.pdf`, `docs/SD-slot.jpg` and `logger/reference/` stay
+  untracked.
 
 
 ## November 24, 2026
