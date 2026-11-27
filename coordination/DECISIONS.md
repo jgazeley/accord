@@ -287,6 +287,11 @@ Sell SD-first. Make the server one generic container (receiver, converter,
 dashboard) that runs on a Pi, a NAS or a PC, not a Pi Zero-only image, and add a
 Pi later only if buyers ask. Test demand with a listing or a forum post before
 building.
+Owner: *"ok, its backburnered for now since I'm still testing and developing
+mine. Can you create a single digikey cart file I can use. I'll delete my
+current cart"*. Selling is on hold. The single cart file is
+`inventory/digikey_cart_20261127.csv` (private): it finishes board 2 and covers
+the third unit's parts, but not the optional MAX3485 and socket.
 
 
 ## November 24, 2026
