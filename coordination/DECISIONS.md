@@ -292,6 +292,11 @@ mine. Can you create a single digikey cart file I can use. I'll delete my
 current cart"*. Selling is on hold. The single cart file is
 `inventory/digikey_cart_20261127.csv` (private): it finishes board 2 and covers
 the third unit's parts, but not the optional MAX3485 and socket.
+Owner: *"BR-2032/BN is backordered now"*. Removed from the cart (16 lines).
+It's only the third unit's cell, so a plain BR2032 bought elsewhere does. The
+BR2032 options Digi-Key stocks (-1HE, -1VB, -1F2) look like tab or pin versions
+that won't sit in the 3034 holder. Keep BR chemistry, not CR (D-RTC-14: rated
+to +85 C).
 
 
 ## November 24, 2026
