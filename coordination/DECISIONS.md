@@ -319,6 +319,11 @@ It's only the third unit's cell, so a plain BR2032 bought elsewhere does. The
 BR2032 options Digi-Key stocks (-1HE, -1VB, -1F2) look like tab or pin versions
 that won't sit in the 3034 holder. Keep BR chemistry, not CR (D-RTC-14: rated
 to +85 C).
+Owner asked, hypothetically, what could replace the SD card in a revision, then
+whether a small SD NAND daughterboard matching J5 (3V3_SW, GND, MISO, CS, SCK,
+MOSI) is plausible. Answer: yes, it's one chip plus pull-ups and decoupling, and
+the firmware is unchanged. The catch is that the card is no longer removable
+(S5.2). No decision yet. Owner: *"push it, and then ill discuss this further"*.
 
 
 ## November 24, 2026
