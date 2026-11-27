@@ -242,6 +242,13 @@ holds"*. DS3231 VBAT range is 2.3-5.5 V.
   replugged about 15:01Z, up to about 16 h. At 15:02:26Z it read osf=0, sets=0,
   drift_s=+0, 20.75 C. Pass.
 
+**C3 sourcing (D-BOM-38 follow-up), 2026-11-27.** Owner: *"MKS2C041001F00JSSD
+is "marketplace" only, is there another good replacement option or do I need
+this one"*. The KEMET R82DC4100AA60J matches the specs C3 needs: 1 uF, 5 %, 63 V
+DC, PET, 7.2 x 5 x 10 mm body, 5 mm pitch. It fits the existing
+C_Rect_L7.2mm_W5.5mm footprint, and Digi-Key stocks it. The BOM still names the
+WIMA until the owner picks.
+
 
 ## November 24, 2026
 
