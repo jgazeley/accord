@@ -5,6 +5,8 @@ part = "top"; // top (roof down), bottom, assembled, exploded
 engagement = 0.4; // 0.1..0.6; regenerate BOTH parts after fitting changes
 lip_clearance = 0.3; // radial, 0.2..0.5
 pcb_headroom = 25; // PCB top to roof underside; mating geometry stays fixed
+sd_center_x = 41.2675;
+sd_width = 29.8; // gap matches lower SD window
 pcb_top_z = 8.775;
 roof = 2;
 top_z = pcb_top_z+pcb_headroom+roof;
@@ -49,6 +51,8 @@ module lid() {
             }
             // Cut wall AND alignment skirt to complete the lower JAE notch.
             translate([118,26,8.275]) cube([5.2,28,16.5]);
+            // Remove the thin inner skirt below the Z=16 seam above SD access.
+            translate([sd_center_x-sd_width/2,-5,0]) cube([sd_width,6,16]);
         }
         clips();
     }

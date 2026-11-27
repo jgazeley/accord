@@ -9,7 +9,8 @@ not have the receivers needed for these clips.
 that the tallest component is about 20 mm above the PCB. The revised lid
 provides **25 mm of clear height above the PCB**, about 5 mm over that estimate.
 The bottom STL is byte-for-byte unchanged; the existing snap positions,
-alignment skirt and connector opening are retained. Only the lid needs printing.
+alignment skirt (apart from the SD relief below) and connector opening are retained.
+Only the lid needs printing.
 
 ![Assembled case](assembled-preview.png)
 
@@ -56,8 +57,13 @@ the previous catalogue-based allowances; see the
 Harness-plug latch operation and actual fitted component heights still need
 checking on the assembly.
 
-The original SD window stays 29.8 × 3.75 mm. Its top is Z=12.025; the skirt
-ends at Z=13, leaving 0.975 mm between them. The owner-selected SD position
+**SD lip relief (November 27, D-CASE-41):** the thin alignment skirt is removed
+across the SD window's full 29.8 mm width, X=26.3675..56.1675, on the front
+(-Y) wall. In this section the lid stops at **Z=16**, flush with the top edge
+of the bottom half; nothing from the lid projects down behind the SD area.
+The lid wall and skirt root above the seam remain joined. The original
+29.8 × 3.75 mm window and the printed bottom are unchanged.
+Elsewhere the alignment skirt still extends down to Z=13. The owner-selected SD position
 remains provisional, directly above the PCB. The skirt projects 0.3 mm inward
 past the PCB outline, starting 4.225 mm above the PCB top; check tall edge
 components against it. The four stepped studs, 3.175 mm support height,
@@ -102,7 +108,7 @@ python3 logger/hardware/kicad/tools/build_case_enclosure.py --preview
 
 `--pcb-headroom` sets the clear height above the PCB (default 25 mm,
 minimum 18.225 mm). It raises the roof and upper walls while keeping the
-bottom, clip roots/hooks, seam, skirt and JAE aperture fixed. The previous
+bottom, clip roots/hooks, seam, skirt geometry and JAE aperture fixed. The previous
 29 mm overall case used 18.225 mm headroom. The current overall height is
 `8.775 PCB top + 25 headroom + 2 roof = 35.775 mm`.
 
@@ -137,10 +143,13 @@ at coincident cut faces. Independent sections at Z=13.1 and 15.9 confirm
 the 0.3 mm skirt gap; reversing the print orientation matches assembly
 vertices within 0.00001 mm. Both extremes of the exposed fit-adjustment
 ranges also pass the geometry checks from the original lid validation.
-For the height revision, comparison with the previous exported lid confirms
+For the height revision (before the subsequent SD skirt relief), comparison with the previous exported lid confirms
 identical geometry below Z=26.9 mm, covering the mating skirt, hooks and
 connector aperture. An independent cavity check verifies 25 mm headroom
-and the 2 mm roof. The bottom export is identical to its previous bytes.
+and the 2 mm roof. The SD relief removes only the 29.8 × 1 × 3 mm skirt
+segment (89.4 mm³); comparison with the previous exported mesh confirms no
+other changes. The gap is empty below Z=16 and the wall above it remains
+solid. The bottom export is identical to its previous bytes.
 
 Based on Accord by Jayson Gazeley — https://github.com/jgazeley/accord.
 The design and generated representations use CERN-OHL-P-2.0; see

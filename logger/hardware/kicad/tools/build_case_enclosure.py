@@ -182,6 +182,10 @@ def main():
     lid = lid+skirt+root
     jae_cutter = box([118, 26, 8.275], [5.2, 28, 16.5])
     lid -= jae_cutter
+    # Above the SD window, stop all lid material at the bottom's top rim.
+    sd_lip_x = sd['center_along_wall']-sd['width']/2
+    sd_lip_gap = box([sd_lip_x, -5, 0], [sd['width'], 6, seam])
+    lid -= sd_lip_gap
 
     # Local coordinates: u points outwards from the outside wall, v is case Z.
     beam_profile = [(0.3, 12.8), (1.5, 12.8), (1.5, 26.9), (-0.3, 28.7), (-0.3, 25)]
@@ -216,6 +220,7 @@ def main():
     assert abs(((bottom+lid) ^ jae_cutter).volume()) < 1e-4  # STL float32 rounding
     sd_access = box(sd['cutter_origin'], sd['cutter_size'])
     assert abs(((bottom+lid) ^ sd_access).volume()) < 1e-4
+    assert abs((lid ^ sd_lip_gap).volume()) < 1e-4
     protected = box([-4, -5, 0], [128, 94, 12.5])
     assert abs(((base-bottom) ^ protected).volume()) < 1e-4
     expected_removed = 4*9*2*2.2
@@ -239,7 +244,9 @@ def main():
                   seam_z=16, roof_thickness=roof, roof_underside_z=top_z-roof, wall=2,
                   pcb_headroom=args.pcb_headroom,
                   pcb_top_z=dims['pcb_top_z'], lip=dict(insertion=3, radial_clearance=lip_gap,
-                  thickness=1, lowest_z=13, interrupted_at_JAE=True),
+                  thickness=1, lowest_z=13, interrupted_at_JAE=True,
+                  SD_gap=dict(x=[sd_lip_x, sd_lip_x+sd['width']], width=sd['width'],
+                              lowest_lid_z=seam)),
                   snap=dict(count=4, centers_x=[18, 102], walls=['front', 'back'],
                   beam_width=8, beam_thickness=1.2, outside_gap=0.3, root_radius=0.6,
                   root_z=25, hook_retention_z=14.6, hook_tip_z=12.8,
@@ -249,10 +256,11 @@ def main():
                   bottom=bottom_report, lid_assembled=lid_report, lid_print=print_report,
                   validation=dict(exported_meshes_closed_oriented_connected=True,
                   closed_assembly_overlap_mm3=overlap, SD_and_JAE_apertures_clear=True,
+                  no_lid_below_rim_over_SD_window=True,
                   original_geometry_below_z_12_5_preserved=True, latch_retention_and_release_checked=True,
                   physical_fit_and_fatigue_tested=False))
     (out/'dimensions.json').write_text(json.dumps(report, indent=2)+'\n')
-    write_scad(out, engagement, lip_gap, beam_profile, args.pcb_headroom)
+    write_scad(out, engagement, lip_gap, beam_profile, args.pcb_headroom, sd)
     if args.preview:
         blue, orange = (100, 155, 197), (225, 163, 88)
         render(out/'assembled-preview.png', [(bottom, blue), (lid, orange)],
@@ -263,17 +271,17 @@ def main():
         render(out/'exploded-preview.png', [(bottom, blue), (lid.translate((0, 0, 24)), orange)],
                'Accord logger — matching bottom and lid',
                ['Lid lifted 24 mm for illustration; PCB omitted',
-                'Four receiver windows in bottom; alignment lip interrupted at JAE connector',
+                'Four receiver windows in bottom; alignment lip interrupted at SD and JAE openings',
                 'Existing studs, SD opening and bottom chamfer retained'])
         render(out/'top-print-preview.png', [(printed_lid, orange)],
                'Accord logger — lid, roof down for printing',
                ['Primary top STL is already in this orientation; Z minimum = 0',
-                'Inset alignment skirt and four exterior cantilever clips',
+                'Alignment skirt stops at the seam above SD window; four exterior clips',
                 'Fit and clip durability still need a first print in the intended PLA+'])
     print(json.dumps(report, indent=2))
 
 
-def write_scad(out, engagement, lip_gap, beam, headroom):
+def write_scad(out, engagement, lip_gap, beam, headroom, sd):
     # Same constructive geometry as the exported STL; base is imported, lid editable.
     source = '''// SPDX-License-Identifier: CERN-OHL-P-2.0
 // Copyright 2026 Jayson Gazeley — https://github.com/jgazeley/accord
@@ -282,6 +290,8 @@ part = "top"; // top (roof down), bottom, assembled, exploded
 engagement = ENGAGEMENT; // 0.1..0.6; regenerate BOTH parts after fitting changes
 lip_clearance = LIP_GAP; // radial, 0.2..0.5
 pcb_headroom = HEADROOM; // PCB top to roof underside; mating geometry stays fixed
+sd_center_x = SD_CENTER;
+sd_width = SD_WIDTH; // gap matches lower SD window
 pcb_top_z = 8.775;
 roof = 2;
 top_z = pcb_top_z+pcb_headroom+roof;
@@ -326,6 +336,8 @@ module lid() {
             }
             // Cut wall AND alignment skirt to complete the lower JAE notch.
             translate([118,26,8.275]) cube([5.2,28,16.5]);
+            // Remove the thin inner skirt below the Z=16 seam above SD access.
+            translate([sd_center_x-sd_width/2,-5,0]) cube([sd_width,6,16]);
         }
         clips();
     }
@@ -340,6 +352,7 @@ else assert(false,"Unknown part selector");
 '''
     source = source.replace('ENGAGEMENT', str(engagement)).replace('LIP_GAP', str(lip_gap))
     source = source.replace('BEAM', json.dumps(beam)).replace('HEADROOM', str(headroom))
+    source = source.replace('SD_CENTER', str(sd['center_along_wall'])).replace('SD_WIDTH', str(sd['width']))
     (out/'accord-logger-enclosure.scad').write_text(source)
 
 

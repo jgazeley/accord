@@ -66,6 +66,11 @@ arrived, and the owner has transferred the working circuit onto one.**
   the estimate. Roof remains 2 mm. Bottom STL is byte-for-byte unchanged;
   comparison confirms the mating geometry and JAE aperture are preserved.
   Height is adjustable with `--pcb-headroom`; lid fit is not yet tested.
+  **SD lip gap added** (November 27, D-CASE-41): across the 29.8 mm SD
+  window width, the lid's thin inner skirt now stops at the Z=16 seam.
+  The 3 mm downward projection is removed there; bottom, clips, JAE opening
+  and 25 mm PCB headroom are unchanged. Exported-mesh checks confirm only
+  that skirt segment was removed and the wall above the seam is intact.
 
 Design and fabrication record:
 

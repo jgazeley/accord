@@ -24,7 +24,15 @@
     "radial_clearance": 0.3,
     "thickness": 1,
     "lowest_z": 13,
-    "interrupted_at_JAE": true
+    "interrupted_at_JAE": true,
+    "SD_gap": {
+      "x": [
+        26.3675,
+        56.167500000000004
+      ],
+      "width": 29.8,
+      "lowest_lid_z": 16
+    }
   },
   "snap": {
     "count": 4,
@@ -76,10 +84,10 @@
     "sha256": "a540e6498a3b28a5dba7681d4f24b4806df2218cfde2e21c1e9f5e3807ed111e"
   },
   "lid_assembled": {
-    "triangles": 3134,
+    "triangles": 3154,
     "connected_solids": 1,
     "euler_characteristic": 2,
-    "volume_mm3": 38773.75511708848,
+    "volume_mm3": 38684.3551193773,
     "bounds": [
       -3.0,
       -4.5,
@@ -88,13 +96,13 @@
       87.5,
       35.775001525878906
     ],
-    "sha256": "9bbc5f7dc3a66b461a838c71f99cb9adef15e14638db81318db60cfc96b13e2e"
+    "sha256": "fd260d67b07f4effb396072b653da11e10b738d05a717b9dfb87aed099bc6c03"
   },
   "lid_print": {
-    "triangles": 3134,
+    "triangles": 3154,
     "connected_solids": 1,
     "euler_characteristic": 2,
-    "volume_mm3": 38773.75358430471,
+    "volume_mm3": 38684.35358659353,
     "bounds": [
       -3.0,
       -4.5,
@@ -103,12 +111,13 @@
       87.5,
       22.975000381469727
     ],
-    "sha256": "cf4a045605c07b855c71a3d482c34ac97416da4fce1c5bf5915bb983769114b6"
+    "sha256": "8f7e77f53d7f056a53044bcbb790c26f995e0eeb2b9a1a52e84968f93d948500"
   },
   "validation": {
     "exported_meshes_closed_oriented_connected": true,
     "closed_assembly_overlap_mm3": -7.370626740500739e-16,
     "SD_and_JAE_apertures_clear": true,
+    "no_lid_below_rim_over_SD_window": true,
     "original_geometry_below_z_12_5_preserved": true,
     "latch_retention_and_release_checked": true,
     "physical_fit_and_fatigue_tested": false

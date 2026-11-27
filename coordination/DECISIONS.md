@@ -8,6 +8,13 @@ October 29 evening were carried over from the retired tracker
 
 ## November 27, 2026
 
+**D-CASE-41: interrupt the lid's inner lip above the SD window.** Owner:
+*"I would like the top to leave a "gap" in that same area, where the top
+half does not extend below the very top edge of the bottom half. This means
+the small thin inner pieces"*. Remove the downward-projecting alignment
+skirt across the SD window's width, stopping the lid at the Z=16 mm seam
+there. Preserve the already printed bottom, clips and raised roof.
+
 **D-CASE-40: bottom printed; more component headroom needed before printing lid.**
 Owner: *"I printed the bottom, now I am going to print the top, but first I
 can field measure the tallest components on the PCB to make sure the top
