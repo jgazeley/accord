@@ -258,6 +258,21 @@ KEMET's own stock, not the marketplace: 183,438 in stock, $0.66, minimum 1, cut
 tape. R82DC4100SH60J (1,961) is the 5 % backup. The 10 % and 20 % rows are
 skipped. The export stays untracked with the other docs files.
 
+**Third unit, 2026-11-27.** Owner: *"If I'm going to be ordering stuff anyway I
+wonder if I should order enough for another board so I can try listing one
+online for sale and see if anyone is interested. Would need to build a harness
+to tap the B and C connectors on gauge cluster with IL-AG5 connectors (I have
+some male/female ones from AliExpress that may already work), last digikey
+order had some extra parts it looks like so might only need to order some
+specific parts. current cart: /srv/agent_share/accord/docs/2026-11-27T092545.xlsx,
+plus my inventory and digikey invoice(s) to see if you can determine what I
+need to make one additional unit, and complete this unit"*. Worked out against
+the Nov 17 order, less board 2 and the puzzlebox share. The cart completes board
+2. For the third unit, U3 and C3 go to 2, and a short list of parts ordered at
+one per board is added (private: `inventory/supplemental_order.md`, "Third
+unit"). Bare boards: 2 of the 5 left after the third. The cart xlsx stays
+untracked.
+
 
 ## November 24, 2026
 
