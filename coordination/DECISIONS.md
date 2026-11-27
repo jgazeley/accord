@@ -248,6 +248,9 @@ this one"*. The KEMET R82DC4100AA60J matches the specs C3 needs: 1 uF, 5 %, 63 V
 DC, PET, 7.2 x 5 x 10 mm body, 5 mm pitch. It fits the existing
 C_Rect_L7.2mm_W5.5mm footprint, and Digi-Key stocks it. The BOM still names the
 WIMA until the owner picks.
+Owner: *"KEMET R82DC4100AA60J is also Marketplace only on Digikey"*. Next to
+check: TDK B32529C0105J (000/189/006), the other R82DC4100 suffixes, then
+Mouser.
 
 
 ## November 24, 2026
