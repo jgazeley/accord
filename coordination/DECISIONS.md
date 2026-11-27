@@ -273,6 +273,21 @@ one per board is added (private: `inventory/supplemental_order.md`, "Third
 unit"). Bare boards: 2 of the 5 left after the third. The cart xlsx stays
 untracked.
 
+**Selling a unit: owner's question, 2026-11-27 (no decision yet).** Owner:
+*"assuming I made the harness, and finalized the 3D enclosure, how would I try to
+pitch this, what could I sell it for, should I try to provide some sort of
+turnkey "server" using a Pi Zero or something to handle the auto upload and
+database, or rely on the raw trip data and a more generic option to convert to
+trips, hmmm.. much of the workflow and data built up so far is specific for my
+car (carfax, service history), but the FSM intervals and the basic connections
+could still serve as a fancy "next service due" dashboard and odometer sync
+etc"*. My advice: before any sale, finish stages 2-4 and measure the key-off
+draw, and add Wi-Fi setup the buyer can do themselves (no compiled-in secrets).
+Sell SD-first. Make the server one generic container (receiver, converter,
+dashboard) that runs on a Pi, a NAS or a PC, not a Pi Zero-only image, and add a
+Pi later only if buyers ask. Test demand with a listing or a forum post before
+building.
+
 
 ## November 24, 2026
 
