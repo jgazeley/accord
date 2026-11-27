@@ -123,10 +123,14 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--engagement', type=float, default=0.4, help='Hook intrusion into bottom wall')
     parser.add_argument('--lip-clearance', type=float, default=0.3, help='Radial alignment gap')
+    parser.add_argument('--pcb-headroom', type=float, default=25,
+                        help='Clear height from PCB top to roof underside; keeps the printed bottom interface fixed')
     parser.add_argument('--preview', action='store_true')
     args = parser.parse_args()
     if not 0.1 <= args.engagement <= 0.6 or not 0.2 <= args.lip_clearance <= 0.5:
         parser.error('Prototype ranges: engagement 0.1..0.6; lip clearance 0.2..0.5 mm')
+    if not math.isfinite(args.pcb_headroom) or args.pcb_headroom < 18.225:
+        parser.error('PCB headroom must be at least 18.225 mm for the existing JAE opening and clips')
     reference = json.loads((ROOT/'mechanical/accord-logger-mechanical.json').read_text())
     base_dir = ROOT/'mechanical/case-bottom'
     dims = json.loads((base_dir/'dimensions.json').read_text())
@@ -142,7 +146,8 @@ def main():
     assert jae['width'] == 28 and jae['center_along_wall'] == 40
     assert jae['requested_z_range'] == [8.275, 24.775]
     assert sd['actual_z_range'][1] < 13
-    w, h, r, seam, top_z, roof = 120, 83, 2, 16, 29, 2
+    w, h, r, seam, roof = 120, 83, 2, 16, 2
+    top_z = dims['pcb_top_z']+args.pcb_headroom+roof
     engagement, lip_gap = args.engagement, args.lip_clearance
     centers = [(r, r), (w-r, r), (w-r, h-r), (r, h-r)]
 
@@ -203,8 +208,8 @@ def main():
     assert bottom_report['euler_characteristic'] == -8  # SD window + 4 receivers
     assert lid_report['euler_characteristic'] == 2
     assert np.allclose(bottom_report['bounds'], [-3, -3, 0, 123, 86, 16], atol=1e-5)
-    assert np.allclose(lid_report['bounds'], [-3, -4.5, 12.8, 123, 87.5, 29], atol=1e-5)
-    assert np.allclose(print_report['bounds'], [-3, -4.5, 0, 123, 87.5, 16.2], atol=1e-5)
+    assert np.allclose(lid_report['bounds'], [-3, -4.5, 12.8, 123, 87.5, top_z], atol=1e-5)
+    assert np.allclose(print_report['bounds'], [-3, -4.5, 0, 123, 87.5, top_z-12.8], atol=1e-5)
     # Actual exported-mesh mating, access and preserved-feature checks.
     overlap = (bottom ^ lid).volume()
     assert abs(overlap) < 1e-4
@@ -230,8 +235,9 @@ def main():
     report = dict(units='mm', material_intent='PLA+; first-print prototype',
                   source_pcb_sha256=reference['source_sha256'],
                   source_bottom_sha256=hashlib.sha256(source.read_bytes()).hexdigest(),
-                  assembly_body_size=[126, 89, 29], assembly_with_clips_size=[126, 92, 29],
-                  seam_z=16, roof_thickness=2, roof_underside_z=27, wall=2,
+                  assembly_body_size=[126, 89, top_z], assembly_with_clips_size=[126, 92, top_z],
+                  seam_z=16, roof_thickness=roof, roof_underside_z=top_z-roof, wall=2,
+                  pcb_headroom=args.pcb_headroom,
                   pcb_top_z=dims['pcb_top_z'], lip=dict(insertion=3, radial_clearance=lip_gap,
                   thickness=1, lowest_z=13, interrupted_at_JAE=True),
                   snap=dict(count=4, centers_x=[18, 102], walls=['front', 'back'],
@@ -246,12 +252,12 @@ def main():
                   original_geometry_below_z_12_5_preserved=True, latch_retention_and_release_checked=True,
                   physical_fit_and_fatigue_tested=False))
     (out/'dimensions.json').write_text(json.dumps(report, indent=2)+'\n')
-    write_scad(out, engagement, lip_gap, beam_profile)
+    write_scad(out, engagement, lip_gap, beam_profile, args.pcb_headroom)
     if args.preview:
         blue, orange = (100, 155, 197), (225, 163, 88)
         render(out/'assembled-preview.png', [(bottom, blue), (lid, orange)],
                'Accord logger — snap-on top, assembled',
-               ['126 × 89 × 29 mm body; 92 mm across external clips',
+               [f'126 × 89 × {top_z:g} mm body; {args.pcb_headroom:g} mm clear height above PCB',
                 'JAE aperture: 28 × 16.5 mm, completed by raised lid',
                 f'PLA+ prototype — four clips, {engagement:g} mm nominal engagement'])
         render(out/'exploded-preview.png', [(bottom, blue), (lid.translate((0, 0, 24)), orange)],
@@ -267,7 +273,7 @@ def main():
     print(json.dumps(report, indent=2))
 
 
-def write_scad(out, engagement, lip_gap, beam):
+def write_scad(out, engagement, lip_gap, beam, headroom):
     # Same constructive geometry as the exported STL; base is imported, lid editable.
     source = '''// SPDX-License-Identifier: CERN-OHL-P-2.0
 // Copyright 2026 Jayson Gazeley — https://github.com/jgazeley/accord
@@ -275,6 +281,11 @@ def write_scad(out, engagement, lip_gap, beam):
 part = "top"; // top (roof down), bottom, assembled, exploded
 engagement = ENGAGEMENT; // 0.1..0.6; regenerate BOTH parts after fitting changes
 lip_clearance = LIP_GAP; // radial, 0.2..0.5
+pcb_headroom = HEADROOM; // PCB top to roof underside; mating geometry stays fixed
+pcb_top_z = 8.775;
+roof = 2;
+top_z = pcb_top_z+pcb_headroom+roof;
+assert(pcb_headroom >= 18.225);
 $fn = 128;
 assert(engagement >= 0.1 && engagement <= 0.6);
 assert(lip_clearance >= 0.2 && lip_clearance <= 0.5);
@@ -304,7 +315,7 @@ module lid() {
     union() {
         difference() {
             union() {
-                difference() { rounded(3,16,29); rounded(1,15.9,27); }
+                difference() { rounded(3,16,top_z); rounded(1,15.9,top_z-roof); }
                 difference() {
                     rounded(1-lip_clearance,13,16.1);
                     rounded(-lip_clearance,12.9,16.2);
@@ -320,7 +331,7 @@ module lid() {
     }
 }
 if(part=="bottom") bottom();
-else if(part=="top") translate([0,83,29]) rotate([180,0,0]) lid();
+else if(part=="top") translate([0,83,top_z]) rotate([180,0,0]) lid();
 else if(part=="assembled" || part=="exploded") {
     color([0.39,0.61,0.77]) bottom();
     color([0.88,0.64,0.35]) translate([0,0,part=="exploded"?24:0]) lid();
@@ -328,7 +339,7 @@ else if(part=="assembled" || part=="exploded") {
 else assert(false,"Unknown part selector");
 '''
     source = source.replace('ENGAGEMENT', str(engagement)).replace('LIP_GAP', str(lip_gap))
-    source = source.replace('BEAM', json.dumps(beam))
+    source = source.replace('BEAM', json.dumps(beam)).replace('HEADROOM', str(headroom))
     (out/'accord-logger-enclosure.scad').write_text(source)
 
 

@@ -6,17 +6,18 @@
   "assembly_body_size": [
     126,
     89,
-    29
+    35.775
   ],
   "assembly_with_clips_size": [
     126,
     92,
-    29
+    35.775
   ],
   "seam_z": 16,
   "roof_thickness": 2,
-  "roof_underside_z": 27,
+  "roof_underside_z": 33.775,
   "wall": 2,
+  "pcb_headroom": 25,
   "pcb_top_z": 8.775,
   "lip": {
     "insertion": 3,
@@ -78,35 +79,35 @@
     "triangles": 3134,
     "connected_solids": 1,
     "euler_characteristic": 2,
-    "volume_mm3": 33148.84196277307,
+    "volume_mm3": 38773.75511708848,
     "bounds": [
       -3.0,
       -4.5,
       12.800000190734863,
       123.0,
       87.5,
-      29.0
+      35.775001525878906
     ],
-    "sha256": "cf61d23ab2667b85efcba481baad920c718bab52ed79201cae06e9795e674efc"
+    "sha256": "9bbc5f7dc3a66b461a838c71f99cb9adef15e14638db81318db60cfc96b13e2e"
   },
   "lid_print": {
     "triangles": 3134,
     "connected_solids": 1,
     "euler_characteristic": 2,
-    "volume_mm3": 33148.84200335356,
+    "volume_mm3": 38773.75358430471,
     "bounds": [
       -3.0,
       -4.5,
       0.0,
       123.0,
       87.5,
-      16.200000762939453
+      22.975000381469727
     ],
-    "sha256": "5fb71b82b3e944e79d25d642911749eaabe6931224bf426512dd4f76aee05af8"
+    "sha256": "cf4a045605c07b855c71a3d482c34ac97416da4fce1c5bf5915bb983769114b6"
   },
   "validation": {
     "exported_meshes_closed_oriented_connected": true,
-    "closed_assembly_overlap_mm3": 2.7813016293576217e-14,
+    "closed_assembly_overlap_mm3": -7.370626740500739e-16,
     "SD_and_JAE_apertures_clear": true,
     "original_geometry_below_z_12_5_preserved": true,
     "latch_retention_and_release_checked": true,

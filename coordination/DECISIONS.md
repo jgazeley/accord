@@ -6,6 +6,21 @@ changes. Newest first. Don't re-ask anything recorded here. Entries before
 October 29 evening were carried over from the retired tracker
 (`PROJECT_MILESTONES.md`), which has the fuller original text.
 
+## November 27, 2026
+
+**D-CASE-40: bottom printed; more component headroom needed before printing lid.**
+Owner: *"I printed the bottom, now I am going to print the top, but first I
+can field measure the tallest components on the PCB to make sure the top
+has enough room without touching the components"*. After being told the
+current ceiling is 18.225 mm above the PCB, owner estimated:
+*"I think it will need 25 - 30 mm"*. This is an estimate, not a confirmed
+component measurement. Preserve compatibility with the already printed
+bottom. Asked to distinguish component height from desired clear space,
+owner clarified: *"tallest component looks about 20 mm its hard to measure
+directly"*. Use 25 mm PCB-to-ceiling clearance as the modelling choice,
+providing about 5 mm over that estimate. Raise the lid roof and upper walls;
+retain the original seam, alignment skirt, clip positions and JAE aperture.
+
 ## November 25, 2026
 
 **D-BUILD-39 progress: stage 1 soldered except the small caps.** Owner: *"i have

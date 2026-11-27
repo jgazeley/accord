@@ -4,6 +4,11 @@
 part = "top"; // top (roof down), bottom, assembled, exploded
 engagement = 0.4; // 0.1..0.6; regenerate BOTH parts after fitting changes
 lip_clearance = 0.3; // radial, 0.2..0.5
+pcb_headroom = 25; // PCB top to roof underside; mating geometry stays fixed
+pcb_top_z = 8.775;
+roof = 2;
+top_z = pcb_top_z+pcb_headroom+roof;
+assert(pcb_headroom >= 18.225);
 $fn = 128;
 assert(engagement >= 0.1 && engagement <= 0.6);
 assert(lip_clearance >= 0.2 && lip_clearance <= 0.5);
@@ -33,7 +38,7 @@ module lid() {
     union() {
         difference() {
             union() {
-                difference() { rounded(3,16,29); rounded(1,15.9,27); }
+                difference() { rounded(3,16,top_z); rounded(1,15.9,top_z-roof); }
                 difference() {
                     rounded(1-lip_clearance,13,16.1);
                     rounded(-lip_clearance,12.9,16.2);
@@ -49,7 +54,7 @@ module lid() {
     }
 }
 if(part=="bottom") bottom();
-else if(part=="top") translate([0,83,29]) rotate([180,0,0]) lid();
+else if(part=="top") translate([0,83,top_z]) rotate([180,0,0]) lid();
 else if(part=="assembled" || part=="exploded") {
     color([0.39,0.61,0.77]) bottom();
     color([0.88,0.64,0.35]) translate([0,0,part=="exploded"?24:0]) lid();

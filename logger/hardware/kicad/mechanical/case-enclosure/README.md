@@ -5,6 +5,12 @@ bottom with four latch windows (owner request D-CASE-37, November 12, 2026).
 Use **both parts from this directory**: the earlier `case-bottom` tray does
 not have the receivers needed for these clips.
 
+**November 27 height revision:** the owner has printed the bottom and estimates
+that the tallest component is about 20 mm above the PCB. The revised lid
+provides **25 mm of clear height above the PCB**, about 5 mm over that estimate.
+The bottom STL is byte-for-byte unchanged; the existing snap positions,
+alignment skirt and connector opening are retained. Only the lid needs printing.
+
 ![Assembled case](assembled-preview.png)
 
 ## Files
@@ -29,20 +35,21 @@ not have the receivers needed for these clips.
 
 | Feature | Dimension |
 |---|---:|
-| Assembled body | 126 × 89 × 29 mm |
-| Including external clips | 126 × 92 × 29 mm |
+| Assembled body | 126 × 89 × 35.775 mm |
+| Including external clips | 126 × 92 × 35.775 mm |
 | Bottom rim / lid seam | Z=16 mm |
 | Lid sidewalls / roof | 2 / 2 mm |
-| Roof underside | Z=27 mm |
+| Roof underside | Z=33.775 mm |
+| Clear height above PCB | 25 mm |
 | PCB underside / top | Z=7.175 / 8.775 mm |
 | Alignment skirt | 3 mm insertion, 1 mm thick |
 | Skirt clearance to bottom wall | 0.3 mm per side |
 | Complete JAE opening | 28 mm wide × 16.5 mm high |
 | JAE opening limits | Y=26..54, Z=8.275..24.775 mm |
 
-The lid rises 13 mm above the original rim. Its upper JAE notch meets the
+The lid rises 19.775 mm above the original rim. Its upper JAE notch meets the
 bottom notch at Z=16 without a crossbar. The alignment skirt is also removed
-across this opening. There is 2.225 mm of solid wall above the aperture before
+across this opening. There is 9 mm of solid wall above the aperture before
 the roof underside, and 2 mm of roof above that. The width and height retain
 the previous catalogue-based allowances; see the
 [bottom's dimension derivation](../case-bottom/README.md#jae-reference-and-top-open-notch).
@@ -82,7 +89,8 @@ attention. Reduce hook engagement if the first fit requires excessive force.
 The general cantilever mechanism and the importance of print orientation and
 fit tolerances follow [Formlabs' snap-fit design guide](https://formlabs.com/blog/designing-3d-printed-snap-fit-enclosures/).
 That guide does not validate this geometry or the owner's particular PLA+.
-No print, force, fatigue, or populated-board fit test has been performed.
+The owner has printed the bottom. No lid print, force, fatigue, or
+populated-board fit test has been reported.
 
 ## Regenerate and adjust
 
@@ -91,6 +99,12 @@ With NumPy, Manifold3D 3.5.4 and Pillow available:
 ```sh
 python3 logger/hardware/kicad/tools/build_case_enclosure.py --preview
 ```
+
+`--pcb-headroom` sets the clear height above the PCB (default 25 mm,
+minimum 18.225 mm). It raises the roof and upper walls while keeping the
+bottom, clip roots/hooks, seam, skirt and JAE aperture fixed. The previous
+29 mm overall case used 18.225 mm headroom. The current overall height is
+`8.775 PCB top + 25 headroom + 2 roof = 35.775 mm`.
 
 `--engagement` adjusts the hook intrusion (default 0.4 mm, supported prototype
 range 0.1–0.6). `--lip-clearance` adjusts the skirt's radial clearance (default
@@ -122,7 +136,11 @@ print lid starts at Z=0. Float32 mesh checks allow 0.0001 mm³ residual volume
 at coincident cut faces. Independent sections at Z=13.1 and 15.9 confirm
 the 0.3 mm skirt gap; reversing the print orientation matches assembly
 vertices within 0.00001 mm. Both extremes of the exposed fit-adjustment
-ranges also pass the geometry checks.
+ranges also pass the geometry checks from the original lid validation.
+For the height revision, comparison with the previous exported lid confirms
+identical geometry below Z=26.9 mm, covering the mating skirt, hooks and
+connector aperture. An independent cavity check verifies 25 mm headroom
+and the 2 mm roof. The bottom export is identical to its previous bytes.
 
 Based on Accord by Jayson Gazeley — https://github.com/jgazeley/accord.
 The design and generated representations use CERN-OHL-P-2.0; see

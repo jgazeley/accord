@@ -1,7 +1,7 @@
 # Status
 
 Rewritten, not appended to, whenever the state changes. Owner statements
-go in [DECISIONS.md](DECISIONS.md). Last updated November 12, 2026.
+go in [DECISIONS.md](DECISIONS.md). Last updated November 27, 2026 (case update).
 
 ## Goal now
 
@@ -53,13 +53,19 @@ arrived, and the owner has transferred the working circuit onto one.**
   pair; use its revised bottom with four latch windows. The raised lid has
   2 mm walls/roof, a 3 mm alignment skirt with 0.3 mm radial clearance, and
   four external cantilever clips with 0.4 mm nominal engagement. Owner plans
-  **PLA+**; these are first-print allowances. Body is 126 × 89 × 29 mm,
+  **PLA+**; these are first-print allowances. Body is now 126 × 89 × 35.775 mm,
   92 mm across the clips. The lid completes the JAE aperture to 28 × 16.5 mm
   at Z=8.275..24.775. SD access, studs and bottom chamfer are preserved.
   STL connectivity, closed-assembly clearance, access openings and geometric
   latch/release checks pass. Top STL is roof-down for printing; separate
   assembly orientation, editable SCAD and previews are included. Physical
   clip durability, printer fit and populated-board clearance remain untested.
+  **Bottom printed; lid raised** (November 27, D-CASE-40): owner estimates
+  the tallest component at about 20 mm above the PCB. Revised lid provides
+  25 mm PCB-to-ceiling clearance (previously 18.225), leaving about 5 mm over
+  the estimate. Roof remains 2 mm. Bottom STL is byte-for-byte unchanged;
+  comparison confirms the mating geometry and JAE aperture are preserved.
+  Height is adjustable with `--pcb-headroom`; lid fit is not yet tested.
 
 Design and fabrication record:
 
@@ -104,7 +110,8 @@ Design and fabrication record:
 
 ## Next, in order
 
-1. Check the case's printed stud fit and connector access against the physical
+1. Print and trial-fit the revised 25 mm-headroom lid to the owner's printed
+   bottom. Check stud fit and connector access against the physical
    assembly, especially the provisional SD socket height, mouth position and
    finger access. Trial-fit the new snap pair empty first, then check populated
    board clearance and JAE harness-latch access; do not force the PLA+ clips.
