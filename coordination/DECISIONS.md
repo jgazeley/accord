@@ -251,6 +251,12 @@ WIMA until the owner picks.
 Owner: *"KEMET R82DC4100AA60J is also Marketplace only on Digikey"*. Next to
 check: TDK B32529C0105J (000/189/006), the other R82DC4100 suffixes, then
 Mouser.
+Owner: *"see /srv/agent_share/accord/docs/film_capacitors.csv"* (a Digi-Key
+export of the R82DC4100 parts). Pick: **R82DC4100DQ60J**. It's 5 %, 63 V, and
+the same 7.2 x 5 x 10.1 mm body on a 5 mm pitch. Digi-Key ships it from
+KEMET's own stock, not the marketplace: 183,438 in stock, $0.66, minimum 1, cut
+tape. R82DC4100SH60J (1,961) is the 5 % backup. The 10 % and 20 % rows are
+skipped. The export stays untracked with the other docs files.
 
 
 ## November 24, 2026
